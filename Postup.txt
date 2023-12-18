@@ -41,13 +41,14 @@ Aktivace venv: $ venv\Scripts\activate
 • Zapsat pohledy do urlpatterns
 • Zpustit vývojové prostředí a podívat se zda se načetl nestylizovaný obsah webu: $ python manage.py runserver
 ###
-Otevřít soubor head.html a na úvod dopsat: {% load static %}
-Ke každému lokálnímu odkazu herf dopsat {% static '' %} a do uvozovek dát původní obsah
-To samé udělat i v souboru scripts.html
-To samé udělat pro všechny obrázky (src="img)
-V settings.py zkontrolovat a případně přepsat následujíc: STATICFILES_DIRS = [BASE_DIR / 'static_in_env'], STATIC_ROOT = BASE_DIR / 'static'
-Zpustit příkaz: $ python manage.py collectstatic
-
+• Otevřít soubor head.html, scripts.html, index.html, blog.html, post.html a na úvod dopsat: {% load static %}
+• V souborech head.html a scripts.html, ke každému lokálnímu odkazu herf do uvozovek dopsat {% static '' %} a do apostrofů dát původní obsah
+• To samé udělat pro všechny obrázky (src="img) v souborech index.html, blog.html, post.html.
+• V settings.py zkontrolovat a případně přepsat následujíc: STATICFILES_DIRS = [BASE_DIR / 'static'], STATIC_ROOT = BASE_DIR.parent / 'static'
+• Zpustit příkaz: $ python manage.py collectstatic
+• Zpustit vývojový server
+• Na stránce přepnout do konzole a zkontrolovat zda tu nejsou nějaké nenačtené soubory
+###
 
 
 

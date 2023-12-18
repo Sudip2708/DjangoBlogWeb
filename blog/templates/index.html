@@ -39,18 +39,18 @@
                 <p class="text-sm">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrude consectetur adipisicing elit, sed do eiusmod tempor incididunt.</p>
                 <ul class="list-inline list-separated text-gray-500 mb-0">
                   <li class="list-inline-item"><a class="d-flex align-items-center flex-wrap text-reset" href="!#">
-                      <div class="avatar flex-shrink-0"><img class="img-fluid" src={% static "img/avatar-1.jpg" %} alt="..."/></div><small>John Doe</small></a></li>
+                      <div class="avatar flex-shrink-0"><img class="img-fluid" src="{% static 'img/avatar-1.jpg' %}" alt="..."/></div><small>John Doe</small></a></li>
                   <li class="list-inline-item small"><i class="far fa-clock"></i> 2 months ago</li>
                   <li class="list-inline-item small"><i class="far fa-comment"></i> 12</li>
                 </ul>
               </div>
             </div>
           </div>
-          <div class="col-lg-5"><img class="img-fluid" src={% static "img/featured-pic-1.jpeg" %} alt="..."></div>
+          <div class="col-lg-5"><img class="img-fluid" src="{% static 'img/featured-pic-1.jpeg' %}" alt="..."></div>
         </div>
         <!-- Post        -->
         <div class="row d-flex align-items-stretch g-0">
-          <div class="col-lg-5"><img class="img-fluid" src={% static "img/featured-pic-2.jpeg" %} alt="..."></div>
+          <div class="col-lg-5"><img class="img-fluid" src="{% static 'img/featured-pic-2.jpeg' %}" alt="..."></div>
           <div class="col-lg-7">
             <div class="text-inner d-flex align-items-center h-100">
               <div class="content px-4 px-lg-5">
@@ -62,7 +62,7 @@
                 <p class="text-sm">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrude consectetur adipisicing elit, sed do eiusmod tempor incididunt.</p>
                 <ul class="list-inline list-separated text-gray-500 mb-0">
                   <li class="list-inline-item"><a class="d-flex align-items-center flex-wrap text-reset" href="!#">
-                      <div class="avatar flex-shrink-0"><img class="img-fluid" src={% static "img/avatar-2.jpg" %} alt="..."/></div><small>John Doe</small></a></li>
+                      <div class="avatar flex-shrink-0"><img class="img-fluid" src="{% static 'img/avatar-2.jpg' %}" alt="..."/></div><small>John Doe</small></a></li>
                   <li class="list-inline-item small"><i class="far fa-clock"></i> 2 months ago</li>
                   <li class="list-inline-item small"><i class="far fa-comment"></i> 12</li>
                 </ul>
@@ -83,19 +83,19 @@
                 <p class="text-sm">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrude consectetur adipisicing elit, sed do eiusmod tempor incididunt.</p>
                 <ul class="list-inline list-separated text-gray-500 mb-0">
                   <li class="list-inline-item"><a class="d-flex align-items-center flex-wrap text-reset" href="!#">
-                      <div class="avatar flex-shrink-0"><img class="img-fluid" src={% static "img/avatar-3.jpg" %} alt="..."/></div><small>John Doe</small></a></li>
+                      <div class="avatar flex-shrink-0"><img class="img-fluid" src="{% static 'img/avatar-3.jpg' %}" alt="..."/></div><small>John Doe</small></a></li>
                   <li class="list-inline-item small"><i class="far fa-clock"></i> 2 months ago</li>
                   <li class="list-inline-item small"><i class="far fa-comment"></i> 12</li>
                 </ul>
               </div>
             </div>
           </div>
-          <div class="col-lg-5"><img class="img-fluid" src={% static "img/featured-pic-3.jpeg" %} alt="..."></div>
+          <div class="col-lg-5"><img class="img-fluid" src="{% static 'img/featured-pic-3.jpeg' %}" alt="..."></div>
         </div>
       </div>
     </section>
     <!-- Divider Section-->
-    <section class="divider" style="background: url(img/divider-bg.jpg); background-size: cover; background-position: center bottom">
+    <section class="divider" style="background: {% static 'img/divider-bg.jpg' %}; background-size: cover; background-position: center bottom">
       <div class="container text-white">
         <div class="row">
           <div class="col-md-7">
@@ -112,17 +112,17 @@
           <p class="text-lg fw-light">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
         </header>
         <div class="row gy-4">
-          <div class="col-md-4"><a class="mb-3" href="post.html"><img class="img-fluid" src={% static "img/blog-1.jpg" %} alt="..."/></a>
+          <div class="col-md-4"><a class="mb-3" href="post.html"><img class="img-fluid" src="{% static 'img/blog-1.jpg' %}" alt="..."/></a>
             <div class="d-flex align-items-center justify-content-between mb-2"><small class="text-gray-500">20 May | 2016</small><a class="small fw-bold text-uppercase small" href="!#">Business</a></div>
             <h3 class="h4"><a class="text-dark" href="post.html">Ways to remember your important ideas</a></h3>
             <p class="text-muted text-sm">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore.</p>
           </div>
-          <div class="col-md-4"><a class="mb-3" href="post.html"><img class="img-fluid" src={% static "img/blog-2.jpg" %} alt="..."/></a>
+          <div class="col-md-4"><a class="mb-3" href="post.html"><img class="img-fluid" src="{% static 'img/blog-2.jpg' %}" alt="..."/></a>
             <div class="d-flex align-items-center justify-content-between mb-2"><small class="text-gray-500">20 May | 2016</small><a class="small fw-bold text-uppercase small" href="!#">Technology</a></div>
             <h3 class="h4"><a class="text-dark" href="post.html">Diversity in Engineering: Effect on Questions</a></h3>
             <p class="text-muted text-sm">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore.</p>
           </div>
-          <div class="col-md-4"><a class="mb-3" href="post.html"><img class="img-fluid" src={% static "img/blog-3.jpg" %} alt="..."/></a>
+          <div class="col-md-4"><a class="mb-3" href="post.html"><img class="img-fluid" src="{% static 'img/blog-3.jpg' %}" alt="..."/></a>
             <div class="d-flex align-items-center justify-content-between mb-2"><small class="text-gray-500">20 May | 2016</small><a class="small fw-bold text-uppercase small" href="!#">Financial</a></div>
             <h3 class="h4"><a class="text-dark" href="post.html">Alberto Savoia Can Teach You About Interior</a></h3>
             <p class="text-muted text-sm">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore.</p>
@@ -152,13 +152,13 @@
     <!-- Gallery Section-->
     <section class="p-0">
       <div class="row g-0">
-        <div class="col-lg-3 col-sm-6"><a class="glightbox d-block position-relative" href="img/gallery-1.jpg" data-gallery="gallery" data-glightbox="Gallery image 1"><img class="img-fluid" src={% static "img/gallery-1.jpg" %} alt="image">
+        <div class="col-lg-3 col-sm-6"><a class="glightbox d-block position-relative" href="img/gallery-1.jpg" data-gallery="gallery" data-glightbox="Gallery image 1"><img class="img-fluid" src="{% static 'img/gallery-1.jpg' %}" alt="image">
             <div class="fsc-hover-overlay"><i class="fas fa-search fsc-hover-overlay-icon"></i></div></a></div>
-        <div class="col-lg-3 col-sm-6"><a class="glightbox d-block position-relative" href="img/gallery-2.jpg" data-gallery="gallery" data-glightbox="Gallery image 2"><img class="img-fluid" src={% static "img/gallery-2.jpg" %} alt="image">
+        <div class="col-lg-3 col-sm-6"><a class="glightbox d-block position-relative" href="img/gallery-2.jpg" data-gallery="gallery" data-glightbox="Gallery image 2"><img class="img-fluid" src="{% static 'img/gallery-2.jpg' %}" alt="image">
             <div class="fsc-hover-overlay"><i class="fas fa-search fsc-hover-overlay-icon"></i></div></a></div>
-        <div class="col-lg-3 col-sm-6"><a class="glightbox d-block position-relative" href="img/gallery-3.jpg" data-gallery="gallery" data-glightbox="Gallery image 3"><img class="img-fluid" src={% static "img/gallery-3.jpg" %}4 alt="image">
+        <div class="col-lg-3 col-sm-6"><a class="glightbox d-block position-relative" href="img/gallery-3.jpg" data-gallery="gallery" data-glightbox="Gallery image 3"><img class="img-fluid" src="{% static 'img/gallery-3.jpg' %}" alt="image">
             <div class="fsc-hover-overlay"><i class="fas fa-search fsc-hover-overlay-icon"></i></div></a></div>
-        <div class="col-lg-3 col-sm-6"><a class="glightbox d-block position-relative" href="img/gallery-4.jpg" data-gallery="gallery" data-glightbox="Gallery image 4"><img class="img-fluid" src={% static "img/gallery-4.jpg" %}4 alt="image">
+        <div class="col-lg-3 col-sm-6"><a class="glightbox d-block position-relative" href="img/gallery-4.jpg" data-gallery="gallery" data-glightbox="Gallery image 4"><img class="img-fluid" src="{% static 'img/gallery-4.jpg' %}" alt="image">
             <div class="fsc-hover-overlay"><i class="fas fa-search fsc-hover-overlay-icon"></i></div></a></div>
       </div>
     </section>
