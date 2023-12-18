@@ -31,8 +31,14 @@ Aktivace venv: $ venv\Scripts\activate
 • Migrovat projekt: $ python manage.py migrate
 ###
 Úprava html souborů:
-1) vytvořit base.html, pro základní strukturu
-2) rozebrat index.html na základní společné prvky: head.html, header.html, footer.html, scripts.html
-3) Smazat hlavičku a skripty i na dalších stránkách (blog.html, post.html)
-4) Dopast do stránek {% block content %} a {% endblock content %}
+• vytvořit base.html, pro základní strukturu
+• rozebrat index.html na základní společné prvky: head.html, header.html, footer.html, scripts.html
+• Smazat hlavičku a skripty i na dalších stránkách (blog.html, post.html)
+• Dopast do stránek {% block content %} a {% endblock content %}
 ###
+• Ve složce projektu 'blog' vytvořit soubor views.py a definovat pohled index a blog
+• Ve složce projektu 'blog' otevřít urls.py a importovat vytvořené pohledy: from.views import index, blog
+• Zapsat pohledy do urlpatterns
+• Zpustit vývojové prostředí a podívat se zda se načetl nestylizovaný obsah webu: $ python manage.py runserver
+###
+
