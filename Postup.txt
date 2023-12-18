@@ -14,4 +14,9 @@ Aktivace venv: $ venv\Scripts\activate
 • Aktualizace pip: $ python -m pip install --upgrade pip
 • Instalace Django: $ pip install django
 • Založit projekt: $ django-admin startproject blog
-
+###
+• Uvnitř kořenové složky 'blog' vytvořit složku 'static'
+• Přesunout dovnitř: složky: css, img, js, vendor, a případně další statiku (fonts, icons)
+• Uvnitř kořenové složky 'blog' vytvořit složku 'templates'
+• Přesunout dovnitř html a textové soubory (zbylé z webové šablony)
+###
