@@ -160,13 +160,13 @@ STATIC_URL = 'static/'
 ## Doplnění definice na různé konfigurační proměnné pro manipulaci s médii a statickými soubory:
 '''
 MEDIA_URL: Určuje URL adresu, přes kterou budou přístupné média (např. obrázky, videa) v rámci aplikace. V tomto případě je nastaveno na '/media/', což znamená, že média budou dostupná na URL adrese začínající http://example.com/media/ (předpokládejme, že váš web běží na doméně example.com).
-STATICFILES_DIRS: Je seznam adresářů, ve kterých Django bude hledat statické soubory (např. CSS, JavaScript). V tomto případě je použit adresář BASE_DIR / 'static_in_env'. Adresáře uvedené zde jsou použity výhradně v režimu vývoje (při spuštění serveru v režimu DEBUG=True).
+STATICFILES_DIRS: Je seznam adresářů, ve kterých Django bude hledat statické soubory (např. CSS, JavaScript). V tomto případě je použit adresář BASE_DIR / 'static'. Adresáře uvedené zde jsou použity výhradně v režimu vývoje (při spuštění serveru v režimu DEBUG=True).
 STATIC_ROOT: Je cesta k adresáři, kam budou statické soubory shromážděny před distribucí aplikace. Tato proměnná je relevantní především při nasazování aplikace, kdy chcete shromáždit všechny statické soubory na jednom místě. V tomto případě je použito BASE_DIR / 'static'.
 MEDIA_ROOT: Je cesta k adresáři, kam budou ukládány nahrané mediální soubory (např. obrázky nahrané uživateli). Podobně jako STATIC_ROOT, je to cesta k adresáři, kde jsou fyzicky uložena média. V tomto případě je použito BASE_DIR / 'media'
 '''
 MEDIA_URL = '/media/'
-STATICFILES_DIRS = [BASE_DIR / 'static_in_env']
-STATIC_ROOT = BASE_DIR / 'static'
+STATICFILES_DIRS = [BASE_DIR / 'static']
+STATIC_ROOT = BASE_DIR.parent / 'static'
 MEDIA_ROOT = BASE_DIR / 'media'
 
 
