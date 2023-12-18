@@ -30,4 +30,9 @@ Aktivace venv: $ venv\Scripts\activate
 • Vytvořit soubor pro migraci: $ python manage.py makemigrations
 • Migrovat projekt: $ python manage.py migrate
 ###
-
+Úprava html souborů:
+1) vytvořit base.html, pro základní strukturu
+2) rozebrat index.html na základní společné prvky: head.html, header.html, footer.html, scripts.html
+3) Smazat hlavičku a skripty i na dalších stránkách (blog.html, post.html)
+4) Dopast do stránek {% block content %} a {% endblock content %}
+###
