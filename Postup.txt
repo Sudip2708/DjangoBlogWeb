@@ -1,7 +1,17 @@
-Založit GitHub Repository,
-Natáhnout do PyCharm,
-Jít na: https://bootstrapious.com/free-templates,
-Vybrat podklad a stáhnout do kompu,
-(v mém případě: https://bootstrapious.com/p/bootstrap-blog),
-Překopírovat složky ze zipu do kořenového adresáře,
+• Založit GitHub Repository
+• Natáhnout do PyCharm
+• Jít na: https://bootstrapious.com/free-templates
+• Vybrat podklad a stáhnout do kompu
+(v mém případě: https://bootstrapious.com/p/bootstrap-blog)
+• Překopírovat složky ze zipu do kořenového adresáře
+###
+Pokud mám špatné venv:
+Deaktivace: $ deactivate
+Instalace virtualenv: $ pip install virtualenv
+Vytvoření venv: $ virtualenv venv
+Aktivace venv: $ venv\Scripts\activate
+###
+• Aktualizace pip: $ python -m pip install --upgrade pip
+• Instalace Django: $ pip install django
+• Založit projekt: $ django-admin startproject blog
 
