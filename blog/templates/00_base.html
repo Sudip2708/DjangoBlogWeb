@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html>
 
-<!-- Připojení kódu ze souboru "head.html" (hlavička webu) -->
-{% include "head.html" %}
+<!-- Připojení kódu ze souboru "01_head.html" (hlavička webu) -->
+{% include "01_head.html" %}
 
 <!-- Tělo webu -->
 <body>
 
-    <!-- Připojení kódu ze souboru "header.html" (hlavička stránky) -->
-    {% include 'header.html' %}
+    <!-- Připojení kódu ze souboru "02_header.html" (hlavička stránky) -->
+    {% include '02_header.html' %}
 
     <!-- Připojení kódu pro zprávu oznamu -->
     <!-- Pokud stránka obsahuje messages (krátké oznami), vytvoř neuspořádaný seznam a zprávy vypiš -->
@@ -25,10 +25,10 @@
     {% endblock content %}
 
     <!-- Připojení kódu pro (patičku) spodní část stránky -->
-    {% include 'footer.html' %}
+    {% include '03_footer.html' %}
 
     <!-- Připojení skriptů -->
-    {% include 'scripts.html' %}
+    {% include '04_scripts.html' %}
 
 </body>
 
