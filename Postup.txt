@@ -1,7 +1,7 @@
-Založit GitHub Repository
-Natáhnout do PyCharm
-Jít na: https://bootstrapious.com/free-templates
-Vybrat podklad a stáhnout do kompu
-(v mém případě: https://bootstrapious.com/p/bootstrap-blog)
-Překopírovat složky ze zipu do kořenového adresáře
+Založit GitHub Repository,
+Natáhnout do PyCharm,
+Jít na: https://bootstrapious.com/free-templates,
+Vybrat podklad a stáhnout do kompu,
+(v mém případě: https://bootstrapious.com/p/bootstrap-blog),
+Překopírovat složky ze zipu do kořenového adresáře,
 
