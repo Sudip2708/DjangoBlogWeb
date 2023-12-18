@@ -20,3 +20,14 @@ Aktivace venv: $ venv\Scripts\activate
 • Uvnitř kořenové složky 'blog' vytvořit složku 'templates'
 • Přesunout dovnitř html a textové soubory (zbylé z webové šablony)
 ###
+• Ve složce projektu 'blog' otevřít settings.py
+• Nastavit cestu k složce templates: TEMPLATES... 'DIRS': [BASE_DIR / 'templates']
+• Dopsat pod statiku odkazy na: MEDIA_URL, STATICFILES_DIRS, STATIC_ROOT, MEDIA_ROOT
+• Ve složce projektu 'blog' otevřít urls.py
+• Importovat settings a static: from django.conf import settings, from django.conf.urls.static import static
+• Zapsat kód pro zpřístupnění media a statiky z webu (když jsme v debug módu): if settings.DEBUG:...
+• V terminálu se přesunout do aplikace: $ cd blog
+• Vytvořit soubor pro migraci: $ python manage.py makemigrations
+• Migrovat projekt: $ python manage.py migrate
+###
+
