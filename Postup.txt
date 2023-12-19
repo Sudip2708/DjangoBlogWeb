@@ -1,3 +1,5 @@
+1) Přetažení html do Django
+###
 • Založit GitHub Repository
 • Natáhnout do PyCharm
 • Jít na: https://bootstrapious.com/free-templates
@@ -49,6 +51,14 @@ Aktivace venv: $ venv\Scripts\activate
 • Zpustit vývojový server
 • Na stránce přepnout do konzole a zkontrolovat zda tu nejsou nějaké nenačtené soubory
 ###
+2) Zprovoznění index.html
+###
+• Otevřít header.html a opravit odkazy v navigaci stránky (např. href="blog.html" na href="/blog")
+• Vytvořit nový modul pro příspěvky post: $ python manage.py startapp posts
+• Podívat se na stránku a zjistit, co vše budeme potřebovat za pole pro databázy
+• Otevřít blog/settings.py a zapsat do INSTALLED_APPS 'posts',
+###
+• Otevřít posts/models.py a zapsat třídu Post(models.Model)
 
 
 
