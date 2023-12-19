@@ -28,12 +28,16 @@ ALLOWED_HOSTS = []
 # Definice jednotlivých aplikací:
 # (aplikace jsou samostatné komponenty, které mohou poskytovat určité funkce a mohou být znovu použity v různých projektech)
 '''
-'django.contrib.admin': Tato aplikace poskytuje administrátorské rozhraní pro správu dat v aplikaci. Umožňuje administrátorům pohodlně spravovat modely (databázové tabulky), zobrazovat, filtrovat a editovat data.
-'django.contrib.auth': Aplikace pro autentizaci a autorizaci uživatelů. Poskytuje modely pro uživatele, skupiny a oprávnění. Zahrnuje také několik pohledů a formulářů pro přihlašování, odhlašování a registraci.
-'django.contrib.contenttypes': Tato aplikace umožňuje definovat modely, které mohou být propojeny s jinými modely v aplikaci. Pomocí této aplikace můžete vytvářet obecné vztahy mezi objekty.
-'django.contrib.sessions': Poskytuje podporu pro ukládání a získávání dat relací uživatele. Může být použito pro uchování stavu relace mezi HTTP požadavky.
-'django.contrib.messages': Tato aplikace podporuje systém zpráv, který umožňuje předávat krátké zprávy mezi pohledy a šablonami. Tyto zprávy jsou užitečné například pro zobrazování potvrzení po úspěšném provedení akce.
-'django.contrib.staticfiles': Slouží k správě statických souborů, jako jsou CSS, JavaScript, obrázky atd. Tato aplikace umožňuje jednoduché zpracování a poskytování statických souborů v aplikaci.
+'django.contrib.admin': aplikace, která poskytuje administrátorské rozhraní pro správu dat v aplikaci. Umožňuje administrátorům pohodlně spravovat modely (databázové tabulky), zobrazovat, filtrovat a editovat data.
+'django.contrib.auth': aplikace, pro autentizaci a autorizaci uživatelů. Poskytuje modely pro uživatele, skupiny a oprávnění. Zahrnuje také několik pohledů a formulářů pro přihlašování, odhlašování a registraci.
+'django.contrib.contenttypes': aplikace, která umožňuje definovat modely, které mohou být propojeny s jinými modely v aplikaci. Pomocí této aplikace můžete vytvářet obecné vztahy mezi objekty.
+'django.contrib.sessions': aplikace, která poskytuje podporu pro ukládání a získávání dat relací uživatele. Může být použito pro uchování stavu relace mezi HTTP požadavky.
+'django.contrib.messages': aplikace, která  podporuje systém zpráv, který umožňuje předávat krátké zprávy mezi pohledy a šablonami. Tyto zprávy jsou užitečné například pro zobrazování potvrzení po úspěšném provedení akce.
+'django.contrib.staticfiles': aplikace, která slouží k správě statických souborů, jako jsou CSS, JavaScript, obrázky atd. Tato aplikace umožňuje jednoduché zpracování a poskytování statických souborů v aplikaci.
+
+'tinymce': aplikace, která poskytuje možnosti formátování a editace obsahu pro webové stránky
+
+'posts': aplikace, pro správu příspěvků
 '''
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -42,6 +46,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
+    'tinymce',
+
     'posts',
 ]
 

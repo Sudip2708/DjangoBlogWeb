@@ -58,7 +58,16 @@ Aktivace venv: $ venv\Scripts\activate
 • Podívat se na stránku a zjistit, co vše budeme potřebovat za pole pro databázy
 • Otevřít blog/settings.py a zapsat do INSTALLED_APPS 'posts',
 ###
-• Otevřít posts/models.py a zapsat třídu Post(models.Model)
-
+• Nainstalovat Pillow pro práci s obrázky: $ pip install pillow
+• Nainstalovat knihovna TinyMCE pro práci s obsahem webu: $ pip install django-tinymce
+• Do blog/settings.py a zapsat do INSTALLED_APPS 'tinymce',
+• Do posts/models.py importovat HTMLField, get_user_model a zapsat databázové modely:
+• Post(models.Model) pro příspěvky - pole: title, overview, timestamp, comment_count, author (ForeignKey)
+• Author(models.Model) pro autora příspěvků - pole: user, profile_picture
+• Category(models.Model) pro kategorie příspěvků - pole: title
+Vytvoření souboru s instalovanými balíčky: $ pip freeze > requirements.txt
+• Vytvořit soubor pro migraci: $ python manage.py makemigrations
+• Migrovat projekt: $ python manage.py migrate
+###
 
 
