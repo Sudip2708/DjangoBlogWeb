@@ -71,7 +71,14 @@ Vytvoření souboru s instalovanými balíčky: $ pip freeze > requirements.txt
 ###
 • Z blog/views.py překopírovat obast do posts/views.py a blog/views.py smazat
 • V blog/urls.py přepsat from .views na from posts.views
-Dopsání popisků
++ Dopsání popisků
 ###
-
+• V posts/models dopsat do Post(models.Model) pro příspěvky - pole: featured (pro učení příspěvku pro hlavní stránku)
+• Natsavit defaoultní hodnotu na False: featured = models.BooleanField(default=False)
+• Vytvořit soubor pro migraci: $ python manage.py makemigrations
+• Migrovat projekt: $ python manage.py migrate
+• Vytvoření superuser: $ python manage.py createsuperuser
+• V posts/admin.py importovat a registrovat zobrazení vytvořených tabulek: admin.site.register()
+• Přihlásit se na http://127.0.0.1:8000/admin/ a zapsat pár příspěvků
+###
 

@@ -69,12 +69,14 @@ class Post(models.Model):
     models.IntegerField(): pole, které představuje celé číslo
     models.ForeignKey(): pole, které vytváří vztah k jinému modelu v databázi (cizí klíč)
     models.ImageField(): pole, pro ukládání obrázku
-    models.ManyToManyField(): pole, které
+    models.ManyToManyField(): pole, které vytváří relaci mnoho k mnoha (many-to-many) mezi dvěma modely
+    models.BooleanField(): pole, které je určené pro ukládání hodnoty boolean (True/False)
 
     max_length: parametr, který určuje maximální délku textového řetězce (počet znaků)
     auto_now_add=True: parametr, který automaticky nastavuje hodnotu na aktuální datum a čas při vytváření instance modelu
     default: parametr, který umožňuje nastavit výchozí hodnotu pro pole
     on_delete=models.CASCADE: parametr, který definuje chování při smazání záznamu odkazovaného modelu (smaže spojený záznam při smazání odkazovaného záznamu)
+    default=False: parametr, který nově vytvořeným záznamům automaticky nastavuje hodnotu na False
 
     Author: Model pro databázovou tabulku pro autora příspěvku
     Category: Model pro databázovou tabulku pro kategorie příspěvků
@@ -89,6 +91,7 @@ class Post(models.Model):
     author = models.ForeignKey(Author, on_delete=models.CASCADE)
     thumbnail = models.ImageField()
     categories = models.ManyToManyField(Category)
+    featured = models.BooleanField(default=False) # Pole pro učení příspěvku pro hlavní stránku
 
     def __str__(self):
         return self.title
