@@ -1,11 +1,11 @@
-### Soubor sloužící k nastavení aplikace ###
+### Obsahuje nastavení pro váš Django projekt, včetně databázové konfigurace, klíčů API, nastavení jazyka a dalších
 
 
-# Import modulů:
-'''
-from pathlib import Path: import třídy Path z modulu pathlib. pathlib je modul pro manipulaci s cestami k souborům a adresářům.
-'''
 from pathlib import Path
+'''
+pathlib: balíček, který poskytuje objektové rozhraní pro manipulaci s cestami k souborům a adresářům
+Path: třída, která slouží k manipulaci s cestami k souborům a adresářům
+'''
 
 
 # Definice kořenového adresáře:
@@ -34,9 +34,7 @@ ALLOWED_HOSTS = []
 'django.contrib.sessions': aplikace, která poskytuje podporu pro ukládání a získávání dat relací uživatele. Může být použito pro uchování stavu relace mezi HTTP požadavky.
 'django.contrib.messages': aplikace, která  podporuje systém zpráv, který umožňuje předávat krátké zprávy mezi pohledy a šablonami. Tyto zprávy jsou užitečné například pro zobrazování potvrzení po úspěšném provedení akce.
 'django.contrib.staticfiles': aplikace, která slouží k správě statických souborů, jako jsou CSS, JavaScript, obrázky atd. Tato aplikace umožňuje jednoduché zpracování a poskytování statických souborů v aplikaci.
-
 'tinymce': aplikace, která poskytuje možnosti formátování a editace obsahu pro webové stránky
-
 'posts': aplikace, pro správu příspěvků
 '''
 INSTALLED_APPS = [
@@ -46,9 +44,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-
     'tinymce',
-
     'posts',
 ]
 

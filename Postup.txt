@@ -69,5 +69,9 @@ Vytvoření souboru s instalovanými balíčky: $ pip freeze > requirements.txt
 • Vytvořit soubor pro migraci: $ python manage.py makemigrations
 • Migrovat projekt: $ python manage.py migrate
 ###
+• Z blog/views.py překopírovat obast do posts/views.py a blog/views.py smazat
+• V blog/urls.py přepsat from .views na from posts.views
+Dopsání popisků
+###
 
 

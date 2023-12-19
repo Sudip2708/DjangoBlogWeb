@@ -1,8 +1,10 @@
+### Definuje modely (tabulky) pro aplikaci.
+
+
 from django.db import models
 from django.contrib.auth import get_user_model
 from tinymce.models import HTMLField
 '''
-Nápověda
 django.db: balíček, který poskytuje nástroje pro definici a práci s modely databáze
 django.contrib.auth: balíček, který poskytuje funkcionality pro autentizaci a správu uživatelů
 tinymce: knihovna TinyMCE (Tiny Moxiecode Content Editor), poskytuje možnosti formátování a editace obsahu pro webové stránky
@@ -12,11 +14,13 @@ get_user_model: modul, který vrací třídu modelu uživatele (místo přímoč
 HTMLField: pole, které umožňuje jednoduché a pohodlné začlenění WYSIWYG (What You See Is What You Get) editoru do vaší aplikace Django pro zadávání obsahu v HTML formátu
 '''
 
+
 User = get_user_model()
 '''
-Nápověda:
 get_user_model(): funkce, která vrací třídu modelu uživatele použitou ve vaší aplikaci
 '''
+
+
 class Author(models.Model):
     '''
     Model pro databázovou tabulku pro autora příspěvku
@@ -27,7 +31,7 @@ class Author(models.Model):
 
     on_delete=models.CASCADE: parametr, který definuje chování při smazání záznamu odkazovaného modelu (smaže spojený záznam při smazání odkazovaného záznamu)
 
-    User:
+    User: funkce, která vrací třídu modelu uživatele použitou ve vaší aplikaci
 
     '''
     user = models.OneToOneField(User, on_delete=models.CASCADE)
@@ -35,6 +39,7 @@ class Author(models.Model):
 
     def __str__(self):
         return self.user.username
+
 
 class Category(models.Model):
     '''

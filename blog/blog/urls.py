@@ -1,25 +1,35 @@
-### Soubor sloužící k k definování mapování URL adres (Uniform Resource Locators) na pohledy (views) v rámci aplikace ###
+### Definuje URL směrovač, který určuje, jak mají být zpracovány příchozí HTTP požadavky
+
 
 # Import modulů:
-'''
-django.contrib.admin: Tato část obsahuje funkcionality a nástroje pro administraci vaší webové aplikace.
-admin: v Django umožňuje snadnou tvorbu administrátorského rozhraní, kde můžete spravovat data uložená v databázi a další administrativní úkony
-django.urls: Tento modul poskytuje nástroje pro správu URL adres a routování v aplikaci.
-path: znamená, že se z této části používá funkce path, která slouží k definování cest URL a mapování na pohledy.
-from django.conf import settings: Tento import načítá modul settings z django.conf, který umožňuje přistupovat k nastavením Django, definovaným ve souboru settings.py
-from django.conf.urls.static import static: Tento import načítá funkci static z modulu django.conf.urls.static. Tato funkce je používána k definování URL cesty pro servírování statických souborů (včetně médií) v režimu vývoje.
-'''
 from django.contrib import admin
 from django.urls import path
 from django.conf import settings
 from django.conf.urls.static import static
+from posts.views import index, blog, post
+'''
+django.contrib: balíček, který obsahuje moduly a aplikace poskytující dodatečnou funkcionalitu.
+django.urls: balíček, který obsahuje funkce a třídy pro práci s URL v aplikaci
+django.conf: balíček, který obsahuje nastavení pro konfiguraci Django aplikace
+django.conf.urls.static: balíček, který obsahuje funkce související s obsluhou statických souborů, jako jsou obrázky, CSS a JavaScript
+posts.views: soubor views.py ve složce posts, které definuje pohledy obsluhují HTTP požadavky
 
-from.views import index, blog, post
+admin: modul, který odkazuje na administrátorské rozhraní Django, které je poskytováno modulem django.contrib.admin
+path: třída, která se používá k definici URL cest ve views
+settings: soubor, který obsahuje nastavení pro konfiguraci Django projektu nebo aplikace
+static: modul, který odkazuje na statické soubory, jako jsou obrázky, CSS a JavaScript
+index: pohled, který zpracovává požadavky na úvodní stránku
+blog: pohled, který se stará o zobrazování seznamu příspěvků
+post: pohled, který zpracovává požadavky na zobrazení konkrétního příspěvku
+'''
 
 
 # Definice URL cest a odpovídajícího mapování na pohledy
 '''
-'admin/': je cesta mapována na administrační rozhraní Django.
+path('admin/', admin.site.urls): adresa a cesta, mapována na administrační rozhraní Django
+path('', index): adresa a cesta, mapována na úvodní stránku
+path('blog/', blog): adresa a cesta, mapována na zobrazování seznamu příspěvků
+path('post/', post): adresa a cesta, mapována na zobrazení konkrétního příspěvku
 '''
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -33,7 +43,7 @@ urlpatterns = [
 # (Význam této podmínky spočívá ve změně chování aplikace v závislosti na tom, zda je aktivní vývojový režim nebo ne)
 # (V praxi to znamená, že při vývoji můžete přistupovat k těmto souborům přímo z webového prohlížeče, aniž byste je museli spravovat přes webserver. Ve výrobním prostředí by mělo být toto chování zakázáno, protože by mohlo představovat bezpečnostní rizika.)
 '''
-urlpatterns: je seznam obsahující definice URL tras v Django. Tyto trasy určují, jak mají být zpracovávány různé URL požadavky ve vaší aplikaci.
+urlpatterns: seznam obsahující definice URL tras v Django. Tyto trasy určují, jak mají být zpracovávány různé URL požadavky ve vaší aplikaci.
 settings.STATIC_URL: obsahuje URL pro statické soubory, například "/static/".
 settings.STATIC_ROOT: obsahuje cestu k adresáři, ve kterém jsou statické soubory uloženy na serveru.
 static(settings.STATIC_URL, document_root=settings.STATIC_ROOT): přidává cestu pro servírování statických souborů.
