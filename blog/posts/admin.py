@@ -16,6 +16,7 @@ Comment: databázový model, pro tabulku s komentáři příspěvků
 PostView: databázový model, pro tabulku pro zobrazení jednoho příspěvku
 '''
 
+
 # Registrování tabulek v admin sekci
 admin.site.register(Author)
 admin.site.register(Category)

@@ -88,3 +88,16 @@ Vytvoření souboru s instalovanými balíčky: $ pip freeze > requirements.txt
 • Zapsat vyfiltrovaná data do HTML odpovědi: return render(request, 'index.html', context)
 • Otevřít templates/index.html, najít část se zobrazenými články a namísto opakování HTML kódu napsata jinja2 příkazy pro zobrazení dat.
 ###
+• Vytvoření modulu pro zadání emailu pro odebírání novinek:
+• Vtvořit novou aplikaci pro uchovávání emailů: $ python manage.py startapp marketing
+• Do blog/settings.py a zapsat do INSTALLED_APPS 'marketing',
+• Otevřít marketing/models.py a vytvořit tabulku Signup(models.Model) se sloupci: email, timestamp
+• Otevřít marketing/admin.py a registrovat zobrazení vytvořených tabulek v admin sekci
+• Vytvořit soubor pro migraci: $ python manage.py makemigrations
+• Migrovat projekt: $ python manage.py migrate
+• Otevřít posts/views a importovat Signup: from marketing.models import Signup
+• A do index dopsat podmínku pro požadavek typu POST (if request.method == "POST") a příslušný kód pro uložení emailu
+• Otevřít templates/index.html, najít část z formulářem pro přihlášení se k odběru
+• Příkaz <form action="#">, přepsat na <form action="." method="POST">
+• A pod něj vložit token: {% csrf_token %}
+###
