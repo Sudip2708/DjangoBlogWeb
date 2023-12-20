@@ -49,7 +49,13 @@ def blog(request):
     :param request: objekt reprezentující HTTP požadavek, který přichází od klienta (například webový prohlížeč)
     :return: HTTP odpověď obsahující obsah vygenerovaný z HTML šablony a může také obsahovat data předaná šabloně
     '''
-    return render(request, 'blog.html', {})
+    articles = Post.objects.filter()
+
+    context = {
+        'articles': articles,
+    }
+
+    return render(request, 'blog.html', context)
 
 
 def post(request):

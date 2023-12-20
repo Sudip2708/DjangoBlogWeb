@@ -101,3 +101,9 @@ Vytvoření souboru s instalovanými balíčky: $ pip freeze > requirements.txt
 • Příkaz <form action="#">, přepsat na <form action="." method="POST">
 • A pod něj vložit token: {% csrf_token %}
 ###
+• Vytvoření kódu pro stránku blog se všemi příspěvky
+• Otevřít post/views.py a k definici def blog(request) připsat:
+• Kód pro vyfiltrování všech příspěvků: articles = Post.objects.filter()
+• A přidat ho do slovníku context a ten vložit do rendru stránky
+• Otevřít templates/blog.html a sekci se články přepsat do jednoho v jinja2 kódu
+###
