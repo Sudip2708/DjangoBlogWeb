@@ -13,7 +13,7 @@
               <div class="row gy-4 mb-5">
 
                 <!-- Articles -->
-                {% for article in articles %}
+                {% for article in paginated_articles %}
                 <div class="col-xl-6">
 
                   <!-- Thumbnail -->
@@ -54,27 +54,80 @@
                     {{ article.overview }}
                   </p>
 
+                  <!-- Article info -->
                   <ul class="list-inline list-separated text-gray-500 mb-0">
-                    <li class="list-inline-item"><a class="d-flex align-items-center flex-wrap text-reset" href="!#">
-                        <div class="avatar flex-shrink-0"><img class="img-fluid" src="{% static 'img/avatar-3.jpg' %}" alt="..."/></div><small>John Doe</small></a></li>
-                    <li class="list-inline-item small"><i class="far fa-clock"></i> 2 months ago</li>
+
+                    <!-- Link to the author -->
+                    <li class="list-inline-item">
+                      <a class="d-flex align-items-center flex-wrap text-reset" href="!#">
+
+                        <!-- Profile picture -->
+                        <div class="avatar flex-shrink-0">
+                          <img class="img-fluid" src="{{ article.author.profile_picture.url }}" alt="profile_picture"/>
+                        </div>
+
+                        <!-- Name -->
+                        <small>{{ article.author }}</small>
+
+                      </a>
+                    </li>
+
+                    <!-- Created -->
+                    <li class="list-inline-item small">
+                      <i class="far fa-clock"></i>
+                      {{ article.timestamp|timesince }} ago
+                    </li>
+
+                    <!-- Number of comments -->
                     <li class="list-inline-item small"><i class="far fa-comment"></i> 12</li>
                   </ul>
                 </div>
 
               {% endfor %}
 
-              <!-- Pagination -->
-              <nav aria-label="Page navigation example">
-                <ul class="pagination justify-content-center">
-                  <li class="page-item"><a class="page-link" href="!#"><i class="fas fa-angle-left"></i></a></li>
-                  <li class="page-item active"><a class="page-link" href="!#">1</a></li>
-                  <li class="page-item"><a class="page-link" href="!#">2</a></li>
-                  <li class="page-item"><a class="page-link" href="!#">3</a></li>
-                  <li class="page-item"><a class="page-link" href="!#"><i class="fas fa-angle-right"></i></a></li>
-                </ul>
-              </nav>
-            </div>
+
+            <!-- Pagination -->
+            <nav aria-label="Page navigation example">
+              <ul class="pagination pagination-template d-flex justify-content-center">
+
+                <!-- If previous -->
+                {% if paginated_articles.has_previous %}
+                  <li class="page-item">
+                    <a href="?{{ page_request_var }}={{ paginated_articles.previous_page_number }}" class="page-link">
+                      <i class="fa fa-angle-left"></i>
+                    </a>
+                  </li>
+                  <li class="page-item">
+                    <a href="?{{ page_request_var }}={{ paginated_articles.previous_page_number }}" class="page-link">
+                      {{ paginated_articles.previous_page_number }}
+                    </a>
+                  </li>
+                {% endif %}
+
+                <!-- Current page -->
+                <li class="page-item active">
+                  <a href="?{{ page_request_var }}={{ paginated_articles.number }}" class="page-link">
+                    {{ paginated_articles.number }}
+                  </a>
+                </li>
+
+                <!-- If next -->
+                {% if paginated_articles.has_next %}
+                  <li class="page-item">
+                    <a href="?{{ page_request_var }}={{ paginated_articles.next_page_number }}" class="page-link">
+                      {{ paginated_articles.next_page_number }}
+                    </a>
+                  </li>
+                  <li class="page-item">
+                    <a href="?{{ page_request_var }}={{ paginated_articles.next_page_number }}" class="page-link">
+                      <i class="fa fa-angle-right"></i>
+                    </a>
+                  </li>
+                {% endif %}
+              </ul>
+            </nav>
+
+
           </main>
 
           <aside class="col-lg-4">

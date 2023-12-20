@@ -107,3 +107,7 @@ Vytvoření souboru s instalovanými balíčky: $ pip freeze > requirements.txt
 • A přidat ho do slovníku context a ten vložit do rendru stránky
 • Otevřít templates/blog.html a sekci se články přepsat do jednoho v jinja2 kódu
 ###
+• Paginace:
+• Otevřít post/views.py a zapsat import: from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+• Zapsat kód pro stránkování
+• Otevřít templates/blog.html a zapsat jinja2 kód pro stránkování
