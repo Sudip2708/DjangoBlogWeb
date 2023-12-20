@@ -3,7 +3,9 @@
 
 from django.apps import AppConfig
 '''
+[from]
 django.apps: balíček, který poskytuje funkcionalitu pro práci s aplikacemi 
+[import]
 AppConfig: modul, který umožňuje definovat různá nastavení, která ovlivňují URL cesty, šablony, statické soubory, middleware a další
 '''
 

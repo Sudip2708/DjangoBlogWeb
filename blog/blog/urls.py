@@ -8,12 +8,13 @@ from django.conf import settings
 from django.conf.urls.static import static
 from posts.views import index, blog, post
 '''
+[from]
 django.contrib: balíček, který obsahuje moduly a aplikace poskytující dodatečnou funkcionalitu.
 django.urls: balíček, který obsahuje funkce a třídy pro práci s URL v aplikaci
 django.conf: balíček, který obsahuje nastavení pro konfiguraci Django aplikace
 django.conf.urls.static: balíček, který obsahuje funkce související s obsluhou statických souborů, jako jsou obrázky, CSS a JavaScript
 posts.views: soubor views.py ve složce posts, které definuje pohledy obsluhují HTTP požadavky
-
+[import]
 admin: modul, který odkazuje na administrátorské rozhraní Django, které je poskytováno modulem django.contrib.admin
 path: třída, která se používá k definici URL cest ve views
 settings: soubor, který obsahuje nastavení pro konfiguraci Django projektu nebo aplikace

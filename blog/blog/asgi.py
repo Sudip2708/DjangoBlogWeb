@@ -4,8 +4,10 @@
 import os
 from django.core.asgi import get_asgi_application
 '''
-os: modul, který poskytuje přístup k některým funkcím operačního systému
+[from]
 django.core.asgi: balíček, který obsahuje nástroje pro vytváření aplikací s asynchronním obsluhováním (ASGI - Asynchronous Server Gateway Interface)
+[import]
+os: modul, který poskytuje přístup k některým funkcím operačního systému
 get_asgi_application: funkce, která slouží k získání asynchronní aplikace pro obsluhu požadavků pomocí ASGI 
 '''
 

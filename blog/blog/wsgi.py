@@ -4,8 +4,10 @@
 import os
 from django.core.wsgi import get_wsgi_application
 '''
-os: modul, který poskytuje přístup k některým funkcím operačního systému
+[from]
 django.core.wsgi: modul, který obsahuje implementaci WSGI (Web Server Gateway Interface) pro spuštění Django aplikací na webových serverech, které podporují tento standard
+[import]
+os: modul, který poskytuje přístup k některým funkcím operačního systému
 get_wsgi_application: funkce, která vytváří WSGI (Web Server Gateway Interface) aplikaci pro běh Django projektu 
 '''
 

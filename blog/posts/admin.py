@@ -4,9 +4,10 @@
 from django.contrib import admin
 from .models import Author, Category, Post # Comment, PostView
 '''
+[from]
 django.contrib: balíček, který obsahuje různé moduly a aplikace poskytující doplňkovou funkcionalitu pro Django projekty
 .models: soubor v adresáři, který obsahuje definice modelů databázových tabulek 
-
+[import]
 admin: modul, který je zaměřen na administrátorské rozhraní Django, které umožňuje jednoduchou správu dat v aplikaci přes webové rozhraní
 Author: databázový model, pro tabulku pro autory příspěvků
 Category: databázový model, pro tabulku pro kategorie příspěvků

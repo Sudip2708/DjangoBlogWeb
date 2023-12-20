@@ -13,6 +13,7 @@
         </div><a class="continue text-gray-400 position-absolute bottom-0 mb-5 z-index-20 link-transition small text-uppercase" href="#intro"><i class="fas fa-long-arrow-alt-down"></i> Scroll Down</a>
       </div>
     </section>
+
     <!-- Intro Section-->
     <section id="intro">
       <div class="container">
@@ -24,76 +25,96 @@
         </div>
       </div>
     </section>
+
+
+    <!-- Featured Articles -->
     <section class="pt-0">
       <div class="container">
-        <!-- Post-->
+
+        <!-- Article -->
+        {% for article in article_featured %}
         <div class="row d-flex align-items-stretch g-0">
+
+          <!-- Thumbnail before the article -->
+          {% if forloop.counter|divisibleby:2 %}
+            <div class="col-lg-5">
+              <img class="img-fluid" src="{{ article.thumbnail.url }}" alt="article_thumbnail">
+            </div>
+          {% endif %}
+
           <div class="col-lg-7">
             <div class="text-inner d-flex align-items-center h-100 bg-light">
               <div class="content px-4 px-lg-5">
+
+                <!-- Category -->
                 <ul class="list-inline mb-1">
-                  <li class="list-inline-item"><a class="text-uppercase text-dark small fw-bold" href="!#">Business</a></li>
-                  <li class="list-inline-item"><a class="text-uppercase text-dark small fw-bold" href="!#">Technology</a></li>
+                  {% for category in article.categories.all %}
+                    <li class="list-inline-item">
+                      <a class="text-uppercase text-dark small fw-bold" href="!#">
+                        {{ category }}
+                      </a>
+                    </li>
+                  {% endfor %}
                 </ul>
-                <h2 class="h4 mb-3"><a class="text-dark" href="post.html">Alberto Savoia Can Teach You About Interior</a></h2>
-                <p class="text-sm">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrude consectetur adipisicing elit, sed do eiusmod tempor incididunt.</p>
+
+                <!-- Title -->
+                <h2 class="h4 mb-3">
+                  <a class="text-dark" href="post.html">
+                    {{ article.title }}
+                  </a>
+                </h2>
+
+                <!-- Overview -->
+                <p class="text-sm">
+                  {{ article.overview }}
+                </p>
+
+                <!-- Footer -->
                 <ul class="list-inline list-separated text-gray-500 mb-0">
-                  <li class="list-inline-item"><a class="d-flex align-items-center flex-wrap text-reset" href="!#">
-                      <div class="avatar flex-shrink-0"><img class="img-fluid" src="{% static 'img/avatar-1.jpg' %}" alt="..."/></div><small>John Doe</small></a></li>
-                  <li class="list-inline-item small"><i class="far fa-clock"></i> 2 months ago</li>
+
+                  <!-- Author -->
+                  <li class="list-inline-item">
+
+                    <!-- Link to the author -->
+                    <a class="d-flex align-items-center flex-wrap text-reset" href="!#">
+
+                      <!-- Profile picture -->
+                      <div class="avatar flex-shrink-0">
+                        <img class="img-fluid" src="{{ article.author.profile_picture.url }}" alt="profile_picture"/>
+                      </div>
+
+                      <!-- Name -->
+                      <small>{{ article.author }}</small>
+                    </a>
+                  </li>
+
+                  <!-- Created -->
+                  <li class="list-inline-item small">
+                    <i class="far fa-clock"></i>
+                    {{ article.timestamp|timesince }} ago
+                  </li>
+
+                  <!-- Number of comments -->
                   <li class="list-inline-item small"><i class="far fa-comment"></i> 12</li>
                 </ul>
               </div>
             </div>
           </div>
-          <div class="col-lg-5"><img class="img-fluid" src="{% static 'img/featured-pic-1.jpeg' %}" alt="..."></div>
-        </div>
-        <!-- Post        -->
-        <div class="row d-flex align-items-stretch g-0">
-          <div class="col-lg-5"><img class="img-fluid" src="{% static 'img/featured-pic-2.jpeg' %}" alt="..."></div>
-          <div class="col-lg-7">
-            <div class="text-inner d-flex align-items-center h-100">
-              <div class="content px-4 px-lg-5">
-                <ul class="list-inline mb-1">
-                  <li class="list-inline-item"><a class="text-uppercase text-dark small fw-bold" href="!#">Business</a></li>
-                  <li class="list-inline-item"><a class="text-uppercase text-dark small fw-bold" href="!#">Technology</a></li>
-                </ul>
-                <h2 class="h4 mb-3"><a class="text-dark" href="post.html">Alberto Savoia Can Teach You About Interior</a></h2>
-                <p class="text-sm">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrude consectetur adipisicing elit, sed do eiusmod tempor incididunt.</p>
-                <ul class="list-inline list-separated text-gray-500 mb-0">
-                  <li class="list-inline-item"><a class="d-flex align-items-center flex-wrap text-reset" href="!#">
-                      <div class="avatar flex-shrink-0"><img class="img-fluid" src="{% static 'img/avatar-2.jpg' %}" alt="..."/></div><small>John Doe</small></a></li>
-                  <li class="list-inline-item small"><i class="far fa-clock"></i> 2 months ago</li>
-                  <li class="list-inline-item small"><i class="far fa-comment"></i> 12</li>
-                </ul>
-              </div>
+
+          <!-- Thumbnail after the article -->
+          {% if not forloop.counter|divisibleby:2 %}
+            <div class="col-lg-5">
+              <img class="img-fluid" src="{{ article.thumbnail.url }}" alt="article_thumbnail">
             </div>
-          </div>
+          {% endif %}
+
         </div>
-        <!-- Post                            -->
-        <div class="row d-flex align-items-stretch g-0">
-          <div class="col-lg-7">
-            <div class="text-inner d-flex align-items-center h-100 bg-light">
-              <div class="content px-4 px-lg-5">
-                <ul class="list-inline mb-1">
-                  <li class="list-inline-item"><a class="text-uppercase text-dark small fw-bold" href="!#">Business</a></li>
-                  <li class="list-inline-item"><a class="text-uppercase text-dark small fw-bold" href="!#">Technology</a></li>
-                </ul>
-                <h2 class="h4 mb-3"><a class="text-dark" href="post.html">Alberto Savoia Can Teach You About Interior</a></h2>
-                <p class="text-sm">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrude consectetur adipisicing elit, sed do eiusmod tempor incididunt.</p>
-                <ul class="list-inline list-separated text-gray-500 mb-0">
-                  <li class="list-inline-item"><a class="d-flex align-items-center flex-wrap text-reset" href="!#">
-                      <div class="avatar flex-shrink-0"><img class="img-fluid" src="{% static 'img/avatar-3.jpg' %}" alt="..."/></div><small>John Doe</small></a></li>
-                  <li class="list-inline-item small"><i class="far fa-clock"></i> 2 months ago</li>
-                  <li class="list-inline-item small"><i class="far fa-comment"></i> 12</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-          <div class="col-lg-5"><img class="img-fluid" src="{% static 'img/featured-pic-3.jpeg' %}" alt="..."></div>
-        </div>
+        {% endfor %}
+
       </div>
     </section>
+
+
     <!-- Divider Section-->
     <section class="divider" style="background: {% static 'img/divider-bg.jpg' %}; background-size: cover; background-position: center bottom">
       <div class="container text-white">
@@ -104,32 +125,69 @@
         </div>
       </div>
     </section>
-    <!-- Latest Posts -->
+
+
+    <!-- Latest articles -->
     <section>
       <div class="container">
+
+        <!-- Description -->
         <header class="mb-5"> 
           <h2>Latest from the blog</h2>
           <p class="text-lg fw-light">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
         </header>
+
+        <!-- 3 articles -->
         <div class="row gy-4">
-          <div class="col-md-4"><a class="mb-3" href="post.html"><img class="img-fluid" src="{% static 'img/blog-1.jpg' %}" alt="..."/></a>
-            <div class="d-flex align-items-center justify-content-between mb-2"><small class="text-gray-500">20 May | 2016</small><a class="small fw-bold text-uppercase small" href="!#">Business</a></div>
-            <h3 class="h4"><a class="text-dark" href="post.html">Ways to remember your important ideas</a></h3>
-            <p class="text-muted text-sm">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore.</p>
+
+          <!-- One article -->
+          {% for article in article_latest %}
+          <div class="col-md-4">
+
+            <!-- Thumbnail -->
+            <a class="mb-3" href="post.html">
+              <img class="img-fluid" src="{{ article.thumbnail.url }}" alt="article_thumbnail"/>
+            </a>
+
+            <!-- Article info -->
+            <div class="d-flex align-items-center justify-content-between mb-2">
+
+              <!-- Timestamp -->
+              <small class="text-gray-500">
+                {{ article.timestamp }}
+              </small>
+
+              <!-- Category -->
+              <ul class="list-inline mb-1">
+                {% for category in article.categories.all %}
+                  <li class="list-inline-item">
+                    <a class="small fw-bold text-uppercase small" href="!#">
+                      {{ category }}
+                    </a>
+                  </li>
+                {% endfor %}
+              </ul>
+            </div>
+
+            <!-- Title -->
+            <h3 class="h4">
+              <a class="text-dark" href="post.html">
+                {{ article.title }}
+              </a>
+            </h3>
+
+            <!-- Overview -->
+            <p class="text-muted text-sm">
+              {{ article.overview }}
+            </p>
+
           </div>
-          <div class="col-md-4"><a class="mb-3" href="post.html"><img class="img-fluid" src="{% static 'img/blog-2.jpg' %}" alt="..."/></a>
-            <div class="d-flex align-items-center justify-content-between mb-2"><small class="text-gray-500">20 May | 2016</small><a class="small fw-bold text-uppercase small" href="!#">Technology</a></div>
-            <h3 class="h4"><a class="text-dark" href="post.html">Diversity in Engineering: Effect on Questions</a></h3>
-            <p class="text-muted text-sm">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore.</p>
-          </div>
-          <div class="col-md-4"><a class="mb-3" href="post.html"><img class="img-fluid" src="{% static 'img/blog-3.jpg' %}" alt="..."/></a>
-            <div class="d-flex align-items-center justify-content-between mb-2"><small class="text-gray-500">20 May | 2016</small><a class="small fw-bold text-uppercase small" href="!#">Financial</a></div>
-            <h3 class="h4"><a class="text-dark" href="post.html">Alberto Savoia Can Teach You About Interior</a></h3>
-            <p class="text-muted text-sm">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore.</p>
-          </div>
+          {% endfor %}
+
         </div>
       </div>
     </section>
+
     <!-- Newsletter Section-->
     <section class="pt-0">    
       <div class="container">
@@ -149,6 +207,7 @@
         </div>
       </div>
     </section>
+
     <!-- Gallery Section-->
     <section class="p-0">
       <div class="row g-0">

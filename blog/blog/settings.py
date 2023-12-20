@@ -3,7 +3,9 @@
 
 from pathlib import Path
 '''
+[from]
 pathlib: balíček, který poskytuje objektové rozhraní pro manipulaci s cestami k souborům a adresářům
+[import]
 Path: třída, která slouží k manipulaci s cestami k souborům a adresářům
 '''
 

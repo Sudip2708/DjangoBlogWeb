@@ -5,10 +5,11 @@ from django.db import models
 from django.contrib.auth import get_user_model
 from tinymce.models import HTMLField
 '''
+[from]
 django.db: balíček, který poskytuje nástroje pro definici a práci s modely databáze
 django.contrib.auth: balíček, který poskytuje funkcionality pro autentizaci a správu uživatelů
 tinymce: knihovna TinyMCE (Tiny Moxiecode Content Editor), poskytuje možnosti formátování a editace obsahu pro webové stránky
-
+[import]
 models: modul, který obsahuje různé třídy a pole k definování struktury databáze
 get_user_model: modul, který vrací třídu modelu uživatele (místo přímočarého odkazování na User má výhody, protože umožňuje flexibilitu v případě změny modelu uživatele ve vaší aplikaci)
 HTMLField: pole, které umožňuje jednoduché a pohodlné začlenění WYSIWYG (What You See Is What You Get) editoru do vaší aplikace Django pro zadávání obsahu v HTML formátu

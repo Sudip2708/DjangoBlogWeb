@@ -81,4 +81,10 @@ Vytvoření souboru s instalovanými balíčky: $ pip freeze > requirements.txt
 • V posts/admin.py importovat a registrovat zobrazení vytvořených tabulek: admin.site.register()
 • Přihlásit se na http://127.0.0.1:8000/admin/ a zapsat pár příspěvků
 ###
-
+• Do posts/views.py importovat třídu Post: from .models import Post
+• Vyfiltrovat příspěvky s které mají pole featured nastaveno na True: article_featured = Post.objects.filter(featured=True)
+• Vyfiltrovat nejnovější příspěvky: article_latest = Post.objects.order_by('-timestamp')[0:3]
+• Vytvořit slovník context a přidat výsledky obou filtrování
+• Zapsat vyfiltrovaná data do HTML odpovědi: return render(request, 'index.html', context)
+• Otevřít templates/index.html, najít část se zobrazenými články a namísto opakování HTML kódu napsata jinja2 příkazy pro zobrazení dat.
+###
