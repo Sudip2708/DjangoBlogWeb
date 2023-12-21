@@ -124,3 +124,9 @@ Boční panel - nejnovější příspěvky
 • Otevřít posts/views.py a importovat reverse: from django.urls import reverse
 • Dopsat funkci pro získání URL adresy: get_absolute_url(self) == return reverse('post-detail', kwargs={'pk': self.pk})
 ###
+Boční panel - kategorie
+• Otevřít posts/views.py a vytvoříme funkci get_category_count()
+• Vytvoříme dotaz, pro vytažení všech kategorií a jejich zpočítání: queryset = Post.objects.values('categories__title').annotate(Count('categories__title'))
+• Do def blog(request) dopíšeme category_count = get_category_count() a přidáme do context
+• V templates/sidebar.html přepíšeme kód (za pomoci jinja2) aby použil dodané hodnoty
+###

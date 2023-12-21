@@ -1,118 +1,123 @@
+
 <aside class="col-lg-4">
+<!-- Widget [Search Bar Widget]-->
+<div class="card mb-5">
+  <div class="card-body">
+    <h3 class="h6">Search the blog</h3>
+    <form action="#">
+      <div class="input-group border-bottom">
+        <input class="form-control border-0 shadow-0 ps-0" type="search" placeholder="What are you looking for?">
+        <button class="btn btn-link btn-sm shadow-0 px-0" type="submit"><i class="fas fa-search"></i></button>
+      </div>
+    </form>
+  </div>
+</div>
 
-    <!-- Search Bar Widget -->
-    <div class="widget search">
+<!-- Latest Posts Widget -->
+<div class="card mb-5">
+  <div class="card-body">
 
-      <!-- Section name -->
-      <header><h3 class="h6">Search the blog</h3></header>
+    <!-- Section name -->
+    <h3 class="h6 mb-3">Latest Posts</h3>
 
-      <!-- Search form -->
-      <form action="{% url 'search' %}" class="search-form">
-        <div class="form-group">
+    {% for article in most_recent_articles %}
+    <a class="text-reset mb-3" href="{{ article.get_absolute_url }}">
+      <div class="d-flex align-items-center">
 
-          <!-- Searcc title -->
-          <input type="text" name="q" placeholder="What are you looking for?">
+        <!-- Article Thumbnail -->
+        <img class="img-fluid flex-shrink-0" src="{{ article.thumbnail.url }}" alt="article_thumbnail" width="55">
 
-          <!-- Search button -->
-          <button type="submit" class="submit">
-            <i class="icon-search"></i>
-          </button>
+        <!-- Article overview -->
+        <div class="ms-3">
+
+          <!-- Article title -->
+          <p class="mb-2 fw-bold text-gray-700 lh-1">
+            {{ article.title }}
+          </p>
+
+          <!-- Article counts -->
+          <ul class="list-inline list-separated text-gray-500 d-flex align-items-center">
+
+            <!-- Article views count -->
+            <li class="list-inline-item small">
+              <i class="far fa-eye"></i>
+              500
+            </li>
+
+            <!-- Article comment count -->
+            <li class="list-inline-item small">
+              <i class="far fa-comment"></i>
+              12
+            </li>
+
+          </ul>
 
         </div>
-      </form>
 
-    </div>
-
-
-    <!-- Latest Posts Widget -->
-    <div class="widget latest-posts">
-
-      <!-- Section name -->
-      <header><h3 class="h6">Latest Posts</h3></header>
-
-      <!-- Results section -->
-      <div class="blog-posts">
-        {% for article in most_recent_articles %}
-          <a href="{{ article.get_absolute_url }}">
-            <div class="item d-flex align-items-center">
-
-              <!-- Article Thumbnail -->
-              <div class="image">
-                <img src="{{ article.thumbnail.url }}" alt="article_thumbnail" class="img-fluid">
-              </div>
-
-              <!-- Article overview -->
-              <div class="title">
-
-                <!-- Article title -->
-                <strong>{{ article.title }}</strong>
-
-                <!-- Article counts -->
-                <div class="d-flex align-items-center">
-
-                  <!-- Article views count -->
-                  <div class="views">
-                    <i class="icon-eye"></i>
-                    {{ article.view_count }}
-                  </div>
-
-                  <!-- Article comment count -->
-                  <div class="comments">
-                    <i class="icon-comment"></i>
-                    {{ article.comment_count }}
-                  </div>
-
-                </div>
-              </div>
-
-            </div>
-          </a>
-        {% endfor %}
       </div>
+    </a>
+    {% endfor %}
 
-    </div>
+  </div>
+</div>
 
+<!--  Categories Widget -->
+<div class="card mb-5">
+  <div class="card-body">
 
-    <!--  Categories Widget -->
-    <div class="widget categories">
+    <!-- Section name -->
+    <h3 class="h6 mb-3">Categories</h3>
 
-      <!-- Section name -->
-      <header><h3 class="h6">Categories</h3></header>
+    {% for category in category_count %}
 
-      <!-- Results section -->
-      {% for cat in category_count %}
-        <div class="item d-flex justify-content-between">
+      <!-- Odd order -->
+      {% if not forloop.counter|divisibleby:2 %}
+        <div class="p-2 d-flex justify-content-between fw-bold text-gray-600 bg-light">
 
           <!-- Categories title -->
-          <a href="#">
-            {{ cat.categories__title }}
-          </a>
+          <a class="text-reset" href="!#">
+            {{ category.categories__title }}</a>
 
           <!-- Categories count -->
           <span>
-            {{ cat.categories__title__count }}
-          </span>
+            {{ category.categories__title__count }}</span>
 
         </div>
-      {% endfor %}
+      {% endif %}
 
-    </div>
+      <!-- Even order -->
+      {% if forloop.counter|divisibleby:2 %}
+        <div class="p-2 d-flex justify-content-between fw-bold text-gray-600 1">
 
+          <!-- Categories title -->
+          <a class="text-reset" href="!#">
+            {{ category.categories__title }}</a>
 
-    <!--  Tags Cloud Widget -->
-      <div class="card">
-        <div class="card-body">
-          <h3 class="h6 mb-3">Tags</h3>
-          <ul class="list-inline mb-0">
-            <li class="list-inline-item"><a class="tag" href="!#">#Business </a></li>
-            <li class="list-inline-item"><a class="tag" href="!#">#Fashion </a></li>
-            <li class="list-inline-item"><a class="tag" href="!#">#Sports </a></li>
-            <li class="list-inline-item"><a class="tag" href="!#">#Technology </a></li>
-            <li class="list-inline-item"><a class="tag" href="!#">#Economy </a></li>
-          </ul>
+          <!-- Categories count -->
+          <span>
+            {{ category.categories__title__count }}</span>
+
         </div>
-      </div>
+      {% endif %}
+
+    {% endfor %}
+
+
+
+  </div>
+</div>
+
+<!-- Widget [Tags Cloud Widget]-->
+<div class="card">
+  <div class="card-body">
+    <h3 class="h6 mb-3">Tags</h3>
+    <ul class="list-inline mb-0">
+      <li class="list-inline-item"><a class="tag" href="!#">#Business </a></li>
+      <li class="list-inline-item"><a class="tag" href="!#">#Fashion </a></li>
+      <li class="list-inline-item"><a class="tag" href="!#">#Sports </a></li>
+      <li class="list-inline-item"><a class="tag" href="!#">#Technology </a></li>
+      <li class="list-inline-item"><a class="tag" href="!#">#Economy </a></li>
+    </ul>
+  </div>
+</div>
 </aside>
-
-
-
