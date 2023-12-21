@@ -4,15 +4,18 @@
 from django.db import models
 from django.contrib.auth import get_user_model
 from tinymce.models import HTMLField
+from django.urls import reverse
 '''
 [from]
 django.db: balíček, který poskytuje nástroje pro definici a práci s modely databáze
 django.contrib.auth: balíček, který poskytuje funkcionality pro autentizaci a správu uživatelů
 tinymce: knihovna TinyMCE (Tiny Moxiecode Content Editor), poskytuje možnosti formátování a editace obsahu pro webové stránky
+django.urls: balíček, který poskytuje nástroje pro efektivní správu URL adres
 [import]
 models: modul, který obsahuje různé třídy a pole k definování struktury databáze
 get_user_model: modul, který vrací třídu modelu uživatele (místo přímočarého odkazování na User má výhody, protože umožňuje flexibilitu v případě změny modelu uživatele ve vaší aplikaci)
 HTMLField: pole, které umožňuje jednoduché a pohodlné začlenění WYSIWYG (What You See Is What You Get) editoru do vaší aplikace Django pro zadávání obsahu v HTML formátu
+reverse: pole, které umožňuje získat odpovídající URL adresu pro daný pohled a oddělit definici URL adres od samotného kódu, což usnadňuje údržbu a změny URL struktury bez přímého zásahu do kódu
 '''
 
 
@@ -97,3 +100,16 @@ class Post(models.Model):
 
     def __str__(self):
         return self.title
+
+    def get_absolute_url(self):
+        '''
+        Funkce vytváří URL adresu pro pohled s názvem 'post-detail' a předává hodnotu primárního klíče (self.pk) jako parametr do této URL adresy
+        :return: Zpětná adresa na objekt
+
+        Nápověda:
+        reverse:  funkce vytváří URL adresu na základě názvu pohledu
+        post-detail: představuje název pohledu, pro který se snažíme vytvořit URL adresu
+        kwargs={'pk': self.pk}: představuje klíčové argumenty, které jsou použity ve vzoru URL adresy
+        (V tomto případě je očekáván parametr s názvem 'pk' (primární klíč, často používaný pro identifikaci záznamů v databázi), a hodnota tohoto parametru je nastavena na hodnotu self.pk, což předpokládá, že váš model má atribut pk (primární klíč) a chcete použít jeho hodnotu v URL adrese)
+        '''
+        return reverse('post-detail', kwargs={'pk': self.pk})

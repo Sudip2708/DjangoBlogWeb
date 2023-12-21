@@ -111,3 +111,16 @@ Vytvoření souboru s instalovanými balíčky: $ pip freeze > requirements.txt
 • Otevřít post/views.py a zapsat import: from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 • Zapsat kód pro stránkování
 • Otevřít templates/blog.html a zapsat jinja2 kód pro stránkování
+###
+Boční panel - nejnovější příspěvky
+• V templates vytvořit nový soubor sidebar.html
+• Otevřít templates/blog.html a překopírovat do templates/sidebar.html část kódu pro boční panel <aside>
+• V templates/blog.html dopsat jinja2 odkaz na natežení obsahu z templates/sidebar.html {% include 'sidebar.html' %}
+• Otevřít post/views.py a k definici def blog(request) připsat:
+• Kód pro vyfiltrování kategorií: get_category_count()
+• Kód pro vyfiltrování nejnovějších příspěvků: Post.objects.order_by('-timestamp')[:3]
+• Přidat obě položky do slovníku context, vloženého do rendru stránky
+• Otevřít blog/urls.py a do urlpatterns dopsat k položkám blog a post hodnotu name: name='post-list', name='post-detail'
+• Otevřít posts/views.py a importovat reverse: from django.urls import reverse
+• Dopsat funkci pro získání URL adresy: get_absolute_url(self) == return reverse('post-detail', kwargs={'pk': self.pk})
+###

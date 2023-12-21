@@ -35,8 +35,8 @@ path('post/', post): adresa a cesta, mapována na zobrazení konkrétního pří
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', index),
-    path('blog/', blog),
-    path('post/', post),
+    path('blog/', blog, name='post-list'),
+    path('post/<id>/', post, name='post-detail'),
 ]
 
 

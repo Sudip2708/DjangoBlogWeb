@@ -58,36 +58,43 @@ def blog(request):
 
     Nápověda:
     Post.objects.all(): vytažení všech článků z databáze (SELECT * FROM Post;)
-    Paginator(articles, 4): nastavení stránkování na 4 články na stránku
+    Paginator(articles, 4): vytvoření instance paginator a nastavení stránkování na 4 články na stránku
     request.GET.get(page_request_var): extrakce hodnoty 'page' z URL požadavku a přiřazení této hodnoty do proměnné page
     paginator.page(page): kód k získání konkrétní stránky z objektu Paginator
-    paginator.page(1):  kód získá první stránku z objektu Paginator
+    PageNotAnInteger: výjimka, která se vyvolá, pokud uživatel nezadá do URL celé číslo jako číslo stránky
+    paginator.page(1): kód získá první stránku z objektu Paginator
+    EmptyPage: výjimka, která se vyvolá, pokud uživatel požádá o stránku, která neexistuje
     paginator.page(paginator.num_pages):  kód získá poslední stránku z objektu
 
     '''
-    articles = Post.objects.all()
-    paginator = Paginator(articles, 4)
-    page_request_var = 'page'
-    page = request.GET.get(page_request_var)
+    articles = Post.objects.all() # natažení dat z databáze
+    paginator = Paginator(articles, 4) # vytvoření instance pro stránkování s nastavením počtu stránek
+    page_request_var = 'page' # extrakce hodnoty 'page' z URL požadavku a přiřazení této hodnoty do proměnné page
+    page = request.GET.get(page_request_var) # vyvtoření proměnné s číslem stránky
     try:
-        paginated_articles = paginator.page(page)
+        paginated_articles = paginator.page(page) # přiřazení dávky článků
     except PageNotAnInteger:
-        paginated_articles = paginator.page(1)
+        paginated_articles = paginator.page(1) # vyjímka zachytávající chybu, která se vyvolá, pokud uživatel nezadá do URL celé číslo jako číslo stránky (dojde k přesměrování na první stránku)
     except EmptyPage:
-        paginated_articles = paginator.page(paginator.num_pages)
+        paginated_articles = paginator.page(paginator.num_pages) # vyjímka zachytávající chybu, která se vyvolá, pokud uživatel požádá o stránku, která neexistuje (dojde na přesměrování na poslední stránku)
+    most_recent_articles = Post.objects.order_by('-timestamp')[:3]
+    category_count = 1 #get_category_count()
 
     context = {
         'paginated_articles': paginated_articles,
         'page_request_var': page_request_var,
+        'most_recent_articles': most_recent_articles,
+        'category_count': category_count,
     }
 
     return render(request, 'blog.html', context)
 
 
-def post(request):
+def post(request, id):
     '''
     Definice pohledu pro stránku s jedním příspěvkem
     :param request: objekt reprezentující HTTP požadavek, který přichází od klienta (například webový prohlížeč)
+    :param id:
     :return: HTTP odpověď obsahující obsah vygenerovaný z HTML šablony a může také obsahovat data předaná šabloně
     '''
     return render(request, 'post.html', {})
