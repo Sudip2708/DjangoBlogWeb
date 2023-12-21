@@ -160,3 +160,10 @@ Otevřeme posts/views importoujeme get_object_or_404
 A dopíšeme kód do post(request, id) pro vyhledání příspěvku: post = get_object_or_404(Post, id=id) a zapíšeme do rendru stránky.
 Otevřeme templates/post.html a přepíšeme část s článkem za pomoci jinja2 kódu
 ###
+Předešlý a další článek:
+• Otevřít posts/model.py a dopsat pole i s definicí pro previous_post a next_post
+• Vytvořit soubor pro migraci: $ python manage.py makemigrations
+• Migrovat projekt: $ python manage.py migrate
+• Otevřít web v admin sekci a přidat k článkům odkaz na předchozí a minulý
+• Otevřít templates/post.html a přepsat kód pro předcházející a následující článek.
+###

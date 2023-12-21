@@ -96,7 +96,20 @@ class Post(models.Model):
     author = models.ForeignKey(Author, on_delete=models.CASCADE)
     thumbnail = models.ImageField()
     categories = models.ManyToManyField(Category)
-    featured = models.BooleanField(default=False) # Pole pro učení příspěvku pro hlavní stránku
+    # Pole pro učení příspěvku pro hlavní stránku:
+    featured = models.BooleanField(default=False)
+    # Pole pro zobrazení předešlého vybraného článku:
+    previous_post = models.ForeignKey('self',
+                                      related_name='previous',
+                                      on_delete=models.SET_NULL,
+                                      blank=True,
+                                      null=True)
+    # Pole pro zobrazení dalšího vybraného článku:
+    next_post = models.ForeignKey('self',
+                                  related_name='next',
+                                  on_delete=models.SET_NULL,
+                                  blank=True,
+                                  null=True)
 
     def __str__(self):
         return self.title
