@@ -183,3 +183,4 @@ MEDIA_ROOT = BASE_DIR / 'media'
 BigAutoField je varianta AutoField, která používá datový typ BigIntegerField na pozadí (v databázi). BigIntegerField umožňuje ukládat velká celá čísla, což může být užitečné v případech, kdy se očekává velký počet záznamů v databázi a hrozí vyčerpání rozsahu standardního IntegerField.
 '''
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+

@@ -3,7 +3,7 @@
 
 # Import modulů:
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
 from posts.views import index, blog, post, search
@@ -17,6 +17,7 @@ posts.views: soubor views.py ve složce posts, které definuje pohledy obsluhuj�
 [import]
 admin: modul, který odkazuje na administrátorské rozhraní Django, které je poskytováno modulem django.contrib.admin
 path: třída, která se používá k definici URL cest ve views
+include: umožňuje zahrnout (importovat) další soubory urls.py do aktuálního souboru urls.py
 settings: soubor, který obsahuje nastavení pro konfiguraci Django projektu nebo aplikace
 static: modul, který odkazuje na statické soubory, jako jsou obrázky, CSS a JavaScript
 index: pohled, který zpracovává požadavky na úvodní stránku
@@ -27,10 +28,12 @@ post: pohled, který zpracovává požadavky na zobrazení konkrétního přísp
 
 # Definice URL cest a odpovídajícího mapování na pohledy
 '''
-path('admin/', admin.site.urls): adresa a cesta, mapována na administrační rozhraní Django
-path('', index): adresa a cesta, mapována na úvodní stránku
-path('blog/', blog): adresa a cesta, mapována na zobrazování seznamu příspěvků
-path('post/', post): adresa a cesta, mapována na zobrazení konkrétního příspěvku
+path('admin/', admin.site.urls): adresa a cesta k administrační rozhraní Django
+path('', index): adresa a cesta, na úvodní stránku
+path('blog/', blog, name='post-list'): adresa, cesta a jméno, na stránku všech příspěvků
+path('post/<pk>/', post, name='post-detail'): adresa, cesta a jméno, na stránku konkrétního příspěvku
+path('search/', search, name='search'): adresa, cesta a jméno, pro vyhledávání na stránce všech příspěvků
+path('tinymce/', include('tinymce.urls')): adresa a cesta, na k zobrazení tinymce (zde zobrazovače a editora článků)
 '''
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -38,6 +41,7 @@ urlpatterns = [
     path('blog/', blog, name='post-list'),
     path('post/<pk>/', post, name='post-detail'),
     path('search/', search, name='search'),
+    path('tinymce/', include('tinymce.urls')),
 ]
 
 

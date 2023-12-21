@@ -1,7 +1,7 @@
 ### Definuje pohledy (views), které obsluhují HTTP požadavky
 
 
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from .models import Post
 from marketing.models import Signup
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
@@ -15,6 +15,7 @@ django.core.paginator: balíček, který obsahuje nástroje a třídy souvisejí
 django.db.models: balíček, který obsahuje různé nástroje a třídy pro definování modelů, dotazů a dalších součástí, které se používají při práci s databází
 [import]
 render: funkce, která se používá v pohledech (views) k renderování HTML šablon a generování HTTP odpovědí
+get_object_or_404: funkce, která se používá v pohledech (views) k získání objektu z databáze na základě zadaných parametrů. Pokud objekt není nalezen, vrátí HTTP odpověď s chybovým kódem 404 (stránka nenalezena).
 Post: třída, modelu databázové tabulky pro příspěvky
 Signup: třída, modelu databázové tabulky pro zápis k odebírání novinek
 Paginator: třída, která slouží k rozdělování velkého seznamu objektů na stránky (části)
@@ -145,11 +146,20 @@ def blog(request):
     return render(request, 'blog.html', context)
 
 
-def post(request, id):
+def post(request, pk):
     '''
     Definice pohledu pro stránku s jedním příspěvkem
     :param request: objekt reprezentující HTTP požadavek, který přichází od klienta (například webový prohlížeč)
     :param id:
     :return: HTTP odpověď obsahující obsah vygenerovaný z HTML šablony a může také obsahovat data předaná šabloně
     '''
-    return render(request, 'post.html', {})
+
+    article = get_object_or_404(Post, id=pk)
+
+    context = {
+        'article': article,
+        'pk': pk,
+
+    }
+
+    return render(request, 'post.html', context)

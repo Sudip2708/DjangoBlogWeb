@@ -139,4 +139,24 @@ Boční panel - hledání (pouze v nadpisech a popisu článků)
 ###
 Pole s tagy budu dělat až nakonec (nebyli součástí tutotiálu)
 ###
-
+Stránka s příspěvkem
+• Otevřít templates/post.html odstranit část s bočním panelem a připsat: a přepsat kód
+{% include 'sidebar.html' with most_recent_articles=most_recent_articles category_count=category_count %}
+• Odebereme i část kódu pro vykreslení těla příspěvku (tato část je zde jen na ukázku, vzhled článku bude přes TinyMCE)
+(
+• Instalace TinyMCE: $ pip install django-tinymce
+• Přidat tinymce do INSTALLED_APPS v settings.py: 'tinymce'
+• A přepsat kód pro nastavení dle: https://django-tinymce.readthedocs.io/en/latest/installation.html
+• Do blog/urls.py inportovat include a do urlpatterns: path('tinymce/', include('tinymce.urls')),
+• Do posts/models.py importovat HTMLField: from tinymce.models import HTMLField
+• A pole contens (pro obsah článku) nastavit na HTMLField()
+• Ve složce posts vytvořit nový soubor forms.py a zapsat kód pro formulář
+# • Do static/css přidat github.css
+# • Otevřít templates/head.html a dopsat: <link href='{% static "css/github.css" %}' rel="stylesheet">
+# • Do static/js přidat front.js highlight.pack.js
+# • Otevřít templates/scripts.html a dopsat: <script src='{% static "js/highlight.pack.js" %}'></script>
+)
+Otevřeme posts/views importoujeme get_object_or_404
+A dopíšeme kód do post(request, id) pro vyhledání příspěvku: post = get_object_or_404(Post, id=id) a zapíšeme do rendru stránky.
+Otevřeme templates/post.html a přepíšeme část s článkem za pomoci jinja2 kódu
+###
