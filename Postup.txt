@@ -130,3 +130,13 @@ Boční panel - kategorie
 • Do def blog(request) dopíšeme category_count = get_category_count() a přidáme do context
 • V templates/sidebar.html přepíšeme kód (za pomoci jinja2) aby použil dodané hodnoty
 ###
+Boční panel - hledání (pouze v nadpisech a popisu článků)
+• Vytvořit v templates soubor search_result.html + zapsat kód
+• Otevřít posts/views.py a vytvoříme pohled pro výsledky hledání:  def search(request)
+• Zapsat kód pro vyfiltrování obsahu dle zadaného textu
+• Otevřít blog/urls.py importovat search, a do urlpatterns připsat path('search/', search, name='search'),
+• Otevřít templates/sidebar.html a přepsat kód, a do form přidat action="{% url 'search' %}"
+###
+Pole s tagy budu dělat až nakonec (nebyli součástí tutotiálu)
+###
+

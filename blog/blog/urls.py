@@ -6,7 +6,7 @@ from django.contrib import admin
 from django.urls import path
 from django.conf import settings
 from django.conf.urls.static import static
-from posts.views import index, blog, post
+from posts.views import index, blog, post, search
 '''
 [from]
 django.contrib: balíček, který obsahuje moduly a aplikace poskytující dodatečnou funkcionalitu.
@@ -37,6 +37,7 @@ urlpatterns = [
     path('', index),
     path('blog/', blog, name='post-list'),
     path('post/<pk>/', post, name='post-detail'),
+    path('search/', search, name='search'),
 ]
 
 

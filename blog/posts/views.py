@@ -5,7 +5,7 @@ from django.shortcuts import render
 from .models import Post
 from marketing.models import Signup
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-from django.db.models import Count
+from django.db.models import Count, Q
 '''
 [from]
 django.shortcuts: balíček, který obsahuje různé funkce zjednodušující vývoj webových aplikací.
@@ -21,7 +21,41 @@ Paginator: třída, která slouží k rozdělování velkého seznamu objektů n
 EmptyPage: výjimka, která se vyvolá, pokud uživatel požádá o stránku, která neexistuje.
 PageNotAnInteger:  výjimka, která se vyvolá, pokud uživatel nezadá do URL celé číslo jako číslo stránky
 Count:  třída, která reprezentuje agregační funkci pro počítání počtu prvků v sadě záznamů v databázi
+Q: třída, která reprezentuje objekt pro vytváření složitých podmínek v dotazech. Tato třída umožňuje kombinovat podmínky logickými operátory (AND, OR, NOT) a vytvářet tak flexibilní dotazy
 '''
+
+
+
+def search(request):
+    '''
+    Pohled pro výsledek hledání (ze stránky všech příspěvků)
+    :param request: objekt reprezentující HTTP požadavek, který přichází od klienta (například webový prohlížeč)
+    :return:
+
+    Nápověda:
+    Post.objects.all(): získání všech příspěvků
+    request.GET.get('q'): získání hodnoty parametru s názvem 'q' z řetězce dotazu (query string) v URL adrese
+    queryset.filter(): viltrování dat ve získaných příspěvcích
+    Q(title__icontains=query): podmínka, která hledá záznamy, kde pole title obsahuje (case-insensitive) určitý řetězec, který je definován proměnnou query
+    Q(overview__icontains=query: podmínka, která hledá záznamy, kde pole title obsahuje (case-insensitive) určitý řetězec, který je definován proměnnou overview
+    distinct(): se používá k tomu, aby se výsledky querysetu filtrovaného pomocí metod jako filter() nebo annotate() staly jedinečnými, tedy bez duplikátů
+    '''
+
+    queryset = Post.objects.all()
+    query = request.GET.get('q')
+
+    if query:
+        queryset = queryset.filter(
+            Q(title__icontains=query) |
+            Q(overview__icontains=query)
+        ).distinct()
+
+    context = {
+        'queryset': queryset
+    }
+
+    return render(request, 'search_results.html', context)
+
 
 def get_category_count():
     '''
@@ -34,6 +68,7 @@ def get_category_count():
     '''
     queryset = Post.objects.values('categories__title').annotate(Count('categories__title'))
     return queryset
+
 
 def index(request):
     '''
