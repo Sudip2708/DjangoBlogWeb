@@ -26,12 +26,32 @@
         <div class="close-btn position-absolute p-4 top-0 end-0 cursor-pointer z-index-20"><i class="fas fa-times"></i></div>
         <div class="row d-flex justify-content-center w-100">
           <div class="col-md-8">
-            <form action="#">
+
+            <!-- Search form -->
+            <form action="{% url 'search' %}">
               <div class="input-group border-bottom">
-                <input class="form-control form-control-lg border-0 shadow-0 ps-0 bg-none px-0" type="search" placeholder="What are you looking for?">
-                <button class="btn btn-link btn-sm shadow-0 px-0 btn-lg text-dark" type="submit"><i class="fas fa-search"></i></button>
+
+                <!-- Search label -->
+                <input class="form-control form-control-lg border-0 shadow-0 ps-0 bg-none px-0"
+                       type="search" name="q"
+                       placeholder="What are you looking for?">
+
+                <!-- Search button -->
+                <button class="btn btn-link btn-sm shadow-0 px-0 btn-lg text-dark" type="submit">
+                  <i class="fas fa-search"></i>
+                </button>
+
               </div>
             </form>
+
+        <!-- Search label -->
+        <input class="form-control border-0 shadow-0 ps-0" type="text" name="q" placeholder="What are you looking for?">
+
+        <!-- Search button -->
+        <button class="btn btn-link btn-sm shadow-0 px-0" type="submit"><i class="fas fa-search"></i></button>
+
+      </div>
+    </form>
           </div>
         </div>
       </div>

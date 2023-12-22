@@ -176,3 +176,6 @@ Komentáře:
 • Vytvořit soubor pro migraci: $ python manage.py makemigrations
 • Migrovat projekt: $ python manage.py migrate
 ###
+Zprovoznění vyhledávání
+• Otevřít templates/header.html a z templates/sidebar.html překopírovat části kódu pro vyhledávání
+###
