@@ -7,33 +7,33 @@
       <div class="container">
         <div class="row gy-5">
 
-          <!-- Latest articles -->
+          <!-- Latest posts -->
           <main class="col-lg-8"> 
             <div class="container">
               <div class="row gy-4 mb-5">
 
-                <!-- Articles -->
-                {% for article in paginated_articles %}
+                <!-- posts -->
+                {% for post in paginated_posts %}
                 <div class="col-xl-6">
 
                   <!-- Thumbnail -->
                   <a class="mb-3" href="post.html">
-                    <img class="img-fluid" src="{{ article.thumbnail.url }}" alt="article_thumbnail"/>
+                    <img class="img-fluid" src="{{ post.thumbnail.url }}" alt="post_thumbnail"/>
                   </a>
 
-                  <!-- Article time and category -->
+                  <!-- post time and category -->
                   <div class="d-flex align-items-center justify-content-between mb-2">
 
                     <!-- Timestamp -->
                     <small class="text-gray-500">
-                      {{ article.timestamp }}
+                      {{ post.timestamp }}
                     </small>
 
                     <!-- Category -->
                     <ul class="list-inline mb-1">
-                      {% for category in article.categories.all %}
+                      {% for category in post.categories.all %}
                         <li class="list-inline-item">
-                          <a class="small fw-bold text-uppercase small" href="{{ article.get_absolute_url }}">
+                          <a class="small fw-bold text-uppercase small" href="{{ post.get_absolute_url }}">
                             {{ category }}
                           </a>
                         </li>
@@ -44,17 +44,17 @@
 
                   <!-- Title -->
                   <h3 class="h4">
-                    <a class="text-dark" href="{{ article.get_absolute_url }}">
-                      {{ article.title }}
+                    <a class="text-dark" href="{{ post.get_absolute_url }}">
+                      {{ post.title }}
                     </a>
                   </h3>
 
                   <!-- Overview -->
                   <p class="text-muted text-sm">
-                    {{ article.overview }}
+                    {{ post.overview }}
                   </p>
 
-                  <!-- Article info -->
+                  <!-- post info -->
                   <ul class="list-inline list-separated text-gray-500 mb-0">
 
                     <!-- Link to the author -->
@@ -63,11 +63,11 @@
 
                         <!-- Profile picture -->
                         <div class="avatar flex-shrink-0">
-                          <img class="img-fluid" src="{{ article.author.profile_picture.url }}" alt="profile_picture"/>
+                          <img class="img-fluid" src="{{ post.author.profile_picture.url }}" alt="profile_picture"/>
                         </div>
 
                         <!-- Name -->
-                        <small>{{ article.author }}</small>
+                        <small>{{ post.author }}</small>
 
                       </a>
                     </li>
@@ -75,11 +75,15 @@
                     <!-- Created -->
                     <li class="list-inline-item small">
                       <i class="far fa-clock"></i>
-                      {{ article.timestamp|timesince }} ago
+                      {{ post.timestamp|timesince }} ago
                     </li>
 
                     <!-- Number of comments -->
-                    <li class="list-inline-item small"><i class="far fa-comment"></i> 12</li>
+                    <li class="list-inline-item small">
+                      <i class="far fa-comment"></i>
+                      {{ post.comment_count }}
+                    </li>
+
                   </ul>
                 </div>
 
@@ -91,19 +95,19 @@
               <ul class="pagination pagination-template d-flex justify-content-center">
 
                 <!-- If previous -->
-                {% if paginated_articles.has_previous %}
+                {% if paginated_posts.has_previous %}
 
                 <!-- Display of left pointer -->
                   <li class="page-item">
-                    <a href="?{{ page_request_var }}={{ paginated_articles.previous_page_number }}" class="page-link">
+                    <a href="?{{ page_request_var }}={{ paginated_posts.previous_page_number }}" class="page-link">
                       <i class="fa fa-angle-left"></i>
                     </a>
                   </li>
 
                 <!-- Display of previous page number -->
                   <li class="page-item">
-                    <a href="?{{ page_request_var }}={{ paginated_articles.previous_page_number }}" class="page-link">
-                      {{ paginated_articles.previous_page_number }}
+                    <a href="?{{ page_request_var }}={{ paginated_posts.previous_page_number }}" class="page-link">
+                      {{ paginated_posts.previous_page_number }}
                     </a>
                   </li>
 
@@ -111,24 +115,24 @@
 
                 <!-- Display of current page number -->
                 <li class="page-item active">
-                  <a href="?{{ page_request_var }}={{ paginated_articles.number }}" class="page-link">
-                    {{ paginated_articles.number }}
+                  <a href="?{{ page_request_var }}={{ paginated_posts.number }}" class="page-link">
+                    {{ paginated_posts.number }}
                   </a>
                 </li>
 
                 <!-- If next -->
-                {% if paginated_articles.has_next %}
+                {% if paginated_posts.has_next %}
 
                   <!-- Display of next page number -->
                   <li class="page-item">
-                    <a href="?{{ page_request_var }}={{ paginated_articles.next_page_number }}" class="page-link">
-                      {{ paginated_articles.next_page_number }}
+                    <a href="?{{ page_request_var }}={{ paginated_posts.next_page_number }}" class="page-link">
+                      {{ paginated_posts.next_page_number }}
                     </a>
                   </li>
 
                   <!-- Display of right pointer -->
                   <li class="page-item">
-                    <a href="?{{ page_request_var }}={{ paginated_articles.next_page_number }}" class="page-link">
+                    <a href="?{{ page_request_var }}={{ paginated_posts.next_page_number }}" class="page-link">
                       <i class="fa fa-angle-right"></i>
                     </a>
                   </li>
@@ -140,7 +144,7 @@
 
           </main>
 
-          {% include 'sidebar.html' with most_recent_articles=most_recent_articles category_count=category_count %}
+          {% include 'sidebar.html' with most_recent_posts=most_recent_posts category_count=category_count %}
         </div>
       </div>
 

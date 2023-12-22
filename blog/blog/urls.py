@@ -34,7 +34,7 @@ post_delete: pohled, který se stará o zobrazování smazání příspěvku
 path('admin/', admin.site.urls): adresa a cesta k administrační rozhraní Django
 path('', index): adresa a cesta, na úvodní stránku
 path('blog/', blog, name='post-list'): adresa, cesta a jméno, na stránku všech příspěvků
-path('post/<pk>/', post, name='post-detail'): adresa, cesta a jméno, na stránku konkrétního příspěvku
+path('post/<id>/', post, name='post-detail'): adresa, cesta a jméno, na stránku konkrétního příspěvku
 path('search/', search, name='search'): adresa, cesta a jméno, pro vyhledávání na stránce všech příspěvků
 path('tinymce/', include('tinymce.urls')): adresa a cesta, na k zobrazení tinymce (zde zobrazovače a editora článků)
 path('post/<id>/update/', post_update, name='post-update'): adresa, cesta a jméno, pro úpravu příspěvku
@@ -44,7 +44,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', index),
     path('blog/', blog, name='post-list'),
-    path('post/<pk>/', post, name='post-detail'),
+    path('post/<id>/', post, name='post-detail'),
     path('search/', search, name='search'),
     path('tinymce/', include('tinymce.urls')),
     path('create/', post_create, name='post-create'),

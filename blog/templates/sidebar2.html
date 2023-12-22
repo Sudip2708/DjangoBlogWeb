@@ -32,33 +32,33 @@
 
       <!-- Results section -->
       <div class="blog-posts">
-        {% for article in most_recent_articles %}
+        {% for post in most_recent_posts %}
           <a href="#">
             <div class="item d-flex align-items-center">
 
-              <!-- Article Thumbnail -->
+              <!-- post Thumbnail -->
               <div class="image">
-                <img src="{{ article.thumbnail.url }}" alt="article_thumbnail" class="img-fluid">
+                <img src="{{ post.thumbnail.url }}" alt="post_thumbnail" class="img-fluid">
               </div>
 
-              <!-- Article overview -->
+              <!-- post overview -->
               <div class="title">
 
-                <!-- Article title -->
-                <strong>{{ article.title }}</strong>
+                <!-- post title -->
+                <strong>{{ post.title }}</strong>
 
-                <!-- Article counts -->
+                <!-- post counts -->
                 <div class="d-flex align-items-center">
 
-                  <!-- Article views count -->
-                  <!-- {{ article.view_count }} -->
+                  <!-- post views count -->
+                  <!-- {{ post.view_count }} -->
                   <div class="views">
                     <i class="icon-eye"></i>
                     0
                   </div>
 
-                  <!-- Article comment count -->
-                  <!-- {{ article.comment_count }} -->
+                  <!-- post comment count -->
+                  <!-- {{ post.comment_count }} -->
                   <div class="comments">
                     <i class="icon-comment"></i>
                     5

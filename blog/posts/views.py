@@ -2,7 +2,7 @@
 
 
 from django.shortcuts import render, get_object_or_404, redirect, reverse
-from .models import Post, Author
+from .models import Post, Author, PostView
 from marketing.models import Signup
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.db.models import Count, Q
@@ -91,12 +91,12 @@ def index(request):
     Post.objects.order_by('-timestamp')[0:3]: vytažení posledních 3 článků z databáze (SELECT * FROM Post ORDER BY timestamp DESC LIMIT 3;)
 
     '''
-    article_featured = Post.objects.filter(featured=True)
-    article_latest = Post.objects.order_by('-timestamp')[0:3]
+    post_featured = Post.objects.filter(featured=True)
+    post_latest = Post.objects.order_by('-timestamp')[0:3]
 
     context = {
-        'article_featured': article_featured,
-        'article_latest': article_latest,
+        'post_featured': post_featured,
+        'post_latest': post_latest,
     }
 
     # Nastavení pro pole pro přidání emailu k odebírání novinek
@@ -126,7 +126,7 @@ def blog(request):
 
     Nápověda:
     Post.objects.all(): vytažení všech článků z databáze (SELECT * FROM Post;)
-    Paginator(articles, 4): vytvoření instance paginator a nastavení stránkování na 4 články na stránku
+    Paginator(posts, 4): vytvoření instance paginator a nastavení stránkování na 4 články na stránku
     request.GET.get(page_request_var): extrakce hodnoty 'page' z URL požadavku a přiřazení této hodnoty do proměnné page
     paginator.page(page): kód k získání konkrétní stránky z objektu Paginator
     PageNotAnInteger: výjimka, která se vyvolá, pokud uživatel nezadá do URL celé číslo jako číslo stránky
@@ -137,50 +137,53 @@ def blog(request):
     '''
 
     # Články s paginací pro hlavní obsah stránky
-    articles = Post.objects.all().order_by('-timestamp') # natažení dat z databáze
-    paginator = Paginator(articles, 4) # vytvoření instance pro stránkování s nastavením počtu stránek
+    posts = Post.objects.all().order_by('-timestamp') # natažení dat z databáze
+    paginator = Paginator(posts, 4) # vytvoření instance pro stránkování s nastavením počtu stránek
     page_request_var = 'page' # extrakce hodnoty 'page' z URL požadavku a přiřazení této hodnoty do proměnné page
     page = request.GET.get(page_request_var) # vyvtoření proměnné s číslem stránky
     try:
-        paginated_articles = paginator.page(page) # přiřazení dávky článků
+        paginated_posts = paginator.page(page) # přiřazení dávky článků
     except PageNotAnInteger:
-        paginated_articles = paginator.page(1) # vyjímka zachytávající chybu, která se vyvolá, pokud uživatel nezadá do URL celé číslo jako číslo stránky (dojde k přesměrování na první stránku)
+        paginated_posts = paginator.page(1) # vyjímka zachytávající chybu, která se vyvolá, pokud uživatel nezadá do URL celé číslo jako číslo stránky (dojde k přesměrování na první stránku)
     except EmptyPage:
-        paginated_articles = paginator.page(paginator.num_pages) # vyjímka zachytávající chybu, která se vyvolá, pokud uživatel požádá o stránku, která neexistuje (dojde na přesměrování na poslední stránku)
+        paginated_posts = paginator.page(paginator.num_pages) # vyjímka zachytávající chybu, která se vyvolá, pokud uživatel požádá o stránku, která neexistuje (dojde na přesměrování na poslední stránku)
 
     # Seznam 3 nejnovějších článků pro boční panel
-    most_recent_articles = Post.objects.order_by('-timestamp')[:3]
+    most_recent_posts = Post.objects.order_by('-timestamp')[:3]
 
     # Seznam kategorií s počtem výskytu pro boční panel
     category_count = get_category_count()
 
     context = {
-        'paginated_articles': paginated_articles,
+        'paginated_posts': paginated_posts,
         'page_request_var': page_request_var,
-        'most_recent_articles': most_recent_articles,
+        'most_recent_posts': most_recent_posts,
         'category_count': category_count,
     }
 
     return render(request, 'blog.html', context)
 
 
-def post(request, pk):
+def post(request, id):
     '''
     Definice pohledu pro stránku s jedním příspěvkem
     :param request: objekt reprezentující HTTP požadavek, který přichází od klienta (například webový prohlížeč)
-    :param pk:
+    :param id:
     :return: HTTP odpověď obsahující obsah vygenerovaný z HTML šablony a může také obsahovat data předaná šabloně
     '''
 
     # Vytažení šlánku z databáze
-    article = get_object_or_404(Post, id=pk)
+    post = get_object_or_404(Post, id=id)
+
+    # Počítání prohlédnutí příspěvků
+    if request.user.is_authenticated:
+        PostView.objects.get_or_create(user=request.user, post=post)
 
     # Seznam 3 nejnovějších článků pro boční panel
-    most_recent_articles = Post.objects.order_by('-timestamp')[:3]
+    most_recent_posts = Post.objects.order_by('-timestamp')[:3]
 
     # Seznam kategorií s počtem výskytu pro boční panel
     category_count = get_category_count()
-
 
     # Nastavení pro pole pro přidání komentáře k článlku
     form = CommentForm(request.POST or None)
@@ -193,19 +196,23 @@ def post(request, pk):
     form.instance.user = request.user: Nastavení atributů instance formuláře: request.user představuje aktuálně přihlášeného uživatele
     form.instance.post = post: Nastavení atributů instance formuláře: post je příspěvek, ke kterému se komentář vztahuje
     form.save(): Uložení formuláře: Ukládá data z formuláře (včetně nastavených atributů) do databáze
-    return redirect(reverse("post-detail", kwargs={'id': post.pk})): Přesměrování na detail příspěvku: Po úspěšném uložení komentáře přesměruje uživatele na stránku s detaily příspěvku. reverse slouží k vytvoření URL z názvu pohledu a argumentů.
+    return redirect(reverse("post-detail", kwargs={'id': post.id})): Přesměrování na detail příspěvku: Po úspěšném uložení komentáře přesměruje uživatele na stránku s detaily příspěvku. reverse slouží k vytvoření URL z názvu pohledu a argumentů.
     '''
     if request.method == "POST":
         if form.is_valid():
             form.instance.user = request.user
-            form.instance.post = article
+            form.instance.post = post
             form.save()
-            return redirect(reverse("post-detail", kwargs={'pk': article.id}))
+            return redirect(reverse("post-detail", kwargs={'id': post.id}))
+
+
+
+
 
     context = {
-        'article': article,
-        'pk': pk,
-        'most_recent_articles': most_recent_articles,
+        'post': post,
+        'id': id,
+        'most_recent_posts': most_recent_posts,
         'category_count': category_count,
         'form': form
 
@@ -229,7 +236,7 @@ def post_create(request):
         if form.is_valid():
             form.instance.author = author
             form.save()
-            return redirect(reverse("post-detail", kwargs={'pk': form.instance.id}))
+            return redirect(reverse("post-detail", kwargs={'id': form.instance.id}))
     context = {
         'title': title,
         'form': form,
@@ -240,18 +247,18 @@ def post_create(request):
 
 def post_update(request, id):
     title = 'Update'
-    article = get_object_or_404(Post, id=id)
+    post = get_object_or_404(Post, id=id)
     form = PostForm(
         request.POST or None,
         request.FILES or None,
-        instance=article)
+        instance=post)
     author = get_author(request.user)
     if request.method == "POST":
         if form.is_valid():
             form.instance.author = author
             form.save()
             return redirect(reverse("post-detail", kwargs={
-                'pk': form.instance.id
+                'id': form.instance.id
             }))
     context = {
         'title': title,

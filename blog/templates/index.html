@@ -27,18 +27,18 @@
     </section>
 
 
-    <!-- Featured Articles -->
+    <!-- Featured posts -->
     <section class="pt-0">
       <div class="container">
 
-        <!-- Article -->
-        {% for article in article_featured %}
+        <!-- post -->
+        {% for post in post_featured %}
         <div class="row d-flex align-items-stretch g-0">
 
-          <!-- Thumbnail before the article -->
+          <!-- Thumbnail before the post -->
           {% if forloop.counter|divisibleby:2 %}
             <div class="col-lg-5">
-              <img class="img-fluid" src="{{ article.thumbnail.url }}" alt="article_thumbnail">
+              <img class="img-fluid" src="{{ post.thumbnail.url }}" alt="post_thumbnail">
             </div>
           {% endif %}
 
@@ -48,7 +48,7 @@
 
                 <!-- Category -->
                 <ul class="list-inline mb-1">
-                  {% for category in article.categories.all %}
+                  {% for category in post.categories.all %}
                     <li class="list-inline-item">
                       <a class="text-uppercase text-dark small fw-bold" href="!#">
                         {{ category }}
@@ -59,14 +59,14 @@
 
                 <!-- Title -->
                 <h2 class="h4 mb-3">
-                  <a class="text-dark" href="post.html">
-                    {{ article.title }}
+                  <a class="text-dark" href="{{ post.get_absolute_url }}">
+                    {{ post.title }}
                   </a>
                 </h2>
 
                 <!-- Overview -->
                 <p class="text-sm">
-                  {{ article.overview }}
+                  {{ post.overview }}
                 </p>
 
                 <!-- Footer -->
@@ -80,32 +80,36 @@
 
                       <!-- Profile picture -->
                       <div class="avatar flex-shrink-0">
-                        <img class="img-fluid" src="{{ article.author.profile_picture.url }}" alt="profile_picture"/>
+                        <img class="img-fluid" src="{{ post.author.profile_picture.url }}" alt="profile_picture"/>
                       </div>
 
                       <!-- Name -->
-                      <small>{{ article.author }}</small>
+                      <small>{{ post.author }}</small>
                     </a>
                   </li>
 
                   <!-- Created -->
                   <li class="list-inline-item small">
                     <i class="far fa-clock"></i>
-                    {{ article.timestamp|timesince }} ago
+                    {{ post.timestamp|timesince }} ago
                   </li>
 
                   <!-- Number of comments -->
-                  <li class="list-inline-item small"><i class="far fa-comment"></i> 12</li>
+                  <li class="list-inline-item small">
+                    <i class="far fa-comment"></i>
+                    {{ post.comment_count }}
+                  </li>
+
                 </ul>
 
               </div>
             </div>
           </div>
 
-          <!-- Thumbnail after the article -->
+          <!-- Thumbnail after the post -->
           {% if not forloop.counter|divisibleby:2 %}
             <div class="col-lg-5">
-              <img class="img-fluid" src="{{ article.thumbnail.url }}" alt="article_thumbnail">
+              <img class="img-fluid" src="{{ post.thumbnail.url }}" alt="post_thumbnail">
             </div>
           {% endif %}
 
@@ -117,7 +121,7 @@
 
 
     <!-- Divider Section-->
-    <section class="divider" style="background: {% static 'img/divider-bg.jpg' %}; background-size: cover; background-position: center bottom">
+    <section class="divider" style="background: url({% static 'img/divider-bg.jpg' %}); background-size: cover; background-position: center bottom">
       <div class="container text-white">
         <div class="row">
           <div class="col-md-7">
@@ -128,7 +132,7 @@
     </section>
 
 
-    <!-- Latest articles -->
+    <!-- Latest posts -->
     <section>
       <div class="container">
 
@@ -138,29 +142,29 @@
           <p class="text-lg fw-light">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
         </header>
 
-        <!-- 3 articles -->
+        <!-- 3 posts -->
         <div class="row gy-4">
 
-          <!-- One article -->
-          {% for article in article_latest %}
+          <!-- One post -->
+          {% for post in post_latest %}
           <div class="col-md-4">
 
             <!-- Thumbnail -->
             <a class="mb-3" href="post.html">
-              <img class="img-fluid" src="{{ article.thumbnail.url }}" alt="article_thumbnail"/>
+              <img class="img-fluid" src="{{ post.thumbnail.url }}" alt="post_thumbnail"/>
             </a>
 
-            <!-- Article Timestamp and Category -->
+            <!-- post Timestamp and Category -->
             <div class="d-flex align-items-center justify-content-between mb-2">
 
               <!-- Timestamp -->
               <small class="text-gray-500">
-                {{ article.timestamp }}
+                {{ post.timestamp }}
               </small>
 
               <!-- Category -->
               <ul class="list-inline mb-1">
-                {% for category in article.categories.all %}
+                {% for category in post.categories.all %}
                   <li class="list-inline-item">
                     <a class="small fw-bold text-uppercase small" href="!#">
                       {{ category }}
@@ -173,13 +177,13 @@
             <!-- Title -->
             <h3 class="h4">
               <a class="text-dark" href="post.html">
-                {{ article.title }}
+                {{ post.title }}
               </a>
             </h3>
 
             <!-- Overview -->
             <p class="text-muted text-sm">
-              {{ article.overview }}
+              {{ post.overview }}
             </p>
 
           </div>

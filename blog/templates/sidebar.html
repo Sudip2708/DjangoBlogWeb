@@ -32,34 +32,34 @@
     <!-- Section name -->
     <h3 class="h6 mb-3">Latest Posts</h3>
 
-    {% for article in most_recent_articles %}
-    <a class="text-reset mb-3" href="{{ article.get_absolute_url }}">
+    {% for post in most_recent_posts %}
+    <a class="text-reset mb-3" href="{{ post.get_absolute_url }}">
       <div class="d-flex align-items-center">
 
-        <!-- Article Thumbnail -->
-        <img class="img-fluid flex-shrink-0" src="{{ article.thumbnail.url }}" alt="article_thumbnail" width="55">
+        <!-- post Thumbnail -->
+        <img class="img-fluid flex-shrink-0" src="{{ post.thumbnail.url }}" alt="post_thumbnail" width="55">
 
-        <!-- Article overview -->
+        <!-- post overview -->
         <div class="ms-3">
 
-          <!-- Article title -->
+          <!-- post title -->
           <p class="mb-2 fw-bold text-gray-700 lh-1">
-            {{ article.title }}
+            {{ post.title }}
           </p>
 
-          <!-- Article counts -->
+          <!-- post counts -->
           <ul class="list-inline list-separated text-gray-500 d-flex align-items-center">
 
-            <!-- Article views count -->
+            <!-- post views count -->
             <li class="list-inline-item small">
               <i class="far fa-eye"></i>
-              500
+              {{ post.view_count }}
             </li>
 
-            <!-- Article comment count -->
+            <!-- post comment count -->
             <li class="list-inline-item small">
               <i class="far fa-comment"></i>
-              12
+              {{ post.comment_count }}
             </li>
 
           </ul>

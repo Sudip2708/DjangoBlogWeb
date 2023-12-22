@@ -1,6 +1,5 @@
 ### Definuje modely (tabulky) pro aplikaci.
 
-
 from django.db import models
 from django.contrib.auth import get_user_model
 from tinymce.models import HTMLField
@@ -21,7 +20,6 @@ reverse: pole, které umožňuje získat odpovídající URL adresu pro daný po
 
 User = get_user_model()
 # get_user_model(): funkce, která vrací třídu modelu uživatele použitou ve vaší aplikaci
-
 
 
 class Author(models.Model):
@@ -59,6 +57,42 @@ class Category(models.Model):
         return self.title
 
 
+class Comment(models.Model):
+    '''
+    Tento kód zpracovává formulář s komentářem k příspěvku (post).
+    Kód přijímá data z formuláře pomocí HTTP POST požadavku, ověřuje, zda jsou data platná, a pokud ano, uloží komentář do databáze a přesměruje uživatele na detail příspěvku.
+
+    Nápověda:
+    [definice pole]
+    models.ForeignKey(): pole, které vytváří vztah k jinému modelu v databázi (cizí klíč)
+    DateTimeField(): pole, které představuje datum a čas
+    models.TextField(): pole, které představuje delší textový řetězec bez omezení délky
+    [parametry]
+    User: třída, která reprezentuje uživatele aplikace
+    on_delete=models.CASCADE: parametr, který znamená, že pokud je uživatelský účet (nebo příspěvek) smazán, všechny komentáře, které jsou s ním spojeny, budou také smazány
+    auto_now_add=True: parametr, který automaticky nastavuje hodnotu na aktuální datum a čas při vytváření instance modelu
+    Post: třída, která reprezentuje obsah, ke kterému mohou být přidány komentáře
+    related_name='comments': volitelný parametr, který umožňuje pojmenovat relaci z druhé strany. V tomto případě, když máte instanci Post, můžete přistupovat k přidruženým komentářům pomocí jména "comments". Například, pokud máte instanci post, můžete získat všechny komentáře k tomuto příspěvku pomocí výrazu post.comments.all()
+    '''
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    timestamp = models.DateTimeField(auto_now_add=True)
+    content = models.TextField()
+    post = models.ForeignKey(
+        'Post', related_name='comments', on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.user.username
+
+
+class PostView(models.Model):
+    '''
+    Třída pro počítání zhlédnutí příspěvků
+    '''
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    post = models.ForeignKey('Post', on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.user.username
 
 
 class Post(models.Model):
@@ -89,15 +123,12 @@ class Post(models.Model):
     on_delete=models.SET_NULL: Tato volba určuje chování, když je položka, na kterou odkazuje ForeignKey, odstraněna. V tomto případě, když je položka odstraněna, hodnota ForeignKey (previous_post) bude nastavena na NULL
     blank=True: Toto umožňuje pole v modelu být prázdné (nevyplněné) při validaci formuláře.
     null=True: Tato volba umožňuje hodnotě v databázi být NULL. Pokud není nastavena, hodnota ForeignKey by nemohla být prázdná (NULL)
-    
 
     '''
     title = models.CharField(max_length=100)
     overview = models.TextField()
     timestamp = models.DateTimeField(auto_now_add=True)
     content = HTMLField()
-    # comment_count = models.IntegerField(default = 0)
-    # view_count = models.IntegerField(default = 0)
     author = models.ForeignKey(Author, on_delete=models.CASCADE)
     thumbnail = models.ImageField()
     categories = models.ManyToManyField(Category)
@@ -121,27 +152,27 @@ class Post(models.Model):
 
     def get_absolute_url(self):
         '''
-        Funkce vytváří URL adresu pro pohled s názvem 'post-detail' a předává hodnotu primárního klíče (self.pk) jako parametr do této URL adresy
+        Funkce vytváří URL adresu pro pohled s názvem 'post-detail' a předává hodnotu primárního klíče (self.id) jako parametr do této URL adresy
         :return: Zpětná adresa na objekt
 
         Nápověda:
         reverse:  funkce vytváří URL adresu na základě názvu pohledu
         post-detail: představuje název pohledu, pro který se snažíme vytvořit URL adresu
-        kwargs={'pk': self.pk}: představuje klíčové argumenty, které jsou použity ve vzoru URL adresy
-        (V tomto případě je očekáván parametr s názvem 'pk' (primární klíč, často používaný pro identifikaci záznamů v databázi), a hodnota tohoto parametru je nastavena na hodnotu self.pk, což předpokládá, že váš model má atribut pk (primární klíč) a chcete použít jeho hodnotu v URL adrese)
+        kwargs={'id': self.id}: představuje klíčové argumenty, které jsou použity ve vzoru URL adresy
+        (V tomto případě je očekáván parametr s názvem 'id' (primární klíč, často používaný pro identifikaci záznamů v databázi), a hodnota tohoto parametru je nastavena na hodnotu self.id, což předpokládá, že váš model má atribut id (primární klíč) a chcete použít jeho hodnotu v URL adrese)
         '''
-        return reverse('post-detail', kwargs={'pk': self.pk})
+        return reverse('post-detail', kwargs={'id': self.id})
 
     # funkce pro úpravu příspěvku
     def get_update_url(self):
         return reverse('post-update', kwargs={
-            'pk': self.pk
+            'id': self.id
         })
 
     # funkce pro smazání příspěvku
     def get_delete_url(self):
         return reverse('post-delete', kwargs={
-            'pk': self.pk
+            'id': self.id
         })
 
     @property
@@ -179,28 +210,6 @@ class Post(models.Model):
 
 
 
-class Comment(models.Model):
-    '''
-    Tento kód zpracovává formulář s komentářem k příspěvku (post). 
-    Kód přijímá data z formuláře pomocí HTTP POST požadavku, ověřuje, zda jsou data platná, a pokud ano, uloží komentář do databáze a přesměruje uživatele na detail příspěvku.
-    
-    Nápověda:
-    [definice pole]
-    models.ForeignKey(): pole, které vytváří vztah k jinému modelu v databázi (cizí klíč)
-    DateTimeField(): pole, které představuje datum a čas
-    models.TextField(): pole, které představuje delší textový řetězec bez omezení délky
-    [parametry]
-    User: třída, která reprezentuje uživatele aplikace
-    on_delete=models.CASCADE: parametr, který znamená, že pokud je uživatelský účet (nebo příspěvek) smazán, všechny komentáře, které jsou s ním spojeny, budou také smazány
-    auto_now_add=True: parametr, který automaticky nastavuje hodnotu na aktuální datum a čas při vytváření instance modelu
-    Post: třída, která reprezentuje obsah, ke kterému mohou být přidány komentáře
-    related_name='comments': volitelný parametr, který umožňuje pojmenovat relaci z druhé strany. V tomto případě, když máte instanci Post, můžete přistupovat k přidruženým komentářům pomocí jména "comments". Například, pokud máte instanci post, můžete získat všechny komentáře k tomuto příspěvku pomocí výrazu post.comments.all()
-    '''
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    timestamp = models.DateTimeField(auto_now_add=True)
-    content = models.TextField()
-    post = models.ForeignKey(
-        Post, related_name='comments', on_delete=models.CASCADE)
 
-    def __str__(self):
-        return self.user.username
+
+

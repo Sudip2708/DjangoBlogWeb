@@ -10,16 +10,16 @@
       <div class="container">
         <div class="row gy-5">
 
-          <!-- Selected article -->
+          <!-- Selected post -->
           <main class="col-lg-8"> 
             <div class="container">
 
               <!-- Thumbnail -->
-              <img class="img-fluid w-100 mb-4" src="{{ article.thumbnail.url }}" alt="article_thumbnail">
+              <img class="img-fluid w-100 mb-4" src="{{ post.thumbnail.url }}" alt="post_thumbnail">
 
               <!-- Category -->
               <ul class="list-inline mb-3">
-                {% for category in article.categories.all %}
+                {% for category in post.categories.all %}
                   <li class="list-inline-item">
                     <li class="list-inline-item"><a class="text-uppercase" href="!#">
                       {{ category }}
@@ -29,7 +29,7 @@
               </ul>
 
               <!-- Title -->
-              <h1 class="mb-4">{{ article.title }}<a href="!#"><i class="fa fa-bookmark-o"></i></a></h1>
+              <h1 class="mb-4">{{ post.title }}<a href="!#"><i class="fa fa-bookmark-o"></i></a></h1>
 
               <!-- Info -->
               <ul class="list-inline list-separated text-gray-500 mb-5">
@@ -42,33 +42,36 @@
 
                     <!-- Profile picture -->
                     <div class="avatar flex-shrink-0">
-                      <img class="img-fluid" src="{{ article.author.profile_picture.url }}" alt="profile_picture"/>
+                      <img class="img-fluid" src="{{ post.author.profile_picture.url }}" alt="profile_picture"/>
                     </div>
 
                     <!-- Name -->
-                    <small>{{ article.author }}</small>
+                    <small>{{ post.author }}</small>
                   </a>
                 </li>
 
                 <!-- Created -->
                 <li class="list-inline-item small">
                   <i class="far fa-clock"></i>
-                  {{ article.timestamp|timesince }} ago
+                  {{ post.timestamp|timesince }} ago
                 </li>
 
                 <!-- Number of comments -->
-                <li class="list-inline-item small"><i class="far fa-comment"></i> 12</li>
-
-                <!-- Apdate of the article -->
                 <li class="list-inline-item small">
-                  <a href="{% url 'post-update' id=article.id %}">Update Article</a>
+                  <i class="far fa-comment"></i>
+                  {{ post.comment_count }}
+                </li>
+
+                <!-- Apdate of the post -->
+                <li class="list-inline-item small">
+                  <a href="{% url 'post-update' id=post.id %}">Update post</a>
                 </li>
 
               </ul>
 
-              <!-- Article content -->
+              <!-- post content -->
               <div class="post-body">
-                {{ article.content | safe }}
+                {{ post.content | safe }}
               </div>
 
               <!-- Tags -->
@@ -83,8 +86,8 @@
               <div class="posts-nav d-flex justify-content-between align-items-stretch flex-column flex-md-row mb-5">
 
                 <!-- Display of the Previous Post -->
-                {% if article.previous_post %}
-                  <a class="prev-post text-start d-flex align-items-center" href="{{ article.previous_post.get_absolute_url }}">
+                {% if post.previous_post %}
+                  <a class="prev-post text-start d-flex align-items-center" href="{{ post.previous_post.get_absolute_url }}">
 
                     <!-- Pointer display -->
                     <div class="icon prev">
@@ -94,20 +97,20 @@
                     <!-- Previous Post -->
                     <div class="text">
                       <strong class="text-primary">Previous Post </strong>
-                      <h6>{{ article.previous_post.title }}</h6>
+                      <h6>{{ post.previous_post.title }}</h6>
                     </div>
 
                   </a>
                 {% endif %}
 
                 <!-- Display of the Next Post -->
-                {% if article.next_post %}
-                  <a class="next-post text-end d-flex align-items-center justify-content-end" href="{{ article.next_post.get_absolute_url }}">
+                {% if post.next_post %}
+                  <a class="next-post text-end d-flex align-items-center justify-content-end" href="{{ post.next_post.get_absolute_url }}">
 
                     <!-- Next Post -->
                     <div class="text">
                       <strong class="text-primary">Next Post </strong>
-                      <h6>{{ article.next_post.title }}</h6>
+                      <h6>{{ post.next_post.title }}</h6>
                     </div>
 
                     <!-- Pointer display -->
@@ -126,12 +129,12 @@
                 <!-- Description with comments count -->
                 <header><h3 class="h6 mb-4">Post Comments
                   <span class="fw-light text-gray-600 small ms-2">
-                    ({{ article.comments.count }})
+                    ({{ post.comments.count }})
                   </span>
                 </h3></header>
 
                 <!-- Comments -->
-                {% for comment in article.get_comments %}
+                {% for comment in post.get_comments %}
                 <div class="d-flex align-items-start">
 
                   <!-- Users profile picture -->
@@ -195,7 +198,7 @@
           </main>
 
           <!-- Sidebar -->
-          {% include 'sidebar.html' with most_recent_articles=most_recent_articles category_count=category_count %}
+          {% include 'sidebar.html' with most_recent_posts=most_recent_posts category_count=category_count %}
 
         </div>
       </div>

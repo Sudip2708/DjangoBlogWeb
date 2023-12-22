@@ -186,4 +186,16 @@ Přidání a úprava příspěvku
 • A pod INSTALLED_APPS zapsat: CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5", CRISPY_TEMPLATE_PACK = "bootstrap5"
 • V složce templates vytvožit soubory: post_create.html a zapsat kód
 • Otevřít templates/post.html a připsat odkazy pro zobrazení odkazu pro úpravu článku
+> dodělat mazání příspěvku < (s potvrzením)
+###
+Nastavení počítání zobrazení a počítání komentů
+• Otevřít posts/models.py a zapsat třídy PostView(models.Model)
+• A do Post(models.Model)) připsat @property: def view_count(self) a comment_count(self)
+• Otevřít posts/views.py importovat PostView
+• A do post() připsat PostView.objects.get_or_create(user=request.user, post=post)
+• Vytvořit soubor pro migraci: $ python manage.py makemigrations
+• Migrovat projekt: $ python manage.py migrate
+• Otevřít posts/admin.py a importovat třídu PostView a zaregistrovat ji
+Otevřít index.html, blog.html, post.html, sidebar.html a dopsat {{ post.comment_count }} a {{ post.view_count }}
+> Změna 'article' na 'post' pro zjednodušení kódu <
 ###
