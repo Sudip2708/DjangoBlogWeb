@@ -6,7 +6,7 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
-from posts.views import index, blog, post, search
+from posts.views import index, blog, post, search, post_create, post_update, post_delete
 '''
 [from]
 django.contrib: balíček, který obsahuje moduly a aplikace poskytující dodatečnou funkcionalitu.
@@ -23,6 +23,9 @@ static: modul, který odkazuje na statické soubory, jako jsou obrázky, CSS a J
 index: pohled, který zpracovává požadavky na úvodní stránku
 blog: pohled, který se stará o zobrazování seznamu příspěvků
 post: pohled, který zpracovává požadavky na zobrazení konkrétního příspěvku
+post_create: pohled, který se stará o vytvoření příspěvku
+post_update: pohled, který se stará o zobrazování úpravy příspěvku
+post_delete: pohled, který se stará o zobrazování smazání příspěvku
 '''
 
 
@@ -34,6 +37,8 @@ path('blog/', blog, name='post-list'): adresa, cesta a jméno, na stránku všec
 path('post/<pk>/', post, name='post-detail'): adresa, cesta a jméno, na stránku konkrétního příspěvku
 path('search/', search, name='search'): adresa, cesta a jméno, pro vyhledávání na stránce všech příspěvků
 path('tinymce/', include('tinymce.urls')): adresa a cesta, na k zobrazení tinymce (zde zobrazovače a editora článků)
+path('post/<id>/update/', post_update, name='post-update'): adresa, cesta a jméno, pro úpravu příspěvku
+path('post/<id>/delete/', post_delete, name='post-delete'): adresa, cesta a jméno, pro smazání příspěvku
 '''
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -42,6 +47,9 @@ urlpatterns = [
     path('post/<pk>/', post, name='post-detail'),
     path('search/', search, name='search'),
     path('tinymce/', include('tinymce.urls')),
+    path('create/', post_create, name='post-create'),
+    path('post/<id>/update/', post_update, name='post-update'),
+    path('post/<id>/delete/', post_delete, name='post-delete'),
 ]
 
 

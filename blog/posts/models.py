@@ -132,7 +132,18 @@ class Post(models.Model):
         '''
         return reverse('post-detail', kwargs={'pk': self.pk})
 
-    #
+    # funkce pro úpravu příspěvku
+    def get_update_url(self):
+        return reverse('post-update', kwargs={
+            'pk': self.pk
+        })
+
+    # funkce pro smazání příspěvku
+    def get_delete_url(self):
+        return reverse('post-delete', kwargs={
+            'pk': self.pk
+        })
+
     @property
     def get_comments(self):
         '''

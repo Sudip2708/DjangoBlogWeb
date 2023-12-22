@@ -38,6 +38,9 @@ ALLOWED_HOSTS = []
 'django.contrib.staticfiles': aplikace, která slouží k správě statických souborů, jako jsou CSS, JavaScript, obrázky atd. Tato aplikace umožňuje jednoduché zpracování a poskytování statických souborů v aplikaci.
 'tinymce': aplikace, která poskytuje možnosti formátování a editace obsahu pro webové stránky
 'posts': aplikace, pro správu příspěvků
+'marketing': aplikace, pro správu komentářů k příspěvkům
+'crispy_forms': aplikace, pro vzhled formulářů
+'crispy_bootstrap5': balíček pro crispy_forms v prostředí bottstrap5
 '''
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -49,8 +52,13 @@ INSTALLED_APPS = [
     'tinymce',
     'posts',
     'marketing',
+    'crispy_forms',
+    'crispy_bootstrap5',
 ]
 
+# Nastavení Crispy forms na Bottstrap 5:
+CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
+CRISPY_TEMPLATE_PACK = "bootstrap5"
 
 # Definice seznamu středníků:
 # (pořadí středníků v seznamu je důležité, protože každý středník je volán v pořadí, v jakém je uveden)
@@ -183,4 +191,39 @@ MEDIA_ROOT = BASE_DIR / 'media'
 BigAutoField je varianta AutoField, která používá datový typ BigIntegerField na pozadí (v databázi). BigIntegerField umožňuje ukládat velká celá čísla, což může být užitečné v případech, kdy se očekává velký počet záznamů v databázi a hrozí vyčerpání rozsahu standardního IntegerField.
 '''
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# Tinymce
+'''
+theme: rčuje vzhled editoru. Například: 'silver', 'advanced', 'modern', 'simple', apod.
+width a height: Určují výchozí šířku a výšku editoru.
+plugins: Seznam pluginů, které chcete povolit. Například: 'advlist autolink lists link image charmap print preview anchor'.
+toolbar: Definuje obsah panelu nástrojů. Můžete specifikovat seznam tlačítek, které se zobrazí v panelu nástrojů.
+menubar: Nastavuje, které položky mají být zobrazeny v hlavním menu.
+statusbar: Pokud je nastaven na True, zobrazí se stavový řádek editoru.
+language: Nastavuje jazyk editoru. Například: 'en', 'es', atd.
+file_browser_callback: Specifikuje funkci, která se má zavolat při výběru souboru. Může být použita k přizpůsobení chování pro výběr souborů.
+image_dimensions: Povoluje nebo zakazuje možnost měnit rozměry obrázků při jejich vložení.
+content_css: Specifikuje CSS soubory, které se mají použít pro formátování obsahu editoru.
+extended_valid_elements: Definuje rozšířený seznam povolených HTML elementů.
+'''
+TINYMCE_DEFAULT_CONFIG = {
+    "theme": "silver",
+    "height": 500,
+    "image_dimensions": True,
+    "menubar": "format insert table tools view help",
+    "plugins": "advlist autolink lists link image charmap print preview anchor searchreplace visualblocks code fullscreen insertdatetime media table powerpaste advcode help wordcount spellchecker typography",
+    "toolbar": "undo redo | "
+               "bold italic | "
+               
+               "alignleft aligncenter alignright alignjustify | "
+               "outdent indent |  numlist bullist checklist | "
+               "forecolor backcolor casechange permanentpen formatpainter removeformat | "
+               "pagebreak | "
+               "charmap emoticons | "
+               "fullscreen  preview save print | "
+               "insertfile image media pageembed template link anchor codesample | "
+               "a11ycheck ltr rtl | "
+               "showcomments addcomment code typography | "
+               "fontselect fontsizeselect formatselect",
+}
 

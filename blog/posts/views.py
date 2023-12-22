@@ -2,11 +2,11 @@
 
 
 from django.shortcuts import render, get_object_or_404, redirect, reverse
-from .models import Post
+from .models import Post, Author
 from marketing.models import Signup
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.db.models import Count, Q
-from .forms import CommentForm
+from .forms import CommentForm, PostForm
 '''
 [from]
 django.shortcuts: balíček, který obsahuje různé funkce zjednodušující vývoj webových aplikací.
@@ -21,6 +21,7 @@ get_object_or_404: funkce, která se používá v pohledech (views) k získání
 redirect: funkce, která se používá k vytvoření HTTP přesměrování na základě zadané URL
 reverse: funkce, která se používá k vytvoření URL na základě názvu pohledu a případných argumentů
 Post: třída, modelu databázové tabulky pro příspěvky
+Author: 
 Signup: třída, modelu databázové tabulky pro zápis k odebírání novinek
 Paginator: třída, která slouží k rozdělování velkého seznamu objektů na stránky (části)
 EmptyPage: výjimka, která se vyvolá, pokud uživatel požádá o stránku, která neexistuje.
@@ -28,6 +29,7 @@ PageNotAnInteger:  výjimka, která se vyvolá, pokud uživatel nezadá do URL c
 Count:  třída, která reprezentuje agregační funkci pro počítání počtu prvků v sadě záznamů v databázi
 Q: třída, která reprezentuje objekt pro vytváření složitých podmínek v dotazech. Tato třída umožňuje kombinovat podmínky logickými operátory (AND, OR, NOT) a vytvářet tak flexibilní dotazy
 CommentForm: třída, definující formulář pro komentáře
+PostForm: třída, definující formuláře s použitím TinyMCEWidgetu
 '''
 
 
@@ -208,3 +210,56 @@ def post(request, pk):
     }
 
     return render(request, 'post.html', context)
+
+
+def get_author(user):
+    qs = Author.objects.filter(user=user)
+    if qs.exists():
+        return qs[0]
+    return None
+
+
+def post_create(request):
+    title = 'Create'
+    form = PostForm(request.POST or None, request.FILES or None)
+    author = get_author(request.user)
+    if request.method == "POST":
+        if form.is_valid():
+            form.instance.author = author
+            form.save()
+            return redirect(reverse("post-detail", kwargs={'pk': form.instance.id}))
+    context = {
+        'title': title,
+        'form': form,
+        'pk': pk
+    }
+    return render(request, "post_create.html", context)
+
+
+def post_update(request, id):
+    title = 'Update'
+    post = get_object_or_404(Post, id=id)
+    form = PostForm(
+        request.POST or None,
+        request.FILES or None,
+        instance=post)
+    author = get_author(request.user)
+    if request.method == "POST":
+        if form.is_valid():
+            form.instance.author = author
+            form.save()
+            return redirect(reverse("post-detail", kwargs={
+                'pk': form.instance.id
+            }))
+    context = {
+        'title': title,
+        'form': form,
+        'pk': pk
+    }
+    return render(request, "post_create.html", context)
+
+
+def post_delete(request, id):
+    post = get_object_or_404(Post, id=id)
+    post.delete()
+    return redirect(reverse("post-list"))
