@@ -167,3 +167,12 @@ Předešlý a další článek:
 • Otevřít web v admin sekci a přidat k článkům odkaz na předchozí a minulý
 • Otevřít templates/post.html a přepsat kód pro předcházející a následující článek.
 ###
+Komentáře:
+• Otevřít posts/models.py a zapsat třídu pro tabulku pro příspěvky Comment(models.Model) s poly: user(fk), post(fk), timestamp, content
+• Otevřít posts/admin.py a importovat třídu Comment a zaregistrovat: admin.site.register(Comment)
+• Otevřít posts/forms.py a importovat třídu Comment a napsat model pro formulář
+• Otevřít posts/views.py a importovat třídu CommentForm a zapsat kód
+• Otevřít templates/post.html a přepsat kód pro komentáře
+• Vytvořit soubor pro migraci: $ python manage.py makemigrations
+• Migrovat projekt: $ python manage.py migrate
+###

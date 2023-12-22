@@ -2,7 +2,7 @@
 
 
 from django.contrib import admin
-from .models import Author, Category, Post # Comment, PostView
+from .models import Author, Category, Post, Comment # , PostView
 '''
 [from]
 django.contrib: balíček, který obsahuje různé moduly a aplikace poskytující doplňkovou funkcionalitu pro Django projekty
@@ -21,5 +21,5 @@ PostView: databázový model, pro tabulku pro zobrazení jednoho příspěvku
 admin.site.register(Author)
 admin.site.register(Category)
 admin.site.register(Post)
-# admin.site.register(Comment)
+admin.site.register(Comment)
 # admin.site.register(PostView)

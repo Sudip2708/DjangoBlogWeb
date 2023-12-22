@@ -33,7 +33,7 @@
                     <ul class="list-inline mb-1">
                       {% for category in article.categories.all %}
                         <li class="list-inline-item">
-                          <a class="small fw-bold text-uppercase small" href="!#">
+                          <a class="small fw-bold text-uppercase small" href="{{ article.get_absolute_url }}">
                             {{ category }}
                           </a>
                         </li>
@@ -44,7 +44,7 @@
 
                   <!-- Title -->
                   <h3 class="h4">
-                    <a class="text-dark" href="post.html">
+                    <a class="text-dark" href="{{ article.get_absolute_url }}">
                       {{ article.title }}
                     </a>
                   </h3>

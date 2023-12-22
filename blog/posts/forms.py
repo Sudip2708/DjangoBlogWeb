@@ -2,12 +2,12 @@
 
 
 from django import forms
-from tinymce import TinyMCE
+from tinymce.widgets import TinyMCE
 from .models import Post, Comment
 '''
 [from]
 django: balíček, který obsahuje různé moduly a nástroje související s frameworkem Django
-tinymce: balíček, který poskytuje nástroje pro integraci a používání WYSIWYG (What You See Is What You Get) editoru TinyMCE 
+tinymce.widgets: balíček, který poskytuje nástroje pro integraci a používání WYSIWYG (What You See Is What You Get) editoru TinyMCE 
 .models: balíček, který se nachází ve stejném adresáři a slouží k definici modelů databázových tabulek
 [import]
 forms: modul, který obsahuje různé třídy a nástroje pro práci s formuláři 
@@ -18,9 +18,7 @@ Comment: třída, modelu databázové tabulky pro komentáře
 
 
 class TinyMCEWidget(TinyMCE):
-    '''
-    Definice vlastního widgetu pro TinyMCE editor
-    '''
+    '''Definice vlastního widgetu pro TinyMCE editor'''
     def use_required_attribute(self, *args):
         '''
         Metoda umožňuje ovlivnit chování povinných atributů pro pole widgetu
@@ -35,6 +33,7 @@ class PostForm(forms.ModelForm):
     Definice formuláře pro model Post s použitím TinyMCEWidgetu
 
     Nápověda:
+    models.CharField(): pole, které představuje textový řetězec v databázi
     widget=TinyMCEWidget(...): Specifikuje použití vlastního widgetu TinyMCEWidget pro pole content formuláře
     '''
     content = forms.CharField(
@@ -54,3 +53,30 @@ class PostForm(forms.ModelForm):
         model = Post
         fields = ('title', 'overview', 'content', 'thumbnail',
         'categories', 'featured', 'previous_post', 'next_post')
+
+
+class CommentForm(forms.ModelForm):
+    '''
+    Definice formuláře pro komentáře
+
+    Nápověda:
+    models.CharField(): pole, které představuje textový řetězec v databázi
+    widget=forms.Textarea(): specifikuje zobrazení pomocí víceřádkového textové pole (textarea)
+    '''
+    content = forms.CharField(widget=forms.Textarea(attrs={
+        'class': 'form-control',
+        'placeholder': 'Type your comment',
+        'id': 'usercomment',
+        'rows': '4'
+    }))
+
+    class Meta:
+        '''
+        Obsahuje informace o konkrétním chování formuláře vzhledem k modelu.
+
+        Nápověda:
+        model = Comment: Specifikuje, který model bude tento formulář reprezentovat, v tomto případě Comment.
+        fields = ('content'): Určuje, která pole z modelu budou zahrnuta ve formuláři.
+        '''
+        model = Comment
+        fields = ('content', )
