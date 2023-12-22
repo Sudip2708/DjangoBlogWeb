@@ -73,8 +73,10 @@ def get_category_count():
     Post.objects: Toto je manager objektu Post, který umožňuje provádět dotazy na databázi pro model Post.
     .values('categories__title'): Metoda values se používá k určení polí, která budou vybrána v dotazu. V tomto případě se vybírá pole title z připojených kategorií (categories) přes dvojité podtržítko (__). To znamená, že se vybírá název kategorie pro každý příspěvek.
     .annotate(Count('categories__title')): Metoda annotate se používá k agregaci dat. V tomto případě se používá funkce Count, aby se spočítal počet výskytů každého jedinečného názvu kategorie ve vybraných příspěvcích.
+    .order_by('-categories__title__count'): Metoda pro řazení výsledků, zde podle počtu výskytů a sestupně
     '''
-    queryset = Post.objects.values('categories__title').annotate(Count('categories__title'))
+    queryset = Post.objects.values('categories__title').annotate(Count('categories__title')).order_by('-categories__title__count')
+
     return queryset
 
 
@@ -135,7 +137,7 @@ def blog(request):
     '''
 
     # Články s paginací pro hlavní obsah stránky
-    articles = Post.objects.all().order_by('timestamp') # natažení dat z databáze
+    articles = Post.objects.all().order_by('-timestamp') # natažení dat z databáze
     paginator = Paginator(articles, 4) # vytvoření instance pro stránkování s nastavením počtu stránek
     page_request_var = 'page' # extrakce hodnoty 'page' z URL požadavku a přiřazení této hodnoty do proměnné page
     page = request.GET.get(page_request_var) # vyvtoření proměnné s číslem stránky
@@ -231,18 +233,18 @@ def post_create(request):
     context = {
         'title': title,
         'form': form,
-        'pk': pk
+
     }
     return render(request, "post_create.html", context)
 
 
 def post_update(request, id):
     title = 'Update'
-    post = get_object_or_404(Post, id=id)
+    article = get_object_or_404(Post, id=id)
     form = PostForm(
         request.POST or None,
         request.FILES or None,
-        instance=post)
+        instance=article)
     author = get_author(request.user)
     if request.method == "POST":
         if form.is_valid():
@@ -254,7 +256,7 @@ def post_update(request, id):
     context = {
         'title': title,
         'form': form,
-        'pk': pk
+
     }
     return render(request, "post_create.html", context)
 

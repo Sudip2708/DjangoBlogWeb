@@ -175,7 +175,7 @@ Komentáře:
 Zprovoznění vyhledávání
 • Otevřít templates/header.html a z templates/sidebar.html překopírovat části kódu pro vyhledávání
 ###
-Přidání příspěvku
+Přidání a úprava příspěvku
 • Otevřít templates/post.html a připsat odkazy pro zobrazení tlačítka pro úpravu a smazání článku
 • Otevřít posts/models.py a do Post(models.Model) přidat funkci pro vytvoření, úpravu a smazání příspěvku
 • Otevřít posts/views.py importovat PostForm a Author, a zapsat kód pro tyto pohledy
@@ -185,6 +185,5 @@ Přidání příspěvku
 • Otevřít blog/settings.py a do INSTALLED_APPS zapsat: 'crispy_forms' a 'crispy_bootstrap5'
 • A pod INSTALLED_APPS zapsat: CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5", CRISPY_TEMPLATE_PACK = "bootstrap5"
 • V složce templates vytvožit soubory: post_create.html a zapsat kód
+• Otevřít templates/post.html a připsat odkazy pro zobrazení odkazu pro úpravu článku
 ###
-Úprava příspěvku
-• Otevřít templates/post.html a připsat odkazy pro zobrazení tlačítka pro úpravu a smazání článku

@@ -213,17 +213,16 @@ TINYMCE_DEFAULT_CONFIG = {
     "menubar": "format insert table tools view help",
     "plugins": "advlist autolink lists link image charmap print preview anchor searchreplace visualblocks code fullscreen insertdatetime media table powerpaste advcode help wordcount spellchecker typography",
     "toolbar": "undo redo | "
-               "bold italic | "
-               
-               "alignleft aligncenter alignright alignjustify | "
-               "outdent indent |  numlist bullist checklist | "
-               "forecolor backcolor casechange permanentpen formatpainter removeformat | "
+               "insertfile image media pageembed template link anchor codesample | "
+               "showcomments addcomment code typography | "
                "pagebreak | "
                "charmap emoticons | "
-               "fullscreen  preview save print | "
-               "insertfile image media pageembed template link anchor codesample | "
-               "a11ycheck ltr rtl | "
-               "showcomments addcomment code typography | "
-               "fontselect fontsizeselect formatselect",
+               "fontselect fontsizeselect formatselect | "
+               "bold italic | "
+               "forecolor backcolor casechange permanentpen formatpainter removeformat | "
+               "alignleft aligncenter alignright alignjustify | "
+               "outdent indent | "
+               "numlist bullist checklist | "
+               "fullscreen  preview save print",
 }
 
