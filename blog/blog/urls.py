@@ -6,51 +6,29 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
-from posts.views import index, blog, post, search, post_create, post_update, post_delete
-'''
-[from]
-django.contrib: balíček, který obsahuje moduly a aplikace poskytující dodatečnou funkcionalitu.
-django.urls: balíček, který obsahuje funkce a třídy pro práci s URL v aplikaci
-django.conf: balíček, který obsahuje nastavení pro konfiguraci Django aplikace
-django.conf.urls.static: balíček, který obsahuje funkce související s obsluhou statických souborů, jako jsou obrázky, CSS a JavaScript
-posts.views: soubor views.py ve složce posts, které definuje pohledy obsluhují HTTP požadavky
-[import]
-admin: modul, který odkazuje na administrátorské rozhraní Django, které je poskytováno modulem django.contrib.admin
-path: třída, která se používá k definici URL cest ve views
-include: umožňuje zahrnout (importovat) další soubory urls.py do aktuálního souboru urls.py
-settings: soubor, který obsahuje nastavení pro konfiguraci Django projektu nebo aplikace
-static: modul, který odkazuje na statické soubory, jako jsou obrázky, CSS a JavaScript
-index: pohled, který zpracovává požadavky na úvodní stránku
-blog: pohled, který se stará o zobrazování seznamu příspěvků
-post: pohled, který zpracovává požadavky na zobrazení konkrétního příspěvku
-post_create: pohled, který se stará o vytvoření příspěvku
-post_update: pohled, který se stará o zobrazování úpravy příspěvku
-post_delete: pohled, který se stará o zobrazování smazání příspěvku
-'''
+from posts.views.index import IndexView
+from posts.views.post_create import PostCreateView
+from posts.views.post_delete import PostDeleteView
+from posts.views.post_detail import PostDetailView
+from posts.views.post_list import PostListView
+from posts.views.post_update import PostUpdateView
+from posts.views.search import SearchView
+from marketing.views import email_list_signup
 
 
-# Definice URL cest a odpovídajícího mapování na pohledy
-'''
-path('admin/', admin.site.urls): adresa a cesta k administrační rozhraní Django
-path('', index): adresa a cesta, na úvodní stránku
-path('blog/', blog, name='post-list'): adresa, cesta a jméno, na stránku všech příspěvků
-path('post/<id>/', post, name='post-detail'): adresa, cesta a jméno, na stránku konkrétního příspěvku
-path('search/', search, name='search'): adresa, cesta a jméno, pro vyhledávání na stránce všech příspěvků
-path('tinymce/', include('tinymce.urls')): adresa a cesta, na k zobrazení tinymce (zde zobrazovače a editora článků)
-path('post/<id>/update/', post_update, name='post-update'): adresa, cesta a jméno, pro úpravu příspěvku
-path('post/<id>/delete/', post_delete, name='post-delete'): adresa, cesta a jméno, pro smazání příspěvku
-path('accounts/', include('allauth.urls')):  znamená, že URL začínající na "accounts/" budou směrovány na URL konfiguraci poskytovanou django-allauth
-'''
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', index),
-    path('blog/', blog, name='post-list'),
-    path('post/<id>/', post, name='post-detail'),
-    path('search/', search, name='search'),
+
+    path('', IndexView.as_view(), name='home'),
+    path('blog/', PostListView.as_view(), name='post-list'),
+    path('create/', PostCreateView.as_view(), name='post-create'),
+    path('post/<int:pk>/', PostDetailView.as_view(), name='post-detail'),
+    path('post/<int:pk>/update/', PostUpdateView.as_view(), name='post-update'),
+    path('post/<int:pk>/delete/', PostDeleteView.as_view(), name='post-delete'),
+    path('search/', SearchView.as_view(), name='search'),
+    path('email-signup/', email_list_signup, name='email-list-signup'),
+
     path('tinymce/', include('tinymce.urls')),
-    path('create/', post_create, name='post-create'),
-    path('post/<id>/update/', post_update, name='post-update'),
-    path('post/<id>/delete/', post_delete, name='post-delete'),
     path('accounts/', include('allauth.urls')),
 ]
 

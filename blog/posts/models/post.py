@@ -1,99 +1,12 @@
 ### Definuje modely (tabulky) pro aplikaci.
 
 from django.db import models
-from django.contrib.auth import get_user_model
 from tinymce.models import HTMLField
 from django.urls import reverse
-'''
-[from]
-django.db: balíček, který poskytuje nástroje pro definici a práci s modely databáze
-django.contrib.auth: balíček, který poskytuje funkcionality pro autentizaci a správu uživatelů
-tinymce: knihovna TinyMCE (Tiny Moxiecode Content Editor), poskytuje možnosti formátování a editace obsahu pro webové stránky
-django.urls: balíček, který poskytuje nástroje pro efektivní správu URL adres
-[import]
-models: modul, který obsahuje různé třídy a pole k definování struktury databáze
-get_user_model: modul, který vrací třídu modelu uživatele (místo přímočarého odkazování na User má výhody, protože umožňuje flexibilitu v případě změny modelu uživatele ve vaší aplikaci)
-HTMLField: pole, které umožňuje jednoduché a pohodlné začlenění WYSIWYG (What You See Is What You Get) editoru do vaší aplikace Django pro zadávání obsahu v HTML formátu
-reverse: pole, které umožňuje získat odpovídající URL adresu pro daný pohled a oddělit definici URL adres od samotného kódu, což usnadňuje údržbu a změny URL struktury bez přímého zásahu do kódu
-'''
-
-
-User = get_user_model()
-# get_user_model(): funkce, která vrací třídu modelu uživatele použitou ve vaší aplikaci
-
-
-class Author(models.Model):
-    '''
-    Model pro databázovou tabulku pro autora příspěvku
-
-    Nápověda:
-    [definice pole]
-    models.OneToOneField(): pole, které vytváří vztah "jeden k jednomu" mezi dvěma modely
-    models.ImageField(): pole, pro ukládání obrázku
-    [parametry]
-    User: funkce, která vrací třídu modelu uživatele použitou ve vaší aplikaci
-    on_delete=models.CASCADE: parametr, který definuje chování při smazání záznamu odkazovaného modelu (smaže spojený záznam při smazání odkazovaného záznamu)
-    '''
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
-    profile_picture = models.ImageField()
-
-    def __str__(self):
-        return self.user.username
-
-
-class Category(models.Model):
-    '''
-    Model pro databázovou tabulku pro kategorie příspěvku
-
-    Nápověda:
-    [definice pole]
-    models.CharField(): pole, které představuje textový řetězec v databázi
-    [parametry]
-    max_length: parametr, který určuje maximální délku textového řetězce (počet znaků)
-    '''
-    title = models.CharField(max_length=20)
-
-    def __str__(self):
-        return self.title
-
-
-class Comment(models.Model):
-    '''
-    Tento kód zpracovává formulář s komentářem k příspěvku (post).
-    Kód přijímá data z formuláře pomocí HTTP POST požadavku, ověřuje, zda jsou data platná, a pokud ano, uloží komentář do databáze a přesměruje uživatele na detail příspěvku.
-
-    Nápověda:
-    [definice pole]
-    models.ForeignKey(): pole, které vytváří vztah k jinému modelu v databázi (cizí klíč)
-    DateTimeField(): pole, které představuje datum a čas
-    models.TextField(): pole, které představuje delší textový řetězec bez omezení délky
-    [parametry]
-    User: třída, která reprezentuje uživatele aplikace
-    on_delete=models.CASCADE: parametr, který znamená, že pokud je uživatelský účet (nebo příspěvek) smazán, všechny komentáře, které jsou s ním spojeny, budou také smazány
-    auto_now_add=True: parametr, který automaticky nastavuje hodnotu na aktuální datum a čas při vytváření instance modelu
-    Post: třída, která reprezentuje obsah, ke kterému mohou být přidány komentáře
-    related_name='comments': volitelný parametr, který umožňuje pojmenovat relaci z druhé strany. V tomto případě, když máte instanci Post, můžete přistupovat k přidruženým komentářům pomocí jména "comments". Například, pokud máte instanci post, můžete získat všechny komentáře k tomuto příspěvku pomocí výrazu post.comments.all()
-    '''
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    timestamp = models.DateTimeField(auto_now_add=True)
-    content = models.TextField()
-    post = models.ForeignKey(
-        'Post', related_name='comments', on_delete=models.CASCADE)
-
-    def __str__(self):
-        return self.user.username
-
-
-class PostView(models.Model):
-    '''
-    Třída pro počítání zhlédnutí příspěvků
-    '''
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    post = models.ForeignKey('Post', on_delete=models.CASCADE)
-
-    def __str__(self):
-        return self.user.username
-
+from .author import Author
+from .category import Category
+from .comment import Comment
+from posts.models.post_view import PostView
 
 class Post(models.Model):
     '''
@@ -161,7 +74,7 @@ class Post(models.Model):
         kwargs={'id': self.id}: představuje klíčové argumenty, které jsou použity ve vzoru URL adresy
         (V tomto případě je očekáván parametr s názvem 'id' (primární klíč, často používaný pro identifikaci záznamů v databázi), a hodnota tohoto parametru je nastavena na hodnotu self.id, což předpokládá, že váš model má atribut id (primární klíč) a chcete použít jeho hodnotu v URL adrese)
         '''
-        return reverse('post-detail', kwargs={'id': self.id})
+        return reverse('post-detail', kwargs={'pk': self.id})
 
     # funkce pro úpravu příspěvku
     def get_update_url(self):
@@ -207,9 +120,3 @@ class Post(models.Model):
         PostView.objects.filter(post=self).count(): SQlite qvivqlen - SELECT COUNT(*) FROM post_views WHERE post_id = <ID_příspěvku>;
         '''
         return PostView.objects.filter(post=self).count()
-
-
-
-
-
-

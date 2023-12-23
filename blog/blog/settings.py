@@ -14,6 +14,7 @@ Path: třída, která slouží k manipulaci s cestami k souborům a adresářům
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
+
 # Definice tajného klíče:
 # (tajný klíč pro různé bezpečnostní operace včetně šifrování, generování CSRF (Cross-Site Request Forgery) tokenů, a dalších bezpečnostních mechanismů)
 SECRET_KEY = 'django-insecure-sny#m+80^f!g6rj2w5ve%zdih6&bh(hvh=@p^+ga!s$s@(_5vr'
@@ -248,3 +249,8 @@ AUTHENTICATION_BACKENDS = [
     # `allauth` specific authentication methods, such as login by email
     'allauth.account.auth_backends.AuthenticationBackend',
 ]
+
+# Dočasně pro sprovoznění
+MAILCHIMP_API_KEY = ''
+MAILCHIMP_DATA_CENTER = ''
+MAILCHIMP_EMAIL_LIST_ID = ''

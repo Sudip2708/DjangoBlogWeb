@@ -64,7 +64,7 @@
 
                 <!-- Apdate of the post -->
                 <li class="list-inline-item small">
-                  <a href="{% url 'post-update' id=post.id %}">Update post</a>
+                  <a href="{% url 'post-update' pk=post.id %}">Update post</a>
                 </li>
 
               </ul>
@@ -198,7 +198,7 @@
           </main>
 
           <!-- Sidebar -->
-          {% include 'sidebar.html' with most_recent_posts=most_recent_posts category_count=category_count %}
+          {% include 'sidebar.html' with most_recent=most_recent category_count=category_count %}
 
         </div>
       </div>

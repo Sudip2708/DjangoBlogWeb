@@ -2,7 +2,11 @@
 
 
 from django.contrib import admin
-from .models import Author, Category, Post, Comment, PostView
+from .models.author import Author
+from .models.category import Category
+from .models.post import Post
+from .models.comment import Comment
+from .models.post_view import PostView
 '''
 [from]
 django.contrib: balíček, který obsahuje různé moduly a aplikace poskytující doplňkovou funkcionalitu pro Django projekty
