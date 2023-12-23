@@ -199,3 +199,12 @@ Nastavení počítání zobrazení a počítání komentů
 Otevřít index.html, blog.html, post.html, sidebar.html a dopsat {{ post.comment_count }} a {{ post.view_count }}
 > Změna 'article' na 'post' pro zjednodušení kódu <
 ###
+Změna virtuálního prostředí
+• (Nějak se mi na projek v počátku navázalo virtuální prostředí z jiného projektu a ny ní našel čas to napravit)
+• Deaktivovat virtuální prostředí: $ deactivate
+• Aktivace venv které jsem si vytvořil a v kterém dělám projekt: $ venv\Scripts\activate
+• Natažení requirements.txt: $ pip freeze requirements.txt
+• Vypnout / zapnout PyCharm
+• Jít v PyCharm do File > Settings > Projekt > Projekt interpreter a vytvořit (přidat) nový interpreter
+• Doinstalovat requirements.txt: $ pip install -r requirements.txt
+###
