@@ -208,3 +208,17 @@ Změna virtuálního prostředí
 • Jít v PyCharm do File > Settings > Projekt > Projekt interpreter a vytvořit (přidat) nový interpreter
 • Doinstalovat requirements.txt: $ pip install -r requirements.txt
 ###
+Instalace a základní nastavení Django Allauth (bez možnosti přihlášení prostřednictvím sociálních sítí)
+• Nainstalovat aplikaci: $ pip install django-allauth
+• Zápis instalace do requirements.txt: $ pip freeze requirements.txt
+• Otevřít blog/settings.py a do INSTALLED_APPS přidat: 'allauth', 'allauth.account'
+• Zkontrolovat jestli v TEMPLATES je uvedeno: 'django.template.context_processors.request'
+• Přidat nastavení AUTHENTICATION_BACKENDS
+• Do MIDDLEWARE přidat řádek: "allauth.account.middleware.AccountMiddleware",
+• Otevřít blog/urls.py a do urlpatterns připsat: path('accounts/', include('allauth.urls')),
+• Migrovat projekt: $ python manage.py migrate
+###
+Zpráva uživatelů v Django Allauth (bez možnosti přihlášení prostřednictvím sociálních sítí)
+•
+
+

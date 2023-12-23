@@ -39,6 +39,7 @@ path('search/', search, name='search'): adresa, cesta a jméno, pro vyhledáván
 path('tinymce/', include('tinymce.urls')): adresa a cesta, na k zobrazení tinymce (zde zobrazovače a editora článků)
 path('post/<id>/update/', post_update, name='post-update'): adresa, cesta a jméno, pro úpravu příspěvku
 path('post/<id>/delete/', post_delete, name='post-delete'): adresa, cesta a jméno, pro smazání příspěvku
+path('accounts/', include('allauth.urls')):  znamená, že URL začínající na "accounts/" budou směrovány na URL konfiguraci poskytovanou django-allauth
 '''
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -50,6 +51,7 @@ urlpatterns = [
     path('create/', post_create, name='post-create'),
     path('post/<id>/update/', post_update, name='post-update'),
     path('post/<id>/delete/', post_delete, name='post-delete'),
+    path('accounts/', include('allauth.urls')),
 ]
 
 

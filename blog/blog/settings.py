@@ -41,6 +41,9 @@ ALLOWED_HOSTS = []
 'marketing': aplikace, pro správu komentářů k příspěvkům
 'crispy_forms': aplikace, pro vzhled formulářů
 'crispy_bootstrap5': balíček pro crispy_forms v prostředí bottstrap5
+'allauth': balíček pro allauth, obsahuje základní funkčnost pro autentizaci, včetně registrace a přihlášení uživatelů
+'allauth.account': balíček pro allauth, přidává funkcionalitu účtů, včetně správy uživatelských účtů, změny hesla, atd.
+# 'allauth.socialaccount': balíček pro allauth, přidává podporu pro sociální přihlašování (například pomocí Facebooku, Google atd.
 '''
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -54,6 +57,8 @@ INSTALLED_APPS = [
     'marketing',
     'crispy_forms',
     'crispy_bootstrap5',
+    'allauth',
+    'allauth.account',
 ]
 
 # Nastavení Crispy forms na Bottstrap 5:
@@ -63,6 +68,7 @@ CRISPY_TEMPLATE_PACK = "bootstrap5"
 # Definice seznamu středníků:
 # (pořadí středníků v seznamu je důležité, protože každý středník je volán v pořadí, v jakém je uveden)
 '''
+Middleware v Django je komponenta, která zpracovává HTTP požadavky, než jsou předány pohledům (views)
 SecurityMiddleware: Zajišťuje bezpečnostní opatření, například nastavení HTTP hlaviček pro ochranu před útoky.
 SessionMiddleware: Spravuje relace pro uživatele.
 CommonMiddleware: Poskytuje několik standardních úprav pro HTTP požadavky a odpovědi.
@@ -70,6 +76,7 @@ CsrfViewMiddleware: Ochrana proti CSRF útokům (Cross-Site Request Forgery).
 AuthenticationMiddleware: Zajišťuje autentizaci uživatelů.
 MessageMiddleware: Poskytuje podporu pro systém zpráv.
 XFrameOptionsMiddleware: Nastavuje HTTP hlavičku X-Frame-Options pro ochranu proti clickjacking útokům.
+AccountMiddleware: Zajišťuje určité operace v průběhu zpracování HTTP požadavků, týkající se autentizace a správy uživatelských účtů
 '''
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -79,6 +86,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    "allauth.account.middleware.AccountMiddleware",
 ]
 
 
@@ -226,3 +234,17 @@ TINYMCE_DEFAULT_CONFIG = {
                "fullscreen  preview save print",
 }
 
+# Definice backendů pro autentizaci
+'''
+AUTHENTICATION_BACKENDS určuje pořadí, ve kterém jsou backendy zkoušeny pro ověření uživatele. Pokud první backend nedokáže ověřit uživatele, bude použit další v seznamu
+Tato konfigurace specifikuje, jaké backendy budou použity pro ověření identity uživatele
+'django.contrib.auth.backends.ModelBackend': Standardní Django backend pro autentizaci založený na databázovém modelu. Používá databázový model User pro ukládání a ověřování uživatelů
+'allauth.account.auth_backends.AuthenticationBackend': Backend poskytovaný frameworkem django-allauth. Tento backend rozšiřuje funkce autentizace a zahrnuje podporu pro různé metody přihlašování, včetně sociálního přihlašování
+'''
+AUTHENTICATION_BACKENDS = [
+    # Needed to login by username in Django admin, regardless of `allauth`
+    'django.contrib.auth.backends.ModelBackend',
+
+    # `allauth` specific authentication methods, such as login by email
+    'allauth.account.auth_backends.AuthenticationBackend',
+]
