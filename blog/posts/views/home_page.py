@@ -12,11 +12,11 @@ from marketing.models import Signup
 form = EmailSignupForm()
 
 
-class IndexView(View):
+class HomePageView(View):
     '''
     Tento kód definuje pohled (IndexView) v rámci frameworku Django, který zdědil od základní třídy View.
     Tento pohled zpracovává dvě HTTP metody - GET a POST - a renderuje šablonu s informacemi o článcích, kde je k dispozici formulář pro přihlášení k odběru e-mailových aktualit.
-    Tento kód předpokládá existenci modelu Post a Signup, formuláře EmailSignupForm a šablony index.html.
+    Tento kód předpokládá existenci modelu Post a Signup, formuláře EmailSignupForm a šablony 10_home.html.
     Mějte na paměti, že v tomto kódu je formulář vytvořen jako atribut třídy (form = EmailSignupForm()), což znamená, že stejná instance formuláře bude sdílena mezi všechny instance pohledu.
     Klíčové body kódu:
     V get metodě se získávají dva seznamy článků: featured (označené jako "featured") a latest (tři nejnovější články). Tyto seznamy jsou součástí kontextu, který se předává do šablony pro zobrazení.
@@ -43,7 +43,7 @@ class IndexView(View):
         }
 
         # Vykreslení šablony
-        return render(request, 'index.html', context)
+        return render(request, '10_home.html', context)
 
     def post(self, request, *args, **kwargs):
         # Získání e-mailu z POST dat formuláře

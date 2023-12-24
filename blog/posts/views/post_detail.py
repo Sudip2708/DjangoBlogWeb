@@ -25,7 +25,7 @@ class PostDetailView(DetailView):
     post: Metoda pro zpracování HTTP POST požadavku, který může obsahovat odeslaný formulář pro komentář. Pokud je formulář platný, přiřazují se mu uživatel a článek a formulář se ukládá. Následně je uživatel přesměrován na stránku s detaily článku.
     '''
     model = Post
-    template_name = 'post.html'
+    template_name = '30_article.html'
     context_object_name = 'post'
     form = CommentForm()
 

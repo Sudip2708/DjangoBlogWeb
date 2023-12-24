@@ -1,0 +1,107 @@
+{% extends '00_base.html' %}
+
+{% load static %}
+
+{% block content %}
+
+<section>
+  <div class="container">
+    <div class="row gy-5">
+
+      <!-- Latest posts -->
+      <main class="col-lg-8">
+        <div class="container">
+          <div class="row gy-4 mb-5">
+
+            <!-- posts -->
+            {% for post in page_obj %}
+              <div class="col-xl-6">
+
+                <!-- Thumbnail -->
+                <a class="mb-3" href="post.html">
+                  <img class="img-fluid" src="{{ post.thumbnail.url }}" alt="post_thumbnail"/>
+                </a>
+
+                <!-- post time and category -->
+                <div class="d-flex align-items-center justify-content-between mb-2">
+
+                  <!-- Timestamp -->
+                  <small class="text-gray-500">
+                    {{ post.timestamp }}
+                  </small>
+
+                  <!-- Category -->
+                  <ul class="list-inline mb-1">
+                    {% for category in post.categories.all %}
+                      <li class="list-inline-item">
+                        <a class="small fw-bold text-uppercase small" href="{{ post.get_absolute_url }}">
+                          {{ category }}
+                        </a>
+                      </li>
+                    {% endfor %}
+                  </ul>
+
+                </div>
+
+                <!-- Title -->
+                <h3 class="h4">
+                  <a class="text-dark" href="{{ post.get_absolute_url }}">
+                    {{ post.title }}
+                  </a>
+                </h3>
+
+                <!-- Overview -->
+                <p class="text-muted text-sm">
+                  {{ post.overview }}
+                </p>
+
+                <!-- post info -->
+                <ul class="list-inline list-separated text-gray-500 mb-0">
+
+                  <!-- Link to the author -->
+                  <li class="list-inline-item">
+                    <a class="d-flex align-items-center flex-wrap text-reset" href="!#">
+
+                      <!-- Profile picture -->
+                      <div class="avatar flex-shrink-0">
+                        <img class="img-fluid" src="{{ post.author.profile_picture.url }}" alt="profile_picture"/>
+                      </div>
+
+                      <!-- Name -->
+                      <small>{{ post.author }}</small>
+
+                    </a>
+                  </li>
+
+                  <!-- Created -->
+                  <li class="list-inline-item small">
+                    <i class="far fa-clock"></i>
+                    {{ post.timestamp|timesince }} ago
+                  </li>
+
+                  <!-- Number of comments -->
+                  <li class="list-inline-item small">
+                    <i class="far fa-comment"></i>
+                    {{ post.comment_count }}
+                  </li>
+
+                </ul>
+              </div>
+
+            {% endfor %}
+          </div>
+
+          {% include '21_articles_pagination.html' with page_obj=page_obj %}
+
+
+        </div>
+
+      </main>
+
+      {% include '50_sidebar.html' with most_recent=most_recent category_count=category_count %}
+
+    </div>
+  </div>
+</section>
+
+{% endblock content %}

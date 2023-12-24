@@ -6,7 +6,7 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
-from posts.views.index import IndexView
+from posts.views.home_page import HomePageView
 from posts.views.post_create import PostCreateView
 from posts.views.post_delete import PostDeleteView
 from posts.views.post_detail import PostDetailView
@@ -19,7 +19,7 @@ from marketing.views import email_list_signup
 urlpatterns = [
     path('admin/', admin.site.urls),
 
-    path('', IndexView.as_view(), name='home'),
+    path('', HomePageView.as_view(), name='home'),
     path('blog/', PostListView.as_view(), name='post-list'),
     path('create/', PostCreateView.as_view(), name='post-create'),
     path('post/<int:pk>/', PostDetailView.as_view(), name='post-detail'),
