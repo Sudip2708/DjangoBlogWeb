@@ -1,0 +1,62 @@
+{% load static %}
+
+<!-- Latest articles -->
+<section>
+  <div class="container">
+
+    <!-- Description -->
+    <header class="mb-5">
+      <h2>Latest from the blog</h2>
+      <p class="text-lg fw-light">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
+    </header>
+
+    <!-- 3 articles -->
+    <div class="row gy-4">
+
+      <!-- One article -->
+      {% for article in latest %}
+      <div class="col-md-4">
+
+        <!-- Thumbnail -->
+        <a class="mb-3" href="article.html">
+          <img class="img-fluid" src="{{ article.thumbnail.url }}" alt="article_thumbnail"/>
+        </a>
+
+        <!-- Created and Category -->
+        <div class="d-flex align-items-center justify-content-between mb-2">
+
+          <!-- Created -->
+          <small class="text-gray-500">
+            {{ article.created }}
+          </small>
+
+          <!-- Category -->
+          <ul class="list-inline mb-1">
+            {% for category in article.categories.all %}
+              <li class="list-inline-item">
+                <a class="small fw-bold text-uppercase small" href="!#">
+                  {{ category }}
+                </a>
+              </li>
+            {% endfor %}
+          </ul>
+        </div>
+
+        <!-- Title -->
+        <h3 class="h4">
+          <a class="text-dark" href="article.html">
+            {{ article.title }}
+          </a>
+        </h3>
+
+        <!-- Overview -->
+        <p class="text-muted text-sm">
+          {{ article.overview }}
+        </p>
+
+      </div>
+      {% endfor %}
+
+    </div>
+  </div>
+</section>

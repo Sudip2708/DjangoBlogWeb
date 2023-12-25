@@ -218,7 +218,7 @@ Instalace a základní nastavení Django Allauth (bez možnosti přihlášení p
 • Otevřít blog/urls.py a do urlpatterns připsat: path('accounts/', include('allauth.urls')),
 • Migrovat projekt: $ python manage.py migrate
 ###
-Toto jsou nobé urls, které jcme tím získali:
+Toto jsou nové urls, které jsme tím získali:
 accounts/ signup/ [name='account_signup']
 accounts/ login/ [name='account_login']
 accounts/ logout/ [name='account_logout']
@@ -233,6 +233,22 @@ accounts/ password/reset/ [name='account_reset_password']
 accounts/ password/reset/done/ [name='account_reset_password_done']
 accounts/ ^password/reset/key/(?P<uidb36>[0-9A-Za-z]+)-(?P<key>.+)/$ [name='account_reset_password_from_key']
 accounts/ password/reset/key/done/ [name='account_reset_password_from_key_done']
+###
+Restrukturizace projektu
+1) Změna názvů souborů py
+2) Změna názvů souborů html
+3) Změna modulu posts na articles
+4) Přesunutí databáze na plochu
+5) Smazání všech migrací
+6) Vytvořit nové migrace
+###
+Přidání automaticky generovaného obsahu pro pole slug:
+• Instalace django-autoslug: $ pip install django-autoslug
+• Přidání do INSTALLED_APPS: 'autoslug'
+• Import AutoSlugField v modelu: from autoslug import AutoSlugField
+• Použití AutoSlugField v modelu: slug = AutoSlugField(populate_from='title', unique=True)
+• Vytvořit soubor pro migraci: $ python manage.py makemigrations
+• Migrovat projekt: $ python manage.py migrate
 ###
 Zpráva uživatelů v Django Allauth (bez možnosti přihlášení prostřednictvím sociálních sítí)
 •

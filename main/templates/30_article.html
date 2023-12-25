@@ -1,0 +1,101 @@
+{% extends '00_base.html' %}
+{% load static %}
+
+{% block content %}
+
+<!-- Pro případ, kdyby obrázky vykukovali ze stránky: -->
+<!--  <style>.article-body img {width: 100%;}</style> -->
+
+    <section class="py-5">
+      <div class="container">
+        <div class="row gy-5">
+
+          <!-- Selected article -->
+          <main class="col-lg-8">
+            <div class="container">
+
+              <!-- Thumbnail -->
+              <img class="img-fluid w-100 mb-4" src="{{ article.thumbnail.url }}" alt="article_thumbnail">
+
+              <!-- Category -->
+              <ul class="list-inline mb-3">
+                {% for category in article.categories.all %}
+                  <li class="list-inline-item">
+                    <li class="list-inline-item"><a class="text-uppercase" href="!#">
+                      {{ category }}
+                    </a>
+                  </li>
+                {% endfor %}
+              </ul>
+
+              <!-- Title -->
+              <h1 class="mb-4">{{ article.title }}<a href="!#"><i class="fa fa-bookmark-o"></i></a></h1>
+
+              <!-- Info -->
+              <ul class="list-inline list-separated text-gray-500 mb-5">
+
+                <!-- Author -->
+                <li class="list-inline-item">
+
+                  <!-- Link to the author -->
+                  <a class="d-flex align-items-center flex-wrap text-reset" href="!#">
+
+                    <!-- Profile picture -->
+                    <div class="avatar flex-shrink-0">
+                      <img class="img-fluid" src="{{ article.author.profile_picture.url }}" alt="profile_picture"/>
+                    </div>
+
+                    <!-- Name -->
+                    <small>{{ article.author }}</small>
+                  </a>
+                </li>
+
+                <!-- Created -->
+                <li class="list-inline-item small">
+                  <i class="far fa-clock"></i>
+                  {{ article.created|timesince }} ago
+                </li>
+
+                <!-- Number of comments -->
+                <li class="list-inline-item small">
+                  <i class="far fa-comment"></i>
+                  {{ article.comment_count }}
+                </li>
+
+                <!-- Apdate of the article -->
+                <li class="list-inline-item small">
+                  <a href="{% url 'article-update' pk=article.id %}">Update article</a>
+                </li>
+
+              </ul>
+
+              <!-- Article content -->
+              <div class="article-body">
+                {{ article.content | safe }}
+              </div>
+
+              <!-- Tags -->
+              <ul class="list-inline mb-5">
+                <li class="list-inline-item"><a class="tag" href="!#">#Business</a></li>
+                <li class="list-inline-item"><a class="tag" href="!#">#Tricks</a></li>
+                <li class="list-inline-item"><a class="tag" href="!#">#Financial</a></li>
+                <li class="list-inline-item"><a class="tag" href="!#">#Economy</a></li>
+              </ul>
+
+              {% include '31_article_previous_and_next.html' with article=article %}
+
+              {% include '32_article_display_comments.html' with article=article %}
+
+              {% include '33_article_add_comment.html' with article=article form=form %}
+
+            </div>
+          </main>
+
+          <!-- Sidebar -->
+          {% include '50_sidebar.html' with most_recent=most_recent category_count=category_count %}
+
+        </div>
+      </div>
+    </section>
+
+{% endblock content %}
