@@ -237,8 +237,8 @@ accounts/ password/reset/key/done/ [name='account_reset_password_from_key_done']
 Restrukturizace projektu
 1) Změna názvů souborů py
 2) Změna názvů souborů html
-3) Změna modulu posts na articles
-4) Přesunutí databáze na plochu
+3) Změna modulu posts na articles + oprava v kódu
+4) Smazání databáze
 5) Smazání všech migrací
 6) Vytvořit nové migrace
 ###
