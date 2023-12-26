@@ -17,11 +17,11 @@ urlpatterns = [
     path('admin/', admin.site.urls),
 
     path('', HomePageView.as_view(), name='home'),
-    path('blog/', ArticleListView.as_view(), name='articles-list'),
-    path('articles/', ArticleCreateView.as_view(), name='article-create'),
-    path('article/<int:pk>/', ArticleDetailView.as_view(), name='article-detail'),
-    path('article/<int:pk>/update/', ArticleUpdateView.as_view(), name='article-update'),
-    path('article/<int:pk>/delete/', ArticleDeleteView.as_view(), name='article-delete'),
+    path('articles/', ArticleListView.as_view(), name='article-list'),
+    path('articles/create/', ArticleCreateView.as_view(), name='article-create'),
+    path('articles/<slug:slug>/', ArticleDetailView.as_view(), name='article-detail'),
+    path('articles/<slug:slug>/update/', ArticleUpdateView.as_view(), name='article-update'),
+    path('articles/<slug:slug>/delete/', ArticleDeleteView.as_view(), name='article-delete'),
     path('search/', SearchView.as_view(), name='search'),
     path('email-signup/', email_list_signup, name='email-list-signup'),
 

@@ -20,10 +20,46 @@ ArticleComment: databázový model, pro tabulku s komentáři příspěvků
 ArticleView: databázový model, pro tabulku pro zobrazení jednoho příspěvku
 '''
 
+@admin.register(Article)
+class ArticleAdmin(admin.ModelAdmin):
+    list_display = ['title', 'slug', 'author', 'created']
+    list_filter = ['created', 'created', 'categories']
+    search_fields = ['title', 'overview', 'content']
+    date_hierarchy = 'created'
+    ordering = ['-updated']
+
+@admin.register(ArticleView)
+class ArticleAdmin(admin.ModelAdmin):
+    list_display = ['created', 'article', 'user']
+    list_filter = ['user', 'article']
+    search_fields = ['user', 'article']
+    date_hierarchy = 'created'
+    ordering = ['article']
+
+@admin.register(ArticleComment)
+class ArticleAdmin(admin.ModelAdmin):
+    list_display = ['article', 'user', 'created']
+    list_filter = ['user', 'article']
+    search_fields = ['user', 'article']
+    ordering = ['-created']
+
+
+@admin.register(ArticleCategory)
+class ArticleAdmin(admin.ModelAdmin):
+    list_filter = ['title']
+    search_fields = ['title']
+    ordering = ['title']
+
+@admin.register(ArticleAuthor)
+class ArticleAdmin(admin.ModelAdmin):
+    list_filter = ['author']
+    search_fields = ['author']
+    ordering = ['author']
+
 
 # Registrování tabulek v admin sekci
-admin.site.register(Article)
-admin.site.register(ArticleAuthor)
-admin.site.register(ArticleCategory)
-admin.site.register(ArticleComment)
-admin.site.register(ArticleView)
+# admin.site.register(Article)
+# admin.site.register(ArticleAuthor)
+# admin.site.register(ArticleCategory)
+# admin.site.register(ArticleComment)
+# admin.site.register(ArticleView)

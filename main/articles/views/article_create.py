@@ -35,4 +35,4 @@ class ArticleCreateView(CreateView):
         # Přetěžená metoda pro zpracování platného formuláře
         form.instance.author = get_author(self.request.user)  # Přiřazení autora článku
         form.save()  # Uložení článku do databáze
-        return redirect(reverse("article-detail", kwargs={'pk': form.instance.pk}))  # Přesměrování na detaily nového článku
+        return redirect(reverse("article-detail", kwargs={'slug': form.instance.slug}))  # Přesměrování na detaily nového článku

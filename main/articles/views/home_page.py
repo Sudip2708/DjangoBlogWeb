@@ -42,8 +42,6 @@ class HomePageView(View):
 
         }
 
-        messages.info(request, "Zprávy na hlavní obrazovku fungujou")
-
         # Vykreslení šablony
         return render(request, '10_home.html', context)
 

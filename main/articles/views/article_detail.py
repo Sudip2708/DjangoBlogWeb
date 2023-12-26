@@ -70,4 +70,4 @@ class ArticleDetailView(DetailView):
             form.save()
 
             # Přesměrování na detaily článku
-            return redirect(reverse("article-detail", kwargs={'pk': article.pk}))
+            return redirect(reverse("article-detail", kwargs={'slug': article.slug}))

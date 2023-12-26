@@ -250,6 +250,11 @@ Přidání automaticky generovaného obsahu pro pole slug:
 • Vytvořit soubor pro migraci: $ python manage.py makemigrations
 • Migrovat projekt: $ python manage.py migrate
 ###
+• Přidání kódu do articles/admin.py pro zobrazení polí v tabulce
+Vytvoření kanonické adresy:
+• Změnit v articles/urls.py v path <int:id> na <slug:slug>
+• Změnit výskyt všech pk na slug
+###
 Zpráva uživatelů v Django Allauth (bez možnosti přihlášení prostřednictvím sociálních sítí)
 •
 

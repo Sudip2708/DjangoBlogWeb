@@ -72,6 +72,11 @@ class Article(models.Model):
                                   blank=True,
                                   null=True)
 
+    class Meta:
+        indexes = [
+            models.Index(fields=['slug'])
+        ]
+
 
     def __str__(self):
         return self.title
@@ -87,18 +92,18 @@ class Article(models.Model):
         kwargs={'id': self.id}: představuje klíčové argumenty, které jsou použity ve vzoru URL adresy
         (V tomto případě je očekáván parametr s názvem 'id' (primární klíč, často používaný pro identifikaci záznamů v databázi), a hodnota tohoto parametru je nastavena na hodnotu self.id, což předpokládá, že váš model má atribut id (primární klíč) a chcete použít jeho hodnotu v URL adrese)
         '''
-        return reverse('article-detail', kwargs={'pk': self.id})
+        return reverse('article-detail', kwargs={'slug': self.slug})
 
     # funkce pro úpravu příspěvku
     def get_update_url(self):
         return reverse('article-update', kwargs={
-            'id': self.id
+            'slug': self.slug
         })
 
     # funkce pro smazání příspěvku
     def get_delete_url(self):
         return reverse('article-delete', kwargs={
-            'id': self.id
+            'slug': self.slug
         })
 
     @property
