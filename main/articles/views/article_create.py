@@ -22,7 +22,7 @@ class ArticleCreateView(CreateView):
     form_valid: Přetěžená metoda pro zpracování platného formuláře. Zde je přiřazován autor článku na základě přihlášeného uživatele (pomocí funkce get_author). Následně je článek uložen do databáze a uživatel je přesměrován na stránku s detaily vytvořeného článku.
     '''
     model = Article
-    template_name = '34_article_create.html'
+    template_name = '50_article_create.html'
     form_class = ArticleForm
 
     def get_context_data(self, **kwargs):

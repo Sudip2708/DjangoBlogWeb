@@ -4,6 +4,7 @@
 from django.db.models import Count
 from articles.models.article import Article
 from marketing.forms import EmailSignupForm
+from taggit.models import Tag
 
 
 form = EmailSignupForm()
@@ -29,3 +30,24 @@ def get_author(user):
     if qs.exists():
         return qs[0]
     return None
+
+
+# Definice filtrování podle tagu
+def list_of_articles(request, tag_slug = None):
+    articles = Article.publishedArticles.all()
+
+    tag = None
+    if tag_slug:
+        tag = get_object_or_404(Tag, slug=tag_slug)
+        articles = articles.filter(tags__in=[tag])
+
+    paginator = Paginator(articles, 3)
+    page_number = request.GET.get('page', 1)
+    try:
+        articles = paginator.page(page_number)
+    except EmptyPage:
+        articles = paginator.page(paginator.num_pages)
+    except PageNotAnInteger:
+        articles = paginator.page(1)
+
+    return render(request, 'blog/list.html', {'articles': articles, 'tag': tag})

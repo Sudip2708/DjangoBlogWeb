@@ -255,6 +255,23 @@ Vytvoření kanonické adresy:
 • Změnit v articles/urls.py v path <int:id> na <slug:slug>
 • Změnit výskyt všech pk na slug
 ###
+Vytvoření kanonické adresy:
+• Změnit v articles/urls.py v path <int:id> na <slug:slug>
+• Změnit výskyt všech pk na slug
+Přidání tagování:
+• Instalace django-taggit: $ pip install django-taggit
+• Otevřít main/settings.py a do INSTALLED_APPS přidat 'taggit'
+• Otevřít articles/models/article.py a importovat taggit: from taggit.managers import TaggableManager
+• A do Article(models.Model) přidat nové pole: tags = TaggableManager()
+• A do Article(models.Model) přidat pro získání tagů k příspěvku: @property, def get_tags(self): return self.tags.all()
+• Otevřít templates/article-tags a zapsat kód pro zobrazení tagů
+• $ python manage.py makemigrations
+• $ python manage.py migrate
+Zobrazení tagů v postranním panelu:
+• Otevřít articles/views/article-list.py a articles/views/article-detail.py a do oubou importovat tagit: from taggit.models import Tag
+• A do kontextu připsat: context['tags'] = Tag.objects.all()
+• Otevřít templates/sidebar_tags a zapsat kód pro zobrazení všech tagů
+###
 Zpráva uživatelů v Django Allauth (bez možnosti přihlášení prostřednictvím sociálních sítí)
 •
 

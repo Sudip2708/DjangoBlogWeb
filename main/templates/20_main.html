@@ -1,0 +1,36 @@
+{% extends '00_base.html' %}
+
+{% load static %}
+
+{% block main_content %}
+
+<section>
+    <div class="container">
+        <div class="row gy-5">
+
+            <!-- Context -->
+            {% block inner_content %}
+            {% endblock inner_content %}
+
+            <!-- Sidebar -->
+            <aside class="col-lg-4">
+
+                <!-- Search Bar Widget -->
+                {% include '21_sidebar_search.html' %}
+
+                <!-- Latest Articles Widget -->
+                {% include '22_sidebar_latest.html' with most_recent=most_recent %}
+
+                <!--  Categories Widget -->
+                {% include '23_sidebar_categories.html' with category_count=category_count %}
+
+                <!-- Tags Widget -->
+                {% include '24_sidebar_tags.html' with tags=tags %}
+
+            </aside>
+
+        </div>
+    </div>
+</section>
+
+{% endblock main_content %}

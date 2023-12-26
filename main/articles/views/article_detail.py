@@ -9,6 +9,8 @@ from articles.models.article import Article
 from articles.models.article_view import ArticleView
 from marketing.forms import EmailSignupForm
 from .utils import get_category_count
+from taggit.models import Tag
+
 
 
 form = EmailSignupForm()
@@ -25,7 +27,7 @@ class ArticleDetailView(DetailView):
     article: Metoda pro zpracování HTTP POST požadavku, který může obsahovat odeslaný formulář pro komentář. Pokud je formulář platný, přiřazují se mu uživatel a článek a formulář se ukládá. Následně je uživatel přesměrován na stránku s detaily článku.
     '''
     model = Article
-    template_name = '30_article.html'
+    template_name = '40_article.html'
     context_object_name = 'article'
     form = CommentForm()
 
@@ -46,12 +48,15 @@ class ArticleDetailView(DetailView):
         # Získání dalších informací pro kontext šablony
         category_count = get_category_count()
         most_recent = Article.objects.order_by('-created')[:3]
+        tags = Tag.objects.all()
+        print(tags)
 
         # Příprava kontextu pro šablonu
         context = super().get_context_data(**kwargs)
         context['most_recent'] = most_recent
         context['page_request_var'] = "page"
         context['category_count'] = category_count
+        context['tags'] = tags
         context['form'] = self.form
 
         return context

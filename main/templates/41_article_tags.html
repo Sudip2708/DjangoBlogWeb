@@ -1,0 +1,10 @@
+<!-- Tags -->
+<ul class="list-inline mb-5">
+  {% for tag in article.get_tags %}
+    <li class="list-inline-item">
+      <a class="tag" href="!#">
+        {{ tag.name }}
+      </a>
+    </li>
+  {% endfor %}
+</ul>

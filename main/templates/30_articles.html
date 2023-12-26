@@ -1,0 +1,99 @@
+{% extends '20_main.html' %}
+
+{% load static %}
+
+{% block inner_content %}
+
+
+<!-- Latest articles -->
+<main class="col-lg-8">
+  <div class="container">
+    <div class="row gy-4 mb-5">
+
+      <!-- Articles -->
+      {% for article in page_obj %}
+        <div class="col-xl-6">
+
+          <!-- Thumbnail -->
+          <a class="mb-3" href="article.html">
+            <img class="img-fluid" src="{{ article.thumbnail.url }}" alt="article_thumbnail"/>
+          </a>
+
+          <!-- Article time and category -->
+          <div class="d-flex align-items-center justify-content-between mb-2">
+
+            <!-- Created -->
+            <small class="text-gray-500">
+              {{ article.created }}
+            </small>
+
+            <!-- Category -->
+            <ul class="list-inline mb-1">
+              {% for category in article.categories.all %}
+                <li class="list-inline-item">
+                  <a class="small fw-bold text-uppercase small" href="{{ article.get_absolute_url }}">
+                    {{ category }}
+                  </a>
+                </li>
+              {% endfor %}
+            </ul>
+
+          </div>
+
+          <!-- Title -->
+          <h3 class="h4">
+            <a class="text-dark" href="{{ article.get_absolute_url }}">
+              {{ article.title }}
+            </a>
+          </h3>
+
+          <!-- Overview -->
+          <p class="text-muted text-sm">
+            {{ article.overview }}
+          </p>
+
+          <!-- Article info -->
+          <ul class="list-inline list-separated text-gray-500 mb-0">
+
+            <!-- Link to the author -->
+            <li class="list-inline-item">
+              <a class="d-flex align-items-center flex-wrap text-reset" href="!#">
+
+                <!-- Profile picture -->
+                <div class="avatar flex-shrink-0">
+                  <img class="img-fluid" src="{{ article.author.profile_picture.url }}" alt="profile_picture"/>
+                </div>
+
+                <!-- Name -->
+                <small>{{ article.author }}</small>
+
+              </a>
+            </li>
+
+            <!-- Created -->
+            <li class="list-inline-item small">
+              <i class="far fa-clock"></i>
+              {{ article.created|timesince }} ago
+            </li>
+
+            <!-- Number of comments -->
+            <li class="list-inline-item small">
+              <i class="far fa-comment"></i>
+              {{ article.comment_count }}
+            </li>
+
+          </ul>
+        </div>
+
+      {% endfor %}
+    </div>
+
+    {% include '31_articles_pagination.html' with page_obj=page_obj %}
+
+
+  </div>
+
+</main>
+
+
+{% endblock inner_content %}

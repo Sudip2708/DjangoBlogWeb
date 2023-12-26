@@ -9,6 +9,8 @@ from .article_category import ArticleCategory
 from .article_comment import ArticleComment
 from articles.models.article_view import ArticleView
 from autoslug import AutoSlugField
+from taggit.managers import TaggableManager
+
 
 class Article(models.Model):
     '''
@@ -41,9 +43,6 @@ class Article(models.Model):
 
     '''
 
-
-
-
     author = models.ForeignKey(ArticleAuthor, on_delete=models.CASCADE)
     title = models.CharField(max_length=100)
     slug = AutoSlugField(populate_from='title', unique=True)
@@ -54,7 +53,7 @@ class Article(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
 
-
+    tags = TaggableManager()
 
     categories = models.ManyToManyField(ArticleCategory)
     # Pole pro učení příspěvku pro hlavní stránku:
@@ -72,6 +71,7 @@ class Article(models.Model):
                                   blank=True,
                                   null=True)
 
+    # Indexování slugu:
     class Meta:
         indexes = [
             models.Index(fields=['slug'])
@@ -138,3 +138,14 @@ class Article(models.Model):
         ArticleView.objects.filter(article=self).count(): SQlite qvivqlen - SELECT COUNT(*) FROM article_views WHERE article_id = <ID_příspěvku>;
         '''
         return ArticleView.objects.filter(article=self).count()
+
+    @property
+    def get_tags(self):
+        '''
+        Definování funkce, která je přístupná jako atributy instance modelu.
+        :return: Všechny komentáře (comments), které jsou připojeny k danému příspěvku (self), a řadí je podle časového razítka (created) sestupně (od nejnovějších k nejstarším).
+
+        Nápověda:
+        self.comments.all().order_by('-created'): SQlite qvivqlen - SELECT * FROM comments WHERE article_id = <ID_příspěvku> ORDER BY created DESC;
+        '''
+        return self.tags.all()

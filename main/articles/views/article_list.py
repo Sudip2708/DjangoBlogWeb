@@ -5,6 +5,7 @@ from django.views.generic import ListView
 from articles.models.article import Article
 from marketing.forms import EmailSignupForm
 from .utils import get_category_count
+from taggit.models import Tag
 
 
 form = EmailSignupForm()
@@ -13,19 +14,19 @@ form = EmailSignupForm()
 class ArticleListView(ListView):
     '''
     Tento kód definuje pohled (ArticleListView) v rámci frameworku Django, který zdědil od třídy ListView.
-    Tento pohled zobrazuje seznam článků v šabloně 20_articles.html a zahrnuje také další informace, jako je nejnovější články, počet článků v každé kategorii a formulář pro přihlášení k odběru e-mailových aktualit.
+    Tento pohled zobrazuje seznam článků v šabloně 30_articles.html a zahrnuje také další informace, jako je nejnovější články, počet článků v každé kategorii a formulář pro přihlášení k odběru e-mailových aktualit.
     Celkově pohled ArticleListView představuje seznam článků s možností stránkování, a zároveň poskytuje další informace, které jsou přínosné pro šablonu.
     Klíčové body kódu:
     form = EmailSignupForm(): Tento řádek vytváří instanci formuláře pro přihlášení k odběru (EmailSignupForm) jako atribut třídy. Stejně jako v předchozím případě, tato instance formuláře je sdílena mezi všemi instancemi pohledu.
     model = Article: Tímto se určuje model, který bude použit pro získání dat pro pohled. V tomto případě se používá model Article.
-    template_name = '20_articles.html': Specifikuje název šablony, která bude použita pro vykreslení tohoto pohledu.
+    template_name = '30_articles.html': Specifikuje název šablony, která bude použita pro vykreslení tohoto pohledu.
     context_object_name = 'queryset': Nastavuje název proměnné v kontextu šablony, která bude obsahovat seznam objektů získaných z databáze.
     paginate_by = 1: Určuje, kolik položek bude zobrazeno na jedné stránce. V tomto případě je nastaveno na 1, což znamená, že bude použit systém stránkování a každá stránka bude obsahovat jednu položku.
     get_context_data: Přetěžená metoda, která rozšiřuje kontext o další informace, jako jsou nejnovější články, počet článků v každé kategorii a formulář pro přihlášení k odběru e-mailových aktualit.
     '''
     form = EmailSignupForm()
     model = Article
-    template_name = '20_articles.html'
+    template_name = '30_articles.html'
     # context_object_name = 'paginated_articles'
     paginate_by = 4
 
@@ -52,11 +53,15 @@ class ArticleListView(ListView):
         # Získání tří nejnovějších článků
         most_recent = Article.objects.order_by('-created')[:3]
 
+        # Získání všech tagů
+        tags = Tag.objects.all()
+
         # Příprava kontextu pro šablonu
         context = super().get_context_data(**kwargs)
         context['most_recent'] = most_recent
         context['page_request_var'] = "page"
         context['category_count'] = category_count
+        context['tags'] = tags
         context['form'] = self.form
 
         return context

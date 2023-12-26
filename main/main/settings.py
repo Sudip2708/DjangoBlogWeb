@@ -35,6 +35,7 @@ INSTALLED_APPS = [
     'allauth',
     'allauth.account',
     'autoslug',
+    'taggit',
 ]
 
 # Nastavení Crispy forms na Bottstrap 5:
