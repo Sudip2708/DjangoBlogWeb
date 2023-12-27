@@ -1,6 +1,7 @@
 ### Definuje modely (tabulky) pro aplikaci.
 
 from django.db import models
+from autoslug import AutoSlugField
 
 class ArticleCategory(models.Model):
     '''
@@ -12,7 +13,9 @@ class ArticleCategory(models.Model):
     [parametry]
     max_length: parametr, který určuje maximální délku textového řetězce (počet znaků)
     '''
-    title = models.CharField(max_length=20)
+    title = models.CharField(max_length=25)
+    slug = AutoSlugField(populate_from='title', unique=True)
+
 
     def __str__(self):
         return self.title

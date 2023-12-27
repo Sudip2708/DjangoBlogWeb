@@ -56,6 +56,9 @@ class Article(models.Model):
     tags = TaggableManager()
 
     categories = models.ManyToManyField(ArticleCategory)
+
+    comment_count = models.PositiveIntegerField(default=0)
+
     # Pole pro učení příspěvku pro hlavní stránku:
     featured = models.BooleanField(default=False)
     # Pole pro zobrazení předešlého vybraného článku:
@@ -117,16 +120,16 @@ class Article(models.Model):
         '''
         return self.comments.all().order_by('-created')
 
-    @property
-    def comment_count(self):
-        '''
-        Definování funkce, která je přístupná jako atributy instance modelu.
-        :return: Počet komentářů, které jsou připojeny k danému příspěvku (self). Používá metodu filter na modelu Comment, aby vyfiltrovala komentáře, které mají odkaz na aktuální příspěvek, a následně používá count k získání celkového počtu komentářů.
-
-        Nápověda:
-        Comment.objects.filter(article=self).count(): SQlite qvivqlen - SELECT COUNT(*) FROM comments WHERE article_id = <ID_příspěvku>;
-        '''
-        return ArticleComment.objects.filter(article=self).count()
+    #
+    # def get_comment_count(self):
+    #     '''
+    #     Definování funkce, která je přístupná jako atributy instance modelu.
+    #     :return: Počet komentářů, které jsou připojeny k danému příspěvku (self). Používá metodu filter na modelu Comment, aby vyfiltrovala komentáře, které mají odkaz na aktuální příspěvek, a následně používá count k získání celkového počtu komentářů.
+    #
+    #     Nápověda:
+    #     Comment.objects.filter(article=self).count(): SQlite qvivqlen - SELECT COUNT(*) FROM comments WHERE article_id = <ID_příspěvku>;
+    #     '''
+    #     return ArticleComment.objects.filter(article=self).count()
 
     @property
     def view_count(self):
@@ -149,3 +152,4 @@ class Article(models.Model):
         self.comments.all().order_by('-created'): SQlite qvivqlen - SELECT * FROM comments WHERE article_id = <ID_příspěvku> ORDER BY created DESC;
         '''
         return self.tags.all()
+

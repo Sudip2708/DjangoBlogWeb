@@ -3,6 +3,7 @@
 
 from django.db.models import Count
 from articles.models.article import Article
+from articles.models.article_comment import ArticleComment
 from marketing.forms import EmailSignupForm
 from taggit.models import Tag
 
@@ -19,7 +20,7 @@ def get_category_count():
     .annotate(Count('categories__title')): Metoda annotate se používá k agregaci dat. V tomto případě se používá funkce Count, aby se spočítal počet výskytů každého jedinečného názvu kategorie ve vybraných příspěvcích.
     .order_by('-categories__title__count'): Metoda pro řazení výsledků, zde podle počtu výskytů a sestupně
     '''
-    queryset = Article.objects.values('categories__title').annotate(Count('categories__title')).order_by('-categories__title__count')
+    queryset = Article.objects.values('categories__title', 'categories__slug').annotate(Count('categories__title')).order_by('-categories__title__count')
 
     return queryset
 
@@ -32,22 +33,10 @@ def get_author(user):
     return None
 
 
-# Definice filtrování podle tagu
-def list_of_articles(request, tag_slug = None):
-    articles = Article.publishedArticles.all()
 
-    tag = None
-    if tag_slug:
-        tag = get_object_or_404(Tag, slug=tag_slug)
-        articles = articles.filter(tags__in=[tag])
+def get_most_commented_articles():
+    # Seznam článků s největším počtem komentářů
+    queryset = Article.objects.order_by('-comment_count')[:3]
+    return queryset
 
-    paginator = Paginator(articles, 3)
-    page_number = request.GET.get('page', 1)
-    try:
-        articles = paginator.page(page_number)
-    except EmptyPage:
-        articles = paginator.page(paginator.num_pages)
-    except PageNotAnInteger:
-        articles = paginator.page(1)
 
-    return render(request, 'blog/list.html', {'articles': articles, 'tag': tag})

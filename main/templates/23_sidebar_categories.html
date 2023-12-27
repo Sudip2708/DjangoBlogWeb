@@ -16,7 +16,7 @@
         <div class="p-2 d-flex justify-content-between fw-bold text-gray-600 bg-light">
 
           <!-- Categories title -->
-          <a class="text-reset" href="!#">
+          <a class="text-reset" href="{% url 'article-category-list' category_slug=category.categories__slug %}">
             {{ category.categories__title }}
           </a>
 
@@ -33,7 +33,7 @@
         <div class="p-2 d-flex justify-content-between fw-bold text-gray-600 1">
 
           <!-- Categories title -->
-          <a class="text-reset" href="!#">
+          <a class="text-reset" href="{% url 'article-category-list' category_slug=category.categories__slug %}">
             {{ category.categories__title }}
           </a>
 

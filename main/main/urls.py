@@ -25,6 +25,9 @@ urlpatterns = [
     path('search/', SearchView.as_view(), name='search'),
     path('email-signup/', email_list_signup, name='email-list-signup'),
 
+    path('articles/tag/<slug:tag_slug>/', ArticleListView.as_view(), name='article-tag-list'),
+    path('articles/category/<slug:category_slug>/', ArticleListView.as_view(), name='article-category-list'),
+
     path('tinymce/', include('tinymce.urls')),
     path('accounts/', include('allauth.urls')),
 ]

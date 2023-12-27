@@ -1,6 +1,6 @@
 <!-- Tags Widget -->
 
-<div class="card">
+<div class="card mb-5">
   <div class="card-body">
 
     <!-- Section name -->
@@ -9,7 +9,7 @@
     <ul class="list-inline mb-0">
       {% for tag in tags %}
         <li class="list-inline-item">
-          <a class="tag" href="!#">
+          <a class="tag" href="{% url 'article-tag-list' tag_slug=tag.slug %}">
             {{ tag }}
           </a>
         </li>

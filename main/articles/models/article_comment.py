@@ -32,3 +32,10 @@ class ArticleComment(models.Model):
 
     def __str__(self):
         return self.user.username
+
+# Přetížení metody save, pro připsání komentáže do pole pro počet komentářů
+    def save(self, *args, **kwargs):
+        # Zvyšujeme comment_count pro příslušný článek
+        self.article.comment_count += 1
+        self.article.save()
+        super(ArticleComment, self).save(*args, **kwargs)

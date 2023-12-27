@@ -32,7 +32,7 @@
             <ul class="list-inline mb-1">
               {% for category in article.categories.all %}
                 <li class="list-inline-item">
-                  <a class="text-uppercase text-dark small fw-bold" href="!#">
+                  <a class="text-uppercase text-dark small fw-bold" href="{% url 'article-category-list' category_slug=category.slug %}">
                     {{ category }}
                   </a>
                 </li>

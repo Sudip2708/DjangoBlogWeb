@@ -22,7 +22,7 @@ ArticleView: databázový model, pro tabulku pro zobrazení jednoho příspěvku
 
 @admin.register(Article)
 class ArticleAdmin(admin.ModelAdmin):
-    list_display = ['title', 'slug', 'author', 'created']
+    list_display = ['title', 'author', 'updated', 'created', 'id', 'comment_count', 'featured']
     list_filter = ['created', 'created', 'categories']
     search_fields = ['title', 'overview', 'content']
     date_hierarchy = 'created'
@@ -38,7 +38,7 @@ class ArticleAdmin(admin.ModelAdmin):
 
 @admin.register(ArticleComment)
 class ArticleAdmin(admin.ModelAdmin):
-    list_display = ['article', 'user', 'created']
+    list_display = ['article', 'content', 'user', 'created']
     list_filter = ['user', 'article']
     search_fields = ['user', 'article']
     ordering = ['-created']

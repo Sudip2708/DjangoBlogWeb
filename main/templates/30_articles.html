@@ -10,9 +10,24 @@
   <div class="container">
     <div class="row gy-4 mb-5">
 
+      <!-- Description -->
+
+        <!-- Custom description for tag pages -->
+        <header class="mb-5">
+          {% if tag_slug %}
+            <h2>Articles with tag: {{ tag_slug }}</h2>
+          {% elif category_slug %}
+            <h2>Articles with category: {{ category_slug|upper }}</h2>
+          {% else %}
+            <h2>All articles</h2>
+          {% endif %}
+          <p class="text-lg fw-light">To find a specific article, use the search box on the right.</p>
+        </header>
+
+
       <!-- Articles -->
       {% for article in page_obj %}
-        <div class="col-xl-6">
+        <div class="col-xl-6 mb-3">
 
           <!-- Thumbnail -->
           <a class="mb-3" href="article.html">
@@ -20,7 +35,7 @@
           </a>
 
           <!-- Article time and category -->
-          <div class="d-flex align-items-center justify-content-between mb-2">
+          <div class="d-flex align-items-center justify-content-between">
 
             <!-- Created -->
             <small class="text-gray-500">
@@ -31,7 +46,7 @@
             <ul class="list-inline mb-1">
               {% for category in article.categories.all %}
                 <li class="list-inline-item">
-                  <a class="small fw-bold text-uppercase small" href="{{ article.get_absolute_url }}">
+                  <a class="small fw-bold text-uppercase small" href="{% url 'article-category-list' category_slug=category.slug %}">
                     {{ category }}
                   </a>
                 </li>
@@ -39,6 +54,24 @@
             </ul>
 
           </div>
+
+          <!-- Tags -->
+
+          <ul class="list-inline mb-2">
+            <small class="text-gray-500">[&nbsp</small>
+
+            {% for tag in article.tags.all %}
+              <li class="list-inline-item">
+                <a class="small" href="{% url 'article-tag-list' tag_slug=tag.slug %}">
+                  {{tag}}
+                </a>
+              </li>
+            {% endfor %}
+
+            <small class="text-gray-500">]</small>
+          </ul>
+
+
 
           <!-- Title -->
           <h3 class="h4">

@@ -4,8 +4,10 @@
 from django.views.generic import ListView
 from articles.models.article import Article
 from marketing.forms import EmailSignupForm
-from .utils import get_category_count
+from .utils import get_category_count, get_most_commented_articles
 from taggit.models import Tag
+from django.shortcuts import get_object_or_404
+from articles.models.article import ArticleCategory
 
 
 form = EmailSignupForm()
@@ -37,7 +39,19 @@ class ArticleListView(ListView):
         :return: Seznam dat seřazený dle data vytvoření
         '''
 
-        return Article.objects.order_by('-created')
+        tag_slug = self.kwargs.get('tag_slug')
+        category_slug = self.kwargs.get('category_slug')
+
+        if tag_slug:
+            tag = get_object_or_404(Tag, slug=tag_slug)
+            queryset = Article.objects.filter(tags=tag).order_by('-created')
+        elif category_slug:
+            category = get_object_or_404(ArticleCategory, slug=category_slug)
+            queryset = Article.objects.filter(categories=category).order_by('-created')
+        else:
+            queryset = Article.objects.order_by('-created')
+
+        return queryset
 
     def get_context_data(self, **kwargs):
         '''
@@ -51,17 +65,29 @@ class ArticleListView(ListView):
         category_count = get_category_count()
 
         # Získání tří nejnovějších článků
-        most_recent = Article.objects.order_by('-created')[:3]
+        # most_recent = Article.objects.order_by('-created')[:3]
+
+        # Získání tří nejkomentovanějších článků
+        most_commented = get_most_commented_articles()
 
         # Získání všech tagů
         tags = Tag.objects.all()
 
+        # Získání názvu tagu, pro vyhledávání výsledků podle tagů
+        tag_slug = self.kwargs.get('tag_slug')
+
+        # Získání názvu kategorie, pro vyhledávání výsledků podle kategorií
+        category_slug = self.kwargs.get('category_slug')
+
         # Příprava kontextu pro šablonu
         context = super().get_context_data(**kwargs)
-        context['most_recent'] = most_recent
+        context['most_commented'] = most_commented
         context['page_request_var'] = "page"
         context['category_count'] = category_count
         context['tags'] = tags
+        context['tag_slug'] = tag_slug
+        context['category_slug'] = category_slug
+
         context['form'] = self.form
 
         return context

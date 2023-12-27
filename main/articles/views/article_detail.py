@@ -8,7 +8,7 @@ from articles.forms.comment_form import CommentForm
 from articles.models.article import Article
 from articles.models.article_view import ArticleView
 from marketing.forms import EmailSignupForm
-from .utils import get_category_count
+from .utils import get_category_count, get_most_commented_articles
 from taggit.models import Tag
 
 
@@ -47,13 +47,15 @@ class ArticleDetailView(DetailView):
     def get_context_data(self, **kwargs):
         # Získání dalších informací pro kontext šablony
         category_count = get_category_count()
-        most_recent = Article.objects.order_by('-created')[:3]
+        #most_recent = Article.objects.order_by('-created')[:3]
+        most_commented = get_most_commented_articles()
         tags = Tag.objects.all()
         print(tags)
 
         # Příprava kontextu pro šablonu
         context = super().get_context_data(**kwargs)
-        context['most_recent'] = most_recent
+        #context['most_recent'] = most_recent
+        context['most_commented'] = most_commented
         context['page_request_var'] = "page"
         context['category_count'] = category_count
         context['tags'] = tags
