@@ -4,26 +4,31 @@
 
 {% block inner_content %}
 
-
 <!-- Latest articles -->
 <main class="col-lg-8">
   <div class="container">
     <div class="row gy-4 mb-5">
 
       <!-- Description -->
+      <header class="mb-5">
 
-        <!-- Custom description for tag pages -->
-        <header class="mb-5">
-          {% if tag_slug %}
-            <h2>Articles with tag: {{ tag_slug }}</h2>
-          {% elif category_slug %}
-            <h2>Articles with category: {{ category_slug|upper }}</h2>
-          {% else %}
-            <h2>All articles</h2>
-          {% endif %}
-          <p class="text-lg fw-light">To find a specific article, use the search box on the right.</p>
-        </header>
+        <!-- Title -->
+        {% if tag_slug %}
+          <h2>Articles with tag: {{ tag_slug }}</h2>
+        {% elif category_slug %}
+          <h2>Articles with category: {{ category_slug|upper }}</h2>
+        {% elif query %}
+          <h2>Search results for: {{ query }}</h2>
+        {% else %}
+          <h2>All articles</h2>
+        {% endif %}
 
+        <!-- Text -->
+        <p class="text-lg fw-light">
+          To find a specific article, use the search box on the right.
+        </p>
+
+      </header>
 
       <!-- Articles -->
       {% for article in page_obj %}
@@ -56,7 +61,6 @@
           </div>
 
           <!-- Tags -->
-
           <ul class="list-inline mb-2">
             <small class="text-gray-500">[&nbsp</small>
 
@@ -70,8 +74,6 @@
 
             <small class="text-gray-500">]</small>
           </ul>
-
-
 
           <!-- Title -->
           <h3 class="h4">
@@ -121,12 +123,13 @@
       {% endfor %}
     </div>
 
+    <!-- Pagination -->
     {% include '31_articles_pagination.html' with page_obj=page_obj %}
 
-
   </div>
-
 </main>
 
+<!-- Sidebar -->
+{% include '32_articles_sidebar.html' with page_obj=page_obj %}
 
 {% endblock inner_content %}

@@ -1,18 +1,11 @@
 ### Definuje formuláře (na webu) pro aplikaci.
 
-
 from django import forms
 from articles.models.article_comment import ArticleComment
 
 
 class CommentForm(forms.ModelForm):
-    '''
-    Definice formuláře pro komentáře
-
-    Nápověda:
-    models.CharField(): pole, které představuje textový řetězec v databázi
-    widget=forms.Textarea(): specifikuje zobrazení pomocí víceřádkového textové pole (textarea)
-    '''
+    # Pole pro obsah komentáře s vlastními atributy pro vzhled (CSS třídy, placeholder, id, atd.)
     content = forms.CharField(widget=forms.Textarea(attrs={
         'class': 'form-control',
         'placeholder': 'Type your comment',
@@ -21,12 +14,8 @@ class CommentForm(forms.ModelForm):
     }))
 
     class Meta:
-        '''
-        Obsahuje informace o konkrétním chování formuláře vzhledem k modelu.
-
-        Nápověda:
-        model = Comment: Specifikuje, který model bude tento formulář reprezentovat, v tomto případě Comment.
-        fields = ('content'): Určuje, která pole z modelu budou zahrnuta ve formuláři.
-        '''
+        # Specifikace modelu, pro který je formulář vytvořen
         model = ArticleComment
-        fields = ('content', )
+
+        # Seznam polí, která budou zahrnuta ve formuláři
+        fields = ('content',)

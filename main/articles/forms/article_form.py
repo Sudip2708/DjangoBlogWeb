@@ -1,19 +1,13 @@
-### Definuje formuláře (na webu) pro aplikaci.
-
+### Definuje formuláře (na webu) pro pole s použitím TinyMCEWidget.
 
 from django import forms
+
+from .tinymce_winget import TinyMCEWidget
 from articles.models.article import Article
-from .tiny_mce_winget import TinyMCEWidget
 
 
 class ArticleForm(forms.ModelForm):
-    '''
-    Definice formuláře pro model article s použitím TinyMCEWidgetu
-
-    Nápověda:
-    models.CharField(): pole, které představuje textový řetězec v databázi
-    widget=TinyMCEWidget(...): Specifikuje použití vlastního widgetu TinyMCEWidget pro pole content formuláře
-    '''
+    # Pole pro obsah článku s použitím TinyMCEWidget pro bohatý textový formát
     content = forms.CharField(
         widget=TinyMCEWidget(
             attrs={'required': False, 'cols': 30, 'rows': 10}
@@ -21,13 +15,11 @@ class ArticleForm(forms.ModelForm):
     )
 
     class Meta:
-        '''
-        Obsahuje informace o konkrétním chování formuláře vzhledem k modelu.
-
-        Nápověda:
-        model = Article: Specifikuje, který model bude tento formulář reprezentovat, v tomto případě Article.
-        fields = ('title', 'overview', ...): Určuje, která pole z modelu budou zahrnuta ve formuláři.
-        '''
+        # Specifikace modelu, pro který je formulář vytvořen
         model = Article
-        fields = ('title', 'overview', 'content', 'thumbnail',
-        'categories', 'featured', 'previous_article', 'next_article')
+
+        # Seznam polí, která budou zahrnuta ve formuláři
+        fields = (
+            'title', 'overview', 'content', 'thumbnail',
+            'categories', 'featured', 'previous_article', 'next_article'
+        )

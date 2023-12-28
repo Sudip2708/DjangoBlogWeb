@@ -10,10 +10,10 @@
       <p class="text-lg fw-light">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
     </header>
 
-    <!-- 3 articles -->
+    <!-- Articles -->
     <div class="row gy-4">
 
-      <!-- One article -->
+      <!-- Articles cycle -->
       {% for article in latest %}
       <div class="col-md-4">
 
@@ -34,7 +34,7 @@
           <ul class="list-inline mb-1">
             {% for category in article.categories.all %}
               <li class="list-inline-item">
-                <a class="small fw-bold text-uppercase small" href="!#">
+                <a class="small fw-bold text-uppercase small" href="{% url 'article-category-list' category_slug=category.slug %}">
                   {{ category }}
                 </a>
               </li>
@@ -44,7 +44,7 @@
 
         <!-- Title -->
         <h3 class="h4">
-          <a class="text-dark" href="article.html">
+          <a class="text-dark" href="{{ article.get_absolute_url }}">
             {{ article.title }}
           </a>
         </h3>

@@ -1,21 +1,16 @@
-### Definuje modely (tabulky) pro aplikaci.
+### Definuje modely (tabulky) pro kategorie.
 
 from django.db import models
 from autoslug import AutoSlugField
 
-class ArticleCategory(models.Model):
-    '''
-    Model pro databázovou tabulku pro kategorie příspěvku
 
-    Nápověda:
-    [definice pole]
-    models.CharField(): pole, které představuje textový řetězec v databázi
-    [parametry]
-    max_length: parametr, který určuje maximální délku textového řetězce (počet znaků)
-    '''
+class ArticleCategory(models.Model):
+    # Název kategorie omezený na 25 znaků
     title = models.CharField(max_length=25)
+
+    # Vytvoření unikátního "slugu" pro URL z názvu kategorie
     slug = AutoSlugField(populate_from='title', unique=True)
 
-
     def __str__(self):
+        # Textová reprezentace instance (pro administrační rozhraní a výpisy)
         return self.title

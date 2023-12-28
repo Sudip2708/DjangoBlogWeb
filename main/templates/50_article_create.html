@@ -1,17 +1,32 @@
-{% extends '00_base.html' %}
+{% extends '20_main.html' %}
+
 {% load crispy_forms_tags %}
 
-{% block main_content %}
+{% block inner_content %}
 
-<div class="container mb-5 mt-5">
-<h3>{{ title }} an article</h3>
-{{ form.media }}
-<form method="POST" action="." enctype="multipart/form-data">
-    {% csrf_token %}
-    {{ form|crispy }}
-    <button class="btn btn-primary" type="submit">Submit</button>
-</form>
+<main class="col-lg-8">
+  <div class="container">
 
-</div>
+    <!-- Title -->
+    <header class="mb-5">
+      <h2>Create an article</h2>
+    </header>
 
-{% endblock main_content %}
+    <!-- Form -->
+    <form method="POST" action="." enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form|crispy }}
+
+        <!-- Submit Button -->
+        <button class="btn btn-primary" type="submit">
+            Submit
+        </button>
+    </form>
+
+  </div>
+</main>
+
+<!-- Sidebar -->
+{% include '32_articles_sidebar.html' with page_obj=page_obj %}
+
+{% endblock inner_content %}

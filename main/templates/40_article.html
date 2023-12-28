@@ -1,11 +1,8 @@
 {% extends '20_main.html' %}
+
 {% load static %}
 
 {% block inner_content %}
-
-<!-- Pro případ, kdyby obrázky vykukovali ze stránky: -->
-<!--  <style>.article-body img {width: 100%;}</style> -->
-
 
 <!-- Selected article -->
 <main class="col-lg-8">
@@ -82,5 +79,7 @@
   </div>
 </main>
 
+<!-- Sidebar -->
+{% include '45_article_sidebar.html' with page_obj=page_obj %}
 
 {% endblock inner_content %}

@@ -16,9 +16,15 @@
 
     <!-- Users profile picture -->
     {% if comment.user.author %}
-      <img class="img-fluid rounded-circle flex-shrink-0" src="{{ comment.user.author.profile_picture.url }}" alt="profile picture" width="50"/>
+      <img class="img-fluid rounded-circle flex-shrink-0"
+           src="{{ comment.user.author.profile_picture.url }}"
+           alt="profile picture"
+           width="50"/>
     {% else %}
-      <img class="img-fluid rounded-circle flex-shrink-0" src="{% static 'img/user.svg' %}" alt="profile picture" width="50"/>
+      <img class="img-fluid rounded-circle flex-shrink-0"
+           src="{% static 'img/user.svg' %}"
+           alt="profile picture"
+           width="50"/>
     {% endif %}
 
     <!-- Users info and comment -->
@@ -28,10 +34,14 @@
       <strong>{{ comment.user.username }}</strong>
 
       <!-- Comment date -->
-      <p class="small text-gray-500">{{ comment.created|timesince }} ago</p>
+      <p class="small text-gray-500">
+        {{ comment.created|timesince }} ago
+      </p>
 
       <!-- Comment -->
-      <p class="mb-0 text-sm">{{ comment.content }}</p>
+      <p class="mb-0 text-sm">
+        {{ comment.content }}
+      </p>
 
     </div>
 

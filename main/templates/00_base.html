@@ -1,37 +1,35 @@
 <!DOCTYPE html>
 <html>
 
-<!-- Připojení kódu ze souboru "01_base_head.html" (hlavička webu) -->
-{% include "01_base_head.html" %}
+  <!-- Head -->
+  {% include "01_base_head.html" %}
 
-<!-- Tělo webu -->
-<body>
+  <body>
 
-    <!-- Připojení kódu ze souboru "02_base_header.html" (hlavička stránky) -->
+    <!-- Header -->
     {% include '02_base_header.html' %}
 
-    <!-- Připojení kódu pro zprávu oznamu -->
-    <!-- Pokud stránka obsahuje messages (krátké oznami), vytvoř neuspořádaný seznam a zprávy vypiš -->
+    <!-- Flash messages -->
     {% if messages %}
-        <ul class="messages">
-            {% for message in messages %}
-                <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>
-                    {{ message }}
-                </li>
-            {% endfor %}
-        </ul>
+      <ul class="messages">
+        {% for message in messages %}
+          <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>
+            {{ message }}
+          </li>
+        {% endfor %}
+      </ul>
     {% endif %}
 
-    <!-- Připojení kódu pro (tělo) hlavní obsah stránky -->
+    <!-- Main content -->
     {% block main_content %}
     {% endblock main_content %}
 
-    <!-- Připojení kódu pro (patičku) spodní část stránky -->
+    <!-- Footer -->
     {% include '03_base_footer.html' %}
 
-    <!-- Připojení skriptů -->
+    <!-- Scripts -->
     {% include '04_base_scripts.html' %}
 
-</body>
+  </body>
 
 </html>

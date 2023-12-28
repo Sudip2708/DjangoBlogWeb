@@ -1,0 +1,16 @@
+<!-- Sidebar for article create page-->
+<aside class="col-lg-4">
+
+  <!-- Search Bar Widget -->
+  {% include '21_sidebar_search.html' %}
+
+  <!-- Similar Articles Widget -->
+  {% include '25_sidebar_similar_articles.html' with similar_articles=similar_articles %}
+
+  <!-- Categories Widget -->
+  {% include '22_sidebar_categories.html' with page_obj=page_obj %}
+
+  <!-- Tags Widget -->
+  {% include '23_sidebar_tags.html' with tags=tags %}
+
+</aside>

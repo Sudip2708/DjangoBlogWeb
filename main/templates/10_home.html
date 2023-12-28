@@ -1,111 +1,26 @@
 {% extends '00_base.html' %}
-
 {% load static %}
-
 {% block main_content %}
 
+<!-- Hero Section-->
 {% include "11_home_hero.html" %}
 
+<!-- Intro Section-->
 {% include "12_home_intro.html" %}
 
-
 <!-- Featured articles -->
-<section class="pt-0">
-  <div class="container">
+{% include "13_home_featured.html" %}
 
-    <!-- Article -->
-    {% for article in object_list %}
-    <div class="row d-flex align-items-stretch g-0">
+<!-- Divider Section-->
+{% include "14_home_divider.html" %}
 
-      <!-- Thumbnail before the article -->
-      {% if forloop.counter|divisibleby:2 %}
-        <div class="col-lg-5">
-          <img class="img-fluid" src="{{ article.thumbnail.url }}" alt="article_thumbnail">
-        </div>
-      {% endif %}
+<!-- Latest articles -->
+{% include "15_home_latest.html" %}
 
-      <div class="col-lg-7">
-        <div class="text-inner d-flex align-items-center h-100 bg-light">
-          <div class="content px-4 px-lg-5">
+<!-- Newsletter Section -->
+{% include "16_home_newsletter.html" %}
 
-            <!-- Category -->
-            <ul class="list-inline mb-1">
-              {% for category in article.categories.all %}
-                <li class="list-inline-item">
-                  <a class="text-uppercase text-dark small fw-bold" href="{% url 'article-category-list' category_slug=category.slug %}">
-                    {{ category }}
-                  </a>
-                </li>
-              {% endfor %}
-            </ul>
-
-            <!-- Title -->
-            <h2 class="h4 mb-3">
-              <a class="text-dark" href="{{ article.get_absolute_url }}">
-                {{ article.title }}
-              </a>
-            </h2>
-
-            <!-- Overview -->
-            <p class="text-sm">
-              {{ article.overview }}
-            </p>
-
-            <!-- Footer -->
-            <ul class="list-inline list-separated text-gray-500 mb-0">
-
-              <!-- Author -->
-              <li class="list-inline-item">
-
-                <!-- Link to the author -->
-                <a class="d-flex align-items-center flex-wrap text-reset" href="!#">
-
-                  <!-- Profile picture -->
-                  <div class="avatar flex-shrink-0">
-                    <img class="img-fluid" src="{{ article.author.profile_picture.url }}" alt="profile_picture"/>
-                  </div>
-
-                  <!-- Name -->
-                  <small>{{ article.author }}</small>
-                </a>
-              </li>
-
-              <!-- Created -->
-              <li class="list-inline-item small">
-                <i class="far fa-clock"></i>
-                {{ article.created|timesince }} ago
-              </li>
-
-              <!-- Number of comments -->
-              <li class="list-inline-item small">
-                <i class="far fa-comment"></i>
-                12
-              </li>
-
-            </ul>
-
-          </div>
-        </div>
-      </div>
-
-      <!-- Thumbnail after the article -->
-      {% if not forloop.counter|divisibleby:2 %}
-        <div class="col-lg-5">
-          <img class="img-fluid" src="{{ article.thumbnail.url }}" alt="article_thumbnail">
-        </div>
-      {% endif %}
-
-    </div>
-    {% endfor %}
-
-  </div>
-</section>
-
-
-{% include "13_home_divider.html" %}
-
-{% include "14_home_latest.html" %}
-
-{% include "15_home_newsletter.html" %}
+<!-- Gallery Section-->
+{% include "17_home_gallery.html" %}
 
 {% endblock main_content %}

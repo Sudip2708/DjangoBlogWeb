@@ -7,8 +7,16 @@
 
       <!-- Description -->
       <div class="col-md-6">
+
+        <!-- Title -->
         <h2>Subscribe to Newsletter</h2>
-        <p class="text-lg lh-lg fw-light mb-4">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+
+        <!-- Comment -->
+        <p class="text-lg lh-lg fw-light mb-4">
+          Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod /
+          tempor incididunt ut labore et dolore magna aliqua.
+        </p>
+
       </div>
 
       <!-- Form -->
@@ -16,8 +24,15 @@
         <form action="." method="article">
           {% csrf_token %}
           <div class="input-group">
+
+            <!-- Email input field -->
             <input class="form-control p-3" type="email" name="email" id="email" placeholder="Type your email address">
-            <button class="btn btn-dark" type="submit">Subscribe</button>
+
+            <!-- Submit button -->
+            <button class="btn btn-dark" type="submit">
+              Subscribe
+            </button>
+
           </div>
         </form>
       </div>

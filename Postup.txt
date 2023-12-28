@@ -272,6 +272,9 @@ Zobrazení tagů v postranním panelu:
 • A do kontextu připsat: context['tags'] = Tag.objects.all()
 • Otevřít templates/sidebar_tags a zapsat kód pro zobrazení všech tagů
 ###
+Přidání zobrazení výsledků vyhledávání do stránky se všemi články.
+Vyčištění a unifikace kódu + Přidání popisů
+###
 Zpráva uživatelů v Django Allauth (bez možnosti přihlášení prostřednictvím sociálních sítí)
 •
 

@@ -1,0 +1,51 @@
+<!-- Latest Articles Widget -->
+
+<div class="card mb-5">
+  <div class="card-body row ">
+
+    <!-- Section name -->
+    <h3 class="h6 mb-3">
+      Similar articles
+    </h3>
+
+    <!-- Loop through most_recent-->
+    {% for article in similar_articles %}
+      <a class="text-reset mb-3" href="{{ article.get_absolute_url }}">
+        <div class="d-flex align-items-center">
+
+          <!-- Article Thumbnail -->
+          <img class="img-fluid flex-shrink-0" src="{{ article.thumbnail.url }}" alt="article_thumbnail" width="55">
+
+          <!-- Article overview -->
+          <div class="ms-3">
+
+            <!-- Article title -->
+            <p class="mb-2 fw-bold text-gray-700 lh-1">
+              {{ article.title }}
+            </p>
+
+            <!-- Article counts -->
+            <ul class="list-inline list-separated text-gray-500 d-flex align-items-center">
+
+              <!-- Article views count -->
+              <li class="list-inline-item small">
+                <i class="far fa-eye"></i>
+                {{ article.view_count }}
+              </li>
+
+              <!-- Article comment count -->
+              <li class="list-inline-item small">
+                <i class="far fa-comment"></i>
+                {{ article.comment_count }}
+              </li>
+
+            </ul>
+
+          </div>
+
+        </div>
+      </a>
+    {% endfor %}
+
+  </div>
+</div>

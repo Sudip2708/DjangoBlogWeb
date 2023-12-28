@@ -1,24 +1,17 @@
 {% load static %}
 
-<!-- JavaScript files -->
-
-<!-- Bootstrap Bundle: obsahuje Bootstrap JavaScript soubory, včetně funkcí jako je modální okna, nabídka, posuvníky a další -->
+<!-- Bootstrap Bundle -->
 <script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
 
-<!-- GLightbox: je knihovna pro vytváření responsivních lightboxů pro zobrazení obrázků nebo videí na webových stránkách -->
+<!-- Lightbox -->
 <script src="{% static 'vendor/glightbox/js/glightbox.js' %}"></script>
 
-<!-- Theme Script: je vlastní JavaScript skript, který obsahuje kód specifický pro danou webovou stránku nebo aplikaci-->
+<!-- Theme Script-->
 <script src="{% static 'js/theme.js' %}"></script>
 
 <!-- FontAwesome CSS - loading as last, so it doesn't block rendering-->
-<!-- Tato funkce pomáhá zabránit vložení neautorizovaných nebo pozměněných souborů do stránky. -->
-<!-- Hash je zde použit k ověření integrity staženého souboru. -->
-<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="stylesheet"
+      href="https://use.fontawesome.com/releases/v5.7.1/css/all.css"
+      integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr"
+      crossorigin="anonymous">
 
-
-<!-- Načtení externího JavaScript souboru highlight.pack.js ze složky js (přidáno pro TinyMCE)  -->
-<!-- <script src='{% static "js/highlight.pack.js" %}'></script>  -->
-
-<!-- Volání této metody zajistí, že veškerý kód na stránce, který je označen pro zvýrazňování syntaxe, bude zvýrazněn podle odpovídajícího programovacího jazyka -->
-<!-- <script>hljs.initHighlightingOnLoad();</script>  -->

@@ -1,47 +1,50 @@
-### Definuje pohledy (views), které obsluhují HTTP požadavky
+### Definice třídy pohledu pro hledání v článcích
 
-
-from django.shortcuts import render
+from django.views.generic import ListView
 from django.db.models import Q
-from django.views.generic import View
+from django.shortcuts import redirect
+from django.urls import reverse
+
 from articles.models.article import Article
-from marketing.forms import EmailSignupForm
+from articles.views.article_common_contex import CommonContextMixin
 
 
-form = EmailSignupForm()
+class SearchView(CommonContextMixin, ListView):
+    # Použitý model pro zobrazení výsledků vyhledávání
+    model = Article
 
+    # Cesta k šabloně pro zobrazení výsledků vyhledávání
+    template_name = '30_articles.html'
 
-class SearchView(View):
-    '''
-    Tento kód definuje pohled (SearchView) v rámci frameworku Django, který zdědil od třídy View.
-    Pohled zpracovává HTTP GET požadavek na vyhledávání článků podle zadaného dotazu.
-    Tento kód v podstatě umožňuje uživateli vyhledávat články podle zadaného dotazu a zobrazit výsledky na stránce 'search_results.html'.
-    Klíčové body kódu:
-    queryset = Article.objects.all(): Na začátku pohledu se vytvoří queryset obsahující všechny články z databáze.
-    query = request.GET.get('q'): Získání hodnoty z parametru 'q' ve GET požadavku, což je dotaz zadaný uživatelem při vyhledávání.
-    Podmíněné filtrování: Pokud je zadán dotaz (if query:), provede se filtrování článků podle titulu nebo přehledu, které obsahuje zadaný dotaz. Používá se Q objekt pro vytvoření složené podmínky (logické OR).
-    distinct(): etoda distinct() slouží k odstranění duplicitních výsledků, pokud existují.
-    Příprava kontextu: Vytváření slovníku context, který obsahuje výsledky vyhledávání.
-    render(): Vykreslení šablony 'search_results.html' s předaným kontextem, který obsahuje výsledky vyhledávání.
-    '''
+    # Počet výsledků na stránku
+    paginate_by = 4
+
     def get(self, request, *args, **kwargs):
-        # Získání všech článků z databáze
-        queryset = Article.objects.all()
-
-        # Získání hodnoty z parametru 'q' ve GET požadavku (dotaz vyhledávání)
-        query = request.GET.get('q')
-
-        # Pokud je zadán dotaz, provede se filtrování článků podle titulu nebo přehledu
+        # Získání vyhledávacího dotazu z URL nebo GET parametru
+        query = self.request.GET.get('q')
         if query:
-            queryset = queryset.filter(
-                Q(title__icontains=query) |  # Hledání podle titulu (ignoruje velikost písmen)
-                Q(overview__icontains=query)  # Hledání podle přehledu (ignoruje velikost písmen)
-            ).distinct()  # Odstranění duplicitních výsledků
+            # Přesměrování na stránku s výsledky vyhledávání
+            return redirect(reverse('article-search-results', kwargs={'query': query}))
+        else:
+            # Pokud není zadán vyhledávací dotaz, pokračuj standardním získáním dat
+            return super().get(request, *args, **kwargs)
 
-        # Příprava kontextu pro šablonu
-        context = {
-            'queryset': queryset  # Předání výsledků do šablony
-        }
+    def get_queryset(self):
+        # Získání vyhledávacího dotazu z URL nebo GET parametru
+        query = self.kwargs.get('query') or self.request.GET.get('q')
+        if query:
+            # Filtrace článků podle titulu nebo přehledu obsahujícího vyhledávací dotaz
+            queryset = Article.objects.filter(
+                Q(title__icontains=query) | Q(overview__icontains=query)
+            ).distinct()
+            return queryset.order_by('-created')
+        else:
+            # Pokud není zadán vyhledávací dotaz, vrátit prázdnou množinu
+            return Article.objects.none()
 
-        # Vykreslení šablony s výsledky vyhledávání
-        return render(request, 'search_results.html', context)
+    def get_context_data(self, **kwargs):
+        # Získání běžného kontextu a přidání vyhledávacího dotazu
+        context = super().get_context_data(**kwargs)
+        context['query'] = self.kwargs.get('query') or self.request.GET.get('q')
+        return context
+

@@ -5,63 +5,15 @@
 {% block main_content %}
 
 <section>
-    <div class="container">
-        <div class="row gy-5">
+  <div class="container">
+    <div class="row gy-5">
 
-            <!-- Context -->
-            {% block inner_content %}
-            {% endblock inner_content %}
+      <!-- Context -->
+      {% block inner_content %}
+      {% endblock inner_content %}
 
-            <!-- Sidebar -->
-            <aside class="col-lg-4">
-
-                <!-- Search Bar Widget -->
-                {% include '21_sidebar_search.html' %}
-
-                {% if tag_slug %}
-
-                    <!-- Tags Widget -->
-                    {% include '24_sidebar_tags.html' with tags=tags %}
-
-                    <!-- Latest Articles Widget -->
-                    {% include '22_sidebar_comments.html' with category_count=category_count %}
-
-                    <!--  Categories Widget -->
-                    {% include '23_sidebar_categories.html' with page_obj=page_obj %}
-
-
-
-                {% elif category_slug %}
-
-                    <!--  Categories Widget -->
-                    {% include '23_sidebar_categories.html' with page_obj=page_obj %}
-
-                    <!-- Latest Articles Widget -->
-                    {% include '22_sidebar_comments.html' with category_count=category_count %}
-
-                    <!-- Tags Widget -->
-                    {% include '24_sidebar_tags.html' with tags=tags %}
-
-                {% else %}
-                    <!-- Latest Articles Widget -->
-                    {% include '22_sidebar_comments.html' with category_count=category_count %}
-
-                    <!--  Categories Widget -->
-                    {% include '23_sidebar_categories.html' with page_obj=page_obj %}
-
-                    <!-- Tags Widget -->
-                    {% include '24_sidebar_tags.html' with tags=tags %}
-
-                {% endif %}
-
-
-
-
-
-            </aside>
-
-        </div>
     </div>
+  </div>
 </section>
 
 {% endblock main_content %}

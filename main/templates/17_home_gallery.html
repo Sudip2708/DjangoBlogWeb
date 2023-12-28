@@ -1,0 +1,57 @@
+{% load static %}
+
+<!-- Temporary style settings for displaying photos -->
+<style>
+  .height-400 {
+    height: 400px;
+    width: 100%;
+  }
+
+  @media (min-width: 1350px) and (max-width: 1500px) {
+    .height-400 {
+      height: 350px;
+    }
+  }
+
+  @media (min-width: 576px) and (max-width: 1349px) {
+    .height-400 {
+      height: 300px;
+    }
+  }
+
+  @media (max-width: 576px) {
+    .height-400 {
+      height: auto;
+    }
+  }
+</style>
+
+<!-- Gallery Section (Most Views) -->
+<section class="p-0">
+  <div class="row g-0">
+
+    <!-- Articles cycle -->
+    {% for article in most_viewed %}
+    <div class="col-lg-3 col-md-3 col-sm-6">
+
+      <!-- Link -->
+      <div class="glightbox d-block position-relative"
+        data-gallery="gallery"
+        data-glightbox="{{ article.title }}">
+
+        <!-- Picture -->
+        <img class="img-fluid height-400" src="{{ article.thumbnail.url }}" alt="{{ article.title }}">
+
+        <!-- Icon -->
+        <div class="fsc-hover-overlay">
+          <i class="fas fa-search fsc-hover-overlay-icon">
+            {{ article.title }}
+          </i>
+        </div>
+
+      </div>
+    </div>
+    {% endfor %}
+
+  </div>
+</section>
