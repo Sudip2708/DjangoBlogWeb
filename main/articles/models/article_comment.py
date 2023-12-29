@@ -23,11 +23,3 @@ class ArticleComment(models.Model):
     def __str__(self):
         # Textová reprezentace instance (pro administrační rozhraní a výpisy)
         return self.user.username
-
-    def save(self, *args, **kwargs):
-        # Při ukládání komentáře se zvýší počet komentářů u příslušného článku
-        self.article.comment_count += 1
-        self.article.save()
-
-        # Volání metody save() nad nadřazenou třídou pro provedení skutečného uložení komentáře
-        super(ArticleComment, self).save(*args, **kwargs)

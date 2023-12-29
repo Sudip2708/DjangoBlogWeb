@@ -70,12 +70,13 @@
               </li>
 
               <!-- Number of comments -->
-              {% if article.comment_count is not None %}
-              <li class="list-inline-item small">
-                <i class="far fa-comment"></i>
-                {{ article.comment_count }}
-              </li>
+              {% if article.comment_count %}
+                <li class="list-inline-item small">
+                  <i class="far fa-comment"></i>
+                  {{ article.comment_count }}
+                </li>
               {% endif %}
+
             </ul>
 
           </div>

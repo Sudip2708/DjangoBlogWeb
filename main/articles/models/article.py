@@ -100,3 +100,10 @@ class Article(models.Model):
     def get_tags(self):
         # Vrátí všechny tagy přiřazené k článku
         return self.tags.all()
+
+    @property
+    def comment_count(self):
+        # Vrátí počet komentářů k článku
+        return self.comments.count()
+
+
