@@ -275,7 +275,18 @@ Zobrazení tagů v postranním panelu:
 Přidání zobrazení výsledků vyhledávání do stránky se všemi články.
 Vyčištění a unifikace kódu + Přidání popisů
 ###
-Zpráva uživatelů v Django Allauth (bez možnosti přihlášení prostřednictvím sociálních sítí)
-•
+Přepis pole pro počítání počtu komentářů na @property v Article(models.Model)
+• Smazat řádek s polem comment_count = models.PositiveIntegerField(default=0)
+• Přidat @property s definicí funkce: return self.comments.count()
+• $ python manage.py makemigrations
+• $ python manage.py migrate
+• V modelu pro komentáře odstranit připočítávání komentářů def save(self, *args, **kwargs)
+• Ke šablonám k zobrazení připsat podmínku: {% if article.comment_count %}
+###
+Přihlášení prostřednictvím Google
+• Do main/urls.py přidat cestu: path('accounts/', include('allauth.urls')), a path('accounts/', include('allauth.socialaccount.urls')),,
+• V templates vytvořit adresář allauth a překopírovat do něj soubory z adresáře templates AllAuth pro pozdější úpravu
+• Nastavit přihlášení přes google: https://medium.com/powered-by-django/add-social-authentication-django-allauth-google-oauth-example-d8d69a603356
+###
 
 

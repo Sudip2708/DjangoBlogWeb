@@ -57,6 +57,10 @@ urlpatterns = [
 
     # URL pro účet uživatele (registrace, přihlášení, atd.)
     path('accounts/', include('allauth.urls')),
+
+
+    # URL pro přihlášení pomocí sociálních sítí
+    path('accounts/', include('allauth.socialaccount.urls')),
 ]
 
 # Přidání URL patternů pro statické a média soubory, pokud je nastavený DEBUG mód

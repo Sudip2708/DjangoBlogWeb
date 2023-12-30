@@ -18,6 +18,8 @@ DEBUG = True
 ALLOWED_HOSTS = []
 
 
+
+
 # Application definition
 
 INSTALLED_APPS = [
@@ -32,11 +34,19 @@ INSTALLED_APPS = [
     'tinymce',
     'crispy_forms',
     'crispy_bootstrap5',
-    'allauth',
-    'allauth.account',
     'autoslug',
     'taggit',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.google',
 ]
+
+
+
+SITE_ID = 1
+
+
 
 # Nastavení Crispy forms na Bottstrap 5:
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
@@ -169,12 +179,7 @@ TINYMCE_DEFAULT_CONFIG = {
 }
 
 # Definice backendů pro autentizaci
-'''
-AUTHENTICATION_BACKENDS určuje pořadí, ve kterém jsou backendy zkoušeny pro ověření uživatele. Pokud první backend nedokáže ověřit uživatele, bude použit další v seznamu
-Tato konfigurace specifikuje, jaké backendy budou použity pro ověření identity uživatele
-'django.contrib.auth.backends.ModelBackend': Standardní Django backend pro autentizaci založený na databázovém modelu. Používá databázový model User pro ukládání a ověřování uživatelů
-'allauth.account.auth_backends.AuthenticationBackend': Backend poskytovaný frameworkem django-allauth. Tento backend rozšiřuje funkce autentizace a zahrnuje podporu pro různé metody přihlašování, včetně sociálního přihlašování
-'''
+
 AUTHENTICATION_BACKENDS = [
     # Needed to login by username in Django admin, regardless of `allauth`
     'django.contrib.auth.backends.ModelBackend',
@@ -182,8 +187,61 @@ AUTHENTICATION_BACKENDS = [
     # `allauth` specific authentication methods, such as login by email
     'allauth.account.auth_backends.AuthenticationBackend',
 ]
+# Tato volba určuje, zda je povinné mít e-mail při vytváření uživatelského účtu:
+# Nastavením na True vyžadujete, aby uživatel poskytl e-mail při registraci.
+ACCOUNT_EMAIL_REQUIRED = True
+# Tato volba určuje, zda je povinné mít uživatelské jméno při vytváření uživatelského účtu:
+# Nastavením na False umožňujete uživatelům vytvářet účty bez uživatelského jména.
+ACCOUNT_USERNAME_REQUIRED = False
+# Tato volba nastavuje metodu autentizace pro uživatelský účet.
+# V tomto případě je nastaveno na 'email', což znamená, že se uživatelé přihlašují pomocí své e-mailové adresy.
+ACCOUNT_AUTHENTICATION_METHOD = 'email'
+# Tato volba určuje, zda je vyžadováno ověření e-mailu po registraci.
+# Nastavením na 'optional' znamená, že ověření e-mailu je volitelné pro uživatele.
+# Může být nastaveno i na 'mandatory' (povinné) nebo 'none' (žádné ověření).
+ACCOUNT_EMAIL_VERIFICATION = 'optional'
+# Tato volba určuje, kam bude uživatel přesměrován po úspěšném přihlášení.
+# V tomto případě je uživatel přesměrován na domovskou stránku '/'.
+LOGIN_REDIRECT_URL = '/'
 
-# Dočasně pro sprovoznění
+# Provider specific settings
+SOCIALACCOUNT_PROVIDERS = {
+    'google': {
+        'APP': {
+            'client_id': '493878433253-mrt023g89cufncgaked1bvelcc6h7csv.apps.googleusercontent.com',
+            'secret': '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',
+            'key': ''
+        },
+        'SCOPE': [
+            'openid',
+            'profile',
+            'email',
+        ],
+        'AUTH_PARAMS': {
+            'access_type': 'online',
+        }
+    }
+}
+'''
+'openid': Tato položka znamená, že vaše aplikace chce používat OpenID Connect pro autentizaci uživatele. Získáváním openid získáváte identifikátor uživatele, který můžete použít k jednoznačnému identifikování uživatele.
+'email': Tato položka znamená, že žádáte o přístup k e-mailové adrese uživatele. Běžně je e-mailová adresa jednou z informací poskytovaných OpenID Connect.
+'profile': Tato položka znamená, že žádáte o přístup k dalším profilovým informacím o uživateli. To může zahrnovat jméno, příjmení, obrázek profilu a další informace, které jsou veřejně dostupné.
+'access_type': 'online': Určuje typ přístupu. V tomto případě je nastaveno na 'online', což znamená, že aplikace žádá o přístup online, a uživatel je přesměrován k přihlášení, pokud není přihlášen.
+'''
+
+# Dočasně pro zprovoznění
+# Mailchimp je platforma pro e-mailový marketing
 MAILCHIMP_API_KEY = ''
 MAILCHIMP_DATA_CENTER = ''
 MAILCHIMP_EMAIL_LIST_ID = ''
+
+CRISPY_TEMPLATE_PACK = 'bootstrap5'
+ACCOUNT_FORMS = {
+    'login': 'allauth.account.forms.LoginForm',
+    'signup': 'allauth.account.forms.SignupForm',
+    'add_email': 'allauth.account.forms.AddEmailForm',
+    'change_password': 'allauth.account.forms.ChangePasswordForm',
+    'set_password': 'allauth.account.forms.SetPasswordForm',
+    'reset_password': 'allauth.account.forms.ResetPasswordForm',
+    'reset_password_from_key': 'allauth.account.forms.ResetPasswordKeyForm',
+}

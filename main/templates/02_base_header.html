@@ -39,19 +39,46 @@
         </li>
 
         <!-- Contact -->
-        <li class="nav-item">
+        <li class="nav-item border-end">
           <a class="nav-link " href="#">
             Contact
           </a>
         </li>
 
-        <!-- Create article (for login users) -->
-        {% if request.user.is_staff %}
-        <li class="nav-item">
-          <a class="nav-link " href="{% url 'article-create' %}">
-            Create article
-          </a>
-        </li>
+        <!-- Items for login users -->
+        {% if user.is_authenticated %}
+
+          <!-- Create article -->
+          <li class="nav-item">
+            <a class="nav-link " href="{% url 'article-create' %}">
+              Create
+            </a>
+          </li>
+
+          <!-- Account management -->
+          <li class="nav-item">
+            <a class="nav-link " href="#">
+              Account
+            </a>
+          </li>
+
+          <!-- Loging out -->
+          <li class="nav-item">
+            <a class="nav-link " href="{% url 'account_logout' %}">
+              Logout
+            </a>
+          </li>
+
+        <!-- Items for unlogin users -->
+        {% else %}
+
+          <!-- Loging in -->
+          <li class="nav-item">
+            <a class="nav-link " href="{% url 'account_login' %}">
+              Login
+            </a>
+          </li>
+
         {% endif %}
 
         <!-- Search and Languages -->
