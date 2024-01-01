@@ -13,6 +13,8 @@ from articles.views.article_list import ArticleListView
 from articles.views.article_update import ArticleUpdateView
 from articles.views.search import SearchView
 from marketing.views import email_list_signup
+from allauth.account.views import LoginView, SignupView
+from users.views import manage_favorites
 
 
 urlpatterns = [
@@ -61,6 +63,11 @@ urlpatterns = [
 
     # URL pro přihlášení pomocí sociálních sítí
     path('accounts/', include('allauth.socialaccount.urls')),
+
+    path('accounts/login/', LoginView.as_view(), name='account_login'),
+    path('accounts/signup/', SignupView.as_view(), name='account_signup'),
+
+    path('manage_favorites/', manage_favorites, name='manage_favorites'),
 ]
 
 # Přidání URL patternů pro statické a média soubory, pokud je nastavený DEBUG mód

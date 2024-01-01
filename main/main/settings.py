@@ -29,6 +29,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'users',
     'articles',
     'marketing',
     'tinymce',
@@ -196,13 +197,28 @@ ACCOUNT_USERNAME_REQUIRED = False
 # Tato volba nastavuje metodu autentizace pro uživatelský účet.
 # V tomto případě je nastaveno na 'email', což znamená, že se uživatelé přihlašují pomocí své e-mailové adresy.
 ACCOUNT_AUTHENTICATION_METHOD = 'email'
-# Tato volba určuje, zda je vyžadováno ověření e-mailu po registraci.
-# Nastavením na 'optional' znamená, že ověření e-mailu je volitelné pro uživatele.
-# Může být nastaveno i na 'mandatory' (povinné) nebo 'none' (žádné ověření).
-ACCOUNT_EMAIL_VERIFICATION = 'optional'
+
 # Tato volba určuje, kam bude uživatel přesměrován po úspěšném přihlášení.
 # V tomto případě je uživatel přesměrován na domovskou stránku '/'.
 LOGIN_REDIRECT_URL = '/'
+ACCOUNT_LOGIN_ON_EMAIL_CONFIRMATION = 'auto'
+ACCOUNT_LOGOUT_ON_GET = True
+#Zakázání potvrzovacího pole pro přihlášení k soc. sítím
+SOCIALACCOUNT_LOGIN_ON_GET=True
+
+
+# Nastavení pro vývoj:
+ACCOUNT_EMAIL_VERIFICATION = "none"
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+# Nastavení pro produkci:
+# Tato volba určuje, zda je vyžadováno ověření e-mailu po registraci.
+# Nastavením na 'optional' znamená, že ověření e-mailu je volitelné pro uživatele.
+# Může být nastaveno i na 'mandatory' (povinné) nebo 'none' (žádné ověření).
+#ACCOUNT_EMAIL_VERIFICATION = "mandatory"
+#EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+#+Dále je třeba nastavit další informace o SMTP serveru, jako jsou EMAIL_HOST, EMAIL_PORT, EMAIL_USE_TLS, atd. Podle konkrétního nastavení vašeho SMTP serveru.
+
 
 # Provider specific settings
 SOCIALACCOUNT_PROVIDERS = {
@@ -212,6 +228,7 @@ SOCIALACCOUNT_PROVIDERS = {
             'secret': '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',
             'key': ''
         },
+        'EMAIL_AUTHENTICATION': True,
         'SCOPE': [
             'openid',
             'profile',

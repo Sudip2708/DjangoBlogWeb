@@ -1,0 +1,202 @@
+{% extends '20_main.html' %}
+{% load account %}
+{% load static %}
+{% load allauth account socialaccount %}
+
+
+
+{% block inner_content %}
+
+<!-- Style for divider and hover -->
+<style>
+
+  .divider:after, .divider:before {
+    content: "";
+    flex: 1;
+    height: 1px;
+    background: #eee;
+  }
+    .btn-myhover {
+    background-color: #156cf1;
+    color: white;
+    transition: background-color 0.3s ease; /* Přidává plynulý efekt při změně barvy */
+  }
+
+  .btn-myhover:hover {
+    background-color: #3f3d55; /* Změna barvy při najetí myší */
+    color: white;
+  }
+
+</style>
+
+<div class="row d-flex align-items-center justify-content-center h-100">
+
+  <!-- Picture -->
+  <div class="col-md-8 col-lg-7 col-xl-6">
+    <img src="{% static 'img/login_picture.svg' %}"
+      class="img-fluid" alt="login_image">
+  </div>
+
+  <!-- Login form -->
+  <div class="col-md-7 col-lg-5 col-xl-5 offset-xl-1">
+    <form method="post" action="{% url 'account_login' %}" class="pt-1">
+      {% csrf_token %}
+
+      <!-- Hidden field for redirect value -->
+      {% if redirect_field_value %}
+        <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}"/>
+      {% endif %}
+
+      <!-- Error messages for non input field -->
+      <p class="form-text error-text">
+        {{ form.non_field_errors.as_text }}
+      </p>
+
+      <!-- Email -->
+      <div class="mb-4">
+
+        <!-- Email label -->
+        <label for="id_login" class="form-label">
+          <small>Email address:</small>
+        </label>
+
+        <!-- Email input -->
+        <input type="email"
+               class="form-control form-control-lg"
+               id="id_login"
+               aria-describedby="emailHelp"
+               placeholder="example@gmail.com"
+               name="login">
+
+        <!-- Error messages for email input -->
+        <p id="emailHelp" class="form-text error-text">
+          {{ form.login.errors.as_text }}
+        </p>
+
+      </div>
+
+      <!-- Password -->
+      <div class="mb-4">
+
+        <!-- Password label -->
+        <label for="id_password" class="form-label">
+          <small>Password:</small>
+        </label>
+
+        <!-- Password input -->
+        <div class="input-group 4">
+
+          <!-- Password input field -->
+          <input type="password"
+                 class="form-control form-control-lg"
+                 id="id_password"
+                 aria-describedby="passwordHelp"
+                 placeholder="At least 8 characters or more"
+                 name="password">
+
+          <!-- Show password button -->
+          <button class="btn btn-primary btn-myhover" type="button" id="togglePassword">
+            <i class="fas fa-eye " id="eye-icon"></i>
+          </button>
+
+        </div>
+
+        <!-- Error messages for password input -->
+        <p id="passwordHelp" class="form-text error-text">
+          {{ form.password.errors.as_text }}
+        </p>
+
+      </div>
+
+      <!-- Checkbox -->
+      <div class="form-check mb-4">
+
+        <!-- Checkbox box -->
+        <input class="form-check-input"
+               type="checkbox"
+               value=""
+               name="remember"
+               id="id_remember"
+               checked />
+
+        <!-- Checkbox label -->
+        <label class="form-check-label remember-text" for="id_remember">
+            <small>Remember me</small>
+        </label>
+
+      </div>
+
+      <!-- Submit -->
+      <div class="row">
+        <div class="col">
+          <div class="d-grid">
+
+            <!-- Submit button -->
+            <button class="btn btn-primary btn-lg btn-myhover" type="submit" id="loginButton">
+              Log In
+            </button>
+
+          </div>
+        </div>
+      </div>
+
+      <!-- Help links -->
+      <div class="d-flex justify-content-around align-items-center mt-2">
+
+        <!-- Link to send password -->
+        <a href="#"><small>Forgot password?</small></a>
+
+        <!-- Link to create a new account -->
+        <a href="{{ signup_url }}"><small>Create Accoun?</small></a>
+
+      </div>
+
+      <!-- Or -->
+      <div class="divider d-flex align-items-center mb-4">
+        <p class="text-center fw-bold mx-3 mb-0 text-muted">OR</p>
+      </div>
+
+      <!-- Sign in with Google -->
+      <div class="row">
+        <div class="col">
+          <div class="d-grid">
+
+            <!-- Link -->
+            <a class="btn btn-primary btn-lg btn-block btn-myhover"
+               href="{% provider_login_url 'google' method='oauth2' %}"
+               role="button">
+              <i class="fab fa-google me-2"></i>
+              Log in with Google
+            </a>
+
+          </div>
+        </div>
+      </div>
+
+    </form>
+
+  </div>
+</div>
+
+<!-- Script for show password button  -->
+<script>
+
+  const passwordInput = document.getElementById('id_password');
+  const eyeIcon = document.getElementById('eye-icon');
+
+  document.getElementById('togglePassword').addEventListener('click', function() {
+    if (passwordInput.type === 'password') {
+      passwordInput.type = 'text';
+      eyeIcon.classList.remove('fa-eye');
+      eyeIcon.classList.add('fa-eye-slash');
+    } else {
+      passwordInput.type = 'password';
+      eyeIcon.classList.remove('fa-eye-slash');
+      eyeIcon.classList.add('fa-eye');
+    }
+  });
+
+</script>
+
+
+{% endblock inner_content %}
