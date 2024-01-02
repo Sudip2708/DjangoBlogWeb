@@ -2,9 +2,6 @@
 {% load account %}
 {% load static %}
 {% load allauth account socialaccount %}
-
-
-
 {% block inner_content %}
 
 <!-- Style for divider and hover -->
@@ -153,26 +150,6 @@
       <div class="d-flex justify-content-around align-items-center mt-2">
         <a href="{% url 'account_login' %}"><small>Already have an account?</small></a>
         <a href="{% url 'home' %}"><small>Continue without sign in?</small></a>
-
-      </div>
-
-      <!-- Or -->
-      <div class="divider d-flex align-items-center mb-4">
-        <p class="text-center fw-bold mx-3 mb-0 text-muted">OR</p>
-      </div>
-
-      <!-- Sign in with Google -->
-      <div class="row">
-        <div class="col">
-          <div class="d-grid">
-            <a class="btn btn-primary btn-lg btn-block btn-myhover"
-               href="{% provider_login_url 'google' method='oauth2' %}"
-               role="button">
-              <i class="fab fa-google me-2"></i>
-              Sign Up with Google
-            </a>
-          </div>
-        </div>
       </div>
 
     </form>
@@ -200,6 +177,5 @@
   });
 
 </script>
-
 
 {% endblock inner_content %}

@@ -204,7 +204,7 @@ LOGIN_REDIRECT_URL = '/'
 ACCOUNT_LOGIN_ON_EMAIL_CONFIRMATION = 'auto'
 ACCOUNT_LOGOUT_ON_GET = True
 #Zakázání potvrzovacího pole pro přihlášení k soc. sítím
-SOCIALACCOUNT_LOGIN_ON_GET=True
+# SOCIALACCOUNT_LOGIN_ON_GET=True
 
 
 # Nastavení pro vývoj:

@@ -8,8 +8,11 @@ defusedxml==0.7.1
 Django==5.0
 django-allauth==0.59.0
 django-autoslug==1.9.9
+django-bootstrap-form==3.4
 django-crispy-forms==2.1
+django-taggit==5.0.1
 django-tinymce==3.6.1
+django-widget-tweaks==1.5.0
 idna==3.6
 oauthlib==3.2.2
 Pillow==10.1.0

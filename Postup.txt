@@ -288,5 +288,9 @@ Přihlášení prostřednictvím Google
 • V templates vytvořit adresář allauth a překopírovat do něj soubory z adresáře templates AllAuth pro pozdější úpravu
 • Nastavit přihlášení přes google: https://medium.com/powered-by-django/add-social-authentication-django-allauth-google-oauth-example-d8d69a603356
 ###
-
-
+Script pro atumatické odkliknutí potvrzení přihlášení přes google
+• Ze složky templates/socialaccount ve virtuálním prostředí Allauth překopírovat souborlogin.html do stejné adresářové struktury v templates
+• Přepsat kód plus přidat script.
+• Aby nedocházelo ke změně okna, přidat tuto stránku ke stránce login.html v mém projektu: {% extends 'account/login.html' %}
+• Překopírovat kód odebrat co není potřeba , přidat skryté tlačítko a script, který ho zmáčkne.
+###

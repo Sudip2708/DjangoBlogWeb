@@ -2,9 +2,6 @@
 {% load account %}
 {% load static %}
 {% load allauth account socialaccount %}
-
-
-
 {% block inner_content %}
 
 <!-- Style for divider and hover -->
@@ -175,6 +172,10 @@
 
     </form>
 
+    <!-- Automatic confirmation of redirection -->
+    {% block social_account %}
+    {% endblock social_account %}
+
   </div>
 </div>
 
@@ -197,6 +198,5 @@
   });
 
 </script>
-
 
 {% endblock inner_content %}

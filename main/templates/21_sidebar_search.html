@@ -10,6 +10,7 @@
 
     <!-- Search form -->
     <form action="{% url 'article-search' %}">
+      {% csrf_token %}
       <div class="input-group border-bottom">
 
         <!-- Search label -->
