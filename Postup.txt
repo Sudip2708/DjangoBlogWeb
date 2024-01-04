@@ -294,3 +294,19 @@ Script pro atumatické odkliknutí potvrzení přihlášení přes google
 • Aby nedocházelo ke změně okna, přidat tuto stránku ke stránce login.html v mém projektu: {% extends 'account/login.html' %}
 • Překopírovat kód odebrat co není potřeba , přidat skryté tlačítko a script, který ho zmáčkne.
 ###
+Vytvoření stránku pro zobrazení a úpravů informací o uživatelovi
+• V users vytvožit složku pro forms, models, views a smazat soubory stejného jména
+• V users/models vytvořit user_profile_model.py a zapsat kód
+• V users/models vytvořit signals.py a zapsat kód pro připojení k User
+• $ pip install Pillow
+• $ python manage.py makemigrations
+• $ python manage.py migrate
+• V users/apps.py dopsat kód upozorňující na signals def ready(self): import users.models.signals
+• V users/__init__.py dopsat řádek upozorňující na kód v apps.py default_app_config = 'users.apps.UsersConfig'
+• V users/forms vytvořit user_update_form.py a zapsat kód pro získání formulářeových dat pro User
+• V users/forms vytvořit profile_update_form.py a zapsat kód pro získání formulářeových dat pro UserProfile
+• V users/views vytvořit profile_update_view.py a zapsat kód pro pohled pro stránku s údaji o uživateli
+• V templates vytvořit soubor profile_update.html a zapsat kód pro stránku s údaji o uživateli
+• V templates vytvořit soubor user_sidebar.html a zapsat kód pro boční panel por stránku s údaji o uživateli a pžipojit ho k ní
+• V templates/02_base_header.html připsat stránku do navigace
+###

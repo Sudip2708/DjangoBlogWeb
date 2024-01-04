@@ -4,6 +4,7 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
+from allauth.account.views import LoginView, SignupView
 
 from articles.views.home_page import HomePageView
 from articles.views.article_create import ArticleCreateView
@@ -13,8 +14,7 @@ from articles.views.article_list import ArticleListView
 from articles.views.article_update import ArticleUpdateView
 from articles.views.search import SearchView
 from marketing.views import email_list_signup
-from allauth.account.views import LoginView, SignupView
-from users.views import manage_favorites
+from users.views.profile_update_view import profile_update
 
 
 urlpatterns = [
@@ -67,7 +67,8 @@ urlpatterns = [
     path('accounts/login/', LoginView.as_view(), name='account_login'),
     path('accounts/signup/', SignupView.as_view(), name='account_signup'),
 
-    path('manage_favorites/', manage_favorites, name='manage_favorites'),
+
+    path('profile/update', profile_update, name='profile_update'),
 ]
 
 # Přidání URL patternů pro statické a média soubory, pokud je nastavený DEBUG mód

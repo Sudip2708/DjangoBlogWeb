@@ -38,13 +38,6 @@
           </a>
         </li>
 
-        <!-- Contact -->
-        <li class="nav-item border-end">
-          <a class="nav-link " href="#">
-            Contact
-          </a>
-        </li>
-
         <!-- Items for login users -->
         {% if user.is_authenticated %}
 
@@ -55,23 +48,16 @@
             </a>
           </li>
 
-          <!-- Account management -->
+          <!-- Update profile  -->
           <li class="nav-item">
-            <a class="nav-link " href="#">
-              Account
+            <a class="nav-link " href="{% url 'profile_update' %}">
+             Account
             </a>
           </li>
 
           <!-- Loging out -->
           <li class="nav-item">
             <a class="nav-link " href="{% url 'account_logout' %}">
-              Logout
-            </a>
-          </li>
-
-                  <!-- Loging out -->
-          <li class="nav-item">
-            <a class="nav-link " href="{% url 'manage_favorites' %}">
               Logout
             </a>
           </li>
