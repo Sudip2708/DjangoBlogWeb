@@ -1,22 +1,13 @@
 from django.contrib import admin
-from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
-from django.contrib.auth.models import User
+from django.contrib.auth.admin import UserAdmin
+from .models import CustomUser
+from django.contrib.auth.models import Group
 
-from users.models.user_profile_model import UserProfile
+# Odstranění registrace Group z administrátorského rozhraní
+admin.site.unregister(Group)
 
-# Unregister initial User
-admin.site.unregister(User)
-
-# Register UserProfile with UserAdmin
-class UserProfileInline(admin.StackedInline):
-    model = UserProfile
-    can_delete = False
-    verbose_name_plural = 'User Profiles'
-
-class UserAdmin(BaseUserAdmin):
-    inlines = (UserProfileInline, )
-    list_display = ('username', 'email', 'first_name', 'last_name', 'is_staff', 'date_joined')
-
-
-# Registret extend User model with UserProfileInline
-admin.site.register(User, UserAdmin)
+# Registrace CustomUser do administrátorského rozhraní
+@admin.register(CustomUser)
+class CustomUserAdmin(UserAdmin):
+    model = CustomUser
+    list_display = ['email', 'username', 'is_staff', 'is_superuser']

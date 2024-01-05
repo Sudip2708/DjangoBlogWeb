@@ -11,9 +11,9 @@ def get_category_count():
     queryset = Article.objects.values('categories__title', 'categories__slug').annotate(Count('categories__title')).order_by('-categories__title__count')
     return queryset
 
-def get_author(author):
+def get_author(user):
     # Získání autora na základě uživatelského jména
-    queryset = ArticleAuthor.objects.filter(author=author)
+    queryset = ArticleAuthor.objects.filter(user=user)
     if queryset.exists():
         return queryset[0]
     return None

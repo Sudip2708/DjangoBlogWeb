@@ -1,1 +1,0 @@
-### Tento soubor označuje složku articles jako balíček.

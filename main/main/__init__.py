@@ -1,1 +1,0 @@
-### Tento soubor označuje složku blog jako balíček

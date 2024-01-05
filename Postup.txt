@@ -310,3 +310,36 @@ Vytvoření stránku pro zobrazení a úpravů informací o uživatelovi
 • V templates vytvořit soubor user_sidebar.html a zapsat kód pro boční panel por stránku s údaji o uživateli a pžipojit ho k ní
 • V templates/02_base_header.html připsat stránku do navigace
 ###
+Přebudování celého projektu tak, abych pro uživatele mohl použít třídu CustomUser(AbstractUser) namísto modelu pro profil
+Vytvoření CustomUser(AbstractUser):
+$ pip install Django
+$ django-admin startproject main
+$ cd main
+$ python manage.py startapp users
+• main/settings.py > INSTALLED_APPS > + "users",
+• users/ > + managers.py
+• users/managers.py > zapsat kód pro vlastního správce (podtřídou BaseUserManager), který místo uživatelského jména používá jako jedinečný identifikátor e-mail
+• users/models.py > zapsat kód pro CustomUser(AbstractUser) + přidat metodu pro automatické vytváření username
+• users/ > + signals.py > zapsat kód pro automatické přidělení defaultního profilového obrázku
+• main/settings.py > přidat kód AUTH_USER_MODEL = "users.CustomUser" , aby Django vědělo, že má použít novou vlastní třídu uživatelů
+$ pip install Pillow
+$ python manage.py makemigrations
+$ python manage.py migrate
+$ python manage.py createsuperuser
+• users/admin.py > odregistrovat Groups: admin.site.unregister(Group) /pokud nechci využívat nastavení práv jednotlivým skupinám/
+• users/admin.py > zaregistrovat CustomUser: @admin.register(CustomUser)
+$ python manage.py runserver
+Napojení stávajícího projektu:
+$ python manage.py startapp articles
+• articles/ > vytvořit složky: forms, models, views a překopírovat do nich obsah
+• articles/ > smazat soubory models.py a views.py
+• root/ > překopírovat složky media, static, templates
+• root/ > překopírovat soubor requirements.txt
+• main/settings.py > dopsat chybějící části kódu
+• main/urls.py > dopsat chybějící části kódu
+$ pip install -r requirements.txt
+$ python manage.py makemigrations
+$ python manage.py migrate
+$ python manage.py collectstatic
+$ python manage.py runserver
+###

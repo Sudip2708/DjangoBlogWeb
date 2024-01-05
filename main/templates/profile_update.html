@@ -9,28 +9,27 @@
   <div class="container">
 
 
-      <!-- Title -->
-      <header class="mb-5">
-        <h2>Update your profile</h2>
-      </header>
+  <!-- Title -->
+  <header class="mb-5">
+    <h2>Update your profile</h2>
+  </header>
 
 
-      <!-- Form -->
-      <form method="POST" enctype="multipart/form-data">
-        {% csrf_token %}
+  <!-- Form -->
+  <form method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
 
-        <!-- Form fields -->
-        <fieldset class="form-group mb-4">
-          {{ u_form|crispy }}
-          {{ p_form|crispy }}
-        </fieldset>
+    <!-- Form fields -->
+    <fieldset class="form-group mb-4">
+      {{ form|crispy }}
+    </fieldset>
 
-        <!-- Submit Button -->
-        <div class="form-group">
-          <button class="btn btn-outline-info" type="submit">Update</button>
-        </div>
+    <!-- Submit Button -->
+    <div class="form-group">
+      <button class="btn btn-outline-info" type="submit">Save Changes</button>
+    </div>
 
-      </form>
+  </form>
 
   </div>
 </main>

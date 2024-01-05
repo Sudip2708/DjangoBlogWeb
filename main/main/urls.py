@@ -13,8 +13,7 @@ from articles.views.article_detail import ArticleDetailView
 from articles.views.article_list import ArticleListView
 from articles.views.article_update import ArticleUpdateView
 from articles.views.search import SearchView
-from marketing.views import email_list_signup
-from users.views.profile_update_view import profile_update
+from users.views import profile_update
 
 
 urlpatterns = [
@@ -38,9 +37,6 @@ urlpatterns = [
 
     # URL pro smazání článku s využitím jeho slugu
     path('articles/<slug:slug>/delete/', ArticleDeleteView.as_view(), name='article-delete'),
-
-    # URL pro přihlášení k odběru e-mailového seznamu
-    path('email-signup/', email_list_signup, name='email-list-signup'),
 
     # URL pro zobrazení seznamu článků s daným tagem
     path('articles/tag/<slug:tag_slug>/', ArticleListView.as_view(), name='article-tag-list'),

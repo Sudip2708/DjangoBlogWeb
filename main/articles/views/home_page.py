@@ -6,17 +6,11 @@ from django.views.generic import View
 from django.db.models import Count
 
 from articles.models.article import Article
-from marketing.forms import EmailSignupForm
-from marketing.models import Signup
 
 
-
-# Vytvoření instance formuláře pro přihlášení k odběru e-mailů
-form = EmailSignupForm()
 
 class HomePageView(View):
-    # Opět vytvoření instance formuláře (class variable), ale také vytvoření instance ve funkci get()
-    form = EmailSignupForm()
+
 
     def get(self, request, *args, **kwargs):
         # Získání featured článků, nejnovějších článků a nejčastěji zobrazených článků
@@ -33,18 +27,19 @@ class HomePageView(View):
             'object_list': featured,
             'latest': latest,
             'most_viewed': most_viewed,
-            'form': self.form,
+
         }
         return render(request, '10_home.html', context)
 
     def post(self, request, *args, **kwargs):
-        # Zpracování odeslaného formuláře pro přihlášení k odběru e-mailů
-        email = request.POST.get("email")
-        new_signup = Signup()
-        new_signup.email = email
-        new_signup.save()
-
-        # Zobrazení informační zprávy po úspěšném přihlášení k odběru
-        messages.info(request, "Successfully subscribed")
-        return redirect("home")
+        # # Zpracování odeslaného formuláře pro přihlášení k odběru e-mailů
+        # email = request.POST.get("email")
+        # new_signup = Signup()
+        # new_signup.email = email
+        # new_signup.save()
+        #
+        # # Zobrazení informační zprávy po úspěšném přihlášení k odběru
+        # messages.info(request, "Successfully subscribed")
+        # return redirect("home")
+        pass
 

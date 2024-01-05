@@ -1,4 +1,11 @@
-### Soubor pro webové servery, které podporují standard WSGI (Web Server Gateway Interface).
+"""
+WSGI config for main project.
+
+It exposes the WSGI callable as a module-level variable named ``application``.
+
+For more information on this file, see
+https://docs.djangoproject.com/en/5.0/howto/deployment/wsgi/
+"""
 
 import os
 

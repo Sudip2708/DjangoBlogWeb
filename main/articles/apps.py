@@ -1,5 +1,3 @@
-### Obsahuje konfiguraci pro aplikaci.
-
 from django.apps import AppConfig
 
 
