@@ -343,3 +343,18 @@ $ python manage.py migrate
 $ python manage.py collectstatic
 $ python manage.py runserver
 ###
+Nahrazení signálů metodou save:
+• articles/models/article_author.py > změna metody create_or_update_author na metodu save
+• users/models.py > změna metody create_username_from_email na metodu save
+$ python manage.py makemigrations
+$ python manage.py migrate
+$ python manage.py runserver
+Oprava aby nový uživatel mohl psát článek - stát se uživatelem:
+• articles/views/utils.py > změnit kód pro get_author tak aby při nenalezení autora vytvořil nového
+Zobrazení možnosti změnit jméno autora a jeho profilovou fotku ve templates pro profile_update.html
+• users/models.py > vytvoření @property pro získání hodnoty zda je uživatel také autor
+• users/forms.py > vytvoření class AuthorProfileForm(forms.ModelForm) pro data autora
+• users/views.py > přepsat kód tak aby přeposílal i data autora
+• templates/profile_update.html > přepis kódu
+• templates/user_sidebar.html > Zapsat kód pro boční panel v kterém se budou zobrazovat informace o autorovi
+###

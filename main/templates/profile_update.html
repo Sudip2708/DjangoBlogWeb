@@ -8,34 +8,49 @@
 <main class="col-lg-8">
   <div class="container">
 
+    <!-- Title -->
+    <header class="mb-5">
+      <h2>Update your profile</h2>
+    </header>
 
-  <!-- Title -->
-  <header class="mb-5">
-    <h2>Update your profile</h2>
-  </header>
+    <!-- User Form -->
+    <form method="POST" enctype="multipart/form-data">
+      {% csrf_token %}
+      <fieldset class="form-group mb-4">
+        {{ user_form|crispy }}
+      </fieldset>
 
+      <!-- Submit Button -->
+      <div class="form-group">
+        <button class="btn btn-outline-info" type="submit">Save Changes</button>
+      </div>
+    </form>
 
-  <!-- Form -->
-  <form method="POST" enctype="multipart/form-data">
-    {% csrf_token %}
+    <!-- Author Form -->
+    {% if author_form %}
 
-    <!-- Form fields -->
-    <fieldset class="form-group mb-4">
-      {{ form|crispy }}
-    </fieldset>
+    <!-- Title -->
+    <header class="mb-5 mt-5">
+      <h2>Update your Author profile</h2>
+    </header>
 
-    <!-- Submit Button -->
-    <div class="form-group">
-      <button class="btn btn-outline-info" type="submit">Save Changes</button>
-    </div>
+    <form method="POST" enctype="multipart/form-data">
+      {% csrf_token %}
+      <fieldset class="form-group mb-4">
+        {{ author_form|crispy }}
+      </fieldset>
 
-  </form>
+      <!-- Submit Button -->
+      <div class="form-group">
+        <button class="btn btn-outline-info" type="submit">Save Author Changes</button>
+      </div>
+    </form>
+    {% endif %}
 
   </div>
 </main>
 
 <!-- Sidebar -->
-{% include 'user_sidebar.html' with favorite_authors=favorite_authors %}
-
+{% include 'user_sidebar.html' with favorite_authors=favorite_authors author_form=author_form %}
 
 {% endblock inner_content %}

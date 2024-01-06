@@ -12,11 +12,9 @@ def get_category_count():
     return queryset
 
 def get_author(user):
-    # Získání autora na základě uživatelského jména
-    queryset = ArticleAuthor.objects.filter(user=user)
-    if queryset.exists():
-        return queryset[0]
-    return None
+    # Získání autora na základě uživatelského jménanebo jeho vytvoření
+    author, created = ArticleAuthor.objects.get_or_create(user=user)
+    return author
 
 def get_most_commented_articles():
     # Získání tří nejvíce komentovaných článků
