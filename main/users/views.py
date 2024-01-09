@@ -12,6 +12,7 @@ def profile_update(request):
 
         # Kontrola existence instance ArticleAuthor
         if hasattr(user, 'articleauthor'):
+
             # Vytvoření formuláře pro autora, pokud existuje
             author_form = AuthorProfileForm(request.POST, request.FILES, instance=user.articleauthor)
         else:

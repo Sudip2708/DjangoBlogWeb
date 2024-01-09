@@ -1,0 +1,10 @@
+<div class="custom-file">
+  <label for="{{ widget.id_for_label }}" class="custom-file-label">
+    {% if widget.value %}
+      {{ widget.value }}
+    {% else %}
+      {% trans "Choose file" %}
+    {% endif %}
+  </label>
+  {{ widget }}
+</div>

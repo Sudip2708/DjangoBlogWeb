@@ -7,7 +7,7 @@ class ArticleAuthor(models.Model):
     user = models.OneToOneField(CustomUser, on_delete=models.SET_NULL, null=True)
 
     # Obrázek profilového obrázku pro autora článku
-    profile_picture = models.ImageField(upload_to="images/profile_pictures/authors/")
+    author_profile_picture = models.ImageField(upload_to="images/profile_pictures/authors/")
 
     # Ukládá poslední uživatelské jméno před smazáním uživatele
     author = models.CharField(max_length=150, unique=True)

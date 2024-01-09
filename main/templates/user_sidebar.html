@@ -1,123 +1,108 @@
 <!-- User sidebar -->
-<style>
-  .bg {
-    background-color: yellow;
-  }
 
-
-</style>
 {% load crispy_forms_tags %}
+
+<style>
+  .form-label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-size: 0.8rem;
+    color: grey;
+  }
+</style>
 
 
 <aside class="col-lg-4">
 
-<!-- User info -->
-<div class="card mb-5">
-  <div class="card-body d-flex align-items-center">
 
+  <!-- User overview -->
+  <div class="card mb-5">
+    <div class="card-body">
 
-    <!-- Profile picture -->
-    <div class="w-25">
-      <img class="account-img w-100" src="{{ user.profile_image.url }}" alt="profile_picture"/>
-    </div>
+      <!-- User info -->
+      <div class="d-flex align-items-center">
 
-    <!-- Username & email -->
-    <div class="w-75 ">
-      <div style="margin-left: 1rem;">
-        <h2 class="account-heading">{{ user.username }}</h2>
-        <p class="text-secondary ">{{ user.email }}</p>
-      </div>
-    </div>
+        <!-- Profile picture -->
+        <div class="w-25">
+          <img class="account-img w-100" src="{{ user.profile_image.url }}" alt="profile_picture"/>
+        </div>
 
-  </div>
-</div>
+        <!-- Username & email -->
+        <div class="w-75 ">
+          <div style="margin-left: 1rem;">
+            <h2 class="account-heading">{{ user.username }}</h2>
+            <p class="text-secondary ">{{ user.email }}</p>
+          </div>
+        </div>
 
-
-<!-- Author section -->
-{% if author_form %}
-<div class="card mb-5">
-  <div class="card-body">
-
-
-    <!-- Section name -->
-    <h3 class="h6 mb-3">My Author section</h3>
-
-
-    <!-- Link to the author -->
-    <a class="d-flex align-items-center flex-wrap text-reset" href="!#">
-
-      <!-- Profile picture -->
-      <div class="avatar flex-shrink-0">
-        <img class="img-fluid" src="{{ author_form.instance.profile_picture.url }}" alt="profile_picture"/>
       </div>
 
-      <!-- Name -->
-      <small>{{ author_form.instance.author }}</small>
+      <!-- If User is Also Author -->
+      {% if author_form %}
 
-    </a>
+        <!-- Separate Line -->
+        <br><hr class="border-top" style="color: grey;">
 
+        <!-- Section name -->
+        <p class="form-label mt-4">Link to my Author section:</p>
 
-  </div>
-</div>
-{% endif %}
+        <!-- Link to the author -->
+        <a class="d-flex align-items-center flex-wrap text-reset" href="!#">
 
+          <!-- Profile picture -->
+          <div class="avatar flex-shrink-0">
+            <img class="img-fluid" src="{{ author_form.instance.author_profile_picture.url }}" alt="profile_picture"/>
+          </div>
 
+          <!-- Name -->
+          {{ author_form.instance.author }}
 
+        </a>
 
-<!-- Favorite Authors -->
-<div class="card mb-5">
-  <div class="card-body">
-
-    <!-- Section name -->
-    <h3 class="h6 mb-3">Favorite Authors</h3>
-
-
-        <!-- Loop through category_count-->
-    {% for autor in favorite_authors %}
-
-      <!-- Display for odd row -->
-      {% if not forloop.counter|divisibleby:2 %}
-        <div class="p-2  justify-content-between fw-bold text-gray-600 bg-light">
-
-          <!-- Categories title -->
-          <a class="text-reset" href="#">
-            {{ autor }}
-          </a>
-
-        </div>
       {% endif %}
 
-      <!-- Display for even row -->
-      {% if forloop.counter|divisibleby:2 %}
-        <div class="p-2 d-flex justify-content-between fw-bold text-gray-600 1">
-
-          <!-- Categories title -->
-          <a class="text-reset" href="#">
-            {{ autor }}
-          </a>
-
-        </div>
-      {% endif %}
-
-    {% endfor %}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    </div>
   </div>
-</div>
 
+
+  <!-- Favorite Authors -->
+  <div class="card mb-5">
+    <div class="card-body">
+
+      <!-- Section name -->
+      <h3 class="h6 mb-3">Favorite Authors</h3>
+
+
+      <!-- Loop through category_count-->
+      {% for autor in favorite_authors %}
+
+        <!-- Display for odd row -->
+        {% if not forloop.counter|divisibleby:2 %}
+          <div class="p-2  justify-content-between fw-bold text-gray-600 bg-light">
+
+            <!-- Categories title -->
+            <a class="text-reset" href="#">
+              {{ autor }}
+            </a>
+
+          </div>
+        {% endif %}
+
+        <!-- Display for even row -->
+        {% if forloop.counter|divisibleby:2 %}
+          <div class="p-2 d-flex justify-content-between fw-bold text-gray-600 1">
+
+            <!-- Categories title -->
+            <a class="text-reset" href="#">
+              {{ autor }}
+            </a>
+
+          </div>
+        {% endif %}
+
+      {% endfor %}
+
+    </div>
+  </div>
 
 </aside>

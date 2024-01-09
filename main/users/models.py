@@ -3,6 +3,7 @@ from django.db import models
 from django.utils.translation import gettext_lazy as _
 from .managers import CustomUserManager
 
+
 class CustomUser(AbstractUser):
 
     # Pole pro uživatelské jméno
@@ -44,6 +45,7 @@ class CustomUser(AbstractUser):
                 new_username = f"{username}_{counter}"
 
             self.username = new_username
+
 
         super().save(*args, **kwargs)
 
