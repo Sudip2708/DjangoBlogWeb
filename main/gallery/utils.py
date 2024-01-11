@@ -11,7 +11,7 @@ def process_and_save_image(instance, image_field, dimensions, tag):
         print(f"@@@@@@@@@@@@@File path: {file_path}")
 
         # Převede obrázek na formát JPEG
-        new_file_path = os.path.join("images/profile_pictures/users/", f"{instance.email.split('@')[0].lower()}_{tag}.jpg")
+        new_file_path = os.path.join("images/profile_pictures/users/", f"{instance.email}_{tag}.jpg")
 
         # Otevři obrázek pomocí Pillow
         image = Image.open(file_path)

@@ -358,3 +358,8 @@ Zobrazení možnosti změnit jméno autora a jeho profilovou fotku ve templates 
 • templates/profile_update.html > přepis kódu
 • templates/user_sidebar.html > Zapsat kód pro boční panel v kterém se budou zobrazovat informace o autorovi
 ###
+Automatická změna formátu, velikosti a jména nahrané profilové fotografie
+$ pip install django-model-utils
+• users/signals.py > zapsat kód pre_save pro hlídání změny profilového obrázku za využití tracker = FieldTracker(instance)
+• users/models.py > do metody save() dopsat kód pro vytvoření profilového obrázku v případě založení účtu.
+###
