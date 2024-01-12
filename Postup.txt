@@ -363,3 +363,18 @@ $ pip install django-model-utils
 • users/signals.py > zapsat kód pre_save pro hlídání změny profilového obrázku za využití tracker = FieldTracker(instance)
 • users/models.py > do metody save() dopsat kód pro vytvoření profilového obrázku v případě založení účtu.
 ###
+Přenesení logiky ze signálů do views
+• users/utils/ > vytvořit create_username.py > přepsat kód z users/models.py pro vytvoření uživatelského jména
+• users/utils/ > vytvořit create_profile_picture.py > přepsat kód z users/models.py pro vytvoření profilového obrázku
+• users/models.py > Odebrat kód pro vytvořené utils a importovat kódy utils
+• users/models.py > Importovat a zapsat tracker na profilový obrázek
+• articles/models/article_author.py > Importovat a zapsat tracker na profilový obrázek
+• articles/models/article_author.py > Připsat třídní metodu na zjištění autora pro uživatele user_is_author()
+• users/utils/ > vytvořit get_author_form.py > přepsat kód z users/views.py pro získání formulářových dat autora
+• users/utils/ > vytvořit prepare_profile_image.py > přepsat kód z users/views.py pro úpravu profilového obrázku
+• users/views.py > Odebrat kód pro vytvořené utils a importovat kódy utils
+• users/views.py > Přepsat kód aby kontroloval změnu profilových obrázků přes tracker
+• users/signals.py > Smazání souboru
+• users/__init__.py > Vymazat směrování na signál
+• users/apps.py > Vymazat směrování na signál
+###

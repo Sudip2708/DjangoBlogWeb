@@ -3,10 +3,10 @@ from django.contrib.auth.models import AbstractUser
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 from .managers import CustomUserManager
+from .utils.create_username import create_username
+from .utils.create_profile_picture import create_profile_picture
 from model_utils import FieldTracker
-import os
-from shutil import copyfile
-from django.utils.text import slugify
+
 
 class CustomUser(AbstractUser):
 
@@ -32,57 +32,28 @@ class CustomUser(AbstractUser):
     # Připojení vlastního manažera
     objects = CustomUserManager()
 
+
+
     def __str__(self):
         return self.username
 
+
+
     def save(self, *args, **kwargs):
+        '''
+        Při ukládání instance CustomUser provede nastavení uživatelského jména a profilového obrázku, pokud neexistuje ID (primární klíč).
 
-        # Pokud uživatel nemá nastavené uživatelské jméno (při vytvoření nové instance)
-        if not self.username:
+        :param args: Poziceové argumenty pro super().save()
+        :param kwargs: Klíčové argumenty pro super().save()
+        :return: None
+        '''
 
-            # Vytvoření základu pro uživatelské jméno: Přední část emailu (před @) + převést velká písmena na malá
-            username = self.email.split('@')[0].lower()
+        # Přiřadí uživatelské jméno a profilového obrázku
+        if not self.pk:
+            self.username = create_username(self.email, CustomUser)
+            self.profile_image = create_profile_picture(self.email)
 
-            # Přidání pořadového čísla v případě, že uživatelské jméno již existuje
-            counter = 1
-            new_username = username
-            while CustomUser.objects.filter(username=new_username).exists():
-                counter += 1
-                new_username = f"{username}_{counter}"
-            self.username = new_username
-
-
-
-
-        if not self.profile_image:
-
-            # Cesta k defaultnímu obrázku
-            default_image_path = 'images/profile_pictures/default.jpg'
-
-            # Název souboru pro nový obrázek
-            new_image_name = f"{slugify(self.email)}_pp_300.jpg"
-            new_image_path = f"images/profile_pictures/users/{new_image_name}"
-
-            # Úplná cesta k souboru defaultního obrázku
-            default_image_full_path = os.path.join(settings.MEDIA_ROOT, default_image_path)
-
-            # Úplná cesta k novému souboru
-            new_image_full_path = os.path.join(settings.MEDIA_ROOT, new_image_path)
-
-            # Kopírování defaultního obrázku na nové místo
-            copyfile(default_image_full_path, new_image_full_path)
-
-            # Přidání vytvořeného souboru do pole profile_image
-            self.profile_image.name = new_image_path
-
+        # Uložení instance
         super().save(*args, **kwargs)
 
-    @property
-    def is_author(self):
-        try:
-            # Zkusí najít záznam v ArticleAuthor, kde uživatel je aktuální uživatel
-            author_instance = ArticleAuthor.objects.get(user=self)
-            return author_instance
-        except ArticleAuthor.DoesNotExist:
-            # Pokud ArticleAuthor s tímto uživatelem neexistuje, vrátí None
-            return None
+
