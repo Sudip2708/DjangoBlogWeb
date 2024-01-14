@@ -1,4 +1,4 @@
-from django.conf import settings
+from django.utils.text import slugify
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 from django.utils.translation import gettext_lazy as _
@@ -21,7 +21,7 @@ class CustomUser(AbstractUser):
                                       upload_to="images/profile_pictures/users/")
 
     # FieldTracker pro sledování změn v profile_image
-    tracker = FieldTracker(fields=['profile_image'])
+    profile_image_tracker = FieldTracker(fields=['profile_image'])
 
     # Nastavení emailu jako primárního identifikátoru
     USERNAME_FIELD = "email"
@@ -38,6 +38,24 @@ class CustomUser(AbstractUser):
         return self.username
 
 
+    @property
+    def profile_image_name(self):
+        '''
+        Definice jména profilového obráku
+
+        :return: Jméno profilového obrázku
+        '''
+        return f"{slugify(self.email.replace('@', '_').replace('.', '_'))}_upp_300.jpg"
+
+    @property
+    def profile_image_directory(self):
+        '''
+        Definice jména profilového obráku
+
+        :return: Jméno profilového obrázku
+        '''
+        return f"images/profile_pictures/users/"
+
 
     def save(self, *args, **kwargs):
         '''
@@ -51,9 +69,11 @@ class CustomUser(AbstractUser):
         # Přiřadí uživatelské jméno a profilového obrázku
         if not self.pk:
             self.username = create_username(self.email, CustomUser)
-            self.profile_image = create_profile_picture(self.email)
+            self.profile_image = create_profile_picture(self.profile_image_directory, self.profile_image_name)
 
         # Uložení instance
         super().save(*args, **kwargs)
+
+
 
 

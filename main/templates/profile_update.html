@@ -28,89 +28,77 @@
     transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
   }
 
+  @media (max-width: 960px) {
+    /* Skryj boční panel, pokud je šířka displeje menší než 960px */
+    aside {
+      display: none;
+    }
 </style>
 
-<!-- Selected article -->
+
 <main class="col-lg-8">
   <div class="container">
 
-    <form method="POST" enctype="multipart/form-data">
-      {% csrf_token %}
 
-      <!-- Title -->
-      <header class="mb-5">
-        <h2>Update your profile</h2>
+    <!-- Zobrazení, pokud uživatel nemá i účet autora-->
+    {% if not author_form %}
+
+      <!-- Nadpis -->
+      <header >
+        <h2>Update Your Profile</h2>
       </header>
 
-      <!-- User Form -->
-      <div class="row">
+      <!-- Navigace -->
+      <nav class="nav nav-tabs justify-content-end mb-5">
+        <li class="nav-item active">
+          <a href="{% url 'profile_update_user' %}" class="nav-link active">User</a>
+        </li>
+      </nav>
 
-        <!-- Profile Picture -->
-        <div class="col-md-4 mb-4">
-          <img src="{{ user_form.instance.profile_image.url }}"
-               alt="Profile Picture"
-               class="img-fluid">
-        </div>
 
-        <!-- User Form Fields -->
-        <div class="col-md-8">
+    <!-- Zobrazení, pokud uživatel má i účet autora-->
+    {% elif author_form %}
 
-          <div class="mb-2">
-            {{ user_form|crispy }}
-          </div>
+      <!-- Nadpis -->
+      <header>
+        <h2>Update Your Profiles</h2>
+      </header>
 
-          <!-- Submit Button -->
-          {% if not author_form %}
-            <div class="form-group pt-4">
-              <button class="btn btn-outline-info btn-lg" type="submit" name="submit_both">
-                Save Changes
-              </button>
-            </div>
-          {% endif %}
+      <!-- Navigace pro stránku uživatele -->
+      {% if user_form %}
+        <nav class="nav nav-tabs justify-content-end mb-5">
+          <li class="nav-item active">
+            <a href="{% url 'profile_update_user' %}" class="nav-link active">User</a>
+          </li>
+          <li class="nav-item">
+            <a href="{% url 'profile_update_author' %}" class="nav-link">Author</a>
+          </li>
+        </nav>
 
-        </div>
+      <!-- Navigace pro stránku autora -->
+      {% elif not user_form %}
+        <nav class="nav nav-tabs justify-content-end mb-5">
+          <li class="nav-item">
+            <a href="{% url 'profile_update_user' %}" class="nav-link">User</a>
+          </li>
+          <li class="nav-item active">
+            <a href="{% url 'profile_update_author' %}" class="nav-link active">Author</a>
+          </li>
+        </nav>
 
-      </div>
-
-      <!-- Author Form -->
-      {% if author_form %}
-
-        <!-- Title -->
-        <header class="mb-5 mt-5">
-          <h2>Update your Author profile</h2>
-        </header>
-
-        <div class="row">
-
-          <!-- Author Profile Picture -->
-          <div class="col-md-4 mb-4">
-            <img src="{{ author_form.instance.author_profile_picture.url }}"
-                 alt="Author Profile Picture"
-                 class="img-fluid">
-          </div>
-
-          <!-- Author Form Fields -->
-          <div class="col-md-8">
-            <fieldset class="form-group mb-4">
-              {{ author_form|crispy }}
-            </fieldset>
-          </div>
-
-          <div class="form-group pt-2 pb-4">
-            <button class="btn btn-outline-info btn-lg" type="submit" name="submit_both">
-              Save Changes
-            </button>
-          </div>
-
-        </div>
       {% endif %}
 
-    </form>
+    {% endif %}
+
+    <!-- Obsah stránky -->
+    {% block profile_update_content %}
+    {% endblock profile_update_content %}
+
 
   </div>
 </main>
 
-<!-- Sidebar -->
+<!-- Napojení Sidebar -->
 {% include 'user_sidebar.html' with author_form=author_form favorite_authors=favorite_authors %}
 
 {% endblock inner_content %}

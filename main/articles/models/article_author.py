@@ -1,35 +1,63 @@
 from django.db import models
 from users.models import CustomUser
 from django.utils.text import slugify
+from django.utils.translation import gettext_lazy as _
 from model_utils import FieldTracker
-
 
 class ArticleAuthor(models.Model):
 
     # Vztah "one-to-one" s modelem CustomUser (po smazání uživatel autor zůstává)
     user = models.OneToOneField(CustomUser, on_delete=models.SET_NULL, null=True)
 
-    # Obrázek profilového obrázku pro autora článku
-    author_profile_picture = models.ImageField(upload_to="images/profile_pictures/authors/")
+    # Profilový obrázek autora článku
+    author_profile_picture = models.ImageField(_("author profile picture"), upload_to="images/profile_pictures/authors/")
 
-    # Ukládá poslední uživatelské jméno před smazáním uživatele
-    author = models.CharField(max_length=150, unique=True)
+    # Uživatelské jméno autora článku
+    author = models.CharField(_("author"), max_length=150, unique=True)
 
     # FieldTracker pro sledování změn v profile_image
-    tracker = FieldTracker(fields=['author_profile_picture'])
+    profile_picture_tracker = FieldTracker(fields=['author_profile_picture'])
 
 
     def __str__(self):
         return self.author
 
 
+    @property
+    def profile_image_name(self):
+        '''
+        Definice jména profilového obráku
+
+        :return: Jméno profilového obrázku
+        '''
+        return f"{slugify(self.user.email.replace('@', '_').replace('.', '_'))}_app_300.jpg"
+
+
+    @property
+    def profile_image_directory(self):
+        '''
+        Definice cesty k profilovému obráku
+
+        :return: Cesta k profilovému obrázku
+        '''
+        return f"images/profile_pictures/authors/"
+
+    @property
+    def profile_image_path(self):
+        '''
+        Definice cesty k profilovému obráku
+
+        :return: Cesta k profilovému obrázku
+        '''
+        return f"images/profile_pictures/authors/{slugify(self.user.email.replace('@', '_').replace('.', '_'))}_app_300.jpg"
 
 
     def save(self, *args, **kwargs):
         # Nastaví author a profile_picture podle CustomUser při vytváření ArticleAuthor
         if not self.pk:
             self.author = self.user.username
-            self.profile_picture = f"{slugify(self.user.email.replace('@', '_').replace('.', '_'))}_app_300.jpg"
+            self.profile_picture = self.user.profile_image
+            self.profile_picture.name = self.profile_image_name
 
         super().save(*args, **kwargs)
 

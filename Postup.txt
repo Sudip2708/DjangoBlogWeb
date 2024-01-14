@@ -378,3 +378,20 @@ Přenesení logiky ze signálů do views
 • users/__init__.py > Vymazat směrování na signál
 • users/apps.py > Vymazat směrování na signál
 ###
+Přepracování views + úprava nahraného profilového obrázku
+• articles/models/article_author.py > Dočasně dopsány property pro definování cesty a názvu obrázku
+• users/models.py > Dočasně dopsány property pro definování cesty a názvu obrázku
+• users/ > vytvořit složku views > vložit prázdný __imit__.py
+• users/views/ > vytvořit profile_update_user.py > přepsat z users/views.py kód pro uživatele
+• users/views/ > vytvořit profile_update_autor.py > přepsat z users/views.py kód pro autora
+• users/views.py > Smazat
+• templates/ > vytvořit profile_update_user.html > přepsat z profile_update.html část pro uživatele
+• templates/ > vytvořit profile_update_autor.html > přepsat z profile_update.html část pro autora
+• templates/profile_update.html > upravit kód aby odpovídal změnám
+• main/urls.py > smazat url pro profile_update.html a napsat url pro profile_update_user.html a profile_update_autor.html
+• users/utils/ > vytvořit change_profile_picture.py > zapsat kod pro základní správu úpravy nahraného obrázku
+• users/utils/ > vytvořit resize_and_jpg_format.py > zapsat část kódu pro změnu velikosti a formátu
+• users/utils/ > vytvořit delete_old_image.py > zapsat část kódu pro smazání starého profilového obrázku
+• users/utils/ > vytvořit rename_new_image.py > zapsat část kódu pro přejmenování nového obrázku
+• users/utils/get_author_form.py > smazat
+###

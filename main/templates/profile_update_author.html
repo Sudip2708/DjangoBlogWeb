@@ -1,0 +1,40 @@
+{% extends 'profile_update.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block profile_update_content %}
+
+<form method="POST" enctype="multipart/form-data">
+  {% csrf_token %}
+
+  <div class="row">
+
+    <!-- Author Profile Picture -->
+    <div class="col-md-4 mb-4">
+      <img src="{{ author_form.instance.author_profile_picture.url }}"
+           alt="Author Profile Picture"
+           class="img-fluid">
+    </div>
+
+
+    <div class="col-md-8">
+
+      <!-- Author Form Fields -->
+      <fieldset class="form-group">
+        {{ author_form|crispy }}
+      </fieldset>
+
+      <!-- Submit Button -->
+      <div class="form-group pt-4">
+        <button class="btn btn-outline-info btn-lg" type="submit" name="submit_author">
+          Save Changes
+        </button>
+      </div>
+
+    </div>
+
+
+
+  </div>
+</form>
+
+{% endblock profile_update_content %}

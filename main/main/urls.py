@@ -13,8 +13,8 @@ from articles.views.article_detail import ArticleDetailView
 from articles.views.article_list import ArticleListView
 from articles.views.article_update import ArticleUpdateView
 from articles.views.search import SearchView
-from users.views import profile_update
-
+from users.views.profile_update_user import profile_update_user
+from users.views.profile_update_author import profile_update_author
 
 urlpatterns = [
     # URL pro administrátorské rozhraní Django
@@ -64,7 +64,8 @@ urlpatterns = [
     path('accounts/signup/', SignupView.as_view(), name='account_signup'),
 
 
-    path('profile/update', profile_update, name='profile_update'),
+    path('profile/update/user', profile_update_user, name='profile_update_user'),
+    path('profile/update/author', profile_update_author, name='profile_update_author'),
 ]
 
 # Přidání URL patternů pro statické a média soubory, pokud je nastavený DEBUG mód
