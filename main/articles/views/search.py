@@ -6,7 +6,7 @@ from django.shortcuts import redirect
 from django.urls import reverse
 
 from articles.models.article import Article
-from articles.views.article_common_contex import CommonContextMixin
+from articles.views.utils.article_common_contex import CommonContextMixin
 
 
 class SearchView(CommonContextMixin, ListView):

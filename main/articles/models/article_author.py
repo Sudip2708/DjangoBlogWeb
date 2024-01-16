@@ -4,6 +4,8 @@ from django.utils.text import slugify
 from django.utils.translation import gettext_lazy as _
 from model_utils import FieldTracker
 
+
+
 class ArticleAuthor(models.Model):
 
     # Vztah "one-to-one" s modelem CustomUser (po smazání uživatel autor zůstává)
@@ -28,8 +30,9 @@ class ArticleAuthor(models.Model):
         '''
         Definice jména profilového obráku
 
-        :return: Jméno profilového obrázku
+        :return: Jméno profilového obrázku autora
         '''
+
         return f"{slugify(self.user.email.replace('@', '_').replace('.', '_'))}_app_300.jpg"
 
 
@@ -40,16 +43,8 @@ class ArticleAuthor(models.Model):
 
         :return: Cesta k profilovému obrázku
         '''
+
         return f"images/profile_pictures/authors/"
-
-    @property
-    def profile_image_path(self):
-        '''
-        Definice cesty k profilovému obráku
-
-        :return: Cesta k profilovému obrázku
-        '''
-        return f"images/profile_pictures/authors/{slugify(self.user.email.replace('@', '_').replace('.', '_'))}_app_300.jpg"
 
 
     def save(self, *args, **kwargs):
@@ -60,7 +55,6 @@ class ArticleAuthor(models.Model):
             self.profile_picture.name = self.profile_image_name
 
         super().save(*args, **kwargs)
-
 
 
     @classmethod
@@ -75,5 +69,6 @@ class ArticleAuthor(models.Model):
         try:
             ArticleAuthor.objects.get(user=user)
             return True
+
         except ArticleAuthor.DoesNotExist:
             return False

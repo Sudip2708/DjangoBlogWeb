@@ -5,8 +5,8 @@ from django.views.generic import UpdateView
 
 from articles.forms.article_form import ArticleForm
 from articles.models.article import Article
-from articles.views.article_common_contex import CommonContextMixin
-from articles.views.utils import get_author
+from articles.views.utils.article_common_contex import CommonContextMixin
+from articles.views.utils.get_author import get_author
 
 
 class ArticleUpdateView(CommonContextMixin, UpdateView):

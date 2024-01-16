@@ -395,3 +395,18 @@ Přepracování views + úprava nahraného profilového obrázku
 • users/utils/ > vytvořit rename_new_image.py > zapsat část kódu pro přejmenování nového obrázku
 • users/utils/get_author_form.py > smazat
 ###
+Oprava nenačítání custumuser a oprava načítání aktualizovaných profilových fotek:
+• main/settings.py > Přenastavit AUTH_USER_MODEL na 'users.custom_user.CustomUser'
+(takto nastavené mi nefungoval autor a tak vracím models.py na původní místo:)
+• users/models/costum_user.py > přesunout do users/ a přejmenovat na models.py
+• users/models/costum_user_manager.py > přejmenovat na manager.py
+• users/models/utils/create_profile_pictur.py > přesunout do users/models/
+• users/models/utils/soubor create_username.py > přesunout do users/models/
+• users/models/utils/ > smazat
+• users/models/ > přejmenovat na users/models_utils/
+$ python manage.py makemigrations
+$ python manage.py migrate
+$ python manage.py runserver
+• templates/ > prohledat temlates a u všech obrázků autora nebo uživatele přidat ?{% now 'U' %} pro časové razítko, tak aby prohlížeče vždy načítali aktuální fotku
+(u obrázků pro články to nedělám protože se jednak moc nemění, ale hlavně jsou i velké, takže je dobré, aby se načítali s paměti prohlížeče)
+###

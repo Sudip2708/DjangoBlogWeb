@@ -3,11 +3,10 @@
 from django.shortcuts import redirect, reverse
 from django.views.generic import CreateView
 
-from .utils import get_author
 from articles.forms.article_form import ArticleForm
-from articles.views.article_common_contex import CommonContextMixin
+from articles.views.utils.article_common_contex import CommonContextMixin
 from articles.models.article import Article
-from articles.views.utils import get_author
+from articles.views.utils.get_author import get_author
 
 
 class ArticleCreateView(CommonContextMixin, CreateView):

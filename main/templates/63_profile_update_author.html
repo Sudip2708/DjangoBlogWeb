@@ -1,4 +1,4 @@
-{% extends 'profile_update.html' %}
+{% extends '60_profile_update.html' %}
 {% load static %}
 {% load crispy_forms_tags %}
 {% block profile_update_content %}
@@ -10,7 +10,7 @@
 
     <!-- Author Profile Picture -->
     <div class="col-md-4 mb-4">
-      <img src="{{ author_form.instance.author_profile_picture.url }}"
+      <img src="{{ author_form.instance.author_profile_picture.url }}?{% now 'U' %}"
            alt="Author Profile Picture"
            class="img-fluid">
     </div>

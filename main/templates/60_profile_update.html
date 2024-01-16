@@ -1,0 +1,55 @@
+{% extends '20_main.html' %}
+
+{% load static %}
+{% load crispy_forms_tags %}
+{% block inner_content %}
+
+<style>
+
+  .form-label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-size: 0.8rem;
+    color: grey;
+  }
+
+  .form-control {
+    display: block;
+    width: 100%;
+    padding: 0.75rem 1rem;
+    font-size: 2rem;
+    font-weight: 600;
+    line-height: 2;
+    color: #495057;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #ced4da;
+    border-radius: 0.25rem;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+  }
+
+  @media (max-width: 960px) {
+    /* Skryj boční panel, pokud je šířka displeje menší než 960px */
+    aside {
+      display: none;
+    }
+</style>
+
+
+<main class="col-lg-8">
+  <div class="container">
+
+    <!-- Nadpis a navigace -->
+    {% include "61_profile_update_header_and_nav.html" %}
+
+    <!-- Obsah stránky -->
+    {% block profile_update_content %}
+    {% endblock profile_update_content %}
+
+  </div>
+</main>
+
+<!-- Napojení Sidebar -->
+{% include '64_profile_update_sidebar.html' with author_form=author_form favorite_authors=favorite_authors %}
+
+{% endblock inner_content %}

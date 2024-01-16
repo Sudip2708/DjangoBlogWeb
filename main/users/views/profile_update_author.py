@@ -1,9 +1,12 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from users.utils.change_profile_picture import change_profile_picture
+
 from articles.models.article_author import ArticleAuthor
-from users.forms import AuthorProfileForm
+from users.forms.author_profile_form import AuthorProfileForm
+from users.views.utils.change_profile_picture import change_profile_picture
+
+
 
 
 
@@ -58,4 +61,4 @@ def profile_update_author(request):
         'author_form': author_form,
     }
 
-    return render(request, 'profile_update_author.html', content)
+    return render(request, '63_profile_update_author.html', content)

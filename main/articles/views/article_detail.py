@@ -6,8 +6,8 @@ from django.views.generic import DetailView
 from articles.models.article import Article
 from articles.models.article_view import ArticleView
 from articles.forms.comment_form import CommentForm
-from .utils import get_similar_articles
-from articles.views.article_common_contex import CommonContextMixin
+from articles.views.utils.get_similar_articles import get_similar_articles
+from articles.views.utils.article_common_contex import CommonContextMixin
 
 
 class ArticleDetailView(CommonContextMixin, DetailView):

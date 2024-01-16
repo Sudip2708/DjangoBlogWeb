@@ -1,10 +1,13 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from users.forms import UserProfileForm
-from users.utils.change_profile_picture import change_profile_picture
+
 from articles.models.article_author import ArticleAuthor
-from users.forms import AuthorProfileForm
+from users.forms.user_profile_form import UserProfileForm
+from users.forms.author_profile_form import AuthorProfileForm
+from users.views.utils.change_profile_picture import change_profile_picture
+
+
 
 
 # Definice pohledu pro stránku pro úpravu uživatelského účtu
@@ -70,7 +73,7 @@ def profile_update_user(request):
     }
 
     # Zobrazení stránky s formuláři
-    return render(request, 'profile_update_user.html', content)
+    return render(request, '62_profile_update_user.html', content)
 
 
 

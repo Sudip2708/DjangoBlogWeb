@@ -147,8 +147,8 @@ STATICFILES_DIRS = [BASE_DIR / 'static']
 STATIC_ROOT = BASE_DIR.parent / 'static'
 MEDIA_ROOT = BASE_DIR / 'media'
 
-# Nastavení vlastní třídy uživaelů (pro users/models/> CustomUser(AbstractUser))
-AUTH_USER_MODEL = "users.CustomUser"
+# Nastavení vlastní třídy uživaelů (pro users/models.py > CustomUser(AbstractUser))
+AUTH_USER_MODEL = 'users.CustomUser'
 
 #############################################################################################
 # Nastavení Crispy forms na Bottstrap 5:

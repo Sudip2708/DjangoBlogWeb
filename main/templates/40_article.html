@@ -36,7 +36,7 @@
 
           <!-- Profile picture -->
           <div class="avatar flex-shrink-0">
-            <img class="img-fluid" src="{{ article.author.profile_picture.url }}" alt="profile_picture"/>
+            <img class="img-fluid" src="{{ article.author.profile_picture.url }}?{% now 'U' %}" alt="profile_picture"/>
           </div>
 
           <!-- Name -->

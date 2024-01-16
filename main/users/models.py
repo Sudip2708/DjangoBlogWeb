@@ -1,11 +1,14 @@
-from django.utils.text import slugify
+
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 from django.utils.translation import gettext_lazy as _
-from .managers import CustomUserManager
-from .utils.create_username import create_username
-from .utils.create_profile_picture import create_profile_picture
+from django.utils.text import slugify
 from model_utils import FieldTracker
+
+from .models_utils.managers import CustomUserManager
+from .models_utils.create_username import create_username
+from .models_utils.create_profile_picture import create_profile_picture
+
 
 
 class CustomUser(AbstractUser):
@@ -17,8 +20,7 @@ class CustomUser(AbstractUser):
     email = models.EmailField(_("email address"), unique=True)
 
     # Pole pro profilový obrázek
-    profile_image = models.ImageField(_("profile image"),
-                                      upload_to="images/profile_pictures/users/")
+    profile_image = models.ImageField(_("profile image"), upload_to="images/profile_pictures/users/")
 
     # FieldTracker pro sledování změn v profile_image
     profile_image_tracker = FieldTracker(fields=['profile_image'])
@@ -33,7 +35,6 @@ class CustomUser(AbstractUser):
     objects = CustomUserManager()
 
 
-
     def __str__(self):
         return self.username
 
@@ -45,7 +46,9 @@ class CustomUser(AbstractUser):
 
         :return: Jméno profilového obrázku
         '''
+
         return f"{slugify(self.email.replace('@', '_').replace('.', '_'))}_upp_300.jpg"
+
 
     @property
     def profile_image_directory(self):
@@ -54,12 +57,13 @@ class CustomUser(AbstractUser):
 
         :return: Jméno profilového obrázku
         '''
+
         return f"images/profile_pictures/users/"
 
 
     def save(self, *args, **kwargs):
         '''
-        Při ukládání instance CustomUser provede nastavení uživatelského jména a profilového obrázku, pokud neexistuje ID (primární klíč).
+        Nastavení uživatelského jména a profilového obrázku při založení účtu
 
         :param args: Poziceové argumenty pro super().save()
         :param kwargs: Klíčové argumenty pro super().save()
