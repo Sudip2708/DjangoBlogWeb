@@ -11,7 +11,7 @@
       <!-- Thumbnail before the article -->
       {% if forloop.counter|divisibleby:2 %}
       <div class="col-lg-5">
-        <img class="img-fluid" src="{{ article.thumbnail.url }}" alt="article_thumbnail">
+        <img class="img-fluid" src="{{ article.main_picture_preview.url }}" alt="article_main_picture">
       </div>
       {% endif %}
 
@@ -55,7 +55,7 @@
 
                   <!-- Profile picture -->
                   <div class="avatar flex-shrink-0">
-                    <img class="img-fluid" src="{{ article.author.profile_picture.url }}?{% now 'U' %}" alt="profile_picture" />
+                    <img class="img-fluid" src="{{ article.author.author_profile_picture.url }}?{% now 'U' %}" alt="profile_picture" />
                   </div>
 
                   <!-- Name -->
@@ -86,7 +86,7 @@
       <!-- Thumbnail after the article -->
       {% if not forloop.counter|divisibleby:2 %}
       <div class="col-lg-5">
-        <img class="img-fluid" src="{{ article.thumbnail.url }}" alt="article_thumbnail">
+        <img class="img-fluid" src="{{ article.main_picture_preview.url }}" alt="article_main_picture">
       </div>
       {% endif %}
 

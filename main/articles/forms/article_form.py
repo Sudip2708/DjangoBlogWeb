@@ -20,6 +20,6 @@ class ArticleForm(forms.ModelForm):
 
         # Seznam polí, která budou zahrnuta ve formuláři
         fields = (
-            'title', 'overview', 'content', 'thumbnail',
+            'title', 'overview', 'content', 'main_picture_for_article',
             'categories', 'featured', 'previous_article', 'next_article'
         )

@@ -410,3 +410,23 @@ $ python manage.py runserver
 • templates/ > prohledat temlates a u všech obrázků autora nebo uživatele přidat ?{% now 'U' %} pro časové razítko, tak aby prohlížeče vždy načítali aktuální fotku
 (u obrázků pro články to nedělám protože se jednak moc nemění, ale hlavně jsou i velké, takže je dobré, aby se načítali s paměti prohlížeče)
 ###
+Změna modelu articles pro hlavní obrázek
+• articles/models/article.py > připsat pole pro různé varianty obrázků
+• articles/models/article.py > připsat metody pro generování názvu obrázku pro low rozlišení
+• articles/models/article.py > připsat metodu na smazání existujících variant obrázků při změně
+• articles/models/article.py > připsat do save kod pro ukládaní obrázků
+$ python manage.py makemigrations
+$ python manage.py migrate
+Přejmenování pole thumbnail na main_picture:
+• articles/models/article.py > přepsat výskyty pole thumbnail na pole main_picture
+• articles/forms/article_form.py > přepsat výskyty pole thumbnail na pole main_picture
+$ python manage.py makemigrations
+$ python manage.py migrate
+• articles/models/article.py > smazat pole pro main_picture_medium
+$ python manage.py makemigrations
+$ python manage.py migrate
+• articles/models/article.py > přidat do pole pro main_picture definici umístění: upload_to='articles/main_picture/
+$ python manage.py makemigrations
+$ python manage.py migrate
+$ python manage.py runserver
+###
