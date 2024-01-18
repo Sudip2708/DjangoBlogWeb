@@ -30,17 +30,14 @@ def profile_update_author(request):
         # Kontrola, zda formulář obsahuje validní data
         if author_form.is_valid():
 
-            # Název databázového pole
-            field_name = 'author_profile_picture'
-
             # Návratová adresa
             return_url = 'profile_update_author'
 
             # Kontrola, zda došlo ke změně profilového obrázku
-            if author.profile_picture_tracker.has_changed(field_name):
+            if author.profile_picture_tracker.has_changed('profile_picture'):
 
                 # Zpracování profilového obrázku a odstranění starého
-                change_profile_picture(request, author_form, author, field_name, return_url)
+                change_profile_picture(request, author_form, author, return_url)
 
             # Uložení formuláře užvatele
             author_form.save()

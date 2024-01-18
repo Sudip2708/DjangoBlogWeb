@@ -3,7 +3,7 @@ from users.models import CustomUser
 from django.utils.text import slugify
 from django.utils.translation import gettext_lazy as _
 from model_utils import FieldTracker
-
+import os
 
 
 class ArticleAuthor(models.Model):
@@ -12,13 +12,13 @@ class ArticleAuthor(models.Model):
     user = models.OneToOneField(CustomUser, on_delete=models.SET_NULL, null=True)
 
     # Profilový obrázek autora článku
-    author_profile_picture = models.ImageField(_("author profile picture"), upload_to="images/profile_pictures/authors/")
+    profile_picture = models.ImageField(_("author profile picture"), upload_to="images/profile_pictures/authors/")
 
     # Uživatelské jméno autora článku
     author = models.CharField(_("author"), max_length=150, unique=True)
 
-    # FieldTracker pro sledování změn v profile_image
-    profile_picture_tracker = FieldTracker(fields=['author_profile_picture'])
+    # FieldTracker pro sledování změn v profile_picture
+    profile_picture_tracker = FieldTracker(fields=['profile_picture'])
 
 
     def __str__(self):
@@ -26,7 +26,7 @@ class ArticleAuthor(models.Model):
 
 
     @property
-    def profile_image_name(self):
+    def profile_picture_name(self):
         '''
         Definice jména profilového obráku
 
@@ -37,7 +37,7 @@ class ArticleAuthor(models.Model):
 
 
     @property
-    def profile_image_directory(self):
+    def profile_picture_directory(self):
         '''
         Definice cesty k profilovému obráku
 
@@ -46,13 +46,23 @@ class ArticleAuthor(models.Model):
 
         return f"images/profile_pictures/authors/"
 
+    @property
+    def profile_picture_path(self):
+        '''
+        Definice umístění a jména profilového obráku.
+
+        :return: Tuple umístění a jména profilového obráku.
+        '''
+
+        return os.path.join(self.profile_picture_directory, self.profile_picture_name)
+
 
     def save(self, *args, **kwargs):
         # Nastaví author a profile_picture podle CustomUser při vytváření ArticleAuthor
         if not self.pk:
             self.author = self.user.username
-            self.profile_picture = self.user.profile_image
-            self.profile_picture.name = self.profile_image_name
+            self.profile_picture = self.user.profile_picture
+            self.profile_picture.name = self.profile_picture_name
 
         super().save(*args, **kwargs)
 

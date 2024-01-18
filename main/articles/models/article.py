@@ -37,7 +37,7 @@ class Article(models.Model):
     # Obrázek reprezentující článek - varianta pro článek (800px)
     main_picture_for_article = models.ImageField(upload_to='images/articles/main_picture/')
 
-    # FieldTracker pro sledování změn v profile_image
+    # FieldTracker pro sledování změn v main_picture_for_article
     main_picture_for_article_tracker = FieldTracker(fields=['main_picture_for_article'])
 
     # Obrázek reprezentující článek - miniatura (60px)

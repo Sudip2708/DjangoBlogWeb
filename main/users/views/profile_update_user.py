@@ -26,17 +26,14 @@ def profile_update_user(request):
         # Kontrola, zda formulář obsahuje validní data
         if user_form.is_valid():
 
-            # Název databázového pole
-            field_name = 'profile_image'
-
             # Návratová adresa
             return_url = 'profile_update_user'
 
             # Kontrola, zda došlo ke změně profilového obrázku
-            if user.profile_image_tracker.has_changed(field_name):
+            if user.profile_picture_tracker.has_changed('profile_picture'):
 
                 # Zpracování profilového obrázku a odstranění starého
-                change_profile_picture(request, user_form, user, field_name, return_url)
+                change_profile_picture(request, user_form, user, return_url)
 
             # Uložení formuláře užvatele
             user_form.save()

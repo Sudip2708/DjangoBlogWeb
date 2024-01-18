@@ -29,9 +29,9 @@ class CustomUserManager(BaseUserManager):
         user.save()
 
         # Set default profile image if not provided
-        if not user.profile_image:
+        if not user.profile_picture:
             default_image_path = os.path.join("images", "profile_pictures", "users", "default.jpg")
-            user.profile_image = default_image_path
+            user.profile_picture = default_image_path
 
         # Return the created user
         return user

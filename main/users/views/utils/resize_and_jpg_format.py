@@ -3,34 +3,29 @@ from django.contrib import messages
 from PIL import Image
 
 
-def resize_and_jpg_format(request, form, field_name, dimensions, return_url):
+def resize_and_jpg_format(request, form, return_url):
     '''
     Funkce pro změnu obrázku na formát JPG a změnu velikosti pro obrázek z formuláře.
 
     :param request: Request z formuláře.
     :param form: Formulář s daty.
-    :param field_name: Název pole v modelu databáze.
-    :param dimensions: Požadovaná velikost.
     :param return_url: Název návratové url.
 
     :return: Změna formátu a velikosti obrázku ve formuláři,
             nebo přerušení nahrávání dat a návrat na stránku s oznamem o chybě.
     '''
 
-    print("############################################")
-    print("### main/users/utils/resize_and_jpg_format.py")
-    print()
 
     try:
 
         # Otevření obrázku
-        image = Image.open(form.cleaned_data[field_name])
+        image = Image.open(form.cleaned_data['profile_picture'])
 
         # Změna velikosti
-        image.thumbnail(dimensions)
+        image.thumbnail((300, 300))
 
         # Změna formátu
-        image.convert("RGB").save(form.cleaned_data[field_name], "JPEG")
+        image.convert("RGB").save(form.cleaned_data['profile_picture'], "JPEG")
 
     except ValueError as e:
 

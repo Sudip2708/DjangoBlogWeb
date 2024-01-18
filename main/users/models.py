@@ -4,6 +4,7 @@ from django.db import models
 from django.utils.translation import gettext_lazy as _
 from django.utils.text import slugify
 from model_utils import FieldTracker
+import os
 
 from .models_utils.managers import CustomUserManager
 from .models_utils.create_username import create_username
@@ -20,10 +21,10 @@ class CustomUser(AbstractUser):
     email = models.EmailField(_("email address"), unique=True)
 
     # Pole pro profilový obrázek
-    profile_image = models.ImageField(_("profile image"), upload_to="images/profile_pictures/users/")
+    profile_picture = models.ImageField(_("profile_picture"), upload_to="images/profile_pictures/users/", null=True)
 
-    # FieldTracker pro sledování změn v profile_image
-    profile_image_tracker = FieldTracker(fields=['profile_image'])
+    # FieldTracker pro sledování změn v profile_picture
+    profile_picture_tracker = FieldTracker(fields=['profile_picture'])
 
     # Nastavení emailu jako primárního identifikátoru
     USERNAME_FIELD = "email"
@@ -40,7 +41,7 @@ class CustomUser(AbstractUser):
 
 
     @property
-    def profile_image_name(self):
+    def profile_picture_name(self):
         '''
         Definice jména profilového obráku
 
@@ -51,7 +52,7 @@ class CustomUser(AbstractUser):
 
 
     @property
-    def profile_image_directory(self):
+    def profile_picture_directory(self):
         '''
         Definice jména profilového obráku
 
@@ -59,6 +60,24 @@ class CustomUser(AbstractUser):
         '''
 
         return f"images/profile_pictures/users/"
+
+    @property
+    def profile_picture_path(self):
+        '''
+        Definice cesty profilového obráku.
+
+        :return: Cesta profilového obráku.
+        '''
+
+        return os.path.join(self.profile_picture_directory, self.profile_picture_name)
+
+
+    @classmethod
+    def default_profile_picture_path(cls):
+        # Cesta k defaultnímu obrázku ze složky media
+        return 'images/profile_pictures/default.jpg'
+
+
 
 
     def save(self, *args, **kwargs):
@@ -73,7 +92,10 @@ class CustomUser(AbstractUser):
         # Přiřadí uživatelské jméno a profilového obrázku
         if not self.pk:
             self.username = create_username(self.email, CustomUser)
-            self.profile_image = create_profile_picture(self.profile_image_directory, self.profile_image_name)
+            self.profile_picture = create_profile_picture(
+                self.profile_picture_path,
+                CustomUser.default_profile_picture_path()
+            )
 
         # Uložení instance
         super().save(*args, **kwargs)

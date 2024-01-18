@@ -10,11 +10,11 @@ class AuthorProfileForm(forms.ModelForm):
 
 
     # Odebrání Current z ImageFields (pole s informací o aktuálně vybraném obrázku)
-    author_profile_picture = hide_current_field()
+    profile_picture = hide_current_field()
 
 
     # Definice metadat
     class Meta:
         model = ArticleAuthor
-        fields = ['author', 'author_profile_picture']
+        fields = ['author', 'profile_picture']
 

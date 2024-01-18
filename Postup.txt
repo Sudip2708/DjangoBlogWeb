@@ -430,3 +430,19 @@ $ python manage.py makemigrations
 $ python manage.py migrate
 $ python manage.py runserver
 ###
+Změna názvu pole pro profilový obrázek autora:
+• articles/models/article_author.py > změnit article_profile_picture na profile_picture
+• root > vyhledat article_profile_picture a změnit na profile_picture všechny výskyty (kromě v migraci)
+$ python manage.py makemigrations
+$ python manage.py migrate
+Změna názvu pole pro profilový obrázek uživatele:
+• users/models.py > změnit profile_image na profile_picture
+• root > vyhledat profile_image a změnit na profile_picture všechny výskyty (kromě v migraci)
+$ python manage.py makemigrations
+$ python manage.py migrate
+Zjednodušení procesů nahrátí nového profilového obrázku:
+• articles/models/article_author.py > přidat třetí property pro cestu k profilovému obrázku
+• users/models.py > přidat třetí property pro cestu k profilovému obrázku
+• rusers/views > projí úpravu profilového obrázku a zjednodušit cestu
+$ python manage.py runserver > ověřit zda je vše funkční
+###

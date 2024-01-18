@@ -10,12 +10,12 @@ class UserProfileForm(forms.ModelForm):
 
 
     # Odebrání Current z ImageFields (pole s informací o aktuálně vybraném obrázku)
-    profile_image = hide_current_field()
+    profile_picture = hide_current_field()
 
 
     # Definice metadat
     class Meta:
         model = CustomUser
-        fields = ['username', 'first_name', 'last_name', 'profile_image']
+        fields = ['username', 'first_name', 'last_name', 'profile_picture']
 
 

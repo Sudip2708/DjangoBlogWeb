@@ -4,7 +4,7 @@ from .rename_new_image import rename_new_image
 import os
 
 
-def change_profile_picture(request, form, instance, field_name, return_url):
+def change_profile_picture(request, form, instance, return_url):
     '''
     Zpracování nahrávaného profilového obrázku.
 
@@ -17,27 +17,12 @@ def change_profile_picture(request, form, instance, field_name, return_url):
     :return: Obrázek připravený na uložení.
     '''
 
-
-    print("############################################")
-    print("### main/users/utils/change_profile_picture.py")
-    print()
-
-
-    # Požadovaný rozměr obrázku
-    dimensions = (300, 300)
-
     # Změna velikosti a formátu
-    resize_and_jpg_format(request, form, field_name, dimensions, return_url)
-
-    # Získání názvu původního obrázku
-    original_image_name = instance.profile_image_name
-
-    # Získání cesty k původnímu obrázku
-    image_path = os.path.join(instance.profile_image_directory, original_image_name)
+    resize_and_jpg_format(request, form, return_url)
 
     # Smazání původního obrázku
-    delete_old_image(image_path)
+    delete_old_image(instance.profile_picture_path)
 
     # Změna jména
-    rename_new_image(form, instance, field_name, original_image_name)
+    rename_new_image(form, instance)
 

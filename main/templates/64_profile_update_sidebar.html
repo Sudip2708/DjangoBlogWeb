@@ -24,7 +24,7 @@
 
         <!-- Profile picture -->
         <div class="w-25">
-          <img class="account-img w-100" src="{{ user.profile_image.url }}?{% now 'U' %}" alt="profile_picture"/>
+          <img class="account-img w-100" src="{{ user.profile_picture.url }}?{% now 'U' %}" alt="profile_picture"/>
         </div>
 
         <!-- Username & email -->
@@ -51,7 +51,7 @@
 
           <!-- Profile picture -->
           <div class="avatar flex-shrink-0">
-            <img class="img-fluid" src="{{ author_form.instance.author_profile_picture.url }}?{% now 'U' %}" alt="profile_picture"/>
+            <img class="img-fluid" src="{{ author_form.instance.profile_picture.url }}?{% now 'U' %}" alt="profile_picture"/>
           </div>
 
           <!-- Name -->
