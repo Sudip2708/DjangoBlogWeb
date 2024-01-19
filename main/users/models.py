@@ -15,10 +15,10 @@ from .models_utils.create_profile_picture import create_profile_picture
 class CustomUser(AbstractUser):
 
     # Pole pro uživatelské jméno
-    username = models.CharField(max_length=150, unique=True)
+    username = models.CharField(_("username"), max_length=150, unique=True)
 
     # Pole pro email
-    email = models.EmailField(_("email address"), unique=True)
+    email = models.EmailField(_("email_address"), unique=True)
 
     # Pole pro profilový obrázek
     profile_picture = models.ImageField(_("profile_picture"), upload_to="images/profile_pictures/users/", null=True)

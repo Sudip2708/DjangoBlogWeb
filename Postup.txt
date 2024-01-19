@@ -446,3 +446,13 @@ Zjednodušení procesů nahrátí nového profilového obrázku:
 • rusers/views > projí úpravu profilového obrázku a zjednodušit cestu
 $ python manage.py runserver > ověřit zda je vše funkční
 ###
+Rozdělení dlouhého kódu pro model article.py
+• articles/models/ > vytvořit složku article_mixins
+• articles/models/article_mixins/ > vytvořit soubor article_images_processing_mixin.py a přepsat z article.py příslušný kód
+• articles/models/article_mixins/ > vytvořit soubor article_images_property_mixin.py a přepsat z article.py příslušný kód
+• articles/models/article_mixins/ > vytvořit soubor article_databases_property_mixin.py a přepsat z article.py příslušný kód
+• articles/models/article_mixins/ > vytvořit soubor article_base_methods_mixin.py a přepsat z article.py příslušný kód
+• articles/models/article.py > dopsat importy mixinů a zapsat je do seznamu děděných tříd
+$ python manage.py makemigrations
+$ python manage.py migrate
+###

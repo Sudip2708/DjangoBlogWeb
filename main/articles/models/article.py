@@ -1,41 +1,63 @@
-### Definuje modely (tabulky) pro článek.
-
 from django.db import models
-from django.urls import reverse
 from tinymce.models import HTMLField
+from django.utils.translation import gettext_lazy as _
 from autoslug import AutoSlugField
 from taggit.managers import TaggableManager
-from PIL import Image
-import os
 from model_utils import FieldTracker
-from django.core.files.storage import default_storage
-
 
 from .article_author import ArticleAuthor
 from .article_category import ArticleCategory
-from articles.models.article_view import ArticleView
+from .article_mixins.article_base_methods_mixin import ArticleBaseMethodsMixin
+from .article_mixins.article_databases_property_mixin import ArticleDatabasesPropertyMixin
+from .article_mixins.article_images_property_mixin import ArticleImagesPropertyMixin
+from .article_mixins.article_images_processing_mixin import ArticleImagesProcessingMixin
 
 
-class Article(models.Model):
+class Article(models.Model,
+              ArticleBaseMethodsMixin,
+              ArticleDatabasesPropertyMixin,
+              ArticleImagesPropertyMixin,
+              ArticleImagesProcessingMixin):
+    """
+    Model reprezentující článek.
+
+    Attributes:
+        author: Cizí klíč na autora článku.
+        title: Název článku, omezený na 100 znaků.
+        slug: Automaický generovaný slug pro URL na základě názvu článku, unikátní.
+        overview: Krátký popis článku.
+        content: Obsah článku v HTML formátu.
+        main_picture_for_article: Obrázek reprezentující článek.
+        main_picture_miniature: Miniatura obrázku reprezentujícího článek.
+        main_picture_preview: Náhledová varianta obrázku reprezentujícího článek.
+        main_picture_max_size: Obrázek v nejvyšším rozlišení.
+        created: Datum vytvoření článku.
+        updated: Datum poslední aktualizace článku.
+        tags: Správce pro práci s tagy.
+        categories: Množina kategorií, ke kterým článek patří.
+        comment_count: Počet komentářů k článku.
+        featured: Příznak, zda je článek označený jako "featured".
+        previous_article: Odkaz na předchozí článek.
+        next_article: Odkaz na následující článek.
+    """
+
     # Cizí klíč na autora článku
     author = models.ForeignKey(ArticleAuthor, on_delete=models.CASCADE)
 
     # Název článku, omezený na 100 znaků
-    title = models.CharField(max_length=100)
+    title = models.CharField(_("article_title"), max_length=100)
 
     # Automaický generovaný slug pro URL na základě názvu článku, unikátní
     slug = AutoSlugField(populate_from='title', unique=True)
 
     # Krátký popis článku
-    overview = models.TextField()
+    overview = models.TextField(_("article_overview"))
 
     # Obsah článku v HTML formátu
-    content = HTMLField()
-
-
+    content = HTMLField(_("article_main_content"))
 
     # Obrázek reprezentující článek - varianta pro článek (800px)
-    main_picture_for_article = models.ImageField(upload_to='images/articles/main_picture/')
+    main_picture_for_article = models.ImageField(_("article_main_picture"), upload_to='images/articles/main_picture/')
 
     # FieldTracker pro sledování změn v main_picture_for_article
     main_picture_for_article_tracker = FieldTracker(fields=['main_picture_for_article'])
@@ -47,11 +69,7 @@ class Article(models.Model):
     main_picture_preview = models.ImageField(upload_to='images/articles/main_picture/', null=True, blank=True)
 
     # Obrázek reprezentující článek- vysoké rozlišení (<1920px)
-    main_picture_max_size = models.ImageField(upload_to='images/articless/main_picture/', null=True, blank=True)
-
-
-
-
+    main_picture_max_size = models.ImageField(upload_to='images/articles/main_picture/', null=True, blank=True)
 
     # Datum vytvoření článku
     created = models.DateTimeField(auto_now_add=True)
@@ -92,148 +110,3 @@ class Article(models.Model):
         indexes = [
             models.Index(fields=['slug'])
         ]
-
-    def __str__(self):
-        # Textová reprezentace instance (pro administrační rozhraní a výpisy)
-        return self.title
-
-    def get_absolute_url(self):
-        # Vrátí absolutní URL pro zobrazení detailu článku
-        return reverse('article-detail', kwargs={'slug': self.slug})
-
-    def get_update_url(self):
-        # Vrátí URL pro aktualizaci článku
-        return reverse('article-update', kwargs={'slug': self.slug})
-
-    def get_delete_url(self):
-        # Vrátí URL pro smazání článku
-        return reverse('article-delete', kwargs={'slug': self.slug})
-
-    @property
-    def get_comments(self):
-        # Vrátí všechny komentáře k článku, seřazené sestupně podle data vytvoření
-        return self.comments.all().order_by('-created')
-
-    @property
-    def view_count(self):
-        # Vrátí počet zobrazení článku
-        return ArticleView.objects.filter(article=self).count()
-
-    @property
-    def get_tags(self):
-        # Vrátí všechny tagy přiřazené k článku
-        return self.tags.all()
-
-    @property
-    def comment_count(self):
-        # Vrátí počet komentářů k článku
-        return self.comments.count()
-
-    @property
-    def get_main_picture_miniature_name(self):
-        # Metoda pro generování názvu pro miniaturu obrázku
-        return f"{self.slug}_amp_mini_60px.jpg"
-
-    @property
-    def get_main_picture_preview_name(self):
-        # Metoda pro generování názvu obrázku pro náhledovou velikost
-        return f"{self.slug}_amp_preview_450px.jpg"
-
-    @property
-    def get_main_picture_for_article_name(self):
-        # Metoda pro generování názvu obrázku velikosti pro článek
-        return f"{self.slug}_amp_article_800px.jpg"
-
-    @property
-    def get_main_picture_max_size_name(self):
-        # Metoda pro generování názvu obrázku v nejvyšším rozlišení
-        return f"{self.slug}_amp_max_1920px.jpg"
-
-    @classmethod
-    def main_picture_path(cls):
-        return 'media/images/articles/main_picture/'
-
-    @property
-    def get_main_picture_miniature_path(self):
-        # Metoda pro generování cesty pro miniaturu obrázku
-        main_picture_path = Article.main_picture_path()
-        picture_name = self.get_main_picture_miniature_name
-        return os.path.join(main_picture_path, picture_name)
-
-    @property
-    def get_main_picture_preview_path(self):
-        # Metoda pro generování cesty obrázku pro náhledovou velikost
-        main_picture_path = Article.main_picture_path()
-        picture_name = self.get_main_picture_preview_name
-        return os.path.join(main_picture_path, picture_name)
-
-    @property
-    def get_main_picture_for_article_path(self):
-        # Metoda pro generování cesty obrázku velikosti pro článek
-        main_picture_path = Article.main_picture_path()
-        picture_name = self.get_main_picture_for_article_name
-        return os.path.join(main_picture_path, picture_name)
-
-    @property
-    def get_main_picture_max_size_path(self):
-        # Metoda pro generování cesty obrázku v nejvyšším rozlišení
-        main_picture_path = Article.main_picture_path()
-        picture_name = self.get_main_picture_max_size_name
-        return os.path.join(main_picture_path, picture_name)
-
-
-    def save(self, *args, **kwargs):
-        print("save")
-
-        if not self.pk:
-            # Ověří zda je vytvořené umístění pro soubory, pokud ne, pak ho vytvoří
-            os.makedirs(Article.main_picture_path(), exist_ok=True)
-
-
-        if self.main_picture_for_article_tracker.has_changed('main_picture_for_article'):
-            print("if self.main_picture_for_article_tracker.has_changed")
-
-            # Vytvoření kopíí obrázku
-            with Image.open(self.main_picture_for_article.path) as img:
-
-                # Pro vysoké rozlišení
-                img.thumbnail((1920, 1920))
-                img.save(self.get_main_picture_max_size_path, 'JPEG')
-                self.main_picture_max_size = self.get_main_picture_max_size_path
-
-                # Pro variantu pro článek
-                img.thumbnail((800, 800))
-                img.save(self.get_main_picture_for_article_path, 'JPEG')
-                # Tato varianta bude přidělena poli až po smazání aktuálně zpracovávaného obrázku
-
-                # Pro náhledovou varianu
-                img.thumbnail((450, 450))
-                img.save(self.get_main_picture_preview_path, 'JPEG')
-                self.main_picture_preview = self.get_main_picture_preview_path
-
-                # Pro miniaturu
-                img.thumbnail((60, 60))
-                img.save(self.get_main_picture_miniature_path, 'JPEG')
-                self.main_picture_miniature = self.get_main_picture_miniature_path
-
-
-        # Volání původní metody save
-        super(Article, self).save(*args, **kwargs)
-
-
-        # Pokud toto pole neobsahuje defaultní hodnotu
-        if self.main_picture_for_article != self.get_main_picture_for_article_path:
-            try:
-                # Fyzické smazání souboru
-                image_path = self.main_picture_for_article.path
-                if default_storage.exists(image_path):
-                    default_storage.delete(image_path)
-
-                # Nahrazení cesty v databázy
-                self.main_picture_for_article = self.get_main_picture_for_article_path
-
-                print("Soubor byl smazán a cesta změněna.")
-            except Exception as e:
-                print("Chyba po uložení:", str(e))
-
-
