@@ -40,7 +40,7 @@
         data-glightbox="{{ article.title }}">
 
         <!-- Picture -->
-        <img class="img-fluid height-400" src="{{ article.main_picture_preview.url }}" alt="article_main_picture">
+        <img class="img-fluid height-400" src="{{ article.main_picture_preview.url }}?{% now 'U' %}" alt="article_main_picture">
 
         <!-- Icon -->
         <div class="fsc-hover-overlay">

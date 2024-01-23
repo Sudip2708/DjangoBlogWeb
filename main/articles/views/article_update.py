@@ -5,11 +5,20 @@ from django.views.generic import UpdateView
 
 from articles.forms.article_form import ArticleForm
 from articles.models.article import Article
-from articles.views.utils.article_common_contex import CommonContextMixin
-from articles.views.utils.get_author import get_author
+from utilities.for_articles.views_common_contex_mixin import CommonContextMixin
+from utilities.for_articles.get_author import get_author
+from utilities.for_articles.clean_main_picture_max_size import clean_main_picture_max_size
 
 
-class ArticleUpdateView(CommonContextMixin, UpdateView):
+class ArticleUpdateView(UpdateView, CommonContextMixin):
+    '''
+    Definice pohledu pro stránku pro úpravu článku.
+
+    :param UpdateView: Třída pro definici pohledu pro úpravu článku
+    :param CommonContextMixin: Společný obsah pro stránky pro vytvoření a úpravu článku.
+    :return: Stránka pro správu uživatelského účtu.
+    '''
+
     # Použitý model pro aktualizaci článku
     model = Article
 
@@ -28,6 +37,10 @@ class ArticleUpdateView(CommonContextMixin, UpdateView):
     def form_valid(self, form):
         # Při úspěšném odeslání formuláře, nastavíme autora na aktuálního uživatele
         form.instance.author = get_author(self.request.user)
+
+        # Validace a změna formátu obrázku
+        if form.instance.main_picture_max_size_tracker.has_changed('main_picture_max_size'):
+            form = clean_main_picture_max_size(form)
 
         # Uložení formuláře a přesměrování na detail aktualizovaného článku
         form.save()

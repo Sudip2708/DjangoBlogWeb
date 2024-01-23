@@ -2,11 +2,15 @@
 
 from django import forms
 
-from .tinymce_winget import TinyMCEWidget
+from utilities.for_articles.tiny_mce_winget import TinyMCEWidget
 from articles.models.article import Article
+from utilities.shared.hide_current_in_image_field import hide_current_in_image_field
 
 
 class ArticleForm(forms.ModelForm):
+
+    main_picture_max_size = hide_current_in_image_field()
+
     # Pole pro obsah článku s použitím TinyMCEWidget pro bohatý textový formát
     content = forms.CharField(
         widget=TinyMCEWidget(
@@ -20,6 +24,6 @@ class ArticleForm(forms.ModelForm):
 
         # Seznam polí, která budou zahrnuta ve formuláři
         fields = (
-            'title', 'overview', 'content', 'main_picture_for_article',
+            'title', 'overview', 'content', 'main_picture_max_size',
             'categories', 'featured', 'previous_article', 'next_article'
         )

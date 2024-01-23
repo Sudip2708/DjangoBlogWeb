@@ -4,12 +4,20 @@ from django.shortcuts import redirect, reverse
 from django.views.generic import CreateView
 
 from articles.forms.article_form import ArticleForm
-from articles.views.utils.article_common_contex import CommonContextMixin
+from utilities.for_articles.views_common_contex_mixin import CommonContextMixin
 from articles.models.article import Article
-from articles.views.utils.get_author import get_author
+from utilities.for_articles.get_author import get_author
 
 
-class ArticleCreateView(CommonContextMixin, CreateView):
+class ArticleCreateView(CreateView, CommonContextMixin):
+    '''
+    Definice pohledu pro stránku pro vytvoření článku.
+
+    :param CreateView: Třída pro definici pohledu pro vytvoření článku
+    :param CommonContextMixin: Společný obsah pro stránky pro vytvoření a úpravu článku.
+    :return: Stránka pro správu uživatelského účtu.
+    '''
+
     # Použitý model pro vytvoření nového článku
     model = Article
 

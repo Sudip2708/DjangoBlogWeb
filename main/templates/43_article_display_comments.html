@@ -17,7 +17,7 @@
     <!-- Users profile picture -->
     {% if comment.user.author %}
       <img class="img-fluid rounded-circle flex-shrink-0"
-           src="{{ comment.user.author.profile_picture.url }}"
+           src="{{ comment.user.author.profile_picture.url }}?{% now 'U' %}"
            alt="profile_picture"
            width="50"/>
     {% else %}

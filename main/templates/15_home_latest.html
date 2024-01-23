@@ -19,7 +19,7 @@
 
         <!-- Thumbnail -->
         <a class="mb-3" href="article.html">
-          <img class="img-fluid" src="{{ article.main_picture_preview.url }}" alt="article_main_picture">
+          <img class="img-fluid" src="{{ article.main_picture_preview.url }}?{% now 'U' %}" alt="article_main_picture">
         </a>
 
         <!-- Created and Category -->

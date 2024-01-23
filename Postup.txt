@@ -446,13 +446,15 @@ Zjednodušení procesů nahrátí nového profilového obrázku:
 • rusers/views > projí úpravu profilového obrázku a zjednodušit cestu
 $ python manage.py runserver > ověřit zda je vše funkční
 ###
-Rozdělení dlouhého kódu pro model article.py
-• articles/models/ > vytvořit složku article_mixins
-• articles/models/article_mixins/ > vytvořit soubor article_images_processing_mixin.py a přepsat z article.py příslušný kód
-• articles/models/article_mixins/ > vytvořit soubor article_images_property_mixin.py a přepsat z article.py příslušný kód
-• articles/models/article_mixins/ > vytvořit soubor article_databases_property_mixin.py a přepsat z article.py příslušný kód
-• articles/models/article_mixins/ > vytvořit soubor article_base_methods_mixin.py a přepsat z article.py příslušný kód
-• articles/models/article.py > dopsat importy mixinů a zapsat je do seznamu děděných tříd
-$ python manage.py makemigrations
-$ python manage.py migrate
+Restrukturalizace projektu - odstranění gallery skrze reinstalaci bez ní
+• root > vytvoření složky utilities/ do které se přesunuly veškeré utility z celého projektu
+• users/models_utils > smazání složky
+• users/views/utils > smazání složky
+• users/views > nahrazení metody na zpracování fotky z formuláře v obou sobourech
+• users/models.py > přidání pole pro slug a miniatury a jejího vytvoření při změně profilového obrázku
+• articles/models/article_author.py > přidání pole pro slug a miniatury a jejího vytvoření při změně profilového obrázku
+• articles/models/article.py > přepsání kódu na automatické vytvoření a uložení různých verzí hlavního obrázku
+• articles/forms/article_form.py > skrytí pole pro current i pole pro výběr obrázku
+• templates/ > poupravení odkazů na obrázky + přidání časového razítka
 ###
+

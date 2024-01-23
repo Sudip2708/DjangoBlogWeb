@@ -4,24 +4,24 @@ from django.contrib.auth.decorators import login_required
 
 from articles.models.article_author import ArticleAuthor
 from users.forms.author_profile_form import AuthorProfileForm
-from users.views.utils.change_profile_picture import change_profile_picture
+from utilities.for_users.clean_profile_picture import clean_profile_picture
 
 
-
-
-
-# Definice pohledu pro stránku pro úpravu účtu autora
 @login_required
 def profile_update_author(request):
+    '''
+    Definice pohledu pro stránku pro správu účtu autora.
 
-    # Načtení uživatele
+    :param request: Formulářový požadavek.
+    :return: Stránka pro správu uživatelského účtu.
+    '''
+
+    # Načtení autora
     user = request.user
-
-    # Načtení atura
     author = ArticleAuthor.objects.get(user=user)
-    # author = ArticleAuthor.objects.get(user_id=user.id)
 
-    # Nastavení pro zpracování dat vložených uživatelem
+
+    # Nastavení pro POST
     if request.method == 'POST':
 
         # Načtení formuláře pro data uživatele
@@ -30,23 +30,18 @@ def profile_update_author(request):
         # Kontrola, zda formulář obsahuje validní data
         if author_form.is_valid():
 
-            # Návratová adresa
-            return_url = 'profile_update_author'
-
-            # Kontrola, zda došlo ke změně profilového obrázku
+            # Validace a změna formátu obrázku
             if author.profile_picture_tracker.has_changed('profile_picture'):
-
-                # Zpracování profilového obrázku a odstranění starého
-                change_profile_picture(request, author_form, author, return_url)
+                author_form = clean_profile_picture(author_form)
 
             # Uložení formuláře užvatele
             author_form.save()
 
             # Zpráva o úspěšném uložení a přesměrování zpátky na stránku
             messages.success(request, 'Your author profile has been updated successfully.')
-            return redirect(return_url)
+            return redirect('profile_update_author')
 
-    # Nastavení základního pohledu stránky
+    # Nastavení pro GET
     else:
 
         # Načtení formuláře Uživatele
@@ -58,4 +53,5 @@ def profile_update_author(request):
         'author_form': author_form,
     }
 
+    # Vytvoření stránky
     return render(request, '63_profile_update_author.html', content)

@@ -5,19 +5,23 @@ from django.contrib.auth.decorators import login_required
 from articles.models.article_author import ArticleAuthor
 from users.forms.user_profile_form import UserProfileForm
 from users.forms.author_profile_form import AuthorProfileForm
-from users.views.utils.change_profile_picture import change_profile_picture
+from utilities.for_users.clean_profile_picture import clean_profile_picture
 
 
-
-
-# Definice pohledu pro stránku pro úpravu uživatelského účtu
 @login_required
 def profile_update_user(request):
+    '''
+    Definice pohledu pro stránku pro správu uživatelského účtu.
+
+    :param request: Formulářový požadavek.
+    :return: Stránka pro správu uživatelského účtu.
+    '''
 
     # Načtení uživatele
     user = request.user
 
-    # Nastavení pro zpracování dat vložených uživatelem
+
+    # Nastavení pro POST
     if request.method == 'POST':
 
         # Načtení formuláře pro data uživatele
@@ -26,41 +30,38 @@ def profile_update_user(request):
         # Kontrola, zda formulář obsahuje validní data
         if user_form.is_valid():
 
-            # Návratová adresa
-            return_url = 'profile_update_user'
-
-            # Kontrola, zda došlo ke změně profilového obrázku
+            # Validace a změna formátu obrázku
             if user.profile_picture_tracker.has_changed('profile_picture'):
-
-                # Zpracování profilového obrázku a odstranění starého
-                change_profile_picture(request, user_form, user, return_url)
+                user_form = clean_profile_picture(user_form)
 
             # Uložení formuláře užvatele
             user_form.save()
 
             # Zpráva o úspěšném uložení a přesměrování zpátky na stránku
             messages.success(request, 'Your profile has been updated successfully.')
-            return redirect(return_url)
+            return redirect('profile_update_user')
 
-
-    # Nastavení základního pohledu stránky
+    # Nastavení pro GET
     else:
 
         # Načtení formuláře Uživatele
         user_form = UserProfileForm(instance=user)
 
 
-    author_form = None
 
     # Kontrola, zda má uživatel i účet autora
     if ArticleAuthor.user_is_author(user):
 
         # Načtení atura
         author = ArticleAuthor.objects.get(user=user)
-        # author = ArticleAuthor.objects.get(user_id=user.id)
 
         # Načtení formuláře autora
         author_form = AuthorProfileForm(instance=author)
+
+    else:
+        # Vrácení hodnoty None, v případě, že uživatel nemá i účet autora
+        author_form = None
+
 
 
     # Příprava obsahu pro šablonu
@@ -69,7 +70,7 @@ def profile_update_user(request):
         'author_form': author_form,
     }
 
-    # Zobrazení stránky s formuláři
+    # Vytvoření stránky
     return render(request, '62_profile_update_user.html', content)
 
 

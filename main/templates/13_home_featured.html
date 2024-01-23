@@ -10,13 +10,13 @@
 
       <!-- Thumbnail before the article -->
       {% if forloop.counter|divisibleby:2 %}
-      <div class="col-lg-5">
-        <img class="img-fluid" src="{{ article.main_picture_preview.url }}" alt="article_main_picture">
+      <div class="col-lg-5 ">
+        <img class="img-fluid " src="{{ article.main_picture_for_article.url }}?{% now 'U' %}" alt="article_main_picture" ">
       </div>
       {% endif %}
 
       <!-- Article -->
-      <div class="col-lg-7">
+      <div class="col-lg-7 ">
         <div class="text-inner d-flex align-items-center h-100 bg-light">
           <div class="content px-4 px-lg-5">
 
@@ -86,7 +86,7 @@
       <!-- Thumbnail after the article -->
       {% if not forloop.counter|divisibleby:2 %}
       <div class="col-lg-5">
-        <img class="img-fluid" src="{{ article.main_picture_preview.url }}" alt="article_main_picture">
+        <img class="img-fluid" src="{{ article.main_picture_for_article.url }}?{% now 'U' %}" alt="article_main_picture">
       </div>
       {% endif %}
 

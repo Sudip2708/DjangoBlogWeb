@@ -36,7 +36,7 @@
 
           <!-- Thumbnail -->
           <a class="mb-3" href="article.html">
-            <img class="img-fluid" src="{{ article.main_picture_preview.url }}" alt="article_main_picture_preview"/>
+            <img class="img-fluid" src="{{ article.main_picture_preview.url }}?{% now 'U' %}" alt="article_main_picture_preview"/>
           </a>
 
           <!-- Article time and category -->
@@ -96,7 +96,7 @@
 
                 <!-- Profile picture -->
                 <div class="avatar flex-shrink-0">
-                  <img class="img-fluid" src="{{ article.profile_picture.url }}?{% now 'U' %}" alt="profile_picture"/>
+                  <img class="img-fluid" src="{{ article.author.profile_picture_thumbnail.url }}?{% now 'U' %}" alt="profile_picture"/>
                 </div>
 
                 <!-- Name -->
