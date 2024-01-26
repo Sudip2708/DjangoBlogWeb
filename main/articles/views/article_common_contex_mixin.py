@@ -5,7 +5,7 @@ from taggit.models import Tag
 from django.views.generic.base import ContextMixin
 
 from articles.models.article import Article
-from .get_category_count import get_category_count
+from utilities.for_articles.get_category_count import get_category_count
 
 
 class CommonContextMixin(ContextMixin):

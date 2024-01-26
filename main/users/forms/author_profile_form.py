@@ -1,7 +1,7 @@
 from django import forms
 
 from articles.models.article_author import ArticleAuthor
-from utilities.shared.hide_current_in_image_field import hide_current_in_image_field
+from utilities.shared.hide_current_from_image_field import hide_current_from_image_field
 
 
 
@@ -10,7 +10,7 @@ class AuthorProfileForm(forms.ModelForm):
 
 
     # Odebrání Current z ImageFields (pole s informací o aktuálně vybraném obrázku)
-    profile_picture = hide_current_in_image_field()
+    profile_picture = hide_current_from_image_field()
 
 
     # Definice metadat

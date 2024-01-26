@@ -443,7 +443,7 @@ $ python manage.py migrate
 Zjednodušení procesů nahrátí nového profilového obrázku:
 • articles/models/article_author.py > přidat třetí property pro cestu k profilovému obrázku
 • users/models.py > přidat třetí property pro cestu k profilovému obrázku
-• rusers/views > projí úpravu profilového obrázku a zjednodušit cestu
+• users/views > projí úpravu profilového obrázku a zjednodušit cestu
 $ python manage.py runserver > ověřit zda je vše funkční
 ###
 Restrukturalizace projektu - odstranění gallery skrze reinstalaci bez ní
@@ -457,4 +457,12 @@ Restrukturalizace projektu - odstranění gallery skrze reinstalaci bez ní
 • articles/forms/article_form.py > skrytí pole pro current i pole pro výběr obrázku
 • templates/ > poupravení odkazů na obrázky + přidání časového razítka
 ###
-
+Úprava stránky pro úpravu příspěvku
+• templates/01_base_head.html > dopsat kód pro tinyMCE
+• templates/01_base_scripts.html > dopsat kód pro tinyMCE
+• templates/52... > dopsat kód šablony pro stránky pro úpravu příspěvku
+• templates/53... > dopsat kód šablony pro stránky pro úpravu příspěvku
+• articles/forms/article_form.py > dopsat kód pro tinyMCE
+• articles/views/article_update.py > dopsat kód pro kontrolu, zda bylo zmáčknuté tlačítko pro uložení formuláře s návratem na stránku s úpravou
+• templates/40.article.html > dopsat kód pro zobraztení overview
+###

@@ -5,7 +5,7 @@ from django.utils.text import slugify
 from model_utils import FieldTracker
 import os
 
-from utilities.for_users.custom_user_managers import CustomUserManager
+from .managers import CustomUserManager
 from utilities.for_users.create_default_username import create_default_username
 from utilities.for_users.create_default_profile_picture import create_default_profile_picture
 from utilities.shared.create_thumbnail import create_thumbnail

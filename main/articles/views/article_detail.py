@@ -7,7 +7,7 @@ from articles.models.article import Article
 from articles.models.article_view import ArticleView
 from articles.forms.comment_form import CommentForm
 from utilities.for_articles.get_similar_articles import get_similar_articles
-from utilities.for_articles.views_common_contex_mixin import CommonContextMixin
+from .article_common_contex_mixin import CommonContextMixin
 
 
 class ArticleDetailView(CommonContextMixin, DetailView):

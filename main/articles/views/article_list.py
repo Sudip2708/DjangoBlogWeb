@@ -5,7 +5,7 @@ from django.shortcuts import get_object_or_404
 from taggit.models import Tag
 
 from articles.models.article import Article, ArticleCategory
-from utilities.for_articles.views_common_contex_mixin import CommonContextMixin
+from .article_common_contex_mixin import CommonContextMixin
 
 
 class ArticleListView(CommonContextMixin, ListView):

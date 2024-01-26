@@ -4,12 +4,20 @@
 
 {% block inner_content %}
 
+<style>
+  .custom-overview {
+    font-size: 0.9rem; /* Nebo jiná hodnota podle vašich potřeb */
+    background-color: #f2f2f2;
+    padding: 1.2rem;
+  }
+</style>
+
 <!-- Selected article -->
 <main class="col-lg-8">
   <div class="container">
 
-    <!-- Thumbnail -->
-    <img class="img-fluid w-100 mb-4" src="{{ article.main_picture_max_size.url }}?{% now 'U' %}" alt="article_main_picture_for_article">
+    <!-- Main Article Image -->
+    <img class="img-fluid w-100 mb-4" src="{{ article.main_picture_for_article.url }}?{% now 'U' %}" alt="article_main_picture_for_article">
 
     <!-- Category -->
     <ul class="list-inline mb-3">
@@ -26,7 +34,7 @@
     <h1 class="mb-4">{{ article.title }}<a href="!#"><i class="fa fa-bookmark-o"></i></a></h1>
 
     <!-- Info -->
-    <ul class="list-inline list-separated text-gray-500 mb-5">
+    <ul class="list-inline list-separated text-gray-500 mb-4">
 
       <!-- Author -->
       <li class="list-inline-item">
@@ -63,8 +71,14 @@
 
     </ul>
 
+    <!-- Article overview -->
+    <div class="article-body custom-overview">
+      {{ article.overview | safe }}
+    </div>
+
+
     <!-- Article content -->
-    <div class="article-body">
+    <div class="article-body mt-4">
       {{ article.content | safe }}
     </div>
 

@@ -1,7 +1,7 @@
 from django import forms
 
 
-def hide_current_in_image_field():
+def hide_current_from_image_field():
     '''
     Metoda pro odebrání zobrazení pole Current z ImageField.
 

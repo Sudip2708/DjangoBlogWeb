@@ -1,0 +1,85 @@
+{% load widget_tweaks %}
+
+<!-- Container for Article Image & Title -->
+<div class="row">
+
+
+
+
+  <!-- Article Image & Title -->
+  <div class="col-md-7 align-middle">
+
+
+    <!-- Article main Picture -->
+    <div id="div_id_main_picture_max_size" >
+
+      <!-- Label -->
+      <label for="{{ form.main_picture_max_size.id_for_label }}" class="form-label">
+        {{ form.main_picture_max_size.label }}
+        {% if form.title.field.required %}
+        <span class="asteriskField">*</span>
+        {% endif %}
+      </label>
+
+      <!-- Field -->
+      {{ form.main_picture_max_size|add_class:"form-control"  }}
+
+    </div>
+
+    <!-- Submit Button with return to editing -->
+    <div class="form-group mb-5 ">
+      {% include '52_article_update_submit_for_editing.html' %}
+    </div>
+
+    <!-- Article Title -->
+    <div class="mb-2">
+      <div id="div_id_title" class="mb-4">
+
+        <!-- Label -->
+        <label for="{{ form.title.id_for_label }}" class="form-label requiredField">
+          {{ form.title.label }}
+          {% if form.title.field.required %}
+          <span class="asteriskField">*</span>
+          {% endif %}
+        </label>
+
+        <!-- Field -->
+        {{ form.title|add_class:"form-control" }}
+
+      </div>
+    </div>
+
+  </div>
+
+
+  <!-- Picture -->
+  <div class="col-md-5 mb-4">
+    <img src="{{ article.main_picture_for_article.url }}?{% now 'U' %}"
+         alt="main_picture_for_article"
+         class="img-fluid mt-4">
+  </div>
+
+
+</div>
+
+
+<!-- Article Overview -->
+<div id="div_id_overview" class="mb-5">
+
+  <!-- Label -->
+  <label for="{{ form.overview.id_for_label }}" class="form-label requiredField">
+    {{ form.overview.label }}
+    {% if form.overview.field.required %}
+    <span class="asteriskField">*</span>
+    {% endif %}
+  </label>
+
+  <!-- Field -->
+  {{ form.overview|add_class:"form-control" }}
+
+</div>
+
+<!-- Submit Button with return to article page -->
+{% include '52_article_update_submit_and_return.html' %}
+
+

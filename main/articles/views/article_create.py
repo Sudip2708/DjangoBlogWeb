@@ -4,7 +4,7 @@ from django.shortcuts import redirect, reverse
 from django.views.generic import CreateView
 
 from articles.forms.article_form import ArticleForm
-from utilities.for_articles.views_common_contex_mixin import CommonContextMixin
+from .article_common_contex_mixin import CommonContextMixin
 from articles.models.article import Article
 from utilities.for_articles.get_author import get_author
 

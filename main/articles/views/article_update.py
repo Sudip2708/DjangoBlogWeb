@@ -2,10 +2,12 @@
 
 from django.shortcuts import redirect, reverse
 from django.views.generic import UpdateView
+from django.http import HttpResponse
+
 
 from articles.forms.article_form import ArticleForm
 from articles.models.article import Article
-from utilities.for_articles.views_common_contex_mixin import CommonContextMixin
+from .article_common_contex_mixin import CommonContextMixin
 from utilities.for_articles.get_author import get_author
 from utilities.for_articles.clean_main_picture_max_size import clean_main_picture_max_size
 
@@ -23,7 +25,7 @@ class ArticleUpdateView(UpdateView, CommonContextMixin):
     model = Article
 
     # Cesta k šabloně pro aktualizaci článku
-    template_name = '50_article_create.html'
+    template_name = '52_article_update.html'
 
     # Použitý formulář pro aktualizaci článku
     form_class = ArticleForm
@@ -44,6 +46,12 @@ class ArticleUpdateView(UpdateView, CommonContextMixin):
 
         # Uložení formuláře a přesměrování na detail aktualizovaného článku
         form.save()
+
+        # Kontrola, zda bylo zmáčknuté tlačítko pro odeslání dat s návratem na stránku pro úpravy
+        submit_change_value = self.request.POST.get('submit_change')
+        if submit_change_value:
+            return redirect(reverse("article-update", kwargs={'slug': form.instance.slug}))
+
         return redirect(reverse("article-detail", kwargs={'slug': form.instance.slug}))
 
 

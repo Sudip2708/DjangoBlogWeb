@@ -1,0 +1,69 @@
+{% load widget_tweaks %}
+
+<!-- Article Categories -->
+<div id="div_id_categories" class="mb-4 mt-4">
+
+  <!-- Label -->
+  <label for="{{ form.categories.id_for_label }}" class="form-label requiredField">
+    {{ form.categories.label }}
+    <span class="asteriskField">*</span>
+  </label>
+
+  <!-- Field -->
+  {{ form.categories|add_class:"form-control" }}
+
+</div>
+
+
+<!-- Article Featured -->
+<div id="div_id_featured" class="mb-4 form-check">
+
+  <!-- Field -->
+  <input
+          type="checkbox"
+          name="{{ form.featured.name }}"
+          class="checkboxinput form-check-input"
+          id="{{ form.featured.id_for_label }}"
+          {% if form.featured.value %}
+          checked
+          {% endif %}>
+
+  <!-- Label -->
+  <label for="{{ form.featured.id_for_label }}" class="form-check-label">
+    {{ form.featured.label }}
+  </label>
+
+</div>
+
+
+  <!-- Article Previous -->
+  <div id="div_id_previous_article" class="mb-4">
+
+    <!-- Label -->
+    <label for="{{ form.previous_article.id_for_label }}" class="form-label">
+      {{ form.previous_article.label }}
+    </label>
+
+    <!-- Field -->
+    {{ form.previous_article|add_class:"form-control" }}
+
+  </div>
+
+
+  <!-- Article Next -->
+  <div id="div_id_next_article" class="mb-4">
+
+    <!-- Label -->
+    <label for="{{ form.next_article.id_for_label }}" class="form-label">
+      {{ form.next_article.label }}
+    </label>
+
+    <!-- Field -->
+    {{ form.next_article|add_class:"form-control" }}
+
+  </div>
+
+
+
+
+

@@ -39,4 +39,37 @@
   <!-- Favicon -->
   <link rel="shortcut icon" href="{% static 'img/favicon.png' %}">
 
+  <!-- TinyMCE
+  {{ form.media }} -->
+
+  <!-- TinyMCE CDN odkaz -->
+  <script
+          type="text/javascript"
+          src="https://cdn.tiny.cloud/1/53fmtiuk9mhttvevp087nqfy6cmqgzl08wvnya7iy2sbyk4d/tinymce/6/tinymce.min.js"
+          referrerpolicy="origin">
+  </script>
+  <!-- 'autoresize' -->
+  <script>
+    tinymce.init({
+      selector: 'textarea#id_content',
+      skin: 'oxide',
+      min_height: 400,
+      plugins: [
+        'advlist', 'autolink', 'link', 'image', 'lists', 'charmap', 'preview', 'anchor', 'pagebreak',
+        'searchreplace', 'wordcount', 'visualblocks', 'visualchars', 'code', 'fullscreen', 'insertdatetime',
+        'media', 'table', 'emoticons', 'template', 'help', 'accordion', 'autosave', 'codesample', 'nonbreaking',
+        'quickbars', 'autoresize',
+      ],
+      toolbar: 'undo redo | styles | bold italic | alignleft aligncenter alignright alignjustify | ' +
+        'print preview media fullscreen | code | help',
+      menu: {
+        favs: { title: 'My Favorites', items: 'code visualaid | searchreplace | emoticons' }
+      },
+      menubar: 'favs file edit view insert format tools table help',
+      content_css: 'css/content.css'
+
+
+    });
+  </script>
+
 </head>
