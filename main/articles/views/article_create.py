@@ -2,6 +2,7 @@
 
 from django.shortcuts import redirect, reverse
 from django.views.generic import CreateView
+import pdb
 
 from articles.forms.article_form import ArticleForm
 from .article_common_contex_mixin import CommonContextMixin
@@ -17,6 +18,7 @@ class ArticleCreateView(CreateView, CommonContextMixin):
     :param CommonContextMixin: Společný obsah pro stránky pro vytvoření a úpravu článku.
     :return: Stránka pro správu uživatelského účtu.
     '''
+    print("### ArticleCreateView")
 
     # Použitý model pro vytvoření nového článku
     model = Article
@@ -39,5 +41,11 @@ class ArticleCreateView(CreateView, CommonContextMixin):
 
         # Uložení formuláře a přesměrování na detail nově vytvořeného článku
         form.save()
+
+        # Kontrola, zda bylo zmáčknuté tlačítko pro odeslání dat s návratem na stránku pro úpravy
+        submit_change_value = self.request.POST.get('submit_change')
+        if submit_change_value:
+            return redirect(reverse("article-update", kwargs={'slug': form.instance.slug}))
+
         return redirect(reverse("article-detail", kwargs={'slug': form.instance.slug}))
 

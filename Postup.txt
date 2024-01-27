@@ -466,3 +466,13 @@ Restrukturalizace projektu - odstranění gallery skrze reinstalaci bez ní
 • articles/views/article_update.py > dopsat kód pro kontrolu, zda bylo zmáčknuté tlačítko pro uložení formuláře s návratem na stránku s úpravou
 • templates/40.article.html > dopsat kód pro zobraztení overview
 ###
+Úprava stránky pro vytvoření článku
+• articles/models/artice.py > přepsat pole overview a content na null=True, blank=True
+• articles/models/artice.py > připsat bolean pole public pro zaškrtávání možnosti, zda má být článek veřejně přístupný
+• templates/ > přidat podmínku o zobrazení náhradního obrázku, když není žádný nahrán (pro vytvoření článku)
+• articles/forms/article_form.py > Odstranit kod pro tinyMCE (již je implementovaný přes odkaz a script v hlavě a patičce html)
+• articles/forms/article_form.py > Připsat kód pro popisný text pro pole (bez tohoto kroku, by pole s tinyMCE vyžadovalo být vyplněné)
+• articles/views/article_create.py > Připsat podmínku pro zjištění, jaké odesílací tlačítko bylo použito
+• templates/ > reorganizace souborů pro tvorbu a úpravů článků
+(Je potřeba ještě dodělat, samostatné ukládání obrázku obsažených v html poli pro rychlejší načítání webu)
+###

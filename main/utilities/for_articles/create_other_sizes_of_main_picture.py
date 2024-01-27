@@ -49,3 +49,6 @@ def create_other_sizes_of_main_picture(article):
         os_path = os.path.join(settings.MEDIA_ROOT, article.main_picture_miniature_path)
         img.save(os_path, 'JPEG')
         article.main_picture_miniature = article.main_picture_miniature_path
+
+    # Uložení změn do databáze
+    article.save()

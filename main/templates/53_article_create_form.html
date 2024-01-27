@@ -1,0 +1,27 @@
+<!-- Forms data -->
+<form method="POST" enctype="multipart/form-data">
+  {% csrf_token %}
+
+  <!-- Container for tabs -->
+  <div class="tab-content">
+
+    <!-- Content for article overview tab -->
+    <div class="tab-pane fade show active" id="overview">
+      {% include '53_article_create_form_overview.html' %}
+    </div>
+
+    <!-- Content for article content tab -->
+    <div class="tab-pane fade" id="content">
+      {{ form.content }}
+      {% include '55_article_create_util_submit_buttons_both.html' %}
+    </div>
+
+    <!-- Content for article settings tab -->
+    <div class="tab-pane fade" id="settings">
+      {% include '53_article_create_form_settings.html' %}
+      {% include '55_article_create_util_submit_buttons_both.html' %}
+    </div>
+
+  </div>
+
+</form>

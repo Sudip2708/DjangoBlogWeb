@@ -1,32 +1,102 @@
 {% extends '20_main.html' %}
-
+{% load static %}
 {% load crispy_forms_tags %}
-
 {% block inner_content %}
+
+<style>
+
+  .black-text {
+      color: black;
+      font-size: 2rem;
+  }
+
+  .bg-yellow {
+    background-color: yellow;
+  }
+
+  .align-right {
+    text-align: right;
+  }
+
+  .align-bottom {
+    margin-top: auto;
+  }
+
+  .align-middle {
+    margin-top: auto;
+    margin-bottom: auto;
+  }
+
+  .form-label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-size: 0.8rem;
+    color: grey;
+  }
+
+  .form-control {
+    display: block;
+    width: 100%;
+    padding: 0.75rem 1rem;
+    font-size: 2rem;
+    font-weight: 400;
+    line-height: 2;
+    color: black;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #ced4da;
+    border-radius: 0.25rem;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+  }
+
+  /* Skrytí postranního panelu pro malá zařízení */
+  @media (max-width: 960px) {
+    aside {
+      display: none;
+    }
+  }
+
+
+  /* Zobrazení submit bottona pro malá zařízení */
+  @media (max-width: 767px) {
+    .mobile-buttons {
+      display: flex;
+      flex-direction: column;
+    }
+  }
+
+  /* Zobrazení submit bottona pro větší zařízení */
+  @media (min-width: 768px) {
+    .mobile-buttons {
+      display: flex;
+      flex-direction: row;
+    }
+  }
+
+</style>
+
 
 <main class="col-lg-8">
   <div class="container">
 
     <!-- Title -->
-    <header class="mb-5">
-      <h2>Create an article</h2>
-    </header>
+    {% include '51_article_create_title.html' %}
 
-    <!-- Form -->
-    <form method="POST" action="." enctype="multipart/form-data">
-        {% csrf_token %}
-        {{ form|crispy }}
+    <!-- Navigation -->
+    {% include '52_article_create_navigation.html' %}
 
-        <!-- Submit Button -->
-        <button class="btn btn-primary" type="submit">
-            Submit
-        </button>
-    </form>
+    <!-- Forms data -->
+    {% include '53_article_create_form.html' %}
 
   </div>
 </main>
 
-<!-- Sidebar -->
-{% include '32_articles_sidebar.html' with page_obj=page_obj %}
+<!-- Napojení Sidebar -->
+{% include '54_article_create_sidebar.html' %}
+
+<script>
+  var myTabs = new bootstrap.Tabset($("#myTabs"));
+  myTabs.show("tab1");  // Show the first tab initially
+</script>
 
 {% endblock inner_content %}

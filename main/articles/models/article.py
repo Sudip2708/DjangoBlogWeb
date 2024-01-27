@@ -47,10 +47,10 @@ class Article(models.Model):
     slug = AutoSlugField(populate_from='title', unique=True)
 
     # Krátký popis článku
-    overview = models.TextField(_("article_overview"))
+    overview = models.TextField(_("article_overview"), null=True, blank=True)
 
     # Obsah článku v HTML formátu
-    content = HTMLField(_("article_main_content"))
+    content = HTMLField(_("article_main_content"), null=True, blank=True)
 
     # Obrázek reprezentující článek- vysoké rozlišení (<1920px)
     main_picture_max_size = models.ImageField(_("article_main_picture_max_size"), upload_to='images/articles/main_picture/', null=True, blank=True)
@@ -74,15 +74,18 @@ class Article(models.Model):
     updated = models.DateTimeField(auto_now=True)
 
     # Správce pro práci s tagy
-    tags = TaggableManager()
+    tags = TaggableManager(blank=True)
 
     # Množina kategorií, ke kterým článek patří
-    categories = models.ManyToManyField(ArticleCategory)
+    categories = models.ManyToManyField(ArticleCategory, blank=True)
 
     # Počet komentářů k článku
     comment_count = models.PositiveIntegerField(default=0)
 
-    # Příznak, zda je článek označený jako "featured"
+    # Příznak, zda je článek označený jako "public" pro zobrazení ve veřejné části webu
+    public = models.BooleanField(default=False)
+
+    # Příznak, zda je článek označený jako "featured" pro hlavní stránku
     featured = models.BooleanField(default=False)
 
     # Odkazy na předchozí a následující článek
