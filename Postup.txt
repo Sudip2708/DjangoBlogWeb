@@ -476,3 +476,23 @@ Restrukturalizace projektu - odstranění gallery skrze reinstalaci bez ní
 • templates/ > reorganizace souborů pro tvorbu a úpravů článků
 (Je potřeba ještě dodělat, samostatné ukládání obrázku obsažených v html poli pro rychlejší načítání webu)
 ###
+Tagy + Nastavení Contentu a tinyMCE
+• articles/models/artice.py > přepsat pole overview a content na null=True, blank=True
+• articles/models/artice.py > připsat bolean pole public pro zaškrtávání možnosti, zda má být článek veřejně přístupný
+• templates/ > přidat podmínku o zobrazení náhradního obrázku, když není žádný nahrán (pro vytvoření článku)
+• articles/forms/article_form.py > Odstranit kod pro tinyMCE (již je implementovaný přes odkaz a script v hlavě a patičce html)
+• articles/forms/article_form.py > Připsat kód pro popisný text pro pole (bez tohoto kroku, by pole s tinyMCE vyžadovalo být vyplněné)
+• articles/views/article_create.py > Připsat podmínku pro zjištění, jaké odesílací tlačítko bylo použito
+• templates/ > reorganizace souborů pro tvorbu a úpravů článků
+(Je potřeba ještě dodělat, samostatné ukládání obrázku obsažených v html poli pro rychlejší načítání webu)
+###
+Tagy
+$ pip install django-taggit
+• INSTALLED_APPS > TAGGIT_CASE_INSENSITIVE = True
+• templates/01_base_head.html > Dopsat kód pro link na CCS pro Bootstrap a Tagify
+• templates/04_base_scripts.html > Dopsat skripty pro Bootstrap a Tagify
+• templates/53_article_create_form_settings.html > Přepsat kód pro tagy
+Použité nástroje:
+Pro pole databáze: https://django-taggit.readthedocs.io/en/latest/#
+Pro vykreslení na webu: https://github.com/yairEO/tagify
+###

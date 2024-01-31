@@ -1,5 +1,10 @@
 ### Definice třídy pohledu pro úpravu článku
 
+
+from taggit.models import Tag
+
+
+
 from django.shortcuts import redirect, reverse
 from django.views.generic import UpdateView
 from django.http import HttpResponse

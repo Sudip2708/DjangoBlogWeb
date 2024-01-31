@@ -1,4 +1,32 @@
 {% load widget_tweaks %}
+<style>
+  .advance .tagify__tag{
+    --tag-hover: var(--tag-bg);
+  }
+
+</style>
+
+
+<!-- Publick Article -->
+<div id="div_id_public" class="mb-4 form-check">
+
+  <!-- Field -->
+  <input
+          type="checkbox"
+          name="{{ form.public.name }}"
+          class="checkboxinput form-check-input"
+          id="{{ form.public.id_for_label }}"
+          {% if form.public.value %}
+          checked
+          {% endif %}>
+
+  <!-- Label -->
+  <label for="{{ form.public.id_for_label }}" class="form-check-label">
+    {{ form.public.label }}
+  </label>
+
+</div>
+
 
 <!-- Article Categories -->
 <div id="div_id_categories" class="mb-4 mt-4">
@@ -15,53 +43,53 @@
 </div>
 
 
-<!-- Article Featured -->
-<div id="div_id_featured" class="mb-4 form-check">
-
-  <!-- Field -->
-  <input
-          type="checkbox"
-          name="{{ form.featured.name }}"
-          class="checkboxinput form-check-input"
-          id="{{ form.featured.id_for_label }}"
-          {% if form.featured.value %}
-          checked
-          {% endif %}>
+<!-- Article Tags -->
+<div id="div_id_tags" class="mb-4 mt-4">
 
   <!-- Label -->
-  <label for="{{ form.featured.id_for_label }}" class="form-check-label">
-    {{ form.featured.label }}
+  <label for="{{ form.tags.id_for_label }}" class="form-label requiredField">
+    {{ form.tags.label }}
+    <span class="asteriskField">*</span>
   </label>
+
+  <!-- Field-->
+
+  <input
+        name='tags'
+        value="{% for tag in form.tags.value %}{{ tag }}{% if not forloop.last %}, {% endif %}{% endfor %}"
+        class='form-control tags-input'
+        placeholder='Add tag' >
 
 </div>
 
 
-  <!-- Article Previous -->
-  <div id="div_id_previous_article" class="mb-4">
 
-    <!-- Label -->
-    <label for="{{ form.previous_article.id_for_label }}" class="form-label">
-      {{ form.previous_article.label }}
-    </label>
+<!-- Article Previous -->
+<div id="div_id_previous_article" class="mb-4">
 
-    <!-- Field -->
-    {{ form.previous_article|add_class:"form-control" }}
+  <!-- Label -->
+  <label for="{{ form.previous_article.id_for_label }}" class="form-label">
+    {{ form.previous_article.label }}
+  </label>
 
-  </div>
+  <!-- Field -->
+  {{ form.previous_article|add_class:"form-control" }}
+
+</div>
 
 
-  <!-- Article Next -->
-  <div id="div_id_next_article" class="mb-4">
+<!-- Article Next -->
+<div id="div_id_next_article" class="mb-4">
 
-    <!-- Label -->
-    <label for="{{ form.next_article.id_for_label }}" class="form-label">
-      {{ form.next_article.label }}
-    </label>
+  <!-- Label -->
+  <label for="{{ form.next_article.id_for_label }}" class="form-label">
+    {{ form.next_article.label }}
+  </label>
 
-    <!-- Field -->
-    {{ form.next_article|add_class:"form-control" }}
+  <!-- Field -->
+  {{ form.next_article|add_class:"form-control" }}
 
-  </div>
+</div>
 
 
 

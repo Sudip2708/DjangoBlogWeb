@@ -272,3 +272,6 @@ SOCIALACCOUNT_PROVIDERS = {
 '''
 
 #############################################################################################
+
+# Nastavení pro taggit, aby nerozlišoval mezi malým a velkým písmem
+TAGGIT_CASE_INSENSITIVE = True

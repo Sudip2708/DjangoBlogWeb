@@ -18,9 +18,15 @@ class ArticleForm(forms.ModelForm):
 
         # Seznam polí, která budou zahrnuta ve formuláři
         fields = (
-            'main_picture_max_size', 'title', 'overview', 'content',
-            'categories', 'featured', 'previous_article', 'next_article',
-
+            'main_picture_max_size',
+            'title',
+            'overview',
+            'content',
+            'public',
+            'categories',
+            'tags',
+            'previous_article',
+            'next_article',
         )
 
     def __init__(self, *args, **kwargs):

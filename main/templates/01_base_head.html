@@ -40,6 +40,14 @@
   <link rel="shortcut icon" href="{% static 'img/favicon.png' %}">
 
 
+
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.0/css/bootstrap.min.css" />
+
+  <!-- Tagify CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/@yaireo/tagify/dist/tagify.css" rel="stylesheet" type="text/css" />
+
+
   <!-- TinyMCE CDN odkaz -->
   <script
           type="text/javascript"
@@ -47,28 +55,45 @@
           referrerpolicy="origin">
   </script>
 
-  <!-- 'autoresize' -->
+  <!-- 'TinyMCE settings' -->
   <script>
     tinymce.init({
       selector: 'textarea#id_content',
-      skin: 'oxide',
-      min_height: 400,
-      plugins: [
-        'advlist', 'autolink', 'link', 'image', 'lists', 'charmap', 'preview', 'anchor', 'pagebreak',
-        'searchreplace', 'wordcount', 'visualblocks', 'visualchars', 'code', 'fullscreen', 'insertdatetime',
-        'media', 'table', 'emoticons', 'template', 'help', 'accordion', 'autosave', 'codesample', 'nonbreaking',
-        'quickbars', 'autoresize',
+      min_height: 800,
+      imagetools_cors_hosts: ['picsum.photos'],
+
+      plugins: ['advlist', 'anchor', 'autoresize', 'autosave', 'autolink',
+        'charmap', 'code', 'codesample', 'emoticons', 'fullscreen', 'help',
+        'image', 'insertdatetime', 'link', 'lists', 'media', 'nonbreaking',
+        'pagebreak', 'preview', 'quickbars', 'searchreplace', 'table', 'template',
+        'visualblocks', 'visualchars', 'wordcount'
       ],
-      toolbar: 'undo redo | styles | bold italic | alignleft aligncenter alignright alignjustify | ' +
-        'print preview media fullscreen | code | help',
-      menu: {
-        favs: { title: 'My Favorites', items: 'code visualaid | searchreplace | emoticons' }
-      },
-      menubar: 'favs file edit view insert format tools table help',
-      content_css: 'css/content.css'
+      menubar: 'file edit view insert format tools table help',
+      toolbar:  'undo redo |' +
+                'styles fontfamily fontsize lineheight forecolor backcolor |' +
+                'bold italic underline |  charmap searchreplace selectall |' +
+                'aligncenter alignjustify alignleft alignnone alignright |' +
+                'indent outdent | bullist numlist  |' +
+                'strikethrough subscript superscript removeformat hr nonbreaking |' +
+                'blockquote visualblocks visualchars code codesample |' +
+                'image emoticons insertdatetime anchor link openlink |' +
+                'cut copy paste pastetext | wordcount preview fullscreen |',
+      toolbar_sticky: true,
+      toolbar_drawer: 'sliding',
 
+      quickbars_selection_toolbar: 'bold italic | quicklink h2 h3 blockquote quickimage quicktable',
+      contextmenu: "link image imagetools table",
+      content_style: ".mymention{ color: green; }",
+      content_style: '.mce-annotation { background: #fff0b7; } .tc-active-annotation {background: #ffe168; color: black; }',
 
-    });
+      autosave_ask_before_unload: true,
+      image_advtab: true,
+      importcss_append: true,
+      image_caption: true,
+      noneditable_noneditable_class: "mceNonEditable",
+
+     });
+
   </script>
 
 </head>

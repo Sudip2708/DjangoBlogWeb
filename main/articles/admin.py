@@ -11,7 +11,7 @@ from .models.article_view import ArticleView
 @admin.register(Article)
 class ArticleAdmin(admin.ModelAdmin):
     # Zobrazení vybraných polí v seznamu článků v administrátorském rozhraní
-    list_display = ['title', 'author', 'updated', 'created', 'id', 'comment_count', 'featured']
+    list_display = ['title', 'author', 'updated', 'created', 'id', 'comment_count', 'public', 'featured']
 
     # Možnost filtrování seznamu článků podle různých kritérií
     list_filter = ['created', 'created', 'categories']
