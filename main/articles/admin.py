@@ -11,10 +11,10 @@ from .models.article_view import ArticleView
 @admin.register(Article)
 class ArticleAdmin(admin.ModelAdmin):
     # Zobrazení vybraných polí v seznamu článků v administrátorském rozhraní
-    list_display = ['title', 'author', 'updated', 'created', 'id', 'comment_count', 'public', 'featured']
+    list_display = ['title', 'author', 'id', 'updated', 'created', 'public', 'featured', 'comment_count', 'category', 'tag_list']
 
     # Možnost filtrování seznamu článků podle různých kritérií
-    list_filter = ['created', 'created', 'categories']
+    list_filter = ['created', 'created', 'category']
 
     # Možnost vyhledávání článků podle různých polí
     search_fields = ['title', 'overview', 'content']
@@ -24,6 +24,31 @@ class ArticleAdmin(admin.ModelAdmin):
 
     # Výchozí řazení seznamu článků podle data poslední aktualizace sestupně
     ordering = ['-updated']
+
+    # Metody na zobrazení tagů v admin sekci
+    def get_queryset(self, request):
+        '''
+        Tato metoda je volána při načítání dat do seznamu v administrátorském rozhraní.
+        V tomto případě se vrací dotaz na databázi, který zahrnuje i přednačítání (prefetching) souvisejících tagů pro každý objekt v seznamu.
+        Tím se snižuje počet dotazů na databázi, protože všechny související tagy jsou předem načteny.
+        '''
+        print('### request:', request)
+        print('### super().get_queryset(request).prefetch_related(tags):', super().get_queryset(request).prefetch_related('tags'))
+        return super().get_queryset(request).prefetch_related('tags')
+
+    def tag_list(self, obj):
+
+        '''
+        Tato metoda slouží k zobrazení tagů v seznamu objektů.
+        Používá se v administrátorském rozhraní pro získání reprezentace tagů, které jsou pak zobrazeny v jednom sloupci.
+        Metoda vrací řetězec, ve kterém jsou tagy spojeny čárkou a mezerou.
+        Jde o čistě vizuální zobrazování informací o tagu.
+        :param obj:
+        :return:
+        '''
+        print('### obj:', obj)
+        print('### obj.tags.all():', obj.tags.all() )
+        return u", ".join(o.name for o in obj.tags.all())
 
 
 # Pro další modely se používá podobný přístup

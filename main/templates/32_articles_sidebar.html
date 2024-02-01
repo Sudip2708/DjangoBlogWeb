@@ -10,8 +10,8 @@
     <!-- Tags Widget -->
     {% include '23_sidebar_tags.html' with tags=tags %}
 
-    <!-- Categories Widget -->
-    {% include '22_sidebar_categories.html' with page_obj=page_obj %}
+    <!-- category Widget -->
+    {% include '22_sidebar_category.html' with page_obj=page_obj %}
 
     <!-- Most comments Articles Widget -->
     {% include '26_sidebar_most_commented_articles.html' with most_commented=most_commented %}
@@ -19,8 +19,8 @@
   <!-- View results for category -->
   {% elif category_slug %}
 
-    <!-- Categories Widget -->
-    {% include '22_sidebar_categories.html' with page_obj=page_obj %}
+    <!-- category Widget -->
+    {% include '22_sidebar_category.html' with page_obj=page_obj %}
 
     <!-- Tags Widget -->
     {% include '23_sidebar_tags.html' with tags=tags %}
@@ -34,8 +34,8 @@
     <!-- Most views Articles Widget -->
     {% include '27_sidebar_most_viewed_articles.html' with most_viewed=most_viewed %}
 
-    <!-- Categories Widget -->
-    {% include '22_sidebar_categories.html' with page_obj=page_obj %}
+    <!-- category Widget -->
+    {% include '22_sidebar_category.html' with page_obj=page_obj %}
 
     <!-- Tags Widget -->
     {% include '23_sidebar_tags.html' with tags=tags %}

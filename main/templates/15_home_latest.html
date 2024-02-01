@@ -38,15 +38,13 @@
           </small>
 
           <!-- Category -->
-          <ul class="list-inline mb-1">
-            {% for category in article.categories.all %}
-              <li class="list-inline-item">
-                <a class="small fw-bold text-uppercase small" href="{% url 'article-category-list' category_slug=category.slug %}">
-                  {{ category }}
-                </a>
-              </li>
-            {% endfor %}
-          </ul>
+          <div class="mb-1">
+            <a class="text-uppercase text-dark small fw-bold"
+              href="{% url 'article-category-list' category_slug=article.category.slug %}">
+              {{ article.category }}
+            </a>
+          </div>
+
         </div>
 
         <!-- Title -->

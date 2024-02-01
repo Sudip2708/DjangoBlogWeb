@@ -30,7 +30,7 @@ class Article(models.Model):
         created: Datum vytvoření článku.
         updated: Datum poslední aktualizace článku.
         tags: Správce pro práci s tagy.
-        categories: Množina kategorií, ke kterým článek patří.
+        category: Množina kategorií, ke kterým článek patří.
         comment_count: Počet komentářů k článku.
         featured: Příznak, zda je článek označený jako "featured".
         previous_article: Odkaz na předchozí článek.
@@ -77,8 +77,12 @@ class Article(models.Model):
     tags = TaggableManager(blank=True)
 
     # Množina kategorií, ke kterým článek patří
-    categories = models.ManyToManyField(ArticleCategory, blank=True)
-
+    category = models.ForeignKey(
+        ArticleCategory,
+        default=ArticleCategory.get_default_category_id,
+        on_delete=models.SET_DEFAULT,
+        related_name='article_category'
+    )
     # Počet komentářů k článku
     comment_count = models.PositiveIntegerField(default=0)
 

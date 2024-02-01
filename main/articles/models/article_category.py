@@ -14,3 +14,9 @@ class ArticleCategory(models.Model):
     def __str__(self):
         # Textová reprezentace instance (pro administrační rozhraní a výpisy)
         return self.title
+
+    @classmethod
+    def get_default_category_id(cls):
+        # Implementujte kód pro získání nebo vytvoření výchozí kategorie
+        default_category, created = cls.objects.get_or_create(title='Uncategorized')
+        return default_category.id

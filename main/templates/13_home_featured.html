@@ -21,16 +21,12 @@
           <div class="content px-4 px-lg-5">
 
             <!-- Category -->
-            <ul class="list-inline mb-1">
-              {% for category in article.categories.all %}
-              <li class="list-inline-item">
-                <a class="text-uppercase text-dark small fw-bold"
-                  href="{% url 'article-category-list' category_slug=category.slug %}">
-                  {{ category }}
-                </a>
-              </li>
-              {% endfor %}
-            </ul>
+            <div class="mb-1">
+              <a class="text-uppercase text-dark small fw-bold"
+                href="{% url 'article-category-list' category_slug=article.category.slug %}">
+                {{ article.category }}
+              </a>
+            </div>
 
             <!-- Title -->
             <h2 class="h4 mb-3">

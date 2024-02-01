@@ -496,3 +496,12 @@ Použité nástroje:
 Pro pole databáze: https://django-taggit.readthedocs.io/en/latest/#
 Pro vykreslení na webu: https://github.com/yairEO/tagify
 ###
+Úprava kategorií z ManyToManyField na ForeignKey:
+• articles/models/article_category.py > přidání kódu pro defaultní hodnotu
+• articles/models/article.py > přepsání kódu pro pole categories na category
+• templates/ > přepsání výskytů v kódu
+• articles/admin.py > přidání kódu pro zobrazení tagů a kategorií v sekci admin
+• articles/migrations/ > smazání migrací
+$ python manage.py makemigrations
+$ python manage.py migrate
+###

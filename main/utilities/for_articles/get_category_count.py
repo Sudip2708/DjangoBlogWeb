@@ -13,9 +13,9 @@ def get_category_count():
     '''
 
     # Získání počtu článků pro každou kategorii
-    queryset = Article.objects.values('categories__title', 'categories__slug')\
-        .annotate(Count('categories__title'))\
-        .order_by('-categories__title__count')
+    queryset = Article.objects.values('category__title', 'category__slug')\
+        .annotate(Count('category__title'))\
+        .order_by('-category__title__count')
 
     # Navrácení výsledu
     return queryset

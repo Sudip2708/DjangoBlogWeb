@@ -33,7 +33,7 @@ class ArticleListView(CommonContextMixin, ListView):
         elif category_slug:
             # Pokud je k dispozici category_slug, vyfiltrovat články podle kategorie
             category = get_object_or_404(ArticleCategory, slug=category_slug)
-            queryset = Article.objects.filter(categories=category).order_by('-created')
+            queryset = Article.objects.filter(category=category).order_by('-created')
         else:
             # Jinak vrátit všechny články, seřazené podle data vytvoření
             queryset = Article.objects.order_by('-created')

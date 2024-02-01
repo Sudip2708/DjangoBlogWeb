@@ -1,11 +1,11 @@
-<!--  Categories Widget -->
+<!--  category Widget -->
 
 <div class="card mb-5">
   <div class="card-body">
 
     <!-- Section name -->
     <h3 class="h6 mb-3">
-      Categories
+      category
     </h3>
 
     <!-- Loop through category_count-->
@@ -15,14 +15,14 @@
       {% if not forloop.counter|divisibleby:2 %}
         <div class="p-2 d-flex justify-content-between fw-bold text-gray-600 bg-light">
 
-          <!-- Categories title -->
-          <a class="text-reset" href="{% url 'article-category-list' category_slug=category.categories__slug %}">
-            {{ category.categories__title }}
+          <!-- category title -->
+          <a class="text-reset" href="{% url 'article-category-list' category_slug=category.category__slug %}">
+            {{ category.category__title }}
           </a>
 
-          <!-- Categories count -->
+          <!-- category count -->
           <span>
-            {{ category.categories__title__count }}
+            {{ category.category__title__count }}
           </span>
 
         </div>
@@ -32,14 +32,14 @@
       {% if forloop.counter|divisibleby:2 %}
         <div class="p-2 d-flex justify-content-between fw-bold text-gray-600 1">
 
-          <!-- Categories title -->
-          <a class="text-reset" href="{% url 'article-category-list' category_slug=category.categories__slug %}">
-            {{ category.categories__title }}
+          <!-- category title -->
+          <a class="text-reset" href="{% url 'article-category-list' category_slug=category.category__slug %}">
+            {{ category.category__title }}
           </a>
 
-          <!-- Categories count -->
+          <!-- category count -->
           <span>
-            {{ category.categories__title__count }}
+            {{ category.category__title__count }}
           </span>
 
         </div>
