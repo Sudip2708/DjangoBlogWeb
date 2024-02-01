@@ -8,7 +8,7 @@
 
 
 <!-- Publick Article -->
-<div id="div_id_public" class="mb-4 form-check">
+<div id="div_id_public" class="mb-5 form-check pt-5">
 
   <!-- Field -->
   <input
@@ -22,19 +22,21 @@
 
   <!-- Label -->
   <label for="{{ form.public.id_for_label }}" class="form-check-label">
-    {{ form.public.label }}
+    Available to the public
+    <div class="form-label">
+      (make sure the article has all the essentials including category and tags)
+    </div>
   </label>
 
 </div>
 
 
 <!-- Article category -->
-<div id="div_id_category" class="mb-4 mt-4">
+<div id="div_id_category" class="mb-5">
 
   <!-- Label -->
   <label for="{{ form.category.id_for_label }}" class="form-label requiredField">
-    {{ form.category.label }}
-    <span class="asteriskField">*</span>
+    {{ form.category.label }} (please select the appropriate category from the list)
   </label>
 
   <!-- Field -->
@@ -44,12 +46,11 @@
 
 
 <!-- Article Tags -->
-<div id="div_id_tags" class="mb-4 mt-4">
+<div id="div_id_tags" class="mb-5">
 
   <!-- Label -->
   <label for="{{ form.tags.id_for_label }}" class="form-label requiredField">
-    {{ form.tags.label }}
-    <span class="asteriskField">*</span>
+    {{ form.tags.label }} (use a comma or enter to separate individual tags)
   </label>
 
   <!-- Field-->
@@ -65,11 +66,11 @@
 
 
 <!-- Article Previous -->
-<div id="div_id_previous_article" class="mb-4">
+<div id="div_id_previous_article" class="mb-5">
 
   <!-- Label -->
   <label for="{{ form.previous_article.id_for_label }}" class="form-label">
-    {{ form.previous_article.label }}
+    {{ form.previous_article.label }} (if you don't want to specify, leave it blank, it will be added automatically)
   </label>
 
   <!-- Field -->
@@ -79,11 +80,11 @@
 
 
 <!-- Article Next -->
-<div id="div_id_next_article" class="mb-4">
+<div id="div_id_next_article" class="mb-5">
 
   <!-- Label -->
   <label for="{{ form.next_article.id_for_label }}" class="form-label">
-    {{ form.next_article.label }}
+    {{ form.next_article.label }} (if you don't want to specify, leave it blank, it will be added automatically)
   </label>
 
   <!-- Field -->

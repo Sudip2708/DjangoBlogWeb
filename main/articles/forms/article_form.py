@@ -32,6 +32,6 @@ class ArticleForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields['title'].widget.attrs['placeholder'] = "This field is mandatory for article creation."
-        self.fields['overview'].widget.attrs['placeholder'] = "Here, you can create an introduction to the article. It will be displayed in the preview and also on the article page. To continue with the article content, go to the 'content' tab."
-        self.fields['content'].widget.attrs['placeholder'] = "Here, you can create the content of the article."
+        self.fields['overview'].widget.attrs['placeholder'] = "Here, you can create an introduction to the article. It will be displayed in the preview and also on the article page. To continue with the article content, go to the Content tab."
+        self.fields['content'].widget.attrs['placeholder'] = "Here, you can create the content of the article. After you're done here, don't forget to set the items in the Settings tab to complete and publish your article"
 

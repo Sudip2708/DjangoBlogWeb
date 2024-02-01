@@ -505,3 +505,8 @@ Pro vykreslení na webu: https://github.com/yairEO/tagify
 $ python manage.py makemigrations
 $ python manage.py migrate
 ###
+Úprava popisků k článku
+• templates/53_article_create_form_overview.html > poupravit lables
+• templates/53_article_create_form_settings.html > poupravit lables
+articles/forms/article_form.py > poupravit placeholds
+###
