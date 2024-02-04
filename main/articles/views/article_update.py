@@ -15,6 +15,8 @@ from articles.models.article import Article
 from .article_common_contex_mixin import CommonContextMixin
 from utilities.for_articles.get_author import get_author
 from utilities.for_articles.clean_main_picture_max_size import clean_main_picture_max_size
+from utilities.for_articles.clean_tagify_input import clean_tagify_input
+from utilities.for_articles.check_and_delete_unused_tags import check_and_delete_unused_tags
 
 
 class ArticleUpdateView(UpdateView, CommonContextMixin):
@@ -48,6 +50,10 @@ class ArticleUpdateView(UpdateView, CommonContextMixin):
         # Validace a změna formátu obrázku
         if form.instance.main_picture_max_size_tracker.has_changed('main_picture_max_size'):
             form = clean_main_picture_max_size(form)
+
+        # Úprava tagů
+        form.cleaned_data['tags'] = clean_tagify_input(form.cleaned_data['tags'])
+        check_and_delete_unused_tags(form.instance, form.cleaned_data['tags'])
 
         # Uložení formuláře a přesměrování na detail aktualizovaného článku
         form.save()

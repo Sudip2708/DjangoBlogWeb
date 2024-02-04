@@ -510,3 +510,9 @@ $ python manage.py migrate
 • templates/53_article_create_form_settings.html > poupravit lables
 articles/forms/article_form.py > poupravit placeholds
 ###
+Ukládání nových a smazání starých tagů:
+• utilities/for_articles/ > vytvořit soubor clean_tagify_input.py a zapsat kód pro očištění vstupních dat
+• utilities/for_articles/ > vytvořit soubor check_and_delete_unused_tags.py a zapsat kód pro kontrolu a případné smazání odstraněných tagů
+• articles/views/article_create.py > Připsat kód pro zachycení změny v poly tagů
+• articles/views/article_update.py > Připsat kód pro zachycení změny v poly tagů
+###

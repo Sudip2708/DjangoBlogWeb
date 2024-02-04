@@ -32,8 +32,6 @@ class ArticleAdmin(admin.ModelAdmin):
         V tomto případě se vrací dotaz na databázi, který zahrnuje i přednačítání (prefetching) souvisejících tagů pro každý objekt v seznamu.
         Tím se snižuje počet dotazů na databázi, protože všechny související tagy jsou předem načteny.
         '''
-        print('### request:', request)
-        print('### super().get_queryset(request).prefetch_related(tags):', super().get_queryset(request).prefetch_related('tags'))
         return super().get_queryset(request).prefetch_related('tags')
 
     def tag_list(self, obj):
@@ -46,8 +44,6 @@ class ArticleAdmin(admin.ModelAdmin):
         :param obj:
         :return:
         '''
-        print('### obj:', obj)
-        print('### obj.tags.all():', obj.tags.all() )
         return u", ".join(o.name for o in obj.tags.all())
 
 

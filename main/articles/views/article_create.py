@@ -8,6 +8,8 @@ from articles.forms.article_form import ArticleForm
 from .article_common_contex_mixin import CommonContextMixin
 from articles.models.article import Article
 from utilities.for_articles.get_author import get_author
+from utilities.for_articles.clean_tagify_input import clean_tagify_input
+from utilities.for_articles.check_and_delete_unused_tags import check_and_delete_unused_tags
 
 
 class ArticleCreateView(CreateView, CommonContextMixin):
@@ -18,7 +20,6 @@ class ArticleCreateView(CreateView, CommonContextMixin):
     :param CommonContextMixin: Společný obsah pro stránky pro vytvoření a úpravu článku.
     :return: Stránka pro správu uživatelského účtu.
     '''
-    print("### ArticleCreateView")
 
     # Použitý model pro vytvoření nového článku
     model = Article
@@ -38,6 +39,10 @@ class ArticleCreateView(CreateView, CommonContextMixin):
     def form_valid(self, form):
         # Při úspěšném odeslání formuláře, nastavíme autora na aktuálního uživatele
         form.instance.author = get_author(self.request.user)
+
+        # Úprava tagů
+        if form.cleaned_data['tags']:
+            form.cleaned_data['tags'] = clean_tagify_input(form.cleaned_data['tags'])
 
         # Uložení formuláře a přesměrování na detail nově vytvořeného článku
         form.save()

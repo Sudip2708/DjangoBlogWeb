@@ -20,9 +20,6 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.0/js/bootstrap.min.js"></script>
 
 
-<!-- Tagify Scripts -->
-<script src="https://cdn.jsdelivr.net/npm/@yaireo/tagify"></script>
-<script src="https://cdn.jsdelivr.net/npm/@yaireo/tagify/dist/tagify.polyfills.min.js"></script>
 
 <!-- Tento skript inicializuje Tagify na konkrétním vstupním poli (input elementu) s názvem "tags". Po načtení stránky bude Tagify aktivován na toto pole, umožňující uživatelům přidávat a spravovat tagy. -->
 <script>
@@ -43,17 +40,17 @@ var input = document.querySelector('input[name=tags]'),
     // createInvalidTags: false,
     editTags            : {
       clicks: 2,                                    // Editace tagu po dvojkliku
-  keepInvalid: false                                // Pokud je tag po editaci neplatný, automaticky se vrátí na původní hodnotu
+      keepInvalid: false                            // Pokud je tag po editaci neplatný, automaticky se vrátí na původní hodnotu
     },
-    maxTags             : 6,                        // Maximální povolený počet tagů
-    blacklist           : [],                       // Černá listina zakázaných tagů
-    whitelist           : {% if tags %} [{% for tag in tags %}'{{ tag }}'{% if not loop.last %}, {% endif %}{% endfor %}] {% else %} ['AAAA',] {% endif %},
+    maxTags             : 25,                        // Maximální povolený počet tagů
+    blacklist           : [':', '[{', 'value', '{', '}', '}]',],                       // Černá listina zakázaných tagů
+    whitelist           : {% if tags %} [{% for tag in tags %}'{{ tag }}'{% if not loop.last %}, {% endif %}{% endfor %}] {% else %} [] {% endif %},
     backspace           : "edit",                   // Povolení editace tagu při stisku klávesy "Backspace"
     dropdown : {
-enabled: 1,                                               // Zobrazit návrhy po zadání 1 znaku
-      fuzzySearch: false,    // Hledat návrhy, které začínají zadanými znaky
-      position: 'text',      // Pozice nabídky návrhů vzhledem k textu
-      caseSensitive: false,   // Nastavení, zda má rozlišovat malé a velké znaky - nastaveno na Ne
+    enabled: 1,                                     // Zobrazit návrhy po zadání 1 znaku
+      fuzzySearch: false,                           // Hledat návrhy, které začínají zadanými znaky
+      position: 'text',                             // Pozice nabídky návrhů vzhledem k textu
+      caseSensitive: false                          // Nastavení, zda má rozlišovat malé a velké znaky - nastaveno na Ne
     },
   })
 
@@ -72,7 +69,7 @@ tagify.on('click', function(e){
   const {tag:tagElm, data:tagData} = e.detail;
 
   // a delay is needed to distinguish between regular click and double-click.
-  // this allows enough time for a possible double-click, and noly fires if such
+  // this allows enough time for a possible double-click, and only fires if such
   // did not occur.
   clearTimeout(clickDebounce);
   clickDebounce = setTimeout(() => {
@@ -83,7 +80,7 @@ tagify.on('click', function(e){
 })
 
 tagify.on('dblclick', function(e){
-  // when souble clicking, do not change the color of the tag
+  // when double clicking, do not change the color of the tag
   clearTimeout(clickDebounce);
 })
 </script>
