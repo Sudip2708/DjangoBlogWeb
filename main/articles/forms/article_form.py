@@ -22,7 +22,7 @@ class ArticleForm(forms.ModelForm):
             'title',
             'overview',
             'content',
-            'public',
+            'status',
             'category',
             'tags',
             'previous_article',

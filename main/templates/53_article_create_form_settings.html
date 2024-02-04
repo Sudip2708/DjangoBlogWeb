@@ -7,10 +7,10 @@
 </style>
 
 
-<!-- Publick Article -->
-<div id="div_id_public" class="mb-5 form-check pt-5">
+<!-- Publick Article
+<div id="div_id_public" class="mb-5 form-check pt-5">-->
 
-  <!-- Field -->
+  <!-- Field
   <input
           type="checkbox"
           name="{{ form.public.name }}"
@@ -18,15 +18,27 @@
           id="{{ form.public.id_for_label }}"
           {% if form.public.value %}
           checked
-          {% endif %}>
+          {% endif %}>-->
 
-  <!-- Label -->
+  <!-- Label
   <label for="{{ form.public.id_for_label }}" class="form-check-label">
     Available to the public
     <div class="form-label">
       (make sure the article has all the essentials including category and tags)
     </div>
   </label>
+
+</div>-->
+<!-- Article status -->
+<div id="div_id_status" class="mb-5">
+
+  <!-- Label -->
+  <label for="{{ form.status.id_for_label }}" class="form-label requiredField">
+    {{ form.status.label }} (before publishing, make sure the article has all the essentials including categories and tags)
+  </label>
+
+  <!-- Field -->
+  {{ form.status|add_class:"form-control" }}
 
 </div>
 

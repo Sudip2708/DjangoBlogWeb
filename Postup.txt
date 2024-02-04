@@ -528,3 +528,16 @@ Navracení se na stejnou záložku v úpravě článku:
 • templates/04_base_scripts.html > Dopsat skripty pro automatické kliknutí na záložku (dle adresy) při návratu na stránku
 • templates/04_base_scripts.html > Dopsat skripty pro změnu adresy při změně záložky
 ###
+Změna zaškrtávacího pole Public na výběrové pole status
+• articles/models/article.py > smazání kódu pro Public
+• articles/migrations/0001_initial.py > smazání kódu pro Public
+• articles/admin.py > smazání kódu pro Public
+• articles/forms/article_form.py > smazání kódu pro Public
+• templates/53_article_create_form_settings.html > smazání kódu pro Public
+• articles/models/article.py > zapsání kodu pro status
+$ python manage.py makemigrations
+$ python manage.py migrate
+• articles/admin.py > zapsání kodu pro status
+• articles/forms/article_form.py > zapsání kodu pro status
+• templates/53_article_create_form_settings.html > zapsání kodu pro status
+###

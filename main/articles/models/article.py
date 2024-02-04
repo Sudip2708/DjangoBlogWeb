@@ -86,8 +86,12 @@ class Article(models.Model):
     # Počet komentářů k článku
     comment_count = models.PositiveIntegerField(default=0)
 
-    # Příznak, zda je článek označený jako "public" pro zobrazení ve veřejné části webu
-    public = models.BooleanField(default=False)
+    # Status článku
+    status = models.CharField(
+        max_length=20,
+        choices=[('draft', 'Draft'), ('publish', 'Publish'), ('archiv', 'Archiv')],
+        default='draft'
+    )
 
     # Příznak, zda je článek označený jako "featured" pro hlavní stránku
     featured = models.BooleanField(default=False)

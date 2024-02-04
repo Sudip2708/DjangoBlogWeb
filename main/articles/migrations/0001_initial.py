@@ -51,7 +51,6 @@ class Migration(migrations.Migration):
                 ('main_picture_miniature', models.ImageField(blank=True, null=True, upload_to='images/articles/main_picture/', verbose_name='article_main_picture_miniature')),
                 ('created', models.DateTimeField(auto_now_add=True)),
                 ('updated', models.DateTimeField(auto_now=True)),
-                ('public', models.BooleanField(default=False)),
                 ('featured', models.BooleanField(default=False)),
                 ('next_article', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='next', to='articles.article')),
                 ('previous_article', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='previous', to='articles.article')),
