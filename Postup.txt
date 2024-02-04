@@ -516,3 +516,15 @@ Ukládání nových a smazání starých tagů:
 • articles/views/article_create.py > Připsat kód pro zachycení změny v poly tagů
 • articles/views/article_update.py > Připsat kód pro zachycení změny v poly tagů
 ###
+Navracení se na stejnou záložku v úpravě článku:
+• articles/views/article_create.py > připsat kód pro zachycení fodnoty odesílacího tlačítka (submit_change_value)
+• articles/views/article_update.py > připsat kód pro zachycení fodnoty odesílacího tlačítka (submit_change_value)
+• templates/40_article.html > připsat do odkazu na úpravu článku hodnotu current_tab
+• templates/53_article_create_form.html > přidat k tlačítkům hodnou current_tab
+• templates/53_article_create_form_overview.html > přidat k tlačítkům hodnou current_tab
+• templates/55_article_create_util_submit_buttons_both.html > přidat k tlačítkům hodnou current_tab
+• templates/55_article_create_util_submit_for_editing.html > přidat k tlačítku value current_tab
+• main/urls.py > do adresy pro úpravu článku přidat hodntu current_tab
+• templates/04_base_scripts.html > Dopsat skripty pro automatické kliknutí na záložku (dle adresy) při návratu na stránku
+• templates/04_base_scripts.html > Dopsat skripty pro změnu adresy při změně záložky
+###

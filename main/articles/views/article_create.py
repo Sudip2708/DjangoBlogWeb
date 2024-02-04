@@ -50,7 +50,9 @@ class ArticleCreateView(CreateView, CommonContextMixin):
         # Kontrola, zda bylo zmáčknuté tlačítko pro odeslání dat s návratem na stránku pro úpravy
         submit_change_value = self.request.POST.get('submit_change')
         if submit_change_value:
-            return redirect(reverse("article-update", kwargs={'slug': form.instance.slug}))
-
-        return redirect(reverse("article-detail", kwargs={'slug': form.instance.slug}))
+            return redirect(reverse("article-update",
+                                    kwargs={'slug': form.instance.slug, 'current_tab': submit_change_value }))
+        else:
+            return redirect(reverse("article-detail",
+                                    kwargs={'slug': form.instance.slug}))
 

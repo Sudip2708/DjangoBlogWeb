@@ -13,13 +13,14 @@
     <!-- Content for article content tab -->
     <div class="tab-pane fade" id="content">
       {{ form.content }}
-      {% include '55_article_create_util_submit_buttons_both.html' %}
+      {% include '55_article_create_util_submit_buttons_both.html' with current_tab="content" %}
+
     </div>
 
     <!-- Content for article settings tab -->
     <div class="tab-pane fade" id="settings">
       {% include '53_article_create_form_settings.html' %}
-      {% include '55_article_create_util_submit_buttons_both.html' %}
+      {% include '55_article_create_util_submit_buttons_both.html' with current_tab="settings" %}
     </div>
 
   </div>

@@ -85,3 +85,98 @@ tagify.on('dblclick', function(e){
 })
 </script>
 
+
+
+<!-- Změna záložky při návratu na stránku -->
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+
+    // Extrahovíní URL
+    const pathFromURL = window.location.pathname;
+    console.log("Hodnota pathFromURL:", pathFromURL);
+
+    // Rozložení URL
+    const pathSegments = pathFromURL.split('/').filter(Boolean);
+    // console.log("Hodnota pathSegments:", pathSegments);
+
+    // Vytažení předposlední části
+    const pathFromURL_last_last = pathSegments[pathSegments.length - 2];
+    // console.log("Hodnota pathFromURL_last_last:", pathFromURL_last_last);
+
+    // Kontrola, zda jsme na stránce pro úpravu příspěvku
+    if (pathFromURL_last_last === 'update') {
+
+        // Vytažení poslední části
+        const pathFromURL_last = pathSegments[pathSegments.length - 1];
+        // console.log("Hodnota pathFromURL_last:", pathFromURL_last);
+
+        // Přidání znaku # před poslední část
+        const pathWithHash = `#${pathFromURL_last}`;
+        // console.log("Hodnota pathWithHash:", pathWithHash);
+
+        // Ověření existence kotvy s href="#content"
+        const contentAnchor = document.querySelector(`a[href="${pathWithHash}"]`);
+        if (contentAnchor) {
+            // console.log("Kotva s href=\"#content\" byla nalezena.");
+
+            // Simulace kliknutí na odkaz
+            contentAnchor.click();
+        } else {
+            // console.log("Kotva s href=\"#content\" nebyla nalezena.");
+        }
+
+    }
+
+});
+</script>
+
+
+<!-- Změna adresy v URL při kliknutí na záložku na stránce pro úpravu článku -->
+<script>
+  // Odchycení kliknutí na záložku
+  document.addEventListener("DOMContentLoaded", function () {
+
+    // Připojte se k všem odkazům s daty-bs-toggle="tab"
+    const tabLinks = document.querySelectorAll('[data-bs-toggle="tab"]');
+
+    // Přidejte naslouchání událostem kliknutí
+    tabLinks.forEach(function (tabLink) {
+      tabLink.addEventListener("click", function (event) {
+
+        // Zabrání výchozímu chování odkazu
+        event.preventDefault();
+
+        // Získání tabId z atributu data-tab-id
+        const tabId = this.getAttribute('data-tab-id');
+
+        // Zavolejte funkci changeTab s tabId
+        changeTab(tabId);
+      });
+    });
+  });
+
+  // Změna adersy
+  function changeTab(tabId) {
+
+    // Načtení id kliknuté záložky
+    const tabElement = document.getElementById(`${tabId}-tab`);
+    if (tabElement) {
+
+      // Získání aktuální URL
+      const currentUrl = window.location.href;
+
+      // Získání pole segmentů cesty
+      const pathSegments = currentUrl.split('/');
+
+      // Nahraďte poslední segment (neprázdný)
+      pathSegments[pathSegments.length - 2] = tabId;
+
+      // Vytvoření nové URL
+      const newUrl = pathSegments.join('/');
+
+      // Nahraďte aktuální stav historie novým URL
+      window.history.replaceState({}, document.title, newUrl);
+
+    }
+  }
+</script>

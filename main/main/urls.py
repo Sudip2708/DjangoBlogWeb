@@ -33,7 +33,7 @@ urlpatterns = [
     path('articles/<slug:slug>/', ArticleDetailView.as_view(), name='article-detail'),
 
     # URL pro aktualizaci článku s využitím jeho slugu
-    path('articles/<slug:slug>/update/', ArticleUpdateView.as_view(), name='article-update'),
+    path('articles/<slug:slug>/update/<str:current_tab>/', ArticleUpdateView.as_view(), name='article-update'),
 
     # URL pro smazání článku s využitím jeho slugu
     path('articles/<slug:slug>/delete/', ArticleDeleteView.as_view(), name='article-delete'),
