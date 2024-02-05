@@ -27,7 +27,7 @@ urlpatterns = [
     path('articles/', ArticleListView.as_view(), name='article-list'),
 
     # URL pro vytvoření nového článku
-    path('articles/create/', ArticleCreateView.as_view(), name='article-create'),
+    path('articles/create/<str:current_tab>/', ArticleCreateView.as_view(), name='article-create'),
 
     # URL pro zobrazení detailu článku s využitím jeho slugu
     path('articles/<slug:slug>/', ArticleDetailView.as_view(), name='article-detail'),

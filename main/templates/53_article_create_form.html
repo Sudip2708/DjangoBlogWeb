@@ -11,9 +11,12 @@
     </div>
 
     <!-- Content for article content tab -->
-    <div class="tab-pane fade" id="content">
+    <div class="tab-pane fade pt-4" id="content">
       {{ form.content }}
-      {% include '55_article_create_util_submit_buttons_both.html' with current_tab="content" %}
+      <div class="pt-4">
+        {% include '55_article_create_util_submit_buttons_both.html' with current_tab="content" %}
+      </div>
+
 
     </div>
 

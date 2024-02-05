@@ -541,3 +541,5 @@ $ python manage.py migrate
 • articles/forms/article_form.py > zapsání kodu pro status
 • templates/53_article_create_form_settings.html > zapsání kodu pro status
 ###
+Doupravení vzhledu stránek pro vytvoření a úpravu článku
+###

@@ -4,65 +4,98 @@
     --tag-hover: var(--tag-bg);
   }
 
+  .max-width-300 {
+    max-width: 300px; /* Nastavte požadovanou maximální šířku */
+  }
+
+  .bg-yellow {
+    background-color: yellow;
+  }
+
+  .explain-input{
+    color: grey;
+    font-size: 0.8rem;
+  }
 </style>
 
 
-<!-- Publick Article
-<div id="div_id_public" class="mb-5 form-check pt-5">-->
+<!-- Article status and Article category -->
+<div class="pt-4">
+  <div class="row">
 
-  <!-- Field
-  <input
-          type="checkbox"
-          name="{{ form.public.name }}"
-          class="checkboxinput form-check-input"
-          id="{{ form.public.id_for_label }}"
-          {% if form.public.value %}
-          checked
-          {% endif %}>-->
+    <!-- Article status -->
+    <div id="div_id_status" class="col-md-4 mb-4">
 
-  <!-- Label
-  <label for="{{ form.public.id_for_label }}" class="form-check-label">
-    Available to the public
-    <div class="form-label">
-      (make sure the article has all the essentials including category and tags)
+      <!-- Label -->
+      <label for="{{ form.status.id_for_label }}" class="form-label requiredField">
+        {{ form.status.label }}
+      </label>
+
+      <!-- Field -->
+      {{ form.status|add_class:"form-control" }}
+
     </div>
-  </label>
 
-</div>-->
-<!-- Article status -->
-<div id="div_id_status" class="mb-5">
+    <!-- Article category -->
+    <div id="div_id_category" class="col-md-8 mb-4">
 
-  <!-- Label -->
-  <label for="{{ form.status.id_for_label }}" class="form-label requiredField">
-    {{ form.status.label }} (before publishing, make sure the article has all the essentials including categories and tags)
-  </label>
+      <!-- Label -->
+      <label for="{{ form.category.id_for_label }}" class="form-label requiredField">
+        {{ form.category.label }}
+      </label>
 
-  <!-- Field -->
-  {{ form.status|add_class:"form-control" }}
+      <!-- Field -->
+      {{ form.category|add_class:"form-control" }}
+      <div class="explain-input">Before publishing, select the appropriate category.</div>
 
+    </div>
+
+  </div>
 </div>
 
+<!-- Article status and Article category -->
+<div class="">
+  <div class="row">
 
-<!-- Article category -->
-<div id="div_id_category" class="mb-5">
+    <!-- Article Previous -->
+    <div id="div_id_previous_article" class="col-md-6 mb-4">
 
-  <!-- Label -->
-  <label for="{{ form.category.id_for_label }}" class="form-label requiredField">
-    {{ form.category.label }} (please select the appropriate category from the list)
-  </label>
+      <!-- Label -->
+      <label for="{{ form.previous_article.id_for_label }}" class="form-label">
+        {{ form.previous_article.label }}
+      </label>
 
-  <!-- Field -->
-  {{ form.category|add_class:"form-control" }}
+      <!-- Field -->
+      {{ form.previous_article|add_class:"form-control" }}
+      <div class="explain-input">This field is mandatory. It is used to connect your own articles.</div>
 
+    </div>
+
+
+    <!-- Article Next -->
+    <div id="div_id_next_article" class="col-md-6 mb-4">
+
+      <!-- Label -->
+      <label for="{{ form.next_article.id_for_label }}" class="form-label">
+        {{ form.next_article.label }}
+      </label>
+
+      <!-- Field -->
+      {{ form.next_article|add_class:"form-control" }}
+      <div class="explain-input">This field is optional. It is used to connect your own articles.</div>
+
+    </div>
+
+  </div>
 </div>
 
 
 <!-- Article Tags -->
-<div id="div_id_tags" class="mb-5">
+<div id="div_id_tags" class="mb-4">
 
   <!-- Label -->
   <label for="{{ form.tags.id_for_label }}" class="form-label requiredField">
-    {{ form.tags.label }} (use a comma or enter to separate individual tags)
+    {{ form.tags.label }}
   </label>
 
   <!-- Field-->
@@ -72,39 +105,6 @@
         value="{% for tag in form.tags.value %}{{ tag }}{% if not forloop.last %}, {% endif %}{% endfor %}"
         class='form-control tags-input'
         placeholder='Add tag' >
+  <div class="explain-input">Use a comma or enter to separate individual tags.</div>
 
 </div>
-
-
-
-<!-- Article Previous -->
-<div id="div_id_previous_article" class="mb-5">
-
-  <!-- Label -->
-  <label for="{{ form.previous_article.id_for_label }}" class="form-label">
-    {{ form.previous_article.label }} (if you don't want to specify, leave it blank, it will be added automatically)
-  </label>
-
-  <!-- Field -->
-  {{ form.previous_article|add_class:"form-control" }}
-
-</div>
-
-
-<!-- Article Next -->
-<div id="div_id_next_article" class="mb-5">
-
-  <!-- Label -->
-  <label for="{{ form.next_article.id_for_label }}" class="form-label">
-    {{ form.next_article.label }} (if you don't want to specify, leave it blank, it will be added automatically)
-  </label>
-
-  <!-- Field -->
-  {{ form.next_article|add_class:"form-control" }}
-
-</div>
-
-
-
-
-

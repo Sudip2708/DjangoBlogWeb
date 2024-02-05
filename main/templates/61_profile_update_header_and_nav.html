@@ -7,7 +7,7 @@
   </header>
 
   <!-- Navigace -->
-  <nav class="nav nav-tabs justify-content-end mb-5">
+  <nav class="nav nav-tabs justify-content-end mb-5 pt-4">
     <li class="nav-item active">
       <a href="{% url 'profile_update_user' %}" class="nav-link active">User</a>
     </li>
@@ -24,7 +24,7 @@
 
   <!-- Navigace pro stránku uživatele -->
   {% if user_form %}
-    <nav class="nav nav-tabs justify-content-end mb-5">
+    <nav class="nav nav-tabs justify-content-end mb-5 pt-4">
       <li class="nav-item active">
         <a href="{% url 'profile_update_user' %}" class="nav-link active">User</a>
       </li>
