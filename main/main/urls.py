@@ -66,6 +66,9 @@ urlpatterns = [
 
     path('profile/update/user', profile_update_user, name='profile_update_user'),
     path('profile/update/author', profile_update_author, name='profile_update_author'),
+
+    # URL pro zobrazení seznamu článků autora
+    path('articles/from/<slug:author_slug>/', ArticleListView.as_view(), name='article-from-author-list'),
 ]
 
 # Přidání URL patternů pro statické a média soubory, pokud je nastavený DEBUG mód

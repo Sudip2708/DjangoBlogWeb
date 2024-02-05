@@ -5,6 +5,8 @@ from taggit.models import Tag
 from django.views.generic.base import ContextMixin
 
 from articles.models.article import Article
+from articles.models.article_author import ArticleAuthor
+
 from utilities.for_articles.get_category_count import get_category_count
 
 
@@ -34,5 +36,18 @@ class CommonContextMixin(ContextMixin):
 
         # Nastavení dalších proměnných do contextu
         context['page_request_var'] = "page"
+
+        # Získání přihlášeného uživatele a jeho dat do kontextu
+        if not self.request.user.is_anonymous:
+            try:
+                user = self.request.user
+                user_author_instance = ArticleAuthor.objects.get(id=user.linked_author_id)
+                user_author = user_author_instance
+            except ArticleAuthor.DoesNotExist:
+                # Zpracování situace, kdy instance není nalezena
+                user_author = None
+            context['user_author'] = user_author
+        else:
+            context['user_author'] = None
 
         return context

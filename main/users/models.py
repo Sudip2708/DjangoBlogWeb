@@ -56,6 +56,9 @@ class CustomUser(AbstractUser):
         null=True
     )
 
+    # Pole pro id Autora (je-li)
+    linked_author_id = models.PositiveIntegerField(null=True, blank=True)
+
 
     # FieldTracker pro sledování změn v profile_picture
     profile_picture_tracker = FieldTracker(fields=['profile_picture'])

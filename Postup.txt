@@ -543,3 +543,13 @@ $ python manage.py migrate
 ###
 Doupravení vzhledu stránek pro vytvoření a úpravu článku
 ###
+Úprava postranního panelu
+• users/models.py > připsat pole pro linked_author_id
+$ python manage.py makemigrations
+$ python manage.py migrate
+• articles/models/article_author.py > připsat kód, kerý při založení instance zapíše id autora do pole v uživatelovi
+• articles/models/article_author.py > připsat kód, kerý při smazání instance nastaví hodnotu None do pole v uživatele
+• tempates/ > úprava kódu pro zobrazení postranního panelu
+• main/urls.py > přidat cestu pro zobrazení článků daného autora
+• articles/views/article_common_contex_mixin.py > importovat ArticleAuthor a připsat kód pro získání autora (je-li)
+###

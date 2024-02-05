@@ -149,13 +149,14 @@ class ArticleAuthor(models.Model):
         create_default_profile_picture()
         creat_thumbnail()
         '''
-
+        new_instance = False
         # Vytvoření uživatelského jména a profilového obrázku, při založení instance.
         if not self.pk:
             self.author = self.user.username
             self.profile_picture = self.user.profile_picture
             self.profile_picture.name = self.profile_picture_name
             self.slug = self.user.slugify_email
+            new_instance = True
 
         # Kontrola, zda byl změněn profilový obrázek.
         change_of_profile_picture = self.profile_picture_tracker.has_changed('profile_picture')
@@ -167,6 +168,14 @@ class ArticleAuthor(models.Model):
         if change_of_profile_picture:
             create_thumbnail(self)
 
+        # Pokud byla nově vytvořená instance, zapsat id autora do instance uživatele
+        if new_instance:
+            self.user.linked_author_id = self.pk
+
+    def delete(self, *args, **kwargs):
+        # Při smazání instance autora, resetujeme linked_author na None
+        self.user.linked_author_id = None
+        super().delete(*args, **kwargs)
 
     @classmethod
     def user_is_author(cls, user):

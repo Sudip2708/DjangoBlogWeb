@@ -92,16 +92,7 @@
 </main>
 
 <!-- Napojení Sidebar -->
-{% include '54_article_create_sidebar.html' %}
-
-<!--script>
-  var myTabs = new bootstrap.Tabset($("#myTabs"));
-  myTabs.show("tab1");  // Show the first tab initially
-</script-->
-
-
-
-
+{% include '54_article_create_sidebar.html' with user_author=user_author %}
 
 
 {% endblock inner_content %}
