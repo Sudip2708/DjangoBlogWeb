@@ -1,40 +1,47 @@
-{% extends '60_profile_update.html' %}
+<!-- Linking to the parent template -->
+{% extends '61_profile_update_main.html' %}
+
+<!-- Import static files -->
 {% load static %}
+
+<!-- Import crispy style -->
 {% load crispy_forms_tags %}
+
+<!-- Start of inner block -->
 {% block profile_update_content %}
 
-<form method="POST" enctype="multipart/form-data">
-  {% csrf_token %}
 
-  <div class="row">
+  <!-- Form -->
+  <form method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    <div class="row">
 
-    <!-- Profile Picture -->
-    <div class="col-md-4 mb-4">
-      <img src="{{ user_form.instance.profile_picture.url }}?{% now 'U' %}"
-           alt="Profile Picture"
-           class="img-fluid">
-    </div>
+      <!-- Profile Picture -->
+      <div class="col-md-4 mb-4">
+        <img src="{{ user_form.instance.profile_picture.url }}?{% now 'U' %}"
+             alt="Profile Picture"
+             class="img-fluid">
+      </div>
 
-
-    <div class="col-md-8">
 
       <!-- User Form Fields -->
-      <div class="mb-2">
-        {{ user_form|crispy }}
-      </div>
+      <div class="col-md-8">
+        <div class="mb-2">
+          {{ user_form|crispy }}
+        </div>
 
-      <!-- Submit Button -->
-      <div class="form-group pt-4">
-        <button class="btn btn-outline-info btn-lg" type="submit" name="submit_user">
-          Save Changes
-        </button>
-      </div>
+        <!-- Submit Button -->
+        <div class="form-group pt-4">
+          <button class="btn btn-outline-info btn-lg" type="submit" name="submit_user">
+            Save Changes
+          </button>
+        </div>
 
+      </div>
 
     </div>
+  </form>
 
-  </div>
 
-</form>
-
+<!-- End of inner block -->
 {% endblock profile_update_content %}

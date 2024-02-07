@@ -52,6 +52,7 @@ def profile_update_user(request):
         user_author = ArticleAuthor.objects.get(id=user.linked_author_id)
     except:
         user_author = None
+    print("### user_author: ", user_author)
 
 
 

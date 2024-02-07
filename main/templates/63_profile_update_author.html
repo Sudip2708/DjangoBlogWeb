@@ -1,40 +1,47 @@
-{% extends '60_profile_update.html' %}
+<!-- Linking to the parent template -->
+{% extends '61_profile_update_main.html' %}
+
+<!-- Import static files -->
 {% load static %}
+
+<!-- Import crispy style -->
 {% load crispy_forms_tags %}
+
+<!-- Start of inner block -->
 {% block profile_update_content %}
 
-<form method="POST" enctype="multipart/form-data">
-  {% csrf_token %}
 
-  <div class="row">
+  <!-- Form -->
+  <form method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    <div class="row">
 
-    <!-- Author Profile Picture -->
-    <div class="col-md-4 mb-4">
-      <img src="{{ author_form.instance.profile_picture.url }}?{% now 'U' %}"
-           alt="Author Profile Picture"
-           class="img-fluid">
-    </div>
+      <!-- Author Profile Picture -->
+      <div class="col-md-4 mb-4">
+        <img src="{{ author_form.instance.profile_picture.url }}?{% now 'U' %}"
+             alt="Author Profile Picture"
+             class="img-fluid">
+      </div>
 
-
-    <div class="col-md-8">
 
       <!-- Author Form Fields -->
-      <fieldset class="form-group">
-        {{ author_form|crispy }}
-      </fieldset>
+      <div class="col-md-8">
+        <fieldset class="form-group">
+          {{ author_form|crispy }}
+        </fieldset>
 
-      <!-- Submit Button -->
-      <div class="form-group pt-4">
-        <button class="btn btn-outline-info btn-lg" type="submit" name="submit_author">
-          Save Changes
-        </button>
+        <!-- Submit Button -->
+        <div class="form-group pt-4">
+          <button class="btn btn-outline-info btn-lg" type="submit" name="submit_author">
+            Save Changes
+          </button>
+        </div>
+
       </div>
 
     </div>
+  </form>
 
 
-
-  </div>
-</form>
-
+<!-- End of inner block -->
 {% endblock profile_update_content %}

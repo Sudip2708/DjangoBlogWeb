@@ -560,3 +560,8 @@ Dokončení úpravy vzhledu postranního panelu pro uživatele
 • users/views/profile_update_user.py > pozměnit kód pro získání dat autora
 • tempates/ > připsat v šech šablonách pro postranní panely kód pro zobrazení panelu uživatele
 ###
+Úprava stránek pro úpravu uživatelského účtu
+• users/views/profile_update_user.py > odebrání author_form
+• users/views/profile_update_author.py > přidání user_author pro sidebar
+• tempates/ 60-63 - změna rozložení kodu v šablonách
+###

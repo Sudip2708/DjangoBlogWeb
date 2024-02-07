@@ -51,6 +51,7 @@ def profile_update_author(request):
     content = {
         'user_form': None,
         'author_form': author_form,
+        'user_author': author,
     }
 
     # Vytvoření stránky
