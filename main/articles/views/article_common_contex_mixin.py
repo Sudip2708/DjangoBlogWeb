@@ -37,17 +37,15 @@ class CommonContextMixin(ContextMixin):
         # Nastavení dalších proměnných do contextu
         context['page_request_var'] = "page"
 
-        # Získání přihlášeného uživatele a jeho dat do kontextu
+        # Získání autora - je-li
+        user_author = None
         if not self.request.user.is_anonymous:
             try:
                 user = self.request.user
-                user_author_instance = ArticleAuthor.objects.get(id=user.linked_author_id)
-                user_author = user_author_instance
-            except ArticleAuthor.DoesNotExist:
-                # Zpracování situace, kdy instance není nalezena
+                user_author = ArticleAuthor.objects.get(id=user.linked_author_id)
+            except:
                 user_author = None
-            context['user_author'] = user_author
-        else:
-            context['user_author'] = None
+
+        context['user_author'] = user_author
 
         return context

@@ -553,3 +553,10 @@ $ python manage.py migrate
 • main/urls.py > přidat cestu pro zobrazení článků daného autora
 • articles/views/article_common_contex_mixin.py > importovat ArticleAuthor a připsat kód pro získání autora (je-li)
 ###
+Dokončení úpravy vzhledu postranního panelu pro uživatele
+• tempates/ > vytvořit soubor XX_sidebar_user.py a vložit kod pro postranní panel, když je pouze uživatel
+• tempates/ > vytvořit soubor XX_sidebar_user_author.py a přidat kód, pro zobrazení, když uživatel, má i učet authora
+• articles/views/article_common_contex_mixin.py > upravit kód pro získání dat autora
+• users/views/profile_update_user.py > pozměnit kód pro získání dat autora
+• tempates/ > připsat v šech šablonách pro postranní panely kód pro zobrazení panelu uživatele
+###

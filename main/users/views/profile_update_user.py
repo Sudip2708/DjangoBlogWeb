@@ -4,7 +4,6 @@ from django.contrib.auth.decorators import login_required
 
 from articles.models.article_author import ArticleAuthor
 from users.forms.user_profile_form import UserProfileForm
-from users.forms.author_profile_form import AuthorProfileForm
 from utilities.for_users.clean_profile_picture import clean_profile_picture
 
 
@@ -48,26 +47,18 @@ def profile_update_user(request):
         user_form = UserProfileForm(instance=user)
 
 
-
-    # Kontrola, zda má uživatel i účet autora
-    if ArticleAuthor.user_is_author(user):
-
-        # Načtení atura
-        author = ArticleAuthor.objects.get(user=user)
-
-        # Načtení formuláře autora
-        author_form = AuthorProfileForm(instance=author)
-
-    else:
-        # Vrácení hodnoty None, v případě, že uživatel nemá i účet autora
-        author_form = None
+    # Získání autora - je-li
+    try:
+        user_author = ArticleAuthor.objects.get(id=user.linked_author_id)
+    except:
+        user_author = None
 
 
 
     # Příprava obsahu pro šablonu
     content = {
         'user_form': user_form,
-        'author_form': author_form,
+        'user_author': user_author,
     }
 
     # Vytvoření stránky

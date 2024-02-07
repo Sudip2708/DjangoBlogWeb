@@ -2,7 +2,10 @@
 <aside class="col-lg-4">
 
   <!-- User owerview -->
-  {% include '54_article_create_sidebar_user_and_author.html' with user_author=user_author %}
+  {% if user.is_authenticated %}
+    {% include 'XX_sidebar_user.html' %}
+  {% endif %}
+
 
   <!-- category Widget -->
   {% include '22_sidebar_category.html' with page_obj=page_obj %}
