@@ -1,0 +1,21 @@
+<!-- Include for 3_articles/2___article__.html -->
+<!-- for Link to the author -->
+
+
+<!-- Link to the author -->
+<li class="list-inline-item">
+    <a class="d-flex align-items-center flex-wrap text-reset"
+       href="!#">
+
+        <!-- Profile picture -->
+        <div class="avatar flex-shrink-0">
+            <img class="img-fluid"
+                 src="{{ article.author.profile_picture_thumbnail.url }}?{% now 'U' %}"
+                 alt="profile_picture"/>
+        </div>
+
+        <!-- Name -->
+        <small>{{ article.author }}</small>
+
+    </a>
+</li>

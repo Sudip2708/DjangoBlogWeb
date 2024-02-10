@@ -1,0 +1,40 @@
+<!-- Include for 1_home/0___home__.html -->
+<!-- for Latest articles -->
+
+<!-- Import static files -->
+{% load static %}
+
+
+<!-- Latest articles -->
+<section>
+    <div class="container">
+
+        <!-- Description -->
+        {% include '1_home/5a__description__.html' %}
+
+        <!-- Articles -->
+        <div class="row gy-4">
+
+            <!-- Articles cycle -->
+            {% for article in latest %}
+                <div class="col-md-4">
+
+                    <!-- Main Picture -->
+                    {% include '1_home/5b__main_picture__.html' %}
+
+                    <!-- Created and Category -->
+                    {% include '1_home/5c__created_and_category__.html' %}
+
+                    <!-- Title -->
+                    {% include '1_home/5d__title__.html' %}
+
+                    <!-- Overview -->
+                    {% include '1_home/5e__overview__.html' %}
+
+                </div>
+            {% endfor %}
+
+        </div>
+
+    </div>
+</section>

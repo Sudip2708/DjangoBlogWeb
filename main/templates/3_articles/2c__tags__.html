@@ -1,0 +1,18 @@
+<!-- Include for 3_articles/2___article__.html -->
+<!-- for Article Tags -->
+
+
+<!-- Tags -->
+<ul class="list-inline mb-2">
+    <small class="text-gray-500">[&nbsp</small>
+
+    {% for tag in article.tags.all %}
+        <li class="list-inline-item">
+            <a class="small" href="{% url 'article-tag-list' tag_slug=tag.slug %}">
+                {{tag}}
+            </a>
+        </li>
+    {% endfor %}
+
+    <small class="text-gray-500">]</small>
+</ul>

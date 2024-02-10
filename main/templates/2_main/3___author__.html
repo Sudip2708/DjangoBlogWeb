@@ -1,0 +1,54 @@
+<!-- Include for 2_main/0___main__.html -->
+<!-- for Author Sidebar -->
+
+
+<!-- Separate Line -->
+<div class="pt-3"><hr class="border-top " style="color: grey;"></div>
+
+<!-- Main container -->
+<div class="d-flex align-items-center">
+
+  <!-- Title -->
+  <div class="w-25 author-section align-self-start">Author</div>
+
+  <!-- Author section -->
+  <div class="w-75">
+
+
+    <!-- Author -->
+    <div class="pt-2">
+
+      <!-- Link to the author -->
+      <a class="d-flex align-items-center flex-wrap text-reset" href="{% url 'article-from-author-list' author_slug=user_author.author %}">
+
+        <!-- Profile picture -->
+        <div class="avatar flex-shrink-0">
+          <img class="img-fluid" src="{{ user_author.profile_picture.url }}?{% now 'U' %}" alt="profile_picture"/>
+        </div>
+
+        <!-- Name -->
+        {{ user_author.author }}
+
+      </a>
+    </div>
+
+
+    <!-- Drop-down menu -->
+    <div class="dropdown px-1 pt-2">
+
+      <!-- Title -->
+      <button class=" btn btn-link dropdown-toggle dropdown-font" type="button" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false">
+        Author options
+      </button>
+
+      <!-- Options -->
+      <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton2">
+        <li><a class="dropdown-item dropdown-font" href="#">Create an Article</a></li>
+        <li><a class="dropdown-item dropdown-font" href="#">My Articles</a></li>
+        <li><a class="dropdown-item dropdown-font" href="#">Manage my Account</a></li>
+      </ul>
+    </div>
+
+  </div>
+
+</div>

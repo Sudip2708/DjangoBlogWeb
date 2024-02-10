@@ -1,0 +1,19 @@
+<!-- Include for 4_article/5___display_comments__.html -->
+<!-- for Users profile picture -->
+
+<!-- Import static files -->
+{% load static %}
+
+
+<!-- Users profile picture -->
+{% if comment.user.author %}
+    <img class="img-fluid rounded-circle flex-shrink-0"
+         src="{{ comment.user.author.profile_picture.url }}?{% now 'U' %}"
+         alt="profile_picture"
+         width="50"/>
+{% else %}
+    <img class="img-fluid rounded-circle flex-shrink-0"
+        src="{% static 'img/user.svg' %}"
+        alt="profile picture"
+        width="50"/>
+{% endif %}

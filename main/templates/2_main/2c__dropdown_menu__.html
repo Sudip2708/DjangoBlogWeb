@@ -1,0 +1,33 @@
+<!-- Include for 2_main/2___user__.html -->
+<!-- for Drop-down menu -->
+
+
+<!-- Drop-down menu -->
+<div class="dropdown px-1">
+
+    <!-- Title -->
+    <button class="btn btn-link dropdown-toggle dropdown-font"
+            type="button"
+            id="dropdownMenuButton1"
+            data-bs-toggle="dropdown"
+            aria-expanded="false">
+        User options
+    </button>
+
+    <!-- Options -->
+    <ul class="dropdown-menu"
+        aria-labelledby="dropdownMenuButton1">
+
+        {% if not user_author %}
+            <li><a class="dropdown-item dropdown-font" href="#">Create an Article</a></li>
+        {% endif %}
+
+        <li><a class="dropdown-item dropdown-font" href="#">Favorite Authors</a></li>
+        <li><a class="dropdown-item dropdown-font" href="#">Manage my Account</a></li>
+
+        <li><hr class="dropdown-divider"></li>
+        <li><a class="dropdown-item dropdown-font" href="#">Log out</a></li>
+
+    </ul>
+</div>
+

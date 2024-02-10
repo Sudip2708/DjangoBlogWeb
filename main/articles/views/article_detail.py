@@ -15,13 +15,10 @@ class ArticleDetailView(CommonContextMixin, DetailView):
     model = Article
 
     # Cesta k šabloně pro zobrazení detailu článku
-    template_name = '40_article.html'
+    template_name = '4_article/0___article__.html'
 
     # Název objektu v kontextu
     context_object_name = 'article'
-
-    # Inicializace prázdného formuláře pro komentáře
-    form = CommentForm()
 
     def get_object(self):
         # Získání instance článku, zároveň zaznamenání zobrazení, pokud je uživatel přihlášený
@@ -48,4 +45,7 @@ class ArticleDetailView(CommonContextMixin, DetailView):
         # Získání běžného kontextu a přidání podobných článků
         context = super().get_context_data(**kwargs)
         context['similar_articles'] = get_similar_articles(self.object)
+        # Inicializace prázdného formuláře pro komentáře
+        form = CommentForm()
+        context['form'] = form
         return context

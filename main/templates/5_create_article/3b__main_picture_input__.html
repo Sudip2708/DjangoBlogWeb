@@ -1,0 +1,19 @@
+<!-- Include for 5_create_article/3___overview__.html -->
+<!-- for Main Picture Input -->
+
+<!-- Import widget tweaks (to add class to form field) -->
+{% load widget_tweaks %}
+
+
+<!-- Article main Picture Input -->
+<div id="div_id_main_picture_max_size" >
+
+    <!-- Label -->
+    <label for="{{ form.main_picture_max_size.id_for_label }}" class="form-label">
+        Article main image (hi-res)
+    </label>
+
+    <!-- Field -->
+    {{ form.main_picture_max_size|add_class:"form-control"  }}
+
+</div>

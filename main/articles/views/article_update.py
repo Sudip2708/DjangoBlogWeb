@@ -32,7 +32,7 @@ class ArticleUpdateView(UpdateView, CommonContextMixin):
     model = Article
 
     # Cesta k šabloně pro aktualizaci článku
-    template_name = '50_article_create.html'
+    template_name = '5_create_article/0___create_article__.html'
 
     # Použitý formulář pro aktualizaci článku
     form_class = ArticleForm
@@ -40,7 +40,7 @@ class ArticleUpdateView(UpdateView, CommonContextMixin):
     def get_context_data(self, **kwargs):
         # Získání běžného kontextu a přidání vlastního názvu pro stránku
         context = super().get_context_data(**kwargs)
-        context['title'] = 'Update'
+        context['title'] = 'Update Your Article'
         return context
 
     def form_valid(self, form):

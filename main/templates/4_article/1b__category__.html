@@ -1,0 +1,11 @@
+<!-- Include for 4_article/1___content__.html -->
+<!-- for Category -->
+
+
+<!-- Category -->
+<div class="mb-1">
+    <a class="text-uppercase text-dark small fw-bold"
+       href="{% url 'article-category-list' category_slug=article.category.slug %}">
+        {{ article.category }}
+    </a>
+</div>

@@ -1,0 +1,24 @@
+<!-- Include for 5_create_article/3___overview__.html -->
+<!-- for Article Title -->
+
+<!-- Import widget tweaks (to add class to form field) -->
+{% load widget_tweaks %}
+
+
+<!-- Article Title -->
+<div class="mb-2">
+    <div id="div_id_title" class="mb-4">
+
+        <!-- Label -->
+        <label for="{{ form.title.id_for_label }}" class="form-label requiredField">
+            {{ form.title.label }}
+            {% if form.title.field.required %}
+                <span class="asteriskField">* (This field is required to save the article.)</span>
+            {% endif %}
+        </label>
+
+        <!-- Field -->
+        {{ form.title|add_class:"form-control" }}
+
+    </div>
+</div>

@@ -1,0 +1,37 @@
+<!-- Include for 5_create_article/0___create_article__.html -->
+<!-- for Article Status & Category -->
+
+
+<!-- Article status and Article category -->
+<div class="pt-4">
+    <div class="row">
+
+        <!-- Article status -->
+        {% include '5_create_article/5a__article_status__.html' %}
+
+        <!-- Article category -->
+        {% include '5_create_article/5b__article_category__.html' %}
+
+    </div>
+</div>
+
+
+<!-- Article Previous and Article Next -->
+<div class="">
+    <div class="row">
+
+        <!-- Article Previous -->
+        {% include '5_create_article/5c__article_previous__.html' %}
+
+        <!-- Article Next -->
+        {% include '5_create_article/5d__article_next__.html' %}
+
+    </div>
+</div>
+
+
+<!-- Article Tags -->
+{% include '5_create_article/5e__article_tags__.html' %}
+
+<!-- Submit Buttons -->
+{% include '5_create_article/6___buttons_both__.html' with current_tab="settings" %}

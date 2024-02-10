@@ -1,8 +1,13 @@
-{% extends '20_main.html' %}
+<!-- Linking to the parent template -->
+{% extends '2_main/0___main__.html' %}
+
 {% load account %}
 {% load static %}
 {% load allauth account socialaccount %}
+
+<!-- Start of block for the parent template -->
 {% block inner_content %}
+
 
 <!-- Style for divider and hover -->
 <style>
@@ -199,4 +204,6 @@
 
 </script>
 
+
+<!-- End of block for the parent template -->
 {% endblock inner_content %}

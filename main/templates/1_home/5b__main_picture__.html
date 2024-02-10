@@ -1,0 +1,17 @@
+<!-- Include for 1_home/5___latest__.html -->
+<!-- for Main Picture -->
+
+<!-- Import static files -->
+{% load static %}
+
+
+<!-- Main Picture -->
+<a class="mb-3" href="article.html">
+    <img class="img-fluid"
+       {% if article.main_picture_for_article %}
+       src="{{ article.main_picture_preview.url }}?{% now 'U' %}"
+       {% else %}
+       src="{% static 'img/image_is_not_uploaded_yet.jpg' %}"
+       {% endif %}
+       alt="article_main_picture">
+</a>

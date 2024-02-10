@@ -1,0 +1,182 @@
+<!-- Include for 0_base/0___base__.html -->
+<!-- for Page Scripts -->
+
+<!-- Import static files -->
+{% load static %}
+
+
+<!-- Bootstrap Bundle -->
+<script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+
+<!-- Lightbox -->
+<script src="{% static 'vendor/glightbox/js/glightbox.js' %}"></script>
+
+<!-- Theme Script-->
+<script src="{% static 'js/theme.js' %}"></script>
+
+<!-- FontAwesome CSS - loading as last, so it doesn't block rendering-->
+<link rel="stylesheet"
+      href="https://use.fontawesome.com/releases/v5.7.1/css/all.css"
+      integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr"
+      crossorigin="anonymous">
+
+
+<!-- Tento skript inicializuje Tagify na konkrétním vstupním poli (input elementu) s názvem "tags". Po načtení stránky bude Tagify aktivován na toto pole, umožňující uživatelům přidávat a spravovat tagy. -->
+<script>
+  var inputElem = document.getElementById('id_tags');
+  var tagify = new Tagify(inputElem, {
+    // Vaše nastavení Tagify, pokud je potřeba
+  });
+</script>
+
+<!-- Našeptávač tagů pro Tagify -->
+<script>
+var input = document.querySelector('input[name=tags]'),
+  tagify = new Tagify(input, {
+    pattern             : /^.{0,20}$/,              // Validace zadaných tagů regulárním výrazem. Maximální délka znaků je zde nastavena na "20".
+    delimiters          : ",",                      // Přidání nových tagů po zadání čárky nebo mezery.
+    trim                : true,                     // Pokud je nastaveno, tak trimování mezery začátku a konce tagu.
+    keepInvalidTags     : false,                    // Neodstraňovat neplatné tagy, ale ponechat je označené jako neplatné.
+    // createInvalidTags: false,
+    editTags            : {
+      clicks: 2,                                    // Editace tagu po dvojkliku
+      keepInvalid: false                            // Pokud je tag po editaci neplatný, automaticky se vrátí na původní hodnotu
+    },
+    maxTags             : 25,                        // Maximální povolený počet tagů
+    blacklist           : [':', '[{', 'value', '{', '}', '}]',],                       // Černá listina zakázaných tagů
+    whitelist           : {% if tags %} [{% for tag in tags %}'{{ tag }}'{% if not loop.last %}, {% endif %}{% endfor %}] {% else %} [] {% endif %},
+    backspace           : "edit",                   // Povolení editace tagu při stisku klávesy "Backspace"
+    dropdown : {
+    enabled: 1,                                     // Zobrazit návrhy po zadání 1 znaku
+      fuzzySearch: false,                           // Hledat návrhy, které začínají zadanými znaky
+      position: 'text',                             // Pozice nabídky návrhů vzhledem k textu
+      caseSensitive: false                          // Nastavení, zda má rozlišovat malé a velké znaky - nastaveno na Ne
+    },
+  })
+
+// Nastavení posluchačů událostí Tagify
+tagify.on('add', function(e){
+  console.log(e.detail)
+})
+
+tagify.on('invalid', function(e){
+  console.log(e, e.detail);
+})
+
+var clickDebounce;
+
+tagify.on('click', function(e){
+  const {tag:tagElm, data:tagData} = e.detail;
+
+  // a delay is needed to distinguish between regular click and double-click.
+  // this allows enough time for a possible double-click, and only fires if such
+  // did not occur.
+  clearTimeout(clickDebounce);
+  clickDebounce = setTimeout(() => {
+    tagData.color = getRandomColor();
+    tagData.style = "--tag-bg:" + tagData.color;
+    tagify.replaceTag(tagElm, tagData);
+  }, 200);
+})
+
+tagify.on('dblclick', function(e){
+  // when double clicking, do not change the color of the tag
+  clearTimeout(clickDebounce);
+})
+</script>
+
+
+
+<!-- Změna záložky při návratu na stránku -->
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+
+    // Extrahovíní URL
+    const pathFromURL = window.location.pathname;
+    console.log("Hodnota pathFromURL:", pathFromURL);
+
+    // Rozložení URL
+    const pathSegments = pathFromURL.split('/').filter(Boolean);
+    // console.log("Hodnota pathSegments:", pathSegments);
+
+    // Vytažení předposlední části
+    const pathFromURL_last_last = pathSegments[pathSegments.length - 2];
+    // console.log("Hodnota pathFromURL_last_last:", pathFromURL_last_last);
+
+    // Kontrola, zda jsme na stránce pro úpravu příspěvku
+    if (pathFromURL_last_last === 'update') {
+
+        // Vytažení poslední části
+        const pathFromURL_last = pathSegments[pathSegments.length - 1];
+        // console.log("Hodnota pathFromURL_last:", pathFromURL_last);
+
+        // Přidání znaku # před poslední část
+        const pathWithHash = `#${pathFromURL_last}`;
+        // console.log("Hodnota pathWithHash:", pathWithHash);
+
+        // Ověření existence kotvy s href="#content"
+        const contentAnchor = document.querySelector(`a[href="${pathWithHash}"]`);
+        if (contentAnchor) {
+            // console.log("Kotva s href=\"#content\" byla nalezena.");
+
+            // Simulace kliknutí na odkaz
+            contentAnchor.click();
+        } else {
+            // console.log("Kotva s href=\"#content\" nebyla nalezena.");
+        }
+
+    }
+
+});
+</script>
+
+
+<!-- Změna adresy v URL při kliknutí na záložku na stránce pro úpravu článku -->
+<script>
+  // Odchycení kliknutí na záložku
+  document.addEventListener("DOMContentLoaded", function () {
+
+    // Připojte se k všem odkazům s daty-bs-toggle="tab"
+    const tabLinks = document.querySelectorAll('[data-bs-toggle="tab"]');
+
+    // Přidejte naslouchání událostem kliknutí
+    tabLinks.forEach(function (tabLink) {
+      tabLink.addEventListener("click", function (event) {
+
+        // Zabrání výchozímu chování odkazu
+        event.preventDefault();
+
+        // Získání tabId z atributu data-tab-id
+        const tabId = this.getAttribute('data-tab-id');
+
+        // Zavolejte funkci changeTab s tabId
+        changeTab(tabId);
+      });
+    });
+  });
+
+  // Změna adersy
+  function changeTab(tabId) {
+
+    // Načtení id kliknuté záložky
+    const tabElement = document.getElementById(`${tabId}-tab`);
+    if (tabElement) {
+
+      // Získání aktuální URL
+      const currentUrl = window.location.href;
+
+      // Získání pole segmentů cesty
+      const pathSegments = currentUrl.split('/');
+
+      // Nahraďte poslední segment (neprázdný)
+      pathSegments[pathSegments.length - 2] = tabId;
+
+      // Vytvoření nové URL
+      const newUrl = pathSegments.join('/');
+
+      // Nahraďte aktuální stav historie novým URL
+      window.history.replaceState({}, document.title, newUrl);
+
+    }
+  }
+</script>

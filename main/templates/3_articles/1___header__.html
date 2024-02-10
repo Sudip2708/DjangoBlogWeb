@@ -1,0 +1,28 @@
+<!-- Include for 3_articles/0___articles__.html -->
+<!-- for Articles Header -->
+
+
+<!-- Articles Header -->
+<header class="mb-5">
+
+    <!-- Title -->
+    {% if tag_slug %}
+        <h2>Articles with tag: {{ tag_slug }}</h2>
+
+    {% elif category_slug %}
+        <h2>Articles with category: {{ category_slug|upper }}</h2>
+
+    {% elif query %}
+        <h2>Search results for: {{ query }}</h2>
+
+    {% else %}
+        <h2>All articles</h2>
+
+    {% endif %}
+
+    <!-- Text -->
+    <p class="text-lg fw-light">
+        To find a specific article, use the search box on the right.
+    </p>
+
+</header>

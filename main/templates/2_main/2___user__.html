@@ -1,0 +1,37 @@
+<!-- Include for 2_main/0___main__.html -->
+<!-- for User Sidebar -->
+
+
+<!-- User overview -->
+<div class="card mb-5">
+    <div class="card-body">
+
+        <!-- User info -->
+        <div class="d-flex align-items-center">
+
+            <!-- Profile picture -->
+            <div class="w-25">
+                {% include '2_main/2a__profile_picture__.html' %}
+            </div>
+
+            <!-- Username & Drop-down menu -->
+            <div class="w-75 ">
+
+                <!-- Username -->
+                {% include '2_main/2b__username__.html' %}
+
+                <!-- Drop-down menu -->
+                {% include '2_main/2c__dropdown_menu__.html' %}
+
+            </div>
+
+        </div>
+
+        <!-- Author info -->
+        {% if user_author %}
+            {% include '2_main/3___author__.html' %}
+        {% endif %}
+
+
+    </div>
+</div>

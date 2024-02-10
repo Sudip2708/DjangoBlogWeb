@@ -1,0 +1,22 @@
+<!-- Include for 3_articles/2___article__.html -->
+<!-- for Article Time and Category -->
+
+
+<!-- Article time and category -->
+<div class="d-flex align-items-center justify-content-between">
+
+    <!-- Created -->
+    <small class="text-gray-500">
+        {{ article.created }}
+    </small>
+
+    <!-- Category -->
+    <div class="mb-1">
+        <a class="text-uppercase text-dark small fw-bold"
+           href="{% url 'article-category-list' category_slug=article.category.slug %}">
+            {{ article.category }}
+        </a>
+    </div>
+
+
+</div>

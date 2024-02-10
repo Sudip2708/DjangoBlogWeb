@@ -1,0 +1,15 @@
+<!-- Include for 6_profile_update/0___profile_update__.html -->
+<!-- for Header -->
+
+
+<!-- Profile update Header -->
+
+<!-- Title, if the user has no author account -->
+{% if not user_author %}
+  <header ><h2>Update Your Profile</h2></header>
+
+<!-- Title, if the user has an author account -->
+{% else %}
+  <header><h2>Update Your Profiles</h2></header>
+
+{% endif %}

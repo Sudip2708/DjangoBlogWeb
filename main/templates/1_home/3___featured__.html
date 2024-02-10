@@ -1,0 +1,48 @@
+<!-- Include for 1_home/0___home__.html -->
+<!-- for Featured articles -->
+
+
+<!-- Featured articles -->
+<section class="pt-0">
+    <div class="container">
+
+        <!-- Article cycle -->
+        {% for article in object_list %}
+            <div class="row d-flex align-items-stretch g-0">
+
+                <!-- Main picture placed before the article -->
+                {% if forloop.counter|divisibleby:2 %}
+                    {% include '1_home/3a__main_picture__.html' %}
+                {% endif %}
+
+                <!-- Article -->
+                <div class="col-lg-7 ">
+                    <div class="text-inner d-flex align-items-center h-100 bg-light">
+                        <div class="content px-4 px-lg-5">
+
+                            <!-- Category -->
+                            {% include '1_home/3b__category__.html' %}
+
+                            <!-- Title -->
+                            {% include '1_home/3c__title__.html' %}
+
+                            <!-- Overview -->
+                            {% include '1_home/3d__overview__.html' %}
+
+                            <!-- Footer -->
+                            {% include '1_home/3e__footer__.html' %}
+
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Main picture placed behind the article -->
+                {% if not forloop.counter|divisibleby:2 %}
+                    {% include '1_home/3a__main_picture__.html' %}
+                {% endif %}
+
+            </div>
+        {% endfor %}
+
+    </div>
+</section>

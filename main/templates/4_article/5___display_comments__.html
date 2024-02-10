@@ -1,0 +1,24 @@
+<!-- Include for 4_article/0___article__.html -->
+<!-- for Article Display of Comments -->
+
+
+<!-- Display of Comments -->
+<div class="mb-5">
+
+    <!-- Description with comments count -->
+    {% include '4_article/5a__description__.html' %}
+
+    <!-- Comments -->
+    {% for comment in article.get_comments %}
+        <div class="d-flex align-items-start ">
+
+            <!-- Users profile picture -->
+            {% include '4_article/5b__profile_picture__.html' %}
+
+            <!-- Users info and comment -->
+            {% include '4_article/5c__info_and_comment__.html' %}
+
+        </div>
+    {% endfor %}
+
+</div>

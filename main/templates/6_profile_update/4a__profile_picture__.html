@@ -1,0 +1,10 @@
+<!-- Include for 6_profile_update/4___author__.html -->
+<!-- for Author Profile Picture -->
+
+
+<!-- Author Profile Picture -->
+<div class="col-md-4 mb-4">
+    <img src="{{ author_form.instance.profile_picture.url }}?{% now 'U' %}"
+         alt="Author Profile Picture"
+         class="img-fluid">
+</div>

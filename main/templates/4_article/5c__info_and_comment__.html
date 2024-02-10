@@ -1,0 +1,23 @@
+<!-- Include for 4_article/5___display_comments__.html -->
+<!-- for Users info and comment -->
+
+
+<!-- Users info and comment -->
+<div class="pb-4 ms-3 mb-4">
+
+    <!-- Users name -->
+    <strong>
+        {{ comment.user.username }}
+    </strong>
+
+    <!-- Comment date -->
+    <p class="small text-gray-500">
+        {{ comment.created|timesince }} ago
+    </p>
+
+    <!-- Comment -->
+    <p class="mb-0 text-sm">
+        {{ comment.content }}
+    </p>
+
+</div>

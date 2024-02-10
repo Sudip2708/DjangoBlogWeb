@@ -1,0 +1,39 @@
+<!-- Include for 5_create_article/0___create_article__.html -->
+<!-- for Overview Tab -->
+
+<!-- Import static files -->
+{% load static %}
+
+<!-- Import widget tweaks (to add class to form field) -->
+{% load widget_tweaks %}
+
+
+<!-- Container for Article Image & Title -->
+<div class="row">
+
+  <!-- Picture (Mobile First) -->
+  {% include '5_create_article/3a__main_picture__.html' %}
+
+  <!-- Article Image & Title -->
+  <div class="col-md-7 align-middle order-md-1">
+
+    <!-- Article main Picture -->
+    {% include '5_create_article/3b__main_picture_input__.html' %}
+
+    <!-- Submit Button with return to editing -->
+    <div class="form-group mb-5 ">
+      {% include '5_create_article/6a__button_for_return_to_editing__.html' with current_tab="overview" %}
+    </div>
+
+    <!-- Article Title -->
+    {% include '5_create_article/3c__article_title__.html' %}
+
+  </div>
+
+</div>
+
+<!-- Article Overview -->
+{% include '5_create_article/3e__article_overview__.html' %}
+
+<!-- Submit Button with return to article page -->
+{% include '5_create_article/6b__button_for_return_to_article__.html' %}

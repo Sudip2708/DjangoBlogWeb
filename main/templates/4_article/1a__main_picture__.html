@@ -1,0 +1,17 @@
+<!-- Include for 4_article/1___content__.html -->
+<!-- for Main Picture -->
+
+<!-- Import static files -->
+{% load static %}
+
+
+<!-- Main Picture -->
+{% if article.main_picture_for_article %}
+    <img class="img-fluid w-100 mb-4"
+         src="{{ article.main_picture_for_article.url }}?{% now 'U' %}"
+         alt="main_picture_for_article">
+{% else %}
+    <img class="img-fluid w-100 mb-4"
+         src="{% static 'img/image_is_not_uploaded_yet.jpg' %}"
+         alt="Image Not Uploaded Yet" >
+{% endif %}

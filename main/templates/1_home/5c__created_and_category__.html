@@ -1,0 +1,21 @@
+<!-- Include for 1_home/5___latest__.html -->
+<!-- for Created and Category -->
+
+
+<!-- Created and Category -->
+<div class="d-flex align-items-center justify-content-between mb-2">
+
+    <!-- Created -->
+    <small class="text-gray-500">
+        {{ article.created }}
+    </small>
+
+    <!-- Category -->
+    <div class="mb-1">
+        <a class="text-uppercase text-dark small fw-bold"
+           href="{% url 'article-category-list' category_slug=article.category.slug %}">
+            {{ article.category }}
+        </a>
+    </div>
+
+</div>

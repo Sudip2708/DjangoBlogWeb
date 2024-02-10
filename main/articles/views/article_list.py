@@ -13,7 +13,7 @@ class ArticleListView(CommonContextMixin, ListView):
     model = Article
 
     # Cesta k šabloně pro zobrazení seznamu článků
-    template_name = '30_articles.html'
+    template_name = '3_articles/0___articles__.html'
 
     # Název objektu v kontextu (seznam článků)
     context_object_name = 'queryset'

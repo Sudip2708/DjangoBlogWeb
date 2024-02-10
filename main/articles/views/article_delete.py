@@ -13,6 +13,6 @@ class ArticleDeleteView(DeleteView):
     success_url = '/blog'
 
     # Cesta k šabloně pro potvrzení smazání článku
-    template_name = 'article_confirm_delete.html'
+    template_name = 'article_confirm_delete_.html'
 
 

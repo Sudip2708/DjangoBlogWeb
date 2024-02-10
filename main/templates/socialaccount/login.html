@@ -1,6 +1,11 @@
+<!-- Linking to the parent template -->
 {% extends 'account/login.html' %}
+
 {% load allauth %}
+
+<!-- Start of block for the parent template -->
 {% block social_account %}
+
 
 <!-- Form for confirm redirection -->
 {% element form method="post" no_visible_fields=True %}
@@ -26,4 +31,6 @@
 
 </script>
 
+
+<!-- End of block for the parent template -->
 {% endblock social_account %}

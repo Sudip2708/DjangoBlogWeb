@@ -1,0 +1,45 @@
+<!-- Include for 1_home/0___home__.html -->
+<!-- for Gallery Section -->
+
+<!-- Import static files -->
+{% load static %}
+
+
+<!-- Temporary style settings for displaying photos -->
+{% include '1_home/7___gallery__style__.html' %}
+
+<!-- Gallery Section (Most Views) -->
+<section class="p-0">
+    <div class="row g-0">
+
+        <!-- Articles cycle -->
+        {% for article in most_viewed %}
+            <div class="col-lg-3 col-md-3 col-sm-6">
+
+                <!-- Link -->
+                <div class="glightbox d-block position-relative"
+                     data-gallery="gallery"
+                     data-glightbox="{{ article.title }}">
+
+                    <!-- Picture -->
+                    <img lass="img-fluid height-400"
+                         {% if article.main_picture_for_article %}
+                         src="{{ article.main_picture_preview.url }}?{% now 'U' %}"
+                         {% else %}
+                         src="{% static 'img/image_is_not_uploaded_yet.jpg' %}"
+                         {% endif %}
+                         alt="article_main_picture">
+
+                    <!-- Icon -->
+                    <div class="fsc-hover-overlay">
+                        <i class="fas fa-search fsc-hover-overlay-icon">
+                            {{ article.title }}
+                        </i>
+                    </div>
+
+                </div>
+            </div>
+        {% endfor %}
+
+    </div>
+</section>

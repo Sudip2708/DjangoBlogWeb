@@ -55,4 +55,4 @@ def profile_update_author(request):
     }
 
     # Vytvoření stránky
-    return render(request, '63_profile_update_author.html', content)
+    return render(request, '6_profile_update/4___author__.html', content)

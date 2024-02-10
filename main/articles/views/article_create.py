@@ -25,7 +25,7 @@ class ArticleCreateView(CreateView, CommonContextMixin):
     model = Article
 
     # Cesta k šabloně pro vytvoření článku
-    template_name = '50_article_create.html'
+    template_name = '5_create_article/0___create_article__.html'
 
     # Použitý formulář pro vytvoření článku
     form_class = ArticleForm
@@ -33,7 +33,7 @@ class ArticleCreateView(CreateView, CommonContextMixin):
     def get_context_data(self, **kwargs):
         # Získání běžného kontextu a přidání vlastního názvu pro stránku
         context = super().get_context_data(**kwargs)
-        context['title'] = 'Create'
+        context['title'] = 'Create an Article'
         return context
 
     def form_valid(self, form):
