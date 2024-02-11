@@ -1,0 +1,34 @@
+<!-- Shared Code -->
+<!-- for Article Main Picture: for Article -->
+
+
+<!-- If Article Main Picture Exist -->
+{% if article.main_picture_for_article %}
+
+
+    <!-- For Preview -->
+    {% if spec == "preview" %}
+        <img alt="Article Main Picture Preview"
+             src="{{ article.main_picture_preview.url }}?{% now 'U' %}"
+             class="img-fluid"/>
+
+
+    <!-- For Article -->
+    {% elif spec == "for_article" %}
+        <img alt="Article Main Picture"
+             src="{{ article.main_picture_for_article.url }}?{% now 'U' %}"
+             class="img-fluid"/>
+
+
+    {% endif %}
+
+
+<!-- If Article Main Picture Non Exist -->
+{% else %}
+    {% load static %}
+    <img alt="Image Not Uploaded Yet"
+         src="{% static 'img/image_is_not_uploaded_yet.jpg' %}"
+         class="img-fluid"/>
+
+
+{% endif %}

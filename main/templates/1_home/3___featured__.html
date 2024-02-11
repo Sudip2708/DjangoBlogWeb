@@ -12,7 +12,9 @@
 
                 <!-- Main picture placed before the article -->
                 {% if forloop.counter|divisibleby:2 %}
-                    {% include '1_home/3a__main_picture__.html' %}
+                    <div class="col-lg-5 ">
+                        {% include '__img/__article_main_picture__.html' with spec="for_article" %}
+                    </div>
                 {% endif %}
 
                 <!-- Article -->
@@ -38,7 +40,9 @@
 
                 <!-- Main picture placed behind the article -->
                 {% if not forloop.counter|divisibleby:2 %}
-                    {% include '1_home/3a__main_picture__.html' %}
+                    <div class="col-lg-5 ">
+                        {% include '__img/__article_main_picture__.html' with spec="for_article" %}
+                    </div>
                 {% endif %}
 
             </div>

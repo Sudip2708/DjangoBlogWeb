@@ -12,7 +12,10 @@
 <div class="row">
 
   <!-- Picture (Mobile First) -->
-  {% include '5_create_article/3a__main_picture__.html' %}
+  <div class="col-md-5 mb-4 mt-4 order-md-2" >
+    {% include '__img/__article_main_picture__.html' with spec="for_article" %}
+  </div>
+
 
   <!-- Article Image & Title -->
   <div class="col-md-7 align-middle order-md-1">

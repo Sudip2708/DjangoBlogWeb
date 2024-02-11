@@ -12,9 +12,7 @@
 
             <!-- Profile picture -->
             <div class="avatar flex-shrink-0">
-                <img class="img-fluid"
-                     src="{{ article.author.profile_picture.url }}?{% now 'U' %}"
-                     alt="profile_picture" />
+                {% include '__img/__author_profile_picture__.html' with spec="article_thumbnail" %}
             </div>
 
             <!-- Name -->

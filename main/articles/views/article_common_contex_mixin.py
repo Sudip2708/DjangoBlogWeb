@@ -38,14 +38,14 @@ class CommonContextMixin(ContextMixin):
         context['page_request_var'] = "page"
 
         # Získání autora - je-li
-        user_author = None
+        author = None
         if not self.request.user.is_anonymous:
             try:
                 user = self.request.user
-                user_author = ArticleAuthor.objects.get(id=user.linked_author_id)
+                author = ArticleAuthor.objects.get(id=user.linked_author_id)
             except:
-                user_author = None
+                author = None
 
-        context['user_author'] = user_author
+        context['author'] = author
 
         return context

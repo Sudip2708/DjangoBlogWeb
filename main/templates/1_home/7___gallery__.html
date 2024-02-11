@@ -22,13 +22,7 @@
                      data-glightbox="{{ article.title }}">
 
                     <!-- Picture -->
-                    <img lass="img-fluid height-400"
-                         {% if article.main_picture_for_article %}
-                         src="{{ article.main_picture_preview.url }}?{% now 'U' %}"
-                         {% else %}
-                         src="{% static 'img/image_is_not_uploaded_yet.jpg' %}"
-                         {% endif %}
-                         alt="article_main_picture">
+                    {% include '__img/__article_main_picture__.html' with spec="preview" %}
 
                     <!-- Icon -->
                     <div class="fsc-hover-overlay">

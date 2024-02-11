@@ -11,7 +11,9 @@
     <div class="row">
 
         <!-- Author Profile Picture -->
-        {% include '6_profile_update/4a__profile_picture__.html' %}
+        <div class="col-md-4 mb-4">
+            {% include '__img/__author_profile_picture__.html' with spec="author_form" %}
+        </div>
 
         <!-- Author Form & Submit Button -->
         <div class="col-md-8">

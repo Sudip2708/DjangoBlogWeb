@@ -1,0 +1,40 @@
+<!-- Shared Code -->
+<!-- for User Profile Picture -->
+
+
+<!-- For User Form -->
+{% if spec == "user_form" %}
+<img alt="User Profile Picture"
+     src="{{ user_form.instance.profile_picture.url }}?{% now 'U' %}"
+     class="img-fluid"/>
+
+
+<!-- For User Thumbnail -->
+{% elif spec == "user_thumbnail" %}
+<img alt="User Profile Picture"
+     src="{{ user.profile_picture_thumbnail.url }}?{% now 'U' %}"
+     class="img-fluid w-100"/>
+
+
+<!-- For Comment Thumbnail -->
+{% elif spec == "user_comment" %}
+
+    <!-- If User Exist -->
+    {% if comment.user %}
+        <img alt="Comment User Profile Picture"
+             src="{{ comment.user.profile_picture_thumbnail.url }}?{% now 'U' %}"
+             class="img-fluid rounded-circle flex-shrink-0"
+             width="50"/>
+
+    <!-- If User Non Exist -->
+    {% else %}
+        {% load static %}
+        <img alt="Default Profile Picture"
+             src="{% static 'img/user.svg' %}"
+             class="img-fluid rounded-circle flex-shrink-0"
+             width="50"/>
+
+    {% endif %}
+
+
+{% endif %}

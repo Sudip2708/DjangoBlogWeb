@@ -49,17 +49,15 @@ def profile_update_user(request):
 
     # Získání autora - je-li
     try:
-        user_author = ArticleAuthor.objects.get(id=user.linked_author_id)
+        author = ArticleAuthor.objects.get(id=user.linked_author_id)
     except:
-        user_author = None
-    print("### user_author: ", user_author)
-
+        author = None
 
 
     # Příprava obsahu pro šablonu
     content = {
         'user_form': user_form,
-        'user_author': user_author,
+        'author': author,
     }
 
     # Vytvoření stránky

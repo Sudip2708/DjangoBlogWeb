@@ -6,28 +6,28 @@
 
 
     <!-- Article -->
-    {% include '4_article/1___content__.html' with article=article %}
+    {% include '4_article/1___content__.html' %}
 
     <!-- Article tags -->
-    {% include '4_article/2___tags__.html' with article=article %}
+    {% include '4_article/2___tags__.html' %}
 
 
     <!-- Article Previous and Next -->
     <div class="articles-nav d-flex justify-content-between align-items-stretch flex-column flex-md-row mb-5">
 
         <!-- Previous -->
-        {% include '4_article/3___previous__.html' with article=article %}
+        {% include '4_article/3___previous__.html' %}
 
         <!-- Next -->
-        {% include '4_article/4___next__.html' with article=article %}
+        {% include '4_article/4___next__.html' %}
 
     </div>
 
     <!-- Display Comments -->
-    {% include '4_article/5___display_comments__.html' with article=article %}
+    {% include '4_article/5___display_comments__.html' %}
 
     <!-- Add Comments -->
-    {% include '4_article/6___add_comment__.html' with article=article form=form %}
+    {% include '4_article/6___add_comment__.html' %}
 
 
 <!-- End of block for the parent template -->

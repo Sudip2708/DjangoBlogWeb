@@ -11,7 +11,10 @@
     <div class="row">
 
         <!-- User Profile Picture -->
-        {% include '6_profile_update/3a__profile_picture__.html' %}
+        <div class="col-md-4 mb-4">
+            {% include '__img/__user_profile_picture__.html' with spec="user_form" %}
+        </div>
+
 
         <!-- User Form & Submit Button -->
         <div class="col-md-8">

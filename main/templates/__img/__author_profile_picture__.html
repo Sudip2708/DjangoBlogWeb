@@ -1,0 +1,26 @@
+<!-- Shared Code -->
+<!-- for Author Profile Picture -->
+
+
+<!-- For Form -->
+{% if spec == "author_form" %}
+<img alt="Author Profile Picture"
+     src="{{ author_form.instance.profile_picture.url }}?{% now 'U' %}"
+     class="img-fluid"/>
+
+
+<!-- For Author Thumbnail -->
+{% elif spec == "author_thumbnail" %}
+<img alt="Author Profile Picture"
+     src="{{ author.profile_picture_thumbnail.url }}?{% now 'U' %}"
+     class="img-fluid"/>
+
+
+<!-- For Article Thumbnail -->
+{% elif spec == "article_thumbnail" %}
+<img alt="Author Profile Picture"
+     src="{{ article.author.profile_picture_thumbnail.url }}?{% now 'U' %}"
+     class="img-fluid"/>
+
+
+{% endif %}

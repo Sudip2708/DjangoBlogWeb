@@ -11,7 +11,7 @@
 
             <!-- Profile picture -->
             <div class="w-25">
-                {% include '2_main/2a__profile_picture__.html' %}
+                {% include '__img/__user_profile_picture__.html' with spec="user_thumbnail" %}
             </div>
 
             <!-- Username & Drop-down menu -->
@@ -28,7 +28,7 @@
         </div>
 
         <!-- Author info -->
-        {% if user_author %}
+        {% if author %}
             {% include '2_main/3___author__.html' %}
         {% endif %}
 
