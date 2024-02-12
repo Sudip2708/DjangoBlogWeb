@@ -1,0 +1,25 @@
+<!-- Linking to the parent template -->
+{% extends '2_main/20__base__.html' %}
+
+<!-- Start of block for the parent template -->
+{% block inner_content %}
+
+
+    <!-- Articles -->
+    <div class="row gy-4 mb-5">
+
+        <!-- Articles Header -->
+        {% include '3_articles/31__page_title__.html' %}
+
+        <!-- Articles -->
+        {% include '3_articles/32__articles__.html' %}
+
+    </div>
+
+    <!-- Pagination -->
+    {% include '3_articles/33__pagination__.html' %}
+
+
+
+<!-- End of block for the parent template -->
+{% endblock inner_content %}

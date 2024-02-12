@@ -1,0 +1,51 @@
+<!-- Include for 1_home/0___home__.html -->
+<!-- for Newsletter Section -->
+
+
+<!-- Newsletter Section -->
+<section class="pt-0">
+  <div class="container">
+    <div class="row">
+
+      <!-- Title & Description -->
+      <div class="col-md-6">
+
+          <!-- Title -->
+          <h2>
+              Subscribe to Newsletter
+          </h2>
+
+          <!-- Description -->
+          <p class="text-lg lh-lg fw-light mb-4">
+              Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod /
+              tempor incididunt ut labore et dolore magna aliqua.
+          </p>
+
+      </div>
+
+      <!-- Form -->
+      <div class="col-md-8">
+          <form action="." method="article">
+              {% csrf_token %}
+              <div class="input-group">
+
+                  <!-- Email input field -->
+                  <input class="form-control p-3"
+                         type="email"
+                         name="email"
+                         id="email"
+                         placeholder="Type your email address">
+
+                  <!-- Submit button -->
+                  <button class="btn btn-dark"
+                          type="submit">
+                      Subscribe
+                  </button>
+
+              </div>
+          </form>
+      </div>
+
+    </div>
+  </div>
+</section>

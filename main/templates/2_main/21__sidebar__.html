@@ -1,0 +1,12 @@
+<!-- Include for 2_main/0___main__.html -->
+<!-- for Sidebar -->
+
+
+<aside class="col-lg-4">
+
+    <!-- User & Author -->
+    {% if user.is_authenticated %}
+        {% include '2_main/____user__.html' %}
+    {% endif %}
+
+</aside>

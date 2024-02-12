@@ -15,7 +15,7 @@ class ArticleDetailView(CommonContextMixin, DetailView):
     model = Article
 
     # Cesta k šabloně pro zobrazení detailu článku
-    template_name = '4_article/0___article__.html'
+    template_name = '4_article/40__base__.html'
 
     # Název objektu v kontextu
     context_object_name = 'article'

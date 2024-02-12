@@ -1,0 +1,19 @@
+<!-- Include for 6_profile_update/3___user__.html -->
+<!-- for Profile Picture -->
+
+
+<div class="col-md-4 mb-4">
+
+    <!-- User Profile Picture -->
+    {% if user_form %}
+
+        {% include '__img/__user_profile_picture__.html' with atr="user_form" %}
+
+    <!-- Author Profile Picture -->
+    {% elif author_form %}
+
+        {% include '__img/__author_profile_picture__.html' with atr="author_form" %}
+
+    {% endif %}
+
+</div>

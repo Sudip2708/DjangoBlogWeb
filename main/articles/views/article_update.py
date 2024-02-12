@@ -32,7 +32,7 @@ class ArticleUpdateView(UpdateView, CommonContextMixin):
     model = Article
 
     # Cesta k šabloně pro aktualizaci článku
-    template_name = '5_create_article/0___create_article__.html'
+    template_name = '5_create_article/50__base__.html'
 
     # Použitý formulář pro aktualizaci článku
     form_class = ArticleForm

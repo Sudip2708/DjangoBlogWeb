@@ -1,0 +1,22 @@
+<!-- Include for 1_home/3___featured__.html -->
+<!-- for Article Author -->
+
+
+<!-- Author -->
+<li class="list-inline-item">
+
+    <!-- Link to the author -->
+    <a class="d-flex align-items-center flex-wrap text-reset"
+       href="!#">
+
+        <!-- Profile picture -->
+        <div class="avatar flex-shrink-0">
+            {% include '__img/__author_profile_picture__.html' with atr="article_thumbnail" %}
+        </div>
+
+        <!-- Name -->
+        <small>{{ article.author }}</small>
+
+    </a>
+
+</li>

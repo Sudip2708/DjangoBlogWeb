@@ -1,12 +1,12 @@
 <!-- Linking to the parent template -->
-{% extends '2_main/0___main__.html' %}
+{% extends '0_base/00__base__.html' %}
 
 {% load account %}
 {% load static %}
 {% load allauth account socialaccount %}
 
 <!-- Start of block for the parent template -->
-{% block inner_content %}
+{% block main_content %}
 
 <!-- Style for divider and hover -->
 <style>
@@ -30,137 +30,149 @@
 
 </style>
 
-<div class="row d-flex align-items-center justify-content-center h-100">
 
-  <!-- Picture -->
-  <div class="col-md-8 col-lg-7 col-xl-6">
-    <img src="{% static 'img/signup_picture.webp' %}" class="img-fluid" alt="signup_image">
+<!-- Base containers -->
+<section>
+  <div class="container">
+    <div class="row gy-5">
+
+
+      <div class="row d-flex align-items-center justify-content-center h-100">
+
+        <!-- Picture -->
+        <div class="col-md-8 col-lg-7 col-xl-6">
+          <img src="{% static 'img/signup_picture.webp' %}" class="img-fluid" alt="signup_image">
+        </div>
+
+        <!-- Signup form -->
+        <div class="col-md-7 col-lg-5 col-xl-5 offset-xl-1">
+          <form method="post" action="{% url 'account_signup' %}" class="pt-1">
+            {% csrf_token %}
+
+            <!-- Hidden field for redirect value -->
+            {% if redirect_field_value %}
+              <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}"/>
+            {% endif %}
+
+            <!-- Error messages for non input field -->
+            <p class="form-text error-text">
+              {{ form.non_field_errors.as_text }}
+            </p>
+
+            <!-- Email -->
+            <div class="mb-4">
+
+              <!-- Email label -->
+              <label for="id_email" class="form-label">
+                <small>Email address:</small>
+              </label>
+
+              <!-- Email input -->
+              <input type="email"
+                     class="form-control form-control-lg"
+                     id="id_email"
+                     aria-describedby="emailHelp"
+                     placeholder="example@gmail.com"
+                     name="email">
+
+              <!-- Error messages for email input -->
+              <p id="emailHelp" class="form-text error-text">
+                {{ form.email.errors.as_text }}
+              </p>
+
+            </div>
+
+            <!-- Password -->
+            <div class="mb-4">
+
+              <!-- Password label -->
+              <label for="id_password1" class="form-label">
+                <small>Password:</small>
+              </label>
+
+              <!-- Password input -->
+              <div class="input-group mb-3">
+
+                 <!-- Password input field -->
+                <input type="password"
+                       class="form-control form-control-lg"
+                       id="id_password1"
+                       aria-describedby="passwordHelp"
+                       placeholder="At least 8 characters or more"
+                       name="password1">
+
+                <!-- Show password button -->
+                <button class="btn btn-primary btn-myhover" type="button" id="togglePassword">
+                  <i class="fas fa-eye" id="eye-icon"></i>
+                </button>
+              </div>
+
+              <!-- Error messages for password input -->
+              <p id="passwordHelp" class="form-text error-text">
+                {{ form.password1.errors.as_text }}
+              </p>
+
+            </div>
+
+            <!-- Confirm Password -->
+            <div class="mb-4">
+
+              <!-- Confirm Password label -->
+              <label for="id_password2" class="form-label">
+                <small>Confirm Password:</small>
+              </label>
+
+              <!-- Confirm Password input -->
+              <div class="input-group mb-3">
+
+                <!-- Confirm Password input field -->
+                <input type="password"
+                       class="form-control form-control-lg"
+                       id="id_password2"
+                       aria-describedby="password2Help"
+                       placeholder="Confirm your password"
+                       name="password2">
+
+                <!-- Show password button -->
+                <button class="btn btn-primary btn-myhover" type="button" id="togglePassword">
+                  <i class="fas fa-eye " id="eye-icon"></i>
+                </button>
+
+              </div>
+
+              <!-- Error messages for confirm password input -->
+              <p id="password2Help" class="form-text error-text">
+                {{ form.password2.errors.as_text }}
+              </p>
+            </div>
+
+            <!-- Submit -->
+            <div class="row pt-4">
+              <div class="col">
+                <div class="d-grid">
+                  <button class="btn btn-primary btn-lg btn-myhover" type="submit" id="submitButton">
+                    Sign Up
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Help links -->
+            <div class="d-flex justify-content-around align-items-center mt-2">
+              <a href="{% url 'account_login' %}"><small>Already have an account?</small></a>
+              <a href="{% url 'home' %}"><small>Continue without sign in?</small></a>
+            </div>
+
+          </form>
+
+        </div>
+      </div>
+
+
+
+    </div>
   </div>
-
-  <!-- Signup form -->
-  <div class="col-md-7 col-lg-5 col-xl-5 offset-xl-1">
-    <form method="post" action="{% url 'account_signup' %}" class="pt-1">
-      {% csrf_token %}
-
-      <!-- Hidden field for redirect value -->
-      {% if redirect_field_value %}
-        <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}"/>
-      {% endif %}
-
-      <!-- Error messages for non input field -->
-      <p class="form-text error-text">
-        {{ form.non_field_errors.as_text }}
-      </p>
-
-      <!-- Email -->
-      <div class="mb-4">
-
-        <!-- Email label -->
-        <label for="id_email" class="form-label">
-          <small>Email address:</small>
-        </label>
-
-        <!-- Email input -->
-        <input type="email"
-               class="form-control form-control-lg"
-               id="id_email"
-               aria-describedby="emailHelp"
-               placeholder="example@gmail.com"
-               name="email">
-
-        <!-- Error messages for email input -->
-        <p id="emailHelp" class="form-text error-text">
-          {{ form.email.errors.as_text }}
-        </p>
-
-      </div>
-
-      <!-- Password -->
-      <div class="mb-4">
-
-        <!-- Password label -->
-        <label for="id_password1" class="form-label">
-          <small>Password:</small>
-        </label>
-
-        <!-- Password input -->
-        <div class="input-group mb-3">
-
-           <!-- Password input field -->
-          <input type="password"
-                 class="form-control form-control-lg"
-                 id="id_password1"
-                 aria-describedby="passwordHelp"
-                 placeholder="At least 8 characters or more"
-                 name="password1">
-
-          <!-- Show password button -->
-          <button class="btn btn-primary btn-myhover" type="button" id="togglePassword">
-            <i class="fas fa-eye" id="eye-icon"></i>
-          </button>
-        </div>
-
-        <!-- Error messages for password input -->
-        <p id="passwordHelp" class="form-text error-text">
-          {{ form.password1.errors.as_text }}
-        </p>
-
-      </div>
-
-      <!-- Confirm Password -->
-      <div class="mb-4">
-
-        <!-- Confirm Password label -->
-        <label for="id_password2" class="form-label">
-          <small>Confirm Password:</small>
-        </label>
-
-        <!-- Confirm Password input -->
-        <div class="input-group mb-3">
-
-          <!-- Confirm Password input field -->
-          <input type="password"
-                 class="form-control form-control-lg"
-                 id="id_password2"
-                 aria-describedby="password2Help"
-                 placeholder="Confirm your password"
-                 name="password2">
-
-          <!-- Show password button -->
-          <button class="btn btn-primary btn-myhover" type="button" id="togglePassword">
-            <i class="fas fa-eye " id="eye-icon"></i>
-          </button>
-
-        </div>
-
-        <!-- Error messages for confirm password input -->
-        <p id="password2Help" class="form-text error-text">
-          {{ form.password2.errors.as_text }}
-        </p>
-      </div>
-
-      <!-- Submit -->
-      <div class="row pt-4">
-        <div class="col">
-          <div class="d-grid">
-            <button class="btn btn-primary btn-lg btn-myhover" type="submit" id="submitButton">
-              Sign Up
-            </button>
-          </div>
-        </div>
-      </div>
-
-      <!-- Help links -->
-      <div class="d-flex justify-content-around align-items-center mt-2">
-        <a href="{% url 'account_login' %}"><small>Already have an account?</small></a>
-        <a href="{% url 'home' %}"><small>Continue without sign in?</small></a>
-      </div>
-
-    </form>
-
-  </div>
-</div>
-
+</section>
 
 <!-- Script for show password button  -->
 <script>
@@ -183,4 +195,4 @@
 </script>
 
 <!-- End of block for the parent template -->
-{% endblock inner_content %}
+{% endblock main_content %}

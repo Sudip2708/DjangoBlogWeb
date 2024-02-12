@@ -1,0 +1,52 @@
+<!-- Include for 3_articles/0___articles__.html -->
+<!-- for Articles Cycle -->
+
+<!-- Import static files -->
+{% load static %}
+
+
+{% for article in page_obj %}
+    <div class="col-xl-6 mb-3">
+
+        <!-- Main Picture -->
+        <a class="mb-3" href="article.html">
+            {% include '__img/__article_main_picture__.html' with atr="preview" %}
+        </a>
+
+        <!-- Time and category -->
+        <div class="d-flex align-items-center justify-content-between">
+
+            <!-- Time -->
+            {% include '__article/__date_created__.html' with atr="date" %}
+
+            <!-- Category -->
+            {% include '__article/__category__.html' %}
+
+        </div>
+
+        <!-- Tags -->
+        {% include '__article/__tags__.html' with atr="articles" %}
+
+        <!-- Title -->
+        {% include '__article/__title__.html' with atr="articles" %}
+
+        <!-- Overview -->
+        {% include '__article/__overview__.html' with atr="articles" %}
+
+        <!-- Article info -->
+        <ul class="list-inline list-separated text-gray-500 mb-0">
+
+            <!-- Link to the author -->
+            {% include '__article/__author__.html' %}
+
+            <!-- Created Ago -->
+            {% include '__article/__date_created__.html' with atr="ago" %}
+
+            <!-- Comment Count -->
+            {% include '__article/__comment_count__.html' %}
+
+        </ul>
+
+    </div>
+
+{% endfor %}

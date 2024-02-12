@@ -1,0 +1,41 @@
+<!-- Include for 2_main/0___main__.html -->
+<!-- for Author Sidebar -->
+
+
+<!-- Separate Line -->
+<div class="pt-3"><hr class="border-top " style="color: grey;"></div>
+
+<!-- Main container -->
+<div class="d-flex align-items-center">
+
+    <!-- Title -->
+    <div class="w-25 author-section align-self-start">Author</div>
+
+    <!-- Author section -->
+    <div class="w-75">
+
+        <!-- Author -->
+        <div class="pt-2">
+
+            <!-- Link to the author -->
+            <a class="d-flex align-items-center flex-wrap text-reset"
+               href="{% url 'article-from-author-list' author_slug=author.slug %}">
+
+              <!-- Profile picture -->
+              <div class="avatar flex-shrink-0">
+                {% include '__img/__author_profile_picture__.html' with atr="author_thumbnail" %}
+              </div>
+
+              <!-- Name -->
+              {{ author.author }}
+
+            </a>
+
+        </div>
+
+        <!-- Drop-down menu -->
+        {% include '2_main/_sidebars/_user/__author_dropdown_menu__.html' %}
+
+    </div>
+
+</div>

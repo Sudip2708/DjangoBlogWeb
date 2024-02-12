@@ -1,0 +1,34 @@
+<!-- Linking to the parent template -->
+{% extends '2_main/20__base__.html' %}
+
+<!-- Start of block for the parent template -->
+{% block inner_content %}
+
+
+    <!-- Article -->
+    {% include '4_article/41__article__.html' %}
+
+    <!-- Article tags -->
+    {% include '__article/__tags__.html' with atr="article" %}
+
+
+    <!-- Article Previous and Next -->
+    <div class="articles-nav d-flex justify-content-between align-items-stretch flex-column flex-md-row mb-5">
+
+        <!-- Previous -->
+        {% include '__article/__previous__.html' %}
+
+        <!-- Next -->
+        {% include '__article/__next__.html' %}
+
+    </div>
+
+    <!-- Display Comments -->
+    {% include '4_article/42__display_comments__.html' %}
+
+    <!-- Add Comments -->
+    {% include '4_article/43__add_comment__.html' %}
+
+
+<!-- End of block for the parent template -->
+{% endblock inner_content %}

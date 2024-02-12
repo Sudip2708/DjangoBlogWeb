@@ -1,0 +1,36 @@
+<!-- Include for 1_home/3___featured__.html -->
+<!-- for Overview -->
+
+
+<!-- Overview for 1_home/11__featured_articles__.html -->
+{% if atr == "featured" %}
+
+    <p class="text-sm">
+        {{ article.overview }}
+    </p>
+
+
+<!-- Overview for 1_home/12__latest_articles__.html -->
+{% elif atr == "latest" %}
+
+    <p class="text-muted text-sm">
+        {{ article.overview }}
+    </p>
+
+
+<!-- Overview for 3_articles/31__articles__.html -->
+{% elif atr == "articles" %}
+
+    <p class="text-muted text-sm">
+        {{ article.overview }}
+    </p>
+
+
+<!-- Overview for 4_article/41__article__.html -->
+{% elif atr == "article" %}
+
+    <div class="article-body custom-overview">
+        {{ article.overview | safe }}
+    </div>
+
+{% endif %}

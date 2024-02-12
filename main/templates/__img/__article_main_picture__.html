@@ -7,14 +7,14 @@
 
 
     <!-- For Preview -->
-    {% if spec == "preview" %}
+    {% if atr == "preview" %}
         <img alt="Article Main Picture Preview"
              src="{{ article.main_picture_preview.url }}?{% now 'U' %}"
              class="img-fluid"/>
 
 
     <!-- For Article -->
-    {% elif spec == "for_article" %}
+    {% elif atr == "for_article" %}
         <img alt="Article Main Picture"
              src="{{ article.main_picture_for_article.url }}?{% now 'U' %}"
              class="img-fluid"/>

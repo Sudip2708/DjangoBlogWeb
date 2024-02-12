@@ -1,0 +1,31 @@
+<!-- Linking to the parent template -->
+{% extends '0_base/00__base__.html' %}
+
+<!-- Start of block for the parent template -->
+{% block main_content %}
+
+
+    <!-- Hero Section-->
+    {% include '1_home/11__hero__.html' %}
+
+    <!-- Intro Section-->
+    {% include '1_home/12__intro__.html' %}
+
+    <!-- Featured articles -->
+    {% include '1_home/13__featured_articles__.html' %}
+
+    <!-- Divider Section-->
+    {% include '1_home/14__divider__.html' %}
+
+    <!-- Latest articles -->
+    {% include '1_home/15__latest_articles__.html' %}
+
+    <!-- Newsletter Section -->
+    {% include '1_home/16__newsletter__.html' %}
+
+    <!-- Gallery Section-->
+    {% include '1_home/17__gallery__.html' %}
+
+
+<!-- End of block for the parent template -->
+{% endblock main_content %}

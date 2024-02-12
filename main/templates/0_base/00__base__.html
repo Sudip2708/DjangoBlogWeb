@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+
+    <!-- Head -->
+    {% include '0_base/01__head__.html' %}
+
+    <body>
+
+        <!-- Header -->
+        {% include '0_base/02__header__.html' %}
+
+        <!-- Flash messages -->
+        {% include '0_base/03__messages__.html' %}
+
+        <!-- Main content -->
+        {% block main_content %}
+        {% endblock main_content %}
+
+        <!-- Footer -->
+        {% include '0_base/04__footer__.html' %}
+
+        <!-- Scripts -->
+        {% include '0_base/05__body_scripts__.html' %}
+
+    </body>
+
+</html>

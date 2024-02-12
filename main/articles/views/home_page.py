@@ -29,7 +29,7 @@ class HomePageView(View):
             'most_viewed': most_viewed,
 
         }
-        return render(request, '1_home/0___home__.html', context)
+        return render(request, '1_home/10__base__.html', context)
 
     def post(self, request, *args, **kwargs):
         # # Zpracování odeslaného formuláře pro přihlášení k odběru e-mailů

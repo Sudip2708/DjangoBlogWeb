@@ -1,0 +1,23 @@
+<!-- Include for 3_articles/0___articles__.html -->
+<!-- for Articles Pagination -->
+
+
+<!-- Pagination -->
+<nav aria-label="Page navigation example">
+    <ul class="pagination pagination-template d-flex justify-content-center">
+
+        <!-- If previous -->
+        {% if page_obj.has_previous %}
+            {% include '3_articles/_pagination/__previous__.html' %}
+        {% endif %}
+
+        <!-- Display of current page number -->
+        {% include '3_articles/_pagination/__current__.html' %}
+
+        <!-- If next -->
+        {% if page_obj.has_next %}
+            {% include '3_articles/_pagination/__next__.html' %}
+        {% endif %}
+
+    </ul>
+</nav>

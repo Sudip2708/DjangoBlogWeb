@@ -25,7 +25,7 @@ class ArticleCreateView(CreateView, CommonContextMixin):
     model = Article
 
     # Cesta k šabloně pro vytvoření článku
-    template_name = '5_create_article/0___create_article__.html'
+    template_name = '5_create_article/50__base__.html'
 
     # Použitý formulář pro vytvoření článku
     form_class = ArticleForm

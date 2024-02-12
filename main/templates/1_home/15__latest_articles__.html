@@ -1,0 +1,60 @@
+<!-- Include for 1_home/0___home__.html -->
+<!-- for Latest articles -->
+
+<!-- Import static files -->
+{% load static %}
+
+
+<!-- Latest articles -->
+<section>
+    <div class="container">
+
+        <!-- Section Title and Description -->
+        <header class="mb-5">
+
+            <!-- Title -->
+            <h2> Latest from the blog </h2>
+
+            <!-- Description -->
+            <p class="text-lg fw-light">
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+            </p>
+
+        </header>
+
+        <!-- Articles -->
+        <div class="row gy-4">
+
+            <!-- Articles cycle -->
+            {% for article in latest %}
+                <div class="col-md-4">
+
+                    <!-- Main Picture -->
+                    <a class="mb-3" href="article.html">
+                        {% include '__img/__article_main_picture__.html' with atr="preview" %}
+                    </a>
+
+                    <!-- Created and Category -->
+                    <div class="d-flex align-items-center justify-content-between mb-2">
+
+                        <!-- Created -->
+                        {% include '__article/__date_created__.html' with atr="date" %}
+
+                        <!-- Category -->
+                        {% include '__article/__category__.html' %}
+
+                    </div>
+
+                    <!-- Title -->
+                    {% include '__article/__title__.html' with atr="latest" %}
+
+                    <!-- Overview -->
+                    {% include '__article/__overview__.html' with atr="latest" %}
+
+                </div>
+            {% endfor %}
+
+        </div>
+
+    </div>
+</section>

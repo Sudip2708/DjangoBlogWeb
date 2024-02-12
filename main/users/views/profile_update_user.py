@@ -61,7 +61,7 @@ def profile_update_user(request):
     }
 
     # Vytvoření stránky
-    return render(request, '6_profile_update/3___user__.html', content)
+    return render(request, '6_profile_update/60__base__.html', content)
 
 
 

@@ -1,0 +1,41 @@
+<!-- Include for 4_article/0___article__.html -->
+<!-- for Article Content -->
+
+
+<!-- Main Picture -->
+<div class="w-100 mb-4">
+   {% include '__img/__article_main_picture__.html' with atr="for_article" %}
+</div>
+
+
+<!-- Category -->
+{% include '__article/__category__.html' %}
+
+<!-- Title -->
+{% include '__article/__title__.html' with atr="article" %}
+
+
+<!-- Info -->
+<ul class="list-inline list-separated text-gray-500 mb-4">
+
+    <!-- Link to the author -->
+    {% include '__article/__author__.html' %}
+
+    <!-- Created Ago -->
+    {% include '__article/__date_created__.html' with atr="ago" %}
+
+    <!-- Comment Count -->
+    {% include '__article/__comment_count__.html' %}
+
+    <!-- Apdate of the article -->
+    {% include '__article/__update_article__.html' %}
+
+</ul>
+
+<!-- Article overview -->
+{% include '__article/__overview__.html' with atr="article" %}
+
+<!-- Article content -->
+{% if request.user.is_authenticated %}
+    {% include '__article/__content__.html' %}
+{% endif %}
