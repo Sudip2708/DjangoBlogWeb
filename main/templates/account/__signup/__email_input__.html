@@ -1,0 +1,26 @@
+<!-- Include for account/signup.html -->
+<!-- for Email Input -->
+
+
+<!-- Email -->
+<div class="mb-4">
+
+    <!-- Email label -->
+    <label for="id_email" class="form-label">
+        <small>Email address:</small>
+    </label>
+
+    <!-- Email input -->
+    <input type="email"
+         class="form-control"
+         id="id_email"
+         aria-describedby="emailHelp"
+         placeholder="example@gmail.com"
+         name="email">
+
+    <!-- Error messages for email input -->
+    <p id="emailHelp" class="form-text error-text">
+        {{ form.email.errors.as_text }}
+    </p>
+
+</div>

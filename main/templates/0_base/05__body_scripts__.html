@@ -1,4 +1,4 @@
-<!-- Include for 0_base/0___base__.html -->
+<!-- Include for 0_base/00__base__.html -->
 <!-- for Page Scripts -->
 
 <!-- Import static files -->
@@ -180,3 +180,46 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   }
 </script>
+
+
+<!-- Script for show password button -->
+<!-- Skript pro tlačítko zobrazení hesla -->
+
+<script>
+// Začátek skriptu JavaScriptu
+
+  // Funkce pro získání vstupního pole pro heslo a ikony oka
+  function togglePassword(inputId, iconId) {
+    const passwordInput = document.getElementById(inputId);
+    const eyeIcon = document.getElementById(iconId);
+
+    // Přidání posluchače události na tlačítko pro přepínání zobrazení hesla
+    eyeIcon.addEventListener('click', function() {
+      // Podmínka kontrolující aktuální typ vstupního pole pro heslo
+      if (passwordInput.type === 'password') {
+        // Pokud je aktuální typ pole 'password', změňte ho na 'text'
+        passwordInput.type = 'text';
+
+        // Přidejte třídu 'fa-eye-slash' a odeberte třídu 'fa-eye' z ikony
+        eyeIcon.classList.remove('fa-eye');
+        eyeIcon.classList.add('fa-eye-slash');
+      } else {
+        // Pokud je aktuální typ pole jiný než 'password', změňte ho na 'password'
+        passwordInput.type = 'password';
+
+        // Přidejte třídu 'fa-eye' a odeberte třídu 'fa-eye-slash' z ikony
+        eyeIcon.classList.remove('fa-eye-slash');
+        eyeIcon.classList.add('fa-eye');
+      }
+    });
+  }
+
+  // Zavolání funkce pro každé vstupní pole pro heslo
+  togglePassword('id_password', 'eye-icon');
+  togglePassword('id_password1', 'eye-icon');
+  togglePassword('id_password2', 'eye-icon');
+
+</script>
+
+
+

@@ -1,35 +1,37 @@
 <!-- Linking to the parent template -->
 {% extends 'account/login.html' %}
 
-{% load allauth %}
+<!-- Import Allauth account -->
+{% load account %}
+{% load allauth account socialaccount %}
 
 <!-- Start of block for the parent template -->
 {% block social_account %}
 
 
-<!-- Form for confirm redirection -->
-{% element form method="post" no_visible_fields=True %}
-  {% slot actions %}
-    {% csrf_token %}
+    <!-- Form for confirm redirection -->
+    {% element form method="post" no_visible_fields=True %}
+        {% slot actions %}
+            {% csrf_token %}
 
-    <!-- Hidden button to confirm redirection -->
-    <button type="submit" id="continueButton" style="display: none;"></button>
+            <!-- Hidden button to confirm redirection -->
+            <button type="submit" id="continueButton" style="display: none;"></button>
 
-  {% endslot %}
-{% endelement %}
+        {% endslot %}
+    {% endelement %}
 
-<!-- Script to confirm redirection -->
-<script>
+    <!-- Script to confirm redirection -->
+    <script>
 
-  document.addEventListener("DOMContentLoaded", function() {
-    var continueButton = document.getElementById("continueButton");
+        document.addEventListener("DOMContentLoaded", function() {
+            var continueButton = document.getElementById("continueButton");
 
-    if (continueButton) {
-      continueButton.click();
-    }
-  });
+            if (continueButton) {
+                continueButton.click();
+            }
+        });
 
-</script>
+    </script>
 
 
 <!-- End of block for the parent template -->

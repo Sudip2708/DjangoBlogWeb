@@ -1,198 +1,42 @@
 <!-- Linking to the parent template -->
-{% extends '0_base/00__base__.html' %}
-
-{% load account %}
-{% load static %}
-{% load allauth account socialaccount %}
+{% extends 'account/__shared/__base__.html' %}
 
 <!-- Start of block for the parent template -->
-{% block main_content %}
-
-<!-- Style for divider and hover -->
-<style>
-
-  .divider:after, .divider:before {
-    content: "";
-    flex: 1;
-    height: 1px;
-    background: #eee;
-  }
-    .btn-myhover {
-    background-color: #156cf1;
-    color: white;
-    transition: background-color 0.3s ease; /* Přidává plynulý efekt při změně barvy */
-  }
-
-  .btn-myhover:hover {
-    background-color: #3f3d55; /* Změna barvy při najetí myší */
-    color: white;
-  }
-
-</style>
+{% block inner_content %}
 
 
-<!-- Base containers -->
-<section>
-  <div class="container">
-    <div class="row gy-5">
+    <!-- Picture -->
+    {% include 'account/__shared/__picture__.html' with atr="signup" %}
 
-
-      <div class="row d-flex align-items-center justify-content-center h-100">
-
-        <!-- Picture -->
-        <div class="col-md-8 col-lg-7 col-xl-6">
-          <img src="{% static 'img/signup_picture.webp' %}" class="img-fluid" alt="signup_image">
-        </div>
-
-        <!-- Signup form -->
-        <div class="col-md-7 col-lg-5 col-xl-5 offset-xl-1">
-          <form method="post" action="{% url 'account_signup' %}" class="pt-1">
+    <!-- Signup form -->
+    <div class="col-md-7 col-lg-5 col-xl-5 offset-xl-1">
+        <form method="post" action="{% url 'account_signup' %}" class="pt-1">
             {% csrf_token %}
 
-            <!-- Hidden field for redirect value -->
-            {% if redirect_field_value %}
-              <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}"/>
-            {% endif %}
+            <!-- Hidden field for Redirect value -->
+            {% include 'account/__shared/__redirect_value__.html' %}
 
             <!-- Error messages for non input field -->
-            <p class="form-text error-text">
-              {{ form.non_field_errors.as_text }}
-            </p>
+            {% include 'account/__shared/__error_messages__.html' %}
 
             <!-- Email -->
-            <div class="mb-4">
-
-              <!-- Email label -->
-              <label for="id_email" class="form-label">
-                <small>Email address:</small>
-              </label>
-
-              <!-- Email input -->
-              <input type="email"
-                     class="form-control form-control-lg"
-                     id="id_email"
-                     aria-describedby="emailHelp"
-                     placeholder="example@gmail.com"
-                     name="email">
-
-              <!-- Error messages for email input -->
-              <p id="emailHelp" class="form-text error-text">
-                {{ form.email.errors.as_text }}
-              </p>
-
-            </div>
+            {% include 'account/__signup/__email_input__.html' %}
 
             <!-- Password -->
-            <div class="mb-4">
-
-              <!-- Password label -->
-              <label for="id_password1" class="form-label">
-                <small>Password:</small>
-              </label>
-
-              <!-- Password input -->
-              <div class="input-group mb-3">
-
-                 <!-- Password input field -->
-                <input type="password"
-                       class="form-control form-control-lg"
-                       id="id_password1"
-                       aria-describedby="passwordHelp"
-                       placeholder="At least 8 characters or more"
-                       name="password1">
-
-                <!-- Show password button -->
-                <button class="btn btn-primary btn-myhover" type="button" id="togglePassword">
-                  <i class="fas fa-eye" id="eye-icon"></i>
-                </button>
-              </div>
-
-              <!-- Error messages for password input -->
-              <p id="passwordHelp" class="form-text error-text">
-                {{ form.password1.errors.as_text }}
-              </p>
-
-            </div>
+            {% include 'account/__signup/__password_input1__.html' %}
 
             <!-- Confirm Password -->
-            <div class="mb-4">
-
-              <!-- Confirm Password label -->
-              <label for="id_password2" class="form-label">
-                <small>Confirm Password:</small>
-              </label>
-
-              <!-- Confirm Password input -->
-              <div class="input-group mb-3">
-
-                <!-- Confirm Password input field -->
-                <input type="password"
-                       class="form-control form-control-lg"
-                       id="id_password2"
-                       aria-describedby="password2Help"
-                       placeholder="Confirm your password"
-                       name="password2">
-
-                <!-- Show password button -->
-                <button class="btn btn-primary btn-myhover" type="button" id="togglePassword">
-                  <i class="fas fa-eye " id="eye-icon"></i>
-                </button>
-
-              </div>
-
-              <!-- Error messages for confirm password input -->
-              <p id="password2Help" class="form-text error-text">
-                {{ form.password2.errors.as_text }}
-              </p>
-            </div>
+            {% include 'account/__signup/__password_input2__.html' %}
 
             <!-- Submit -->
-            <div class="row pt-4">
-              <div class="col">
-                <div class="d-grid">
-                  <button class="btn btn-primary btn-lg btn-myhover" type="submit" id="submitButton">
-                    Sign Up
-                  </button>
-                </div>
-              </div>
-            </div>
+            {% include 'account/__signup/__submit_button__.html' %}
 
             <!-- Help links -->
-            <div class="d-flex justify-content-around align-items-center mt-2">
-              <a href="{% url 'account_login' %}"><small>Already have an account?</small></a>
-              <a href="{% url 'home' %}"><small>Continue without sign in?</small></a>
-            </div>
+            {% include 'account/__signup/__help_links__.html' %}
 
-          </form>
-
-        </div>
-      </div>
-
-
+        </form>
 
     </div>
-  </div>
-</section>
 
-<!-- Script for show password button  -->
-<script>
 
-  const passwordInput = document.getElementById('id_password');
-  const eyeIcon = document.getElementById('eye-icon');
-
-  document.getElementById('togglePassword').addEventListener('click', function() {
-    if (passwordInput.type === 'password') {
-      passwordInput.type = 'text';
-      eyeIcon.classList.remove('fa-eye');
-      eyeIcon.classList.add('fa-eye-slash');
-    } else {
-      passwordInput.type = 'password';
-      eyeIcon.classList.remove('fa-eye-slash');
-      eyeIcon.classList.add('fa-eye');
-    }
-  });
-
-</script>
-
-<!-- End of block for the parent template -->
-{% endblock main_content %}
+{% endblock inner_content %}
