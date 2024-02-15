@@ -2,6 +2,22 @@
 <!-- for User Sidebar -->
 
 
+<style>
+    .drop-down-title {
+        margin-left: 1rem;
+    }
+    .drop-down-text {
+        color: black;
+        margin-top: 0.8rem;
+        margin-left: 1rem;
+    }
+    .btn.btn-link:focus {
+        background-color: white;
+        outline: 4px solid white;
+    }
+</style>
+
+
 <!-- User overview -->
 <div class="card mb-5">
     <div class="card-body">
@@ -10,7 +26,7 @@
         <div class="d-flex align-items-center">
 
             <!-- Profile picture -->
-            <div class="w-25">
+            <div class="w-25 align-self-start">
                 {% include '__img/__user_profile_picture__.html' with atr="user_thumbnail" %}
             </div>
 

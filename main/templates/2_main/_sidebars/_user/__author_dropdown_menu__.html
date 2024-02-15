@@ -1,34 +1,35 @@
-<!-- Include for 2_main/_sidebars/_user/__author__.html -->
+<!-- Include for 2_main/____user__.html -->
 <!-- for Drop-down menu -->
 
 
 <!-- Drop-down menu -->
-<div class="dropdown px-1 pt-2">
+<div class="px-1">
 
-    <!-- Title -->
-    <button class=" btn btn-link dropdown-toggle dropdown-font"
-            type="button" id="dropdownMenuButton2"
-            data-bs-toggle="dropdown"
-            aria-expanded="false">
-        Author options
+    <!-- Button -->
+    <button class="btn btn-link d-block "
+            data-bs-toggle="collapse"
+            data-bs-target="#authorOptionsCollapse"
+            aria-expanded="false"
+            aria-controls="authorOptionsCollapse">
+        Author Menu
     </button>
 
-    <!-- Options -->
-    <ul class="dropdown-menu"
-        aria-labelledby="dropdownMenuButton2">
+    <!-- Drop-down items -->
+    <div class="collapse " id="authorOptionsCollapse">
 
-        <li><a class="dropdown-item dropdown-font" href="#">
+        <!-- Create an Article -->
+        <a class="d-block drop-down-text"
+           href="{% url 'article-create'  current_tab='overview'  %}"><button class="btn btn-secondary">
             Create an Article
-        </a></li>
+        </button></a>
 
-        <li><a class="dropdown-item dropdown-font" href="#">
+        <!-- My Articles -->
+        <a class="d-block drop-down-text"
+           href="#"><button class="btn btn-secondary">
             My Articles
-        </a></li>
+        </button></a>
 
-        <li><a class="dropdown-item dropdown-font" href="#">
-            Manage my Account
-        </a></li>
+    </div>
 
-    </ul>
+
 </div>
-

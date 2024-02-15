@@ -1,0 +1,41 @@
+<div class="btn-group d-lg-none">
+      <button type="button"
+              class="btn btn-link dropdown-toggle"
+              data-bs-toggle="dropdown"
+              aria-expanded="false">
+            {% if user.is_authenticated %}
+                  {% include '__img/__user_profile_picture__.html' with atr="user_navigation" %}
+            {% else %}
+                  <span></span>
+                  <span></span>
+                  <span></span>
+            {% endif %}
+      </button>
+      <ul class="dropdown-menu dropdown-menu-end">
+
+            <!-- Options -->
+            {% if not user.linked_author_id %}
+
+                  {% if user.is_authenticated %}
+
+                        <!-- Settings for User without Author -->
+                        {% include '0_base/_header/_dropdown/__settings_for_user__.html' %}
+
+
+                  <!-- Options -->
+                  {% else %}
+
+                        <!-- Settings for Unlog Users -->
+                        {% include '0_base/_header/_dropdown/__settings_for_non_user__.html' %}
+
+                  {% endif %}
+
+            <!-- Options -->
+            {% else %}
+
+                  <!-- Settings for Users with Authors Account -->
+                  {% include '0_base/_header/_dropdown/__settings_for_author__.html' %}
+
+            {% endif %}
+      </ul>
+</div>

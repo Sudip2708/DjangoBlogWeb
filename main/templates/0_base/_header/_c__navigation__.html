@@ -1,0 +1,18 @@
+<!-- Include for 0_base/02__header__.html -->
+<!-- for Navigation for all (Unlog & Log) Users -->
+
+
+<!-- Home Page -->
+{% include '0_base/_header/_navigation/__homepage__.html' %}
+
+<!-- Articles -->
+{% include '0_base/_header/_navigation/__view_all_articles__.html' %}
+
+
+<!-- If User is not login -->
+{% if not user.is_authenticated %}
+
+    <!-- Log In -->
+    {% include '0_base/_header/_navigation/__login__.html' %}
+
+{% endif %}

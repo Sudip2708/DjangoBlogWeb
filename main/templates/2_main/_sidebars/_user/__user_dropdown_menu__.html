@@ -3,41 +3,53 @@
 
 
 <!-- Drop-down menu -->
-<div class="dropdown px-1">
+<div class="px-1">
 
-    <!-- Title -->
-    <button class="btn btn-link dropdown-toggle dropdown-font"
-            type="button"
-            id="dropdownMenuButton1"
-            data-bs-toggle="dropdown"
-            aria-expanded="false">
-        User options
+    <!-- Button -->
+    <button class="btn btn-link d-block "
+            data-bs-toggle="collapse"
+            data-bs-target="#userOptionsCollapse"
+            aria-expanded="false"
+            aria-controls="userOptionsCollapse">
+        User Menu
     </button>
 
-    <!-- Options -->
-    <ul class="dropdown-menu"
-        aria-labelledby="dropdownMenuButton1">
+    <!-- Drop-down items -->
+    <div class="collapse " id="userOptionsCollapse">
 
+        <!-- Create an Article -->
         {% if not author %}
-        <li><a class="dropdown-item dropdown-font" href="#">
-            Create an Article
-        </a></li>
+            <a class="d-block drop-down-text"
+               href="{% url 'article-create'  current_tab='overview'  %}"><button class="btn btn-secondary">
+                Create an Article
+            </button></a>
         {% endif %}
 
-        <li><a class="dropdown-item dropdown-font" href="#">
+        <!-- Favorite Authors -->
+        <a class="d-block drop-down-text"
+           href="#"><button class="btn btn-secondary">
             Favorite Authors
-        </a></li>
+        </button></a>
 
-        <li><a class="dropdown-item dropdown-font" href="#">
+        <!-- Manage my Account -->
+        <a class="d-block drop-down-text"
+           href="{% url 'profile_update_user' %}"><button class="btn btn-secondary">
+            {% if not author %}
             Manage my Account
-        </a></li>
+            {% else %}
+            Manage my Accounts
+            {% endif %}
+        </button></a>
 
-        <li><hr class="dropdown-divider"></li>
+        <!-- Divider -->
+        <hr class="dropdown-divider">
 
-        <li><a class="dropdown-item dropdown-font" href="#">
+        <!-- Log out -->
+        <a class="d-block drop-down-text"
+           href="{% url 'account_logout' %}"><button class="btn btn-secondary">
             Log out
-        </a></li>
+        </button></a>
 
-    </ul>
+    </div>
+
 </div>
-

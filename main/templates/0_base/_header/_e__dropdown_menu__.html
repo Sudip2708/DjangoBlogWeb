@@ -1,0 +1,39 @@
+<!-- Accounts Drop Down Menu -->
+<!-- If not User is not login -->
+
+
+<!-- If User is login -->
+{% if user.is_authenticated %}
+
+    <li class="nav-item">
+        <div class="btn-group dropstart px-1 pt-2 d-block d-xl-none">
+
+
+            <!-- Drop Down Button -->
+            {% include '0_base/_header/_dropdown/__button__.html' %}
+
+            <!-- Options -->
+            <ul class="dropdown-menu"
+                aria-labelledby="dropdownMenuButton1">
+
+                <!-- Options -->
+                {% if user.linked_author_id %}
+
+                    <!-- Settings for Users with Authors Account -->
+                    {% include '0_base/_header/_dropdown/__settings_for_author__.html' %}
+
+
+                <!-- Options -->
+                {% else %}
+
+                    <!-- Settings for User without Author -->
+                    {% include '0_base/_header/_dropdown/__settings_for_user__.html' %}
+
+                {% endif %}
+
+            </ul>
+
+        </div>
+    </li>
+
+{% endif %}

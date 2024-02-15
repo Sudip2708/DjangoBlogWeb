@@ -1,14 +1,18 @@
+/* Drop Down menu pro User Sidebar */
+
+
+
+
 /**********************************************************************************************************************/
 /* Odkládací plocha na nepoužívané tagy */
 
-/* Test, zda CSS funguje */
-_body {
-    background-color: yellow;
-}
-
 /* Barvy */
 .bg-yellow {
-    background-color: yellow;
+    background-color: grey;
+}
+
+.bg-blue {
+    background-color: blue;
 }
 
 /* Pozice */
@@ -95,9 +99,10 @@ label[for="usercomment"] {
 }
 
 /* Nastavení skrytí bočního panelu při šířce menší než 960px */
-@media (max-width: 960px) {
+@media (max-width: 1200px) {
     aside {
         display: none;
+    }
 }
 
 /* Seskupení odesílacích tlačítek pro malá zařízení */
@@ -117,3 +122,4 @@ label[for="usercomment"] {
 }
 
 ************************************************************************************************************/
+

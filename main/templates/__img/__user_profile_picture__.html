@@ -37,4 +37,16 @@
     {% endif %}
 
 
+
+
+<!-- For Navigation Thumbnail -->
+{% elif atr == "user_navigation" %}
+    <img alt="User Profile Picture"
+         src="{{ user.profile_picture_thumbnail.url }}?{% now 'U' %}"
+         class="img-fluid rounded-circle flex-shrink-0"
+         width="40"/>
+
+
+
+
 {% endif %}
