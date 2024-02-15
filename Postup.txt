@@ -569,3 +569,15 @@ Dokončení úpravy vzhledu postranního panelu pro uživatele
 • Úprava responzivního chování hlavního navigačního tlačítka.
 • Úprava dropdown menu pro postraní panel uživatele
 ###
+Vytvoření stránky pro mé články
+• articles/views/ > vytvořit soubor my_articles.py a zapsat kod pro vygenerování obsahu pro články s ohledem na záložky stavu statusu
+• tempates/31__page_title__.html > Připsat kod pro zobrazení pro my articles s navigací pro záložky dle kategorií
+• main/urls.py > zapsat kód pro ardesu generovanou na základě my-articles/záložka
+__author_dropdown_menu__.html > připsat do odkazu na stránku my-author záložku all
+• articles/models/article.py > změna názvů položek v poli status
+$ python manage.py makemigrations
+$ python manage.py migrate
+• databáze > přejmenování existujících hodnot pole status pro položky v databázy
+• articles/views/home_page.py > přidání filtrace na články, které mají status publised
+• articles/views/article_list.py > přidání filtrace na články, které mají status publised
+###

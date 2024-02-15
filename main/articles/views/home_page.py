@@ -15,10 +15,11 @@ class HomePageView(View):
     def get(self, request, *args, **kwargs):
         # Získání featured článků, nejnovějších článků a nejčastěji zobrazených článků
         featured = Article.objects.filter(featured=True)
-        latest = Article.objects.order_by('-created')[0:3]
+        latest = Article.objects.filter(status='publish').order_by('-created')[0:3]
         most_viewed = (
             Article.objects
             .annotate(views_count=Count('articleview'))
+            .filter(status='publish')
             .order_by('-views_count')[:4]
         )
 

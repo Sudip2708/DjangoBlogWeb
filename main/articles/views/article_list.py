@@ -29,14 +29,14 @@ class ArticleListView(CommonContextMixin, ListView):
         if tag_slug:
             # Pokud je k dispozici tag_slug, vyfiltrovat články podle tagu
             tag = get_object_or_404(Tag, slug=tag_slug)
-            queryset = Article.objects.filter(tags=tag).order_by('-created')
+            queryset = Article.objects.filter(status='publish', tags=tag).order_by('-created')
         elif category_slug:
             # Pokud je k dispozici category_slug, vyfiltrovat články podle kategorie
             category = get_object_or_404(ArticleCategory, slug=category_slug)
-            queryset = Article.objects.filter(category=category).order_by('-created')
+            queryset = Article.objects.filter(status='publish', category=category).order_by('-created')
         else:
             # Jinak vrátit všechny články, seřazené podle data vytvoření
-            queryset = Article.objects.order_by('-created')
+            queryset = Article.objects.filter(status='publish').order_by('-created')
 
         return queryset
 

@@ -15,6 +15,7 @@ from articles.views.article_update import ArticleUpdateView
 from articles.views.search import SearchView
 from users.views.profile_update_user import profile_update_user
 from users.views.profile_update_author import profile_update_author
+from articles.views.my_articles import MyArticlesView
 
 urlpatterns = [
     # URL pro administrátorské rozhraní Django
@@ -69,6 +70,9 @@ urlpatterns = [
 
     # URL pro zobrazení seznamu článků autora
     path('articles/from/<slug:author_slug>/', ArticleListView.as_view(), name='article-from-author-list'),
+
+    # URL pro seznam článků
+    path('my-articles/<str:current_tab>/', MyArticlesView.as_view(), name='my-articles'),
 ]
 
 # Přidání URL patternů pro statické a média soubory, pokud je nastavený DEBUG mód

@@ -2,27 +2,73 @@
 <!-- for Articles Header -->
 
 
-<!-- Articles Header -->
-<header class="mb-5">
+{% if page_title %}
 
-    <!-- Title -->
-    {% if tag_slug %}
-        <h2>Articles with tag: {{ tag_slug }}</h2>
+    <!-- Articles Header -->
+    <header >
+        <h2>{{ page_title }}</h2>
+    </header>
 
-    {% elif category_slug %}
-        <h2>Articles with category: {{ category_slug|upper }}</h2>
+    <!-- Tabs -->
+    {% if page_title == 'My Articles' %}
+        <nav class="nav nav-tabs justify-content-end mb-5 pt-4">
 
-    {% elif query %}
-        <h2>Search results for: {{ query }}</h2>
+            <!-- Tab for all authors articles -->
+            <li class="nav-item {% if current_tab == 'all' %}active{% endif %}">
+                <a href="{% url 'my-articles' current_tab='all' %}" class="nav-link {% if current_tab == 'all' %}active{% endif %}">
+                    All
+                </a>
+            </li>
 
-    {% else %}
-        <h2>All articles</h2>
+            <!-- Tab form authors articles with status drafted -->
+            <li class="nav-item {% if current_tab == 'drafted' %}active{% endif %}">
+                <a href="{% url 'my-articles' current_tab='drafted' %}" class="nav-link {% if current_tab == 'drafted' %}active{% endif %}">
+                    Drafted
+                </a>
+            </li>
 
+            <!-- Tab form authors articles with status publish -->
+            <li class="nav-item {% if current_tab == 'publish' %}active{% endif %}">
+                <a href="{% url 'my-articles' current_tab='publish' %}" class="nav-link {% if current_tab == 'publish' %}active{% endif %}">
+                    Publish
+                </a>
+            </li>
+
+            <!-- Tab form authors articles with status archive -->
+            <li class="nav-item {% if current_tab == 'archive' %}active{% endif %}">
+                <a href="{% url 'my-articles' current_tab='archive' %}" class="nav-link {% if current_tab == 'archive' %}active{% endif %}">
+                    Archive
+                </a>
+            </li>
+        </nav>
     {% endif %}
 
-    <!-- Text -->
-    <p class="text-lg fw-light">
-        To find a specific article, use the search box on the right.
-    </p>
 
-</header>
+{% else %}
+
+    <!-- Articles Header -->
+    <header class="mb-5">
+
+        <!-- Title -->
+        {% if tag_slug %}
+            <h2>Articles with tag: {{ tag_slug }}</h2>
+
+        {% elif category_slug %}
+            <h2>Articles with category: {{ category_slug|upper }}</h2>
+
+        {% elif query %}
+            <h2>Search results for: {{ query }}</h2>
+
+        {% else %}
+            <h2>All articles</h2>
+
+        {% endif %}
+
+        <!-- Text -->
+        <p class="text-lg fw-light">
+            To find a specific article, use the search box on the right.
+        </p>
+
+    </header>
+
+{% endif %}

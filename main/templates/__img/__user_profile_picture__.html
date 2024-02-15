@@ -11,10 +11,21 @@
 
 <!-- For User Thumbnail -->
 {% elif atr == "user_thumbnail" %}
-<img alt="User Profile Picture"
-     src="{{ user.profile_picture_thumbnail.url }}?{% now 'U' %}"
-     class="img-fluid w-100"/>
 
+    <!-- If User Exist -->
+    {% if user.profile_picture_thumbnail %}
+        <img alt="User Profile Picture"
+             src="{{ user.profile_picture_thumbnail.url }}?{% now 'U' %}"
+             class="img-fluid w-100"/>
+
+    <!-- If User Non Exist -->
+    {% else %}
+        {% load static %}
+        <img alt="Default Profile Picture"
+             src="{% static 'img/default_profile_picture.jpg' %}"
+             class="img-fluid w-100"/>
+
+    {% endif %}
 
 <!-- For Comment Thumbnail -->
 {% elif atr == "user_comment" %}
@@ -41,12 +52,23 @@
 
 <!-- For Navigation Thumbnail -->
 {% elif atr == "user_navigation" %}
-    <img alt="User Profile Picture"
-         src="{{ user.profile_picture_thumbnail.url }}?{% now 'U' %}"
-         class="img-fluid rounded-circle flex-shrink-0"
-         width="40"/>
 
+    <!-- If User Exist -->
+    {% if user.profile_picture_thumbnail %}
+        <img alt="User Profile Picture"
+             src="{{ user.profile_picture_thumbnail.url }}?{% now 'U' %}"
+             class="img-fluid rounded-circle flex-shrink-0"
+             width="40"/>
 
+    <!-- If User Non Exist -->
+    {% else %}
+        {% load static %}
+        <img alt="Default Profile Picture"
+             src="{% static 'img/default_profile_picture.jpg' %}"
+             class="img-fluid rounded-circle flex-shrink-0"
+             width="40"/>
+
+    {% endif %}
 
 
 {% endif %}

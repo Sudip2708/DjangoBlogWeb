@@ -6,7 +6,7 @@
 <div class="px-1">
 
     <!-- Button -->
-    <button class="btn btn-link d-block "
+    <button class="btn btn-link d-block drop-down-title"
             data-bs-toggle="collapse"
             data-bs-target="#authorOptionsCollapse"
             aria-expanded="false"
@@ -19,13 +19,13 @@
 
         <!-- Create an Article -->
         <a class="d-block drop-down-text"
-           href="{% url 'article-create'  current_tab='overview'  %}"><button class="btn btn-secondary">
+           href="{% url 'article-create' current_tab='overview'  %}"><button class="btn btn-light">
             Create an Article
         </button></a>
 
         <!-- My Articles -->
         <a class="d-block drop-down-text"
-           href="#"><button class="btn btn-secondary">
+           href="{% url 'my-articles' current_tab='all' %}"><button class="btn btn-light">
             My Articles
         </button></a>
 

@@ -6,7 +6,7 @@
 <div class="px-1">
 
     <!-- Button -->
-    <button class="btn btn-link d-block "
+    <button class="btn btn-link d-block drop-down-title"
             data-bs-toggle="collapse"
             data-bs-target="#userOptionsCollapse"
             aria-expanded="false"
@@ -20,20 +20,20 @@
         <!-- Create an Article -->
         {% if not author %}
             <a class="d-block drop-down-text"
-               href="{% url 'article-create'  current_tab='overview'  %}"><button class="btn btn-secondary">
+               href="{% url 'article-create'  current_tab='overview'  %}"><button class="btn btn-light">
                 Create an Article
             </button></a>
         {% endif %}
 
         <!-- Favorite Authors -->
         <a class="d-block drop-down-text"
-           href="#"><button class="btn btn-secondary">
+           href="#"><button class="btn btn-light">
             Favorite Authors
         </button></a>
 
         <!-- Manage my Account -->
         <a class="d-block drop-down-text"
-           href="{% url 'profile_update_user' %}"><button class="btn btn-secondary">
+           href="{% url 'profile_update_user' %}"><button class="btn btn-light">
             {% if not author %}
             Manage my Account
             {% else %}
@@ -42,11 +42,11 @@
         </button></a>
 
         <!-- Divider -->
-        <hr class="dropdown-divider">
+        <hr class="dropdown-divider" style="color: grey;">
 
         <!-- Log out -->
         <a class="d-block drop-down-text"
-           href="{% url 'account_logout' %}"><button class="btn btn-secondary">
+           href="{% url 'account_logout' %}"><button class="btn btn-light">
             Log out
         </button></a>
 
