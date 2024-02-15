@@ -19,14 +19,14 @@
                   {% if user.is_authenticated %}
 
                         <!-- Settings for User without Author -->
-                        {% include '0_base/_header/_dropdown/__settings_for_user__.html' %}
+                        {% include '0_base/_header/_dropdown/__settings_for_user_mobile__.html' %}
 
 
                   <!-- Options -->
                   {% else %}
 
                         <!-- Settings for Unlog Users -->
-                        {% include '0_base/_header/_dropdown/__settings_for_non_user__.html' %}
+                        {% include '0_base/_header/_dropdown/__settings_for_non_user_mobile__.html' %}
 
                   {% endif %}
 
@@ -34,7 +34,7 @@
             {% else %}
 
                   <!-- Settings for Users with Authors Account -->
-                  {% include '0_base/_header/_dropdown/__settings_for_author__.html' %}
+                  {% include '0_base/_header/_dropdown/__settings_for_author_mobile__.html' %}
 
             {% endif %}
       </ul>

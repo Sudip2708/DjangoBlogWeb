@@ -581,3 +581,5 @@ $ python manage.py migrate
 • articles/views/home_page.py > přidání filtrace na články, které mají status publised
 • articles/views/article_list.py > přidání filtrace na články, které mají status publised
 ###
+Drobné úpravi postranního tlačítka a zobrazení jeho položek.
+###
