@@ -581,5 +581,16 @@ $ python manage.py migrate
 • articles/views/home_page.py > přidání filtrace na články, které mají status publised
 • articles/views/article_list.py > přidání filtrace na články, které mají status publised
 ###
+###
 Drobné úpravi postranního tlačítka a zobrazení jeho položek.
+###
+Zaznamenávání otevřených panelů
+• users/models.py přidat boolean pole pro postranní panel uživatele: sidebar_user_user_menu a sidebar_user_author_menu
+$ python manage.py makemigrations
+$ python manage.py migrate
+• users/views/ > vytvořit soubor update_menu_state.py a zapsat kod, který zpracovává požadavky zasnané přes script
+• main/urls.py > zapsat novou adresu pro změnu hodnot update_menu_state
+• templates/05__body_script__.html > připsat kod pro script, který zachytává tlačítka a odesílá POST do souboru ve views
+• templates/2_main/_sidebar/_user/__user_dropdown_menu__.html > připsat podmínku pro zobrazení nabídky na základě pole v modelu
+• templates/2_main/_sidebar/_user/__uauthor_dropdown_menu__.html > připsat podmínku pro zobrazení nabídky na základě pole v modelu
 ###

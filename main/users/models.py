@@ -11,6 +11,7 @@ from utilities.for_users.create_default_profile_picture import create_default_pr
 from utilities.shared.create_thumbnail import create_thumbnail
 
 
+
 class CustomUser(AbstractUser):
     '''
     Rozšiřuje Django vestavěný model AbstractUser o pole pro profilové obrázky.
@@ -72,6 +73,11 @@ class CustomUser(AbstractUser):
     # Připojení vlastního manažera
     objects = CustomUserManager()
 
+    # Pole pro sidebar > user > __user_dropdown_menu__.html
+    sidebar_user_user_menu = models.BooleanField(default=False)
+
+    # Pole pro sidebar > user > author > __author_dropdown_menu__.html
+    sidebar_user_author_menu = models.BooleanField(default=False)
 
     def __str__(self):
         return self.username

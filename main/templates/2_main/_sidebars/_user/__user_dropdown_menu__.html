@@ -9,13 +9,13 @@
     <button class="btn btn-link d-block drop-down-title"
             data-bs-toggle="collapse"
             data-bs-target="#userOptionsCollapse"
-            aria-expanded="false"
+            aria-expanded="{{ user.sidebar_user_user_menu }}"
             aria-controls="userOptionsCollapse">
         User Menu
     </button>
 
     <!-- Drop-down items -->
-    <div class="collapse " id="userOptionsCollapse">
+    <div class="collapse {% if user.sidebar_user_user_menu %} show {% endif %}" id="userOptionsCollapse">
 
         <!-- Create an Article -->
         {% if not author %}

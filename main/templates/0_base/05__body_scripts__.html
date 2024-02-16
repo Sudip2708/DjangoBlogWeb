@@ -223,3 +223,53 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
 
+<!-- Include jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+<!-- Script pro nastavení sidebaru -->
+<script>
+
+    // Funkce pro odeslání AJAX požadavku
+    function toggleMenu(menuId) {
+
+        // Výpis ID objektu do konzole
+        console.log('ID objektu:', menuId);
+
+        // Získání CSRF tokenu
+        var csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+
+        // Odeslání AJAX požadavku na server
+        $.ajax({
+            url: '/update_menu_state/',  // Společná URL adresa pohledu v Django
+            type: 'POST',
+            headers: {
+                'X-CSRFToken': csrftoken  // Přidání CSRF tokenu do hlavičky požadavku
+            },
+            data: {
+                'menu_id': menuId,  // Unikátní identifikátor nabídky
+            }
+        });
+
+
+    }
+
+    // Získání všech vyklápěcích tlačítek
+    var buttons = document.querySelectorAll('[data-bs-toggle="collapse"]');
+
+    // Přidání event listeneru pro kliknutí na tlačítka
+    buttons.forEach(function(button) {
+        button.addEventListener('click', function() {
+
+            // Získání id nabídky z atributu data-bs-target
+            var menuId = button.getAttribute('data-bs-target');
+
+            // Spuštění funkce toggleMenu
+            toggleMenu(menuId);
+        });
+    });
+</script>
+
+
+
+
+
