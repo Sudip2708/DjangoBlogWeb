@@ -13,7 +13,12 @@ def update_menu_state(request):
             menu_id = request.POST.get('menu_id')
 
             # Změna hodnoty pole sidebar_user_user_menu na opačnou
-            if menu_id == "#userOptionsCollapse":
+            if menu_id == "#userCollapse":
+                user.sidebar_user = not user.sidebar_user
+                user.save()
+
+            # Změna hodnoty pole sidebar_user_user_menu na opačnou
+            elif menu_id == "#userOptionsCollapse":
                 user.sidebar_user_user_menu = not user.sidebar_user_user_menu
                 user.save()
 
@@ -21,6 +26,22 @@ def update_menu_state(request):
             elif menu_id == "#authorOptionsCollapse":
                 user.sidebar_user_author_menu = not user.sidebar_user_author_menu
                 user.save()
+
+            # Změna hodnoty pole sidebar_user_user_menu na opačnou
+            elif menu_id == "#searchCollapse":
+                user.sidebar_search = not user.sidebar_search
+                user.save()
+
+            # Změna hodnoty pole sidebar_user_user_menu na opačnou
+            elif menu_id == "#categoryCollapse":
+                user.sidebar_category = not user.sidebar_category
+                user.save()
+
+            # Změna hodnoty pole sidebar_user_user_menu na opačnou
+            elif menu_id == "#tagsCollapse":
+                user.sidebar_tags = not user.sidebar_tags
+                user.save()
+
 
         # Vrácení odpovědi na AJAX požadavek
         return JsonResponse({})

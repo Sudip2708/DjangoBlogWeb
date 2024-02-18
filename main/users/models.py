@@ -8,6 +8,7 @@ import os
 from .managers import CustomUserManager
 from utilities.for_users.create_default_username import create_default_username
 from utilities.for_users.create_default_profile_picture import create_default_profile_picture
+from utilities.for_users.ordered_boolean_field import OrderedBooleanField
 from utilities.shared.create_thumbnail import create_thumbnail
 
 
@@ -73,11 +74,23 @@ class CustomUser(AbstractUser):
     # Připojení vlastního manažera
     objects = CustomUserManager()
 
+    # Pole pro sidebar > tags
+    sidebar_search = OrderedBooleanField(default=False, order=1)
+
+    # Pole pro sidebar > user
+    sidebar_user = OrderedBooleanField(default=True, order=2)
+
     # Pole pro sidebar > user > __user_dropdown_menu__.html
     sidebar_user_user_menu = models.BooleanField(default=False)
 
     # Pole pro sidebar > user > author > __author_dropdown_menu__.html
     sidebar_user_author_menu = models.BooleanField(default=False)
+
+    # Pole pro sidebar > category
+    sidebar_category = OrderedBooleanField(default=True, order=3)
+
+    # Pole pro sidebar > search
+    sidebar_tags = OrderedBooleanField(default=True, order=4)
 
     def __str__(self):
         return self.username

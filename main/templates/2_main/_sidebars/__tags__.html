@@ -1,0 +1,43 @@
+<!-- Tags Widget -->
+
+<!-- Drop-down menu -->
+<div class="px-1">
+
+    <div class="d-flex justify-content-between">
+        <!-- První dva prvky (zleva) -->
+        <div class="d-inline-block">
+            {% include '2_main/_sidebars/_arrow/__bar_up__.html' %}
+            {% include '2_main/_sidebars/__button_collapse__.html' with ar_exp=user.sidebar_tags ar_con="tagsCollapse" title="Tags" %}
+        </div>
+        <div class="d-inline-block">
+            {% include '2_main/_sidebars/_arrow/__move_up__.html' %}
+            {% include '2_main/_sidebars/_arrow/__move_down__.html' %}
+        </div>
+    </div>
+
+
+    <!-- Drop-down items -->
+    <div class="collapse {% if user.sidebar_tags %} show {% endif %}" id="tagsCollapse">
+
+
+        <div class="card mb-5">
+            <div class="card-body">
+
+                <!-- Section name -->
+                <h3 class="h6 mb-3">Tags</h3>
+
+                <ul class="list-inline mb-0">
+                    {% for tag in tags %}
+                        <li class="list-inline-item">
+                            <a class="tag" href="{% url 'article-tag-list' tag_slug=tag.slug %}">
+                                {{ tag }}
+                            </a>
+                        </li>
+                    {% endfor %}
+                </ul>
+
+            </div>
+        </div>
+
+    </div>
+</div>

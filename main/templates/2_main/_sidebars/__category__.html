@@ -1,0 +1,74 @@
+<!--  category Widget -->
+
+<!-- Drop-down menu -->
+<div class="px-1">
+
+    <div class="d-flex justify-content-between">
+        <!-- První dva prvky (zleva) -->
+        <div class="d-inline-block">
+            {% include '2_main/_sidebars/_arrow/__bar_up__.html' %}
+            {% include '2_main/_sidebars/__button_collapse__.html' with ar_exp=user.sidebar_category ar_con="categoryCollapse" title="Category" %}
+        </div>
+        <div class="d-inline-block">
+            {% include '2_main/_sidebars/_arrow/__move_up__.html' %}
+            {% include '2_main/_sidebars/_arrow/__move_down__.html' %}
+        </div>
+    </div>
+
+
+    <!-- Drop-down items -->
+    <div class="collapse {% if user.sidebar_category %} show {% endif %}" id="categoryCollapse">
+
+
+        <div class="card mb-5">
+            <div class="card-body">
+
+                <!-- Section name -->
+                <h3 class="h6 mb-3">
+                    category
+                </h3>
+
+                <!-- Loop through category_count-->
+                {% for category in category_count %}
+
+                    <!-- Display for odd row -->
+                    {% if not forloop.counter|divisibleby:2 %}
+                        <div class="p-2 d-flex justify-content-between fw-bold text-gray-600 bg-light">
+
+                            <!-- category title -->
+                            <a class="text-reset" href="{% url 'article-category-list' category_slug=category.category__slug %}">
+                                {{ category.category__title }}
+                            </a>
+
+                            <!-- category count -->
+                            <span>
+                                {{ category.category__title__count }}
+                            </span>
+
+                        </div>
+                    {% endif %}
+
+                    <!-- Display for even row -->
+                    {% if forloop.counter|divisibleby:2 %}
+                        <div class="p-2 d-flex justify-content-between fw-bold text-gray-600 1">
+
+                            <!-- category title -->
+                            <a class="text-reset" href="{% url 'article-category-list' category_slug=category.category__slug %}">
+                                {{ category.category__title }}
+                            </a>
+
+                            <!-- category count -->
+                            <span>
+                                {{ category.category__title__count }}
+                            </span>
+
+                        </div>
+                    {% endif %}
+
+                {% endfor %}
+
+            </div>
+        </div>
+
+    </div>
+</div>

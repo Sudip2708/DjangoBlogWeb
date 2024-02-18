@@ -594,3 +594,18 @@ $ python manage.py migrate
 • templates/2_main/_sidebar/_user/__user_dropdown_menu__.html > připsat podmínku pro zobrazení nabídky na základě pole v modelu
 • templates/2_main/_sidebar/_user/__uauthor_dropdown_menu__.html > připsat podmínku pro zobrazení nabídky na základě pole v modelu
 ###
+###
+Otevírání a správa postraních panelů
+• templates/2_main/____user__.html > přejmenovat na __user__.html a přesunout do templates/2_main/_sidebar/
+• templates/__zbytek/S2a_sidebar_category.html > přejmenovat na __category__.html a přesunout do templates/2_main/_sidebar/ + dopsat kod pro rozbalovací nabídku
+• templates/2_main/S2b_sidebar__search.html > přejmenovat na __search__.html a přesunout do templates/2_main/_sidebar/ + dopsat kod pro rozbalovací nabídku
+• templates/2_main/S2s_sidebar__tags.html > přejmenovat na __tags__.html a přesunout do templates/2_main/_sidebar/ + dopsat kod pro rozbalovací nabídku
+• utilities/for_user/ > vytvořit soubor ordered_boolean_field.py a zapsat kód pro bolean pole s hodnotou pořadí a metodami pro její změni
+• users/models.py > importovat třídu pro nové pole a připsat kod pro pole user, category, tags, search
+$ python manage.py makemigrations
+$ python manage.py migrate
+• users/views/update_menu_state.py > dopsat kod pro nová pole
+• templates/2_main/_sidebars/ > vytvořit sloužku arrow a zapsat kody pro jednotlivé bootstrap ikony šipek a připsat šipky do kodu pro sidebary
+• templates/2_main/_sidebars/ > vytvořit soubor __button_collapse__.html a zapsat jako šablonu pro tlačítka
+• templates/2_main/21__sidebar__.html > připsat schovávací tlačítko pro celý sidebar
+###

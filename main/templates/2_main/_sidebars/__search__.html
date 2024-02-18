@@ -1,0 +1,52 @@
+<!-- Search Bar Widget -->
+
+<!-- Drop-down menu -->
+<div class="px-1">
+
+    <div class="d-flex justify-content-between">
+        <!-- První dva prvky (zleva) -->
+        <div class="d-inline-block">
+            {% include '2_main/_sidebars/_arrow/__bar_up__.html' %}
+            {% include '2_main/_sidebars/__button_collapse__.html' with ar_exp=user.sidebar_search ar_con="searchCollapse" title="Search" %}
+        </div>
+        <div class="d-inline-block">
+            {% include '2_main/_sidebars/_arrow/__move_up__.html' %}
+            {% include '2_main/_sidebars/_arrow/__move_down__.html' %}
+        </div>
+    </div>
+
+
+    <!-- Drop-down items -->
+    <div class="collapse {% if user.sidebar_search %} show {% endif %}" id="searchCollapse">
+
+
+        <div class="card mb-5">
+            <div class="card-body">
+
+                <!-- Section name -->
+                <h3 class="h6">
+                    Search the blog
+                </h3>
+
+                <!-- Search form -->
+                <form action="{% url 'article-search' %}">
+                    {% csrf_token %}
+                    <div class="input-group border-bottom">
+
+                        <!-- Search label -->
+                        <input class="form-control border-0 shadow-0 ps-0" type="text" name="q"
+                               placeholder="What are you looking for?">
+
+                        <!-- Search button -->
+                        <button class="btn btn-link btn-sm shadow-0 px-0" type="submit">
+                            <i class="fas fa-search"></i>
+                        </button>
+
+                    </div>
+                </form>
+
+            </div>
+        </div>
+
+    </div>
+</div>
