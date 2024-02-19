@@ -6,7 +6,6 @@
     <div class="d-flex justify-content-between">
         <!-- První dva prvky (zleva) -->
         <div class="d-inline-block">
-            {% include '2_main/_sidebars/_arrow/__bar_up__.html' %}
             {% include '2_main/_sidebars/__button_collapse__.html' with ar_exp=user.sidebar_tags ar_con="tagsCollapse" title="Tags" %}
         </div>
         <div class="d-inline-block">
@@ -17,7 +16,7 @@
 
 
     <!-- Drop-down items -->
-    <div class="collapse {% if user.sidebar_tags %} show {% endif %}" id="tagsCollapse">
+    <div class="{% if user.is_authenticated and not user.sidebar_search %} collapse {% else %} collapse show {% endif %}" id="tagsCollapse">
 
 
         <div class="card mb-5">

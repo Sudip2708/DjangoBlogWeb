@@ -623,3 +623,5 @@ $ python manage.py migrate
 • templates/3_articles/32__articles__.html přepsat kod pro zobrazení počtu článků na řádek
 • articles/views/article_list.py . smazat hodnotu paginate_by a nahradit ji metodou get_paginate_by
 ###
+Dodatečná úprava zobrazení postranních panelů
+###
