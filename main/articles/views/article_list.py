@@ -8,6 +8,7 @@ from articles.models.article import Article, ArticleCategory
 from .article_common_contex_mixin import CommonContextMixin
 
 
+
 class ArticleListView(CommonContextMixin, ListView):
     # Použitý model pro seznam článků
     model = Article
@@ -20,6 +21,7 @@ class ArticleListView(CommonContextMixin, ListView):
 
     # Počet článků na stránku
     paginate_by = 4
+
 
     def get_queryset(self):
         # Získání hodnot slugů z URL pro filtrování článků
@@ -40,3 +42,10 @@ class ArticleListView(CommonContextMixin, ListView):
 
         return queryset
 
+    def get_paginate_by(self, queryset):
+        # Získání přihlášeného uživatele
+        user = self.request.user
+        # Pokud je uživatel přihlášený a má pole sidebar nastavené na False, nastavte paginate_by na 6, jinak na 4
+        if user.is_authenticated and not user.sidebar:
+            return 6
+        return 4

@@ -1,0 +1,9 @@
+<!-- Code for hide and show sidebar -->
+
+{% if user.is_authenticated %}
+    {% if user.sidebar %}
+        {% include '2_main/21__sidebar__.html' %}
+    {% endif %}
+{% else %}
+    {% include '2_main/21__sidebar__.html' %}
+{% endif %}

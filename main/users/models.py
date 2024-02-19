@@ -74,6 +74,10 @@ class CustomUser(AbstractUser):
     # Připojení vlastního manažera
     objects = CustomUserManager()
 
+
+    # Pole pro sidebar
+    sidebar = models.BooleanField(default=True)
+
     # Pole pro sidebar > tags
     sidebar_search = OrderedBooleanField(default=False, order=1)
 

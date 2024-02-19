@@ -1,0 +1,7 @@
+<!-- Code for main container size   -->
+
+{% if user.is_authenticated and not user.sidebar %}
+    <main class="col-lg-12">
+{% else %}
+    <main class="col-lg-8">
+{% endif %}

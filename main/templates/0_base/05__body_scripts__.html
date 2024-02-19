@@ -242,12 +242,21 @@ document.addEventListener("DOMContentLoaded", function () {
         $.ajax({
             url: '/update_menu_state/',  // Společná URL adresa pohledu v Django
             type: 'POST',
-            headers: {
-                'X-CSRFToken': csrftoken  // Přidání CSRF tokenu do hlavičky požadavku
-            },
+
             data: {
                 'menu_id': menuId,  // Unikátní identifikátor nabídky
+                csrfmiddlewaretoken: '{{ csrf_token }}'   // Přidání CSRF tokenu do hlavičky požadavku
+            },
+            success: function(response) {
+                if (response.reload_page) {
+                    location.reload(); // Obnoví stránku po úspěšném provedení změn
+                }
+            },
+            error: function(xhr, errmsg, err) {
+                console.log(xhr.status + ": " + xhr.responseText); // Logování chyb
             }
+
+
         });
 
 

@@ -609,3 +609,17 @@ $ python manage.py migrate
 • templates/2_main/_sidebars/ > vytvořit soubor __button_collapse__.html a zapsat jako šablonu pro tlačítka
 • templates/2_main/21__sidebar__.html > připsat schovávací tlačítko pro celý sidebar
 ###
+Skrývání bočního panelu
+• users/models.py > připsat nové boolean pole pro sidebar
+$ python manage.py makemigrations
+$ python manage.py migrate
+• templates/2_main/ > vytvořit soubor 21__sidebar_button__.html a vložit do něj kod pro tlačítko pro sidebar
+• templates/2_main/21__sidebar__.html > odebrat schovávací tlačítko pro celý sidebar
+• templates/0_base/_header/02__header__.html > přidat do menu odkaz na tlačítko pro skrývání sidebaru
+• users/views/ > vytvořit soubory pro části kodu zpracovávající vzhled stránky se sidebarem a bez něj
+• users/views/update_menu_state.py > připsat include pro kod pro změnu vzhledu se sidebarem a bez něj s požadavkem na obnovení stránky
+• templates/0_base/05__body_scripts__.html > připsat do scriptu pro postranní panely vyřízení požadavku na obnovení stránky
+• templates/3_articles/ > vytvořit soubor 32__articles_visibility__.html a vložit do něj kod pro počet článků na řádek pro sidebar a bez něj
+• templates/3_articles/32__articles__.html přepsat kod pro zobrazení počtu článků na řádek
+• articles/views/article_list.py . smazat hodnotu paginate_by a nahradit ji metodou get_paginate_by
+###

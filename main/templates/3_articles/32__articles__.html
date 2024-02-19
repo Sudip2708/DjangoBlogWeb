@@ -6,7 +6,9 @@
 
 
 {% for article in page_obj %}
-    <div class="col-xl-6 mb-3">
+
+    <!-- Articles per row -->
+    {% include '3_articles/32__articles_visibility__.html' %}
 
         <!-- Main Picture -->
         <a class="mb-3" href="article.html">
