@@ -625,3 +625,10 @@ $ python manage.py migrate
 ###
 Dodatečná úprava zobrazení postranních panelů
 ###
+Pozicování bočních panelů
+• users/views/ > soubor update_menu_state.py rozdělit na user_sidebar_appearance.py pro kod pro skrývání panelů a user_sidebar_moovments.py pro jejich pohyb
+• main/urls.py . smazat cestu k update_menu_state a přidat cesty k user_sidebar_moovments a user_sidebar_appearance
+• users/models.py > do modelu pro OrderedBooleanField přidat pole pro hash a do modelu pro costumuser přidat metody pro posun hodnoty pořadí
+• articles/views/article_common_contex_mixin.py > připsat kod pro řazení panelů
+• templates > přizpůsobit všechny šablony, kterých se změna týká
+###

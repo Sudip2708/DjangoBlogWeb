@@ -1,0 +1,98 @@
+<!-- Include for 2_main/20__base__.html -->
+<!-- for Sidebar -->
+
+
+
+<style>
+    .drop-down-title {
+        font-size: 0.8rem;
+    }
+
+    .drop-down-text {
+        color: black;
+        margin-top: 0.8rem;
+        margin-left: 1rem;
+    }
+    .btn.btn-link:focus {
+        background-color: white;
+        outline: 4px solid white;
+    }
+    .pading-0 {
+        padding: 0;
+    }
+
+</style>
+
+
+<!-- Sidebars -->
+<aside class="col-lg-4  d-block d-lg-none d-xl-block">
+
+
+    <!-- Zobrazení postranního panelu, když je uživatel přihlášený -->
+    {% if user.is_authenticated %}
+
+        <!-- Zobrazení postranního panelu, když je uživatel přihlášený a je na stránce pro správu účtu -->
+        {% if user_form or author_form %}
+
+            <!-- User -->
+            {% include '2_main/_sidebars/__user__.html' %}
+
+        <!-- Zobrazení postranního panelu, když je uživatel přihlášený a je na stránkách pro články -->
+        {% else %}
+
+            <!-- Cyklus pro procházení v seznamu panelů -->
+            {% for panel in sorted_panels %}
+
+                <!-- Search -->
+                {% if panel.name == 'search' %}
+                    {% if forloop.last %}
+                        {% include '2_main/_sidebars/__search__.html' with atr='last' %}
+                    {% else %}
+                        {% include '2_main/_sidebars/__search__.html'%}
+                    {% endif %}
+
+                <!-- User -->
+                {% elif panel.name == 'user' %}
+                    {% if forloop.last %}
+                        {% include '2_main/_sidebars/__user__.html' with atr='last' %}
+                    {% else %}
+                        {% include '2_main/_sidebars/__user__.html' %}
+                    {% endif %}
+
+                <!-- Category -->
+                {% elif panel.name == 'category' %}
+                    {% if forloop.last %}
+                        {% include '2_main/_sidebars/__category__.html' with atr='last' %}
+                    {% else %}
+                        {% include '2_main/_sidebars/__category__.html' %}
+                    {% endif %}
+
+                <!-- Tags -->
+                {% elif panel.name == 'tags' %}
+                    {% if forloop.last %}
+                        {% include '2_main/_sidebars/__tags__.html' with atr='last' %}
+                    {% else %}
+                        {% include '2_main/_sidebars/__tags__.html' %}
+                    {% endif %}
+
+                {% endif %}
+            {% endfor %}
+        {% endif %}
+
+    <!-- Zobrazení postranního panelu, když uživatel není přihlášený -->
+    {% else %}
+
+        <!-- Search -->
+        {% include '2_main/_sidebars/__search__.html' %}
+
+        <!-- Category -->
+        {% include '2_main/_sidebars/__category__.html' %}
+
+        <!-- Tags -->
+        {% include '2_main/_sidebars/__tags__.html' %}
+
+    {% endif %}
+
+
+
+</aside>

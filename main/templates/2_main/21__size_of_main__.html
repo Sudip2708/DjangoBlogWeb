@@ -1,0 +1,12 @@
+<!-- Code for main container size -->
+
+
+<!-- Nastavení pro velikost kontejneru main když uživatel je přihlášený a hodnota pole sidebar je False -->
+{% if user.is_authenticated and not user.sidebar %}
+    <main class="col-lg-12">
+
+<!-- Nastavení pro velikost kontejneru main když je zobrazen sidebar -->
+{% else %}
+    <main class="col-lg-8">
+
+{% endif %}

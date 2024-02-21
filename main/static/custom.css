@@ -3,17 +3,21 @@
 
 
 
+
+
 /**********************************************************************************************************************/
 /* Odkládací plocha na nepoužívané tagy */
 
 /* Barvy */
 .bg-yellow {
-    background-color: grey;
+    background-color: yellow;
 }
 
 .bg-blue {
     background-color: blue;
+
 }
+
 
 /* Pozice */
 .align-right {

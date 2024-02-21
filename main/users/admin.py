@@ -14,4 +14,4 @@ class CustomUserAdmin(UserAdmin):
     Registrace CustomUser do administrátorského rozhraní
     '''
     model = CustomUser
-    list_display = ['email', 'username', 'is_staff', 'is_superuser']
+    list_display = ['email', 'username', 'is_staff', 'is_superuser', 'linked_author_id']

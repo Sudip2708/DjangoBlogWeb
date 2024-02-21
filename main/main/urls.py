@@ -15,7 +15,8 @@ from articles.views.article_update import ArticleUpdateView
 from articles.views.search import SearchView
 from users.views.profile_update_user import profile_update_user
 from users.views.profile_update_author import profile_update_author
-from users.views.update_menu_state import update_menu_state
+from users.views.user_sidebar_movements import user_sidebar_movements
+from users.views.user_sidebar_appearance import user_sidebar_appearance
 from articles.views.my_articles import MyArticlesView
 
 urlpatterns = [
@@ -75,9 +76,10 @@ urlpatterns = [
     # URL pro seznam článků
     path('my-articles/<str:current_tab>/', MyArticlesView.as_view(), name='my-articles'),
 
+    # URL pro aktualizaci stavuotevřených postranních panelů
+    path('user_sidebar_appearance/', user_sidebar_appearance, name='user_sidebar_appearance'),
     # URL pro saktualizaci otevřených postranních panelů
-    path('update_menu_state/', update_menu_state, name='update_menu_state'),
-
+    path('user_sidebar_movements/<str:hash>/', user_sidebar_movements, name='user_sidebar_movements'),
 ]
 
 # Přidání URL patternů pro statické a média soubory, pokud je nastavený DEBUG mód

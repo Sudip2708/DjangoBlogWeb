@@ -1,25 +1,29 @@
 <!--  category Widget -->
 
 <!-- Drop-down menu -->
-<div class="px-1">
+<div class="px-1 mt-2">
 
     <div class="d-flex justify-content-between">
         <!-- První dva prvky (zleva) -->
         <div class="d-inline-block">
-            {% include '2_main/_sidebars/__button_collapse__.html' with ar_exp=user.sidebar_category ar_con="categoryCollapse" title="Category" %}
+            {% include '2_main/_sidebars/_common/__button_collapse__.html' with ar_exp=user.sidebar_category ar_con='categoryCollapse' title='Category' %}
         </div>
         <div class="d-inline-block">
-            {% include '2_main/_sidebars/_arrow/__move_up__.html' %}
-            {% include '2_main/_sidebars/_arrow/__move_down__.html' %}
+            {% if user.sidebar_category.order != 1 %}
+                {% include '2_main/_sidebars/_common/__move_up__.html' with target='#categoryMoveUp' %}
+            {% endif %}
+            {% if atr != "last" %}
+                {% include '2_main/_sidebars/_common/__move_down__.html' with target='#categoryMoveDown' %}
+            {% endif %}
         </div>
     </div>
 
 
     <!-- Drop-down items -->
-    <div class="{% if user.is_authenticated and not user.sidebar_search %} collapse {% else %} collapse show {% endif %}" id="categoryCollapse">
+    <div class="{% if user.is_authenticated and not user.sidebar_category.value %} collapse {% else %} collapse show {% endif %}" id="categoryCollapse">
 
 
-        <div class="card mb-5">
+        <div class="card mb-4">
             <div class="card-body">
 
                 <!-- Section name -->

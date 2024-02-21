@@ -45,7 +45,21 @@ class CommonContextMixin(ContextMixin):
                 author = ArticleAuthor.objects.get(id=user.linked_author_id)
             except:
                 author = None
-
+        # Přidání autora do kontextu
         context['author'] = author
+
+        # Pořadí postranních panelů
+        # Seřazení panelů podle jejich pořadí uživatele
+        user = self.request.user
+        sorted_panels = [
+            {'name': 'search', 'order': user.sidebar_search.order},
+            {'name': 'user', 'order': user.sidebar_user.order},
+            {'name': 'category', 'order': user.sidebar_category.order},
+            {'name': 'tags', 'order': user.sidebar_tags.order},
+        ]
+        # Seřazení podle pořadí
+        sorted_panels.sort(key=lambda x: x['order'])
+        # Přidání seřazených panelů do kontextu
+        context['sorted_panels'] = sorted_panels
 
         return context
