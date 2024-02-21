@@ -44,5 +44,11 @@ def user_sidebar_appearance(request):
                 user.sidebar_tags.value = not user.sidebar_tags.value
                 user.save()
 
+            # Změna hodnoty pole navigace pro kategorie
+            elif menu_id == "#categoryNavigationCollapse":
+                user.sidebar_category_navigation = not user.sidebar_category_navigation
+                user.save()
+                return JsonResponse({'reload_page': True})
+
         # Vrácení odpovědi na AJAX požadavek
         return JsonResponse({})

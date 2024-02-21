@@ -26,10 +26,33 @@
         <div class="card mb-4">
             <div class="card-body">
 
-                <!-- Section name -->
-                <h3 class="h6 mb-3">
-                    category
-                </h3>
+
+                <div class="d-flex justify-content-between align-items-center mb-3">
+
+                    <!-- Section name -->
+                    <h3 class="h6 ">
+                        category
+                    </h3>
+
+                    <button class="btn btn-link drop-down-title p-0 light-grey-color"
+                            data-bs-toggle="collapse"
+                            data-bs-target="#categoryNavigationCollapse"
+                            aria-expanded="{{ user.sidebar_category_navigation }}"
+                            aria-controls="categoryNavigationCollapse"
+                            style="transition: none;">
+                        {% if user.is_authenticated and not user.sidebar_category_navigation %}
+                            Show Navigation
+                        {% else %}
+                            Hide Navigation
+                        {% endif %}
+                    </button>
+
+                </div>
+
+
+
+
+
 
                 <!-- Loop through category_count-->
                 {% for category in category_count %}

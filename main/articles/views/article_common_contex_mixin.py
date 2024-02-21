@@ -3,6 +3,7 @@
 from django.db.models import Count
 from taggit.models import Tag
 from django.views.generic.base import ContextMixin
+from django.contrib.auth.models import AnonymousUser
 
 from articles.models.article import Article
 from articles.models.article_author import ArticleAuthor
@@ -51,12 +52,20 @@ class CommonContextMixin(ContextMixin):
         # Pořadí postranních panelů
         # Seřazení panelů podle jejich pořadí uživatele
         user = self.request.user
-        sorted_panels = [
-            {'name': 'search', 'order': user.sidebar_search.order},
-            {'name': 'user', 'order': user.sidebar_user.order},
-            {'name': 'category', 'order': user.sidebar_category.order},
-            {'name': 'tags', 'order': user.sidebar_tags.order},
-        ]
+        print("### user: ", user)
+        if not isinstance(user, AnonymousUser):
+            sorted_panels = [
+                {'name': 'search', 'order': user.sidebar_search.order},
+                {'name': 'user', 'order': user.sidebar_user.order},
+                {'name': 'category', 'order': user.sidebar_category.order},
+                {'name': 'tags', 'order': user.sidebar_tags.order},
+            ]
+        else:
+            sorted_panels = [
+                {'name': 'search', 'order': 1},
+                {'name': 'category', 'order': 2},
+                {'name': 'tags', 'order': 3},
+            ]
         # Seřazení podle pořadí
         sorted_panels.sort(key=lambda x: x['order'])
         # Přidání seřazených panelů do kontextu

@@ -1,7 +1,7 @@
 <!-- Include for 3_articles/30__base__.html -->
 <!-- for Articles Header -->
 
-
+<!-- Pokud je Page Title -->
 {% if page_title %}
 
     <!-- Articles Header -->
@@ -43,31 +43,91 @@
         </nav>
     {% endif %}
 
-
+<!-- Pokud není Page Title -->
 {% else %}
 
     <!-- Articles Header -->
     <header class="mb-5">
 
-        <!-- Title -->
-        {% if tag_slug %}
-            <h2>Articles with tag: {{ tag_slug }}</h2>
+        <!-- Pokud je Category slag -->
+        {% if category_slug %}
 
-        {% elif category_slug %}
-            <h2>Articles with category: {{ category_slug|upper }}</h2>
+            <!-- Když je uživatel přihlášená´ý a hodnota pole je False -->
+            {% if user.is_authenticated and not user.sidebar_category_navigation %}
 
-        {% elif query %}
-            <h2>Search results for: {{ query }}</h2>
+                <!-- Title -->
+                <h2>Articles with category: {{ category_slug|upper }}</h2>
+
+            <!-- Ve všech ostatních případech -->
+            {% else %}
+
+                <!-- Když je uživatel přihlášený a hodnota pole je True -->
+                {% if user.is_authenticated %}
+
+                    <!-- Title -->
+                    <h2 class="mb-2" >Category</h2>
+
+                    <!-- Navigation -->
+                    <nav class="nav nav-tabs justify-content-end mb-2 pt-4">
+                        {% for category in category_count %}
+                            <li class="nav-item {% if category_slug == category.category__slug %}active{% endif %}">
+                                <a href="{% url 'article-category-list' category_slug=category.category__slug %}" class="nav-link {% if category_slug == category.category__slug %}active{% endif %}">
+                                    {{ category.category__title }}
+                                </a>
+                            </li>
+                        {% endfor %}
+                    </nav>
+
+                <!-- Když je uživatel není přihlášený -->
+                {% else %}
+
+                    <div class="{% if user.is_authenticated and not user.sidebar_category_navigation %} collapse {% else %} collapse show {% endif %}" id="categoryNavigationCollapse">
+
+                        <!-- Title -->
+                        <h2 class="mb-2" >Category</h2>
+
+                        <!-- Navigation -->
+                        <nav class="nav nav-tabs justify-content-end mb-2 pt-4">
+                            {% for category in category_count %}
+                                <li class="nav-item {% if category_slug == category.category__slug %}active{% endif %}">
+                                    <a href="{% url 'article-category-list' category_slug=category.category__slug %}" class="nav-link {% if category_slug == category.category__slug %}active{% endif %}">
+                                        {{ category.category__title }}
+                                    </a>
+                                </li>
+                            {% endfor %}
+                        </nav>
+                    </div>
+
+                    <div class="{% if user.is_authenticated and not user.sidebar_category_navigation %} collapse show {% else %} collapse {% endif %}" id="categoryNavigationCollapse">
+                        <h2>Articles with category: {{ category_slug|upper }}</h2>
+                    </div>
+
+                {% endif %}
+
+            {% endif %}
 
         {% else %}
-            <h2>All articles</h2>
+
+            <!-- Pokud je Tag slag -->
+            {% if tag_slug %}
+                <h2>Articles with tag: {{ tag_slug }}</h2>
+
+            <!-- Pokud je Querty -->
+            {% elif query %}
+                <h2>Search results for: {{ query }}</h2>
+
+            <!-- Ve všech ostatních případech -->
+            {% else %}
+                <h2>All articles</h2>
+
+            {% endif %}
+
+            <!-- Text -->
+            <p class="text-lg fw-light">
+                To find a specific article, use the search box on the right.
+            </p>
 
         {% endif %}
-
-        <!-- Text -->
-        <p class="text-lg fw-light">
-            To find a specific article, use the search box on the right.
-        </p>
 
     </header>
 

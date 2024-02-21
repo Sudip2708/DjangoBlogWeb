@@ -632,3 +632,12 @@ Pozicování bočních panelů
 • articles/views/article_common_contex_mixin.py > připsat kod pro řazení panelů
 • templates > přizpůsobit všechny šablony, kterých se změna týká
 ###
+Navigační panel pro kategorie a jeho skrývání
+• users/models.py . připsat boolean pole pro navigační panel sidebar_category_navigation
+$ python manage.py makemigrations
+$ python manage.py migrate
+• users/views/user_sidebar_appereance.py > zapsat kod pro odchytávání a zpracování tlačítka
+• articles/views/article_common_contex_mixin.py > dopsat kod i pro nepřihlášeného uživatele
+templates/3_artisles/31__page_title__.html > Připsat kod pro zobrazování a skrývání panelu
+templates/2_main/_sidebars/__category__.html > přidat tlačítko pro skrývání panelu
+###

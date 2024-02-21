@@ -103,6 +103,9 @@ class CustomUser(AbstractUser):
     # Pole pro sidebar > category
     sidebar_category = OrderedBooleanField(value=True, order=3, hash="#category")
 
+    # Pole pro sidebar > category > Zobrazení / Skrytí lišty navigace
+    sidebar_category_navigation = models.BooleanField(default=True)
+
     # Pole pro sidebar > search
     sidebar_tags = OrderedBooleanField(value=True, order=4, hash="#tags")
 
