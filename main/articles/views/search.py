@@ -14,7 +14,7 @@ class SearchView(CommonContextMixin, ListView):
     model = Article
 
     # Cesta k šabloně pro zobrazení výsledků vyhledávání
-    template_name = '3_articles/0___articles__.html'
+    template_name = '3_articles/32__articles__.html'
 
     # Počet výsledků na stránku
     paginate_by = 4

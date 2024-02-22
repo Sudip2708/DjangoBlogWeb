@@ -1,0 +1,81 @@
+<!-- Include for 2_main/____user__.html -->
+<!-- for Drop-down menu -->
+
+<style>
+    .sidebar-search-text1 {
+        font-size: 0.9rem;
+        color: #a0a0a0;
+    }
+
+    .sidebar-search-text2 {
+        font-size: 0.9rem;
+    }
+
+    #authorSelect {
+        height: 55px;
+        border-radius: 0.25rem;
+        font-size: 0.9rem;
+    }
+</style>
+
+<!-- Drop-down items -->
+<div class="collapse {% if user.sidebar_search_options %} show {% endif %}" id="searchOptionsCollapse">
+
+
+    <p class="sidebar-search-text1 mt-4">Where do you want to search?</p>
+
+    <div class="mt-1">
+        <div class="row">
+            <div class="col-4">
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="titleCheckbox" checked>
+                    <label class="form-check-label sidebar-search-text2" for="titleCheckbox">
+                        Titles
+                    </label>
+                </div>
+            </div>
+            <div class="col-4">
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="overviewCheckbox" checked>
+                    <label class="form-check-label sidebar-search-text2" for="overviewCheckbox">
+                        Overview
+                    </label>
+                </div>
+            </div>
+            <div class="col-4">
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="contentCheckbox">
+                    <label class="form-check-label sidebar-search-text2" for="contentCheckbox">
+                        Content
+                    </label>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <p class="sidebar-search-text1 mt-4 pt-2">Need to specify the Date?</p>
+
+    <div class="row">
+        <div class="col-6">
+            <input class="form-control" type="date" placeholder="Before">
+        </div>
+        <div class="col-6">
+            <input class="form-control" type="date" placeholder="After">
+        </div>
+    </div>
+
+
+    <p class="sidebar-search-text1 mt-4 pt-2">Need to specify the Author?</p>
+
+    <div class="form-group">
+        <select class="form-select" id="authorSelect">
+            <option selected>Choose author...</option>
+            <option value="author1">Author 1</option>
+            <option value="author2">Author 2</option>
+            <option value="author3">Author 3</option>
+            <!-- Add more authors here if needed -->
+        </select>
+    </div>
+
+</div>

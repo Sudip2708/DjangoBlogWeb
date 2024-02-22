@@ -641,3 +641,12 @@ $ python manage.py migrate
 templates/3_artisles/31__page_title__.html > Připsat kod pro zobrazování a skrývání panelu
 templates/2_main/_sidebars/__category__.html > přidat tlačítko pro skrývání panelu
 ###
+Search sidebar vzhled a zaznamenání pozice
+• users/models.py > připsat boolean pole pro vyklápěcí nabídku pro pole search
+$ python manage.py makemigrations
+$ python manage.py migrate
+• users/views/user_sidebar_appearance.py > připsat kod pro zaznamenávání pozice vyklápěcí nabídky
+• templates/2_main/_sidebar/ > vytvořit složku _search
+• templates/2_main/_sidebar/_search/ > vytvořit soubor pro vyklápěci nabídku a tlačítko vyklápěcí nabídky
+• templates/2_main/_sidebar/__search__.html > a zapsat do něj kod pro tlačítko a nabídku
+###

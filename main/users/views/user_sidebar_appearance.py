@@ -50,5 +50,10 @@ def user_sidebar_appearance(request):
                 user.save()
                 return JsonResponse({'reload_page': True})
 
+            # Změna hodnoty pole sidebar_search_option na opačnou
+            elif menu_id == "#searchOptionsCollapse":
+                user.sidebar_search_options = not user.sidebar_search_options
+                user.save()
+
         # Vrácení odpovědi na AJAX požadavek
         return JsonResponse({})

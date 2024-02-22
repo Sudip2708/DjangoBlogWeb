@@ -26,10 +26,16 @@
         <div class="card mb-4">
             <div class="card-body">
 
-                <!-- Section name -->
-                <h3 class="h6">
-                    Search the blog
-                </h3>
+                <!-- Section overview -->
+                <div class="d-flex justify-content-between align-items-center">
+
+                    <!-- Section name -->
+                    <h3 class="h6">Search the blog</h3>
+
+                    <!-- Options Button -->
+                    {% include '2_main/_sidebars/_search/__search_dropdown_button__.html' %}
+
+                </div>
 
                 <!-- Search form -->
                 <form action="{% url 'article-search' %}">
@@ -46,6 +52,10 @@
                         </button>
 
                     </div>
+
+                    <!-- Drop-down menu -->
+                    {% include '2_main/_sidebars/_search/__search_dropdown_menu__.html' %}
+
                 </form>
 
             </div>
