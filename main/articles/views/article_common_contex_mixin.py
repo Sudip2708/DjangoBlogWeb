@@ -52,7 +52,7 @@ class CommonContextMixin(ContextMixin):
         # Pořadí postranních panelů
         # Seřazení panelů podle jejich pořadí uživatele
         user = self.request.user
-        print("### user: ", user)
+
         if not isinstance(user, AnonymousUser):
             sorted_panels = [
                 {'name': 'search', 'order': user.sidebar_search.order},
@@ -70,5 +70,10 @@ class CommonContextMixin(ContextMixin):
         sorted_panels.sort(key=lambda x: x['order'])
         # Přidání seřazených panelů do kontextu
         context['sorted_panels'] = sorted_panels
+
+
+        # Poslání všech autoru do sidebaru pro vyhledávání
+        all_authors = ArticleAuthor.objects.all()
+        context['all_authors'] = all_authors
 
         return context

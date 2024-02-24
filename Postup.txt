@@ -650,3 +650,12 @@ $ python manage.py migrate
 • templates/2_main/_sidebar/_search/ > vytvořit soubor pro vyklápěci nabídku a tlačítko vyklápěcí nabídky
 • templates/2_main/_sidebar/__search__.html > a zapsat do něj kod pro tlačítko a nabídku
 ###
+Search sidebar funkčnost
+• articles/views/search.py > Zapsat kod pro získání dat z pole pro vyhledávání a jejich následné zpracování
+• articles/views/article_common_contex_mixin.py > Přidat výpis všech autorů pro vyhledávací pole autora
+• templates/2_main/_sidebar/_search/__search_dropdown_menu__.html > Připsat id k jednotlivým polím + přepsat kod pro vybrání autora
+• templates/2_main/_sidebar/__search__.html > Připsat id k vyhledávacímu poli
+###
+
+
+

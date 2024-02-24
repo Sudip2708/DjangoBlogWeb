@@ -5,14 +5,12 @@ def user_sidebar_appearance(request):
 
         # Ověření, zda je uživatel přihlášený
         if request.user.is_authenticated:
-            print("### if request.user.is_authenticated:")
 
             # Získání přihlášeného uživatele
             user = request.user
 
             # Získání unikátního identifikátoru nabídky z AJAX požadavku
             menu_id = request.POST.get('menu_id')
-            print("### menu_id: ", menu_id)
 
             # Změna hodnoty pole sidebar_user na opačnou
             if menu_id == "#userCollapse":

@@ -47,11 +47,15 @@ urlpatterns = [
     # URL pro zobrazení seznamu článků v dané kategorii
     path('articles/category/<slug:category_slug>/', ArticleListView.as_view(), name='article-category-list'),
 
+
+
     # URL pro vyhledávání článků
     path('search/', SearchView.as_view(), name='article-search'),
 
     # URL pro zobrazení výsledků vyhledávání s daným dotazem
     path('search/<str:query>/', SearchView.as_view(), name='article-search-results'),
+
+
 
     # URL pro TinyMCE editor
     path('tinymce/', include('tinymce.urls')),
