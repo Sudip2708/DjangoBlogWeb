@@ -1,0 +1,21 @@
+<!-- Sections for Author -->
+<div class="col min-width-xl mobile_margin-top">
+    <div class="main-div">
+
+        <div class="sub-div sidebar-search-text1 mt-4">
+            Need to specify the Author?
+        </div>
+
+        <div class="sub-div form-group row m-1 mt-3">
+            <select class="form-control article-autor-height"
+                    id="author_select"
+                    name="author_select">
+                <option value="">Choose author...</option>
+                {% for author in all_authors %}
+                  <option value="{{ author.id }}">{{ author.author }}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+    </div>
+</div>

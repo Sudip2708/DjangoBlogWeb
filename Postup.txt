@@ -656,6 +656,14 @@ Search sidebar funkčnost
 • templates/2_main/_sidebar/_search/__search_dropdown_menu__.html > Připsat id k jednotlivým polím + přepsat kod pro vybrání autora
 • templates/2_main/_sidebar/__search__.html > Připsat id k vyhledávacímu poli
 ###
-
+Nastavení pro zobrazení vyhledávacího panelu z tlačítka navigační lišty
+• templates/0_base/_header/ > vytvořit složku pro vnitřní obsah vyskakujícího vyhledávacího pole _search_popup
+• templates/0_base/_header/_search_popup > vytvořit soubor __input_field__.html a přepsat sem příslušný kod
+• templates/0_base/_header/_search_popup > vytvořit soubor __subbmit_button__.html a přepsat sem příslušný kod
+• templates/0_base/_header/_search_popup > vytvořit soubor __checkboxes__.html a přepsat sem příslušný kod
+• templates/0_base/_header/_search_popup > vytvořit soubor __dates__.html a přepsat sem příslušný kod
+• templates/0_base/_header/_search_popup > vytvořit soubor __author__.html a přepsat sem příslušný kod
+• templates/0_base/_header/_f__search_popup__.html > přepsat kod vzhledem k nově vytvořeným souborům
+###
 
 
