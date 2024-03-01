@@ -1,47 +1,11 @@
 <!-- Include for 3_articles/30__base__.html -->
 <!-- for Articles Header -->
 
-<!-- Pokud je Page Title -->
-{% if page_title %}
 
-    <!-- Articles Header -->
-    <header >
-        <h2>{{ page_title }}</h2>
-    </header>
 
-    <!-- Tabs -->
-    {% if page_title == 'My Articles' %}
-        <nav class="nav nav-tabs justify-content-end mb-5 pt-4">
-
-            <!-- Tab for all authors articles -->
-            <li class="nav-item {% if current_tab == 'all' %}active{% endif %}">
-                <a href="{% url 'my-articles' current_tab='all' %}" class="nav-link {% if current_tab == 'all' %}active{% endif %}">
-                    All
-                </a>
-            </li>
-
-            <!-- Tab form authors articles with status drafted -->
-            <li class="nav-item {% if current_tab == 'drafted' %}active{% endif %}">
-                <a href="{% url 'my-articles' current_tab='drafted' %}" class="nav-link {% if current_tab == 'drafted' %}active{% endif %}">
-                    Drafted
-                </a>
-            </li>
-
-            <!-- Tab form authors articles with status publish -->
-            <li class="nav-item {% if current_tab == 'publish' %}active{% endif %}">
-                <a href="{% url 'my-articles' current_tab='publish' %}" class="nav-link {% if current_tab == 'publish' %}active{% endif %}">
-                    Publish
-                </a>
-            </li>
-
-            <!-- Tab form authors articles with status archive -->
-            <li class="nav-item {% if current_tab == 'archive' %}active{% endif %}">
-                <a href="{% url 'my-articles' current_tab='archive' %}" class="nav-link {% if current_tab == 'archive' %}active{% endif %}">
-                    Archive
-                </a>
-            </li>
-        </nav>
-    {% endif %}
+<!-- Zobrazení pro stránku s vlastními článkami -->
+{% if page_title == 'My Articles' %}
+    {% include '3_articles/_page_title/__my_articles__.html' %}
 
 <!-- Pokud není Page Title -->
 {% else %}
@@ -49,62 +13,13 @@
     <!-- Articles Header -->
     <header class="mb-5">
 
-        <!-- Pokud je Category slag -->
+        <!-- Zobrazení pro stránku s kategoriemi -->
         {% if category_slug %}
+            {% include '3_articles/_page_title/__category__.html' %}
 
-            <!-- Když je uživatel přihlášená´ý a hodnota pole je False -->
-            {% if user.is_authenticated and not user.sidebar_category_navigation %}
-
-                <!-- Title -->
-                <h2>Articles with category: {{ category_slug|upper }}</h2>
-
-            <!-- Ve všech ostatních případech -->
-            {% else %}
-
-                <!-- Když je uživatel přihlášený a hodnota pole je True -->
-                {% if user.is_authenticated %}
-
-                    <!-- Title -->
-                    <h2 class="mb-2" >Category</h2>
-
-                    <!-- Navigation -->
-                    <nav class="nav nav-tabs justify-content-end mb-2 pt-4">
-                        {% for category in category_count %}
-                            <li class="nav-item {% if category_slug == category.category__slug %}active{% endif %}">
-                                <a href="{% url 'article-category-list' category_slug=category.category__slug %}" class="nav-link {% if category_slug == category.category__slug %}active{% endif %}">
-                                    {{ category.category__title }}
-                                </a>
-                            </li>
-                        {% endfor %}
-                    </nav>
-
-                <!-- Když je uživatel není přihlášený -->
-                {% else %}
-
-                    <div class="{% if user.is_authenticated and not user.sidebar_category_navigation %} collapse {% else %} collapse show {% endif %}" id="categoryNavigationCollapse">
-
-                        <!-- Title -->
-                        <h2 class="mb-2" >Category</h2>
-
-                        <!-- Navigation -->
-                        <nav class="nav nav-tabs justify-content-end mb-2 pt-4">
-                            {% for category in category_count %}
-                                <li class="nav-item {% if category_slug == category.category__slug %}active{% endif %}">
-                                    <a href="{% url 'article-category-list' category_slug=category.category__slug %}" class="nav-link {% if category_slug == category.category__slug %}active{% endif %}">
-                                        {{ category.category__title }}
-                                    </a>
-                                </li>
-                            {% endfor %}
-                        </nav>
-                    </div>
-
-                    <div class="{% if user.is_authenticated and not user.sidebar_category_navigation %} collapse show {% else %} collapse {% endif %}" id="categoryNavigationCollapse">
-                        <h2>Articles with category: {{ category_slug|upper }}</h2>
-                    </div>
-
-                {% endif %}
-
-            {% endif %}
+        <!-- Zobrazení pro stránku s výsledky vyhledávání -->
+        {% elif query %}
+            {% include '3_articles/_page_title/__search_result__.html' %}
 
         {% else %}
 
@@ -112,9 +27,6 @@
             {% if tag_slug %}
                 <h2>Articles with tag: {{ tag_slug }}</h2>
 
-            <!-- Pokud je Querty -->
-            {% elif query %}
-                <h2>Search results for: {{ query }}</h2>
 
             <!-- Ve všech ostatních případech -->
             {% else %}

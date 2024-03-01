@@ -89,7 +89,7 @@ class CustomUser(AbstractUser):
     sidebar = models.BooleanField(default=True)
 
     # Pole pro sidebar > search
-    sidebar_search = OrderedBooleanField(value=False, order=1, hash="#search")
+    sidebar_search = OrderedBooleanField(value=True, order=1, hash="#search")
 
     # Pole pro sidebar > search > options
     sidebar_search_options = models.BooleanField(default=False)

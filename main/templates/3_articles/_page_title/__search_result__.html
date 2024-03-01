@@ -1,0 +1,17 @@
+<!-- Zobrazení pro stránku s výsledky vyhledávání -->
+
+
+<!-- Title -->
+<h2>Search results for Articles</h2>
+<h2>{{ display_text }}</h2>
+
+<!-- Navigation -->
+<nav class="nav nav-tabs justify-content-end mb-2 pt-4">
+    {% for category in category_count %}
+        <li class="nav-item {% if category_slug == category.category__slug %}active{% endif %}">
+            <a href="{% url 'article-category-list' category_slug=category.category__slug %}" class="nav-link {% if category_slug == category.category__slug %}active{% endif %}">
+                {{ category.category__title }}
+            </a>
+        </li>
+    {% endfor %}
+</nav>

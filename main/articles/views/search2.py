@@ -8,7 +8,7 @@ import ast
 from functools import reduce
 from operator import or_
 from articles.models.article import Article
-
+from articles.models.article_author import ArticleAuthor
 from .article_common_contex_mixin import CommonContextMixin
 
 
@@ -34,10 +34,6 @@ class SearchView(CommonContextMixin, ListView):
 
         Metoda zjistí, zda se jedná o požadavek zadaný do vyhledávacího pole a nebo již touto metodou předspracovaný
         '''
-        print("### get(self, request, *args, **kwargs)")
-        current_url = request.build_absolute_uri()
-        print("Current URL:", current_url)
-
         # Slovník pro jednotlivé položky z dotazu
         search_parameters = {
             'query': self.request.GET.get('q', ''),
@@ -48,9 +44,11 @@ class SearchView(CommonContextMixin, ListView):
             'after': self.request.GET.get('after_date', ''),
             'author': self.request.GET.get('author_select', '')
         }
+        print("### search_parameters get: ", search_parameters)
 
         # Zpětné přeposlání zpracovaného dotazu
         if any(value for value in search_parameters.values()):
+            print("### if any(value for value in search_parameters.values())")
             return redirect(reverse('article-search-results', kwargs={'query': search_parameters}))
 
         # Pokud se jedná o zpětné přeposlání dotazu (má kwargs) posuň dotaz dál
@@ -64,8 +62,11 @@ class SearchView(CommonContextMixin, ListView):
         :return:
         '''
 
+        print("### get_queryset(self)")
+
         # Získání hodnoty kwargs a převod na slovník
         search_parameters = ast.literal_eval(self.kwargs.get('query'))
+        print("### search_parameters get_queryset: ", search_parameters)
 
         # Kontrola zda slovník obsahuje i hodnoty
         if any(value for value in search_parameters.values()):
@@ -97,6 +98,7 @@ class SearchView(CommonContextMixin, ListView):
 
             # Přidání filtrace podle pole pro dotaz
             if search_parameters['query']:
+
                 fields = []
                 self.display_text += f"with term: {search_parameters['query']}"
 
@@ -141,4 +143,3 @@ class SearchView(CommonContextMixin, ListView):
 
         # Navrácení kontextu
         return context
-
