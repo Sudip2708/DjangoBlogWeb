@@ -1,3 +1,5 @@
+print("### 13 main/articles/models/article_author.py")
+
 from django.db import models
 from users.models import CustomUser
 from django.utils.translation import gettext_lazy as _
@@ -6,7 +8,7 @@ from model_utils import FieldTracker
 from django.utils.text import slugify
 
 from utilities.shared.create_thumbnail import create_thumbnail
-
+from articles.schema import ArticleSchema
 
 class ArticleAuthor(models.Model):
     '''
@@ -38,6 +40,9 @@ class ArticleAuthor(models.Model):
         max_length=150,
         unique=True
     )
+
+    # FieldTracker pro sledování změn v profile_picture
+    author_tracker = FieldTracker(fields=['author'])
 
     # Automaický generovaný slug pro URL na základě názvu článku, unikátní
     slug = models.SlugField(
@@ -158,8 +163,15 @@ class ArticleAuthor(models.Model):
             self.slug = self.user.slugify_email
             new_instance = True
 
-        # Kontrola, zda byl změněn profilový obrázek.
+        # Kontrola, zda byl změněn profilový obrázek
         change_of_profile_picture = self.profile_picture_tracker.has_changed('profile_picture')
+
+        # Kontrola změn v poli autora
+        if self.author_tracker.has_changed('author'):
+            old_author_name = self.author_tracker.previous('author')
+            new_author_name = self.author
+            ArticleSchema().update_author_name(old_author_name, new_author_name)
+
 
         # Uložení instance
         super().save(*args, **kwargs)

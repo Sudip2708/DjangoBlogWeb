@@ -1,3 +1,5 @@
+print("### main/articles/views/article_detail.py")
+
 ### Definice třídy pohledu pro jeden článek
 
 from django.shortcuts import redirect, reverse

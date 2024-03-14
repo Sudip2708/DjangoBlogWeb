@@ -665,5 +665,12 @@ Nastavení pro zobrazení vyhledávacího panelu z tlačítka navigační lišty
 • templates/0_base/_header/_search_popup > vytvořit soubor __author__.html a přepsat sem příslušný kod
 • templates/0_base/_header/_f__search_popup__.html > přepsat kod vzhledem k nově vytvořeným souborům
 ###
-
-
+Indexování:
+$ pip instalace Whoosh
+• articles/ > vytvořit soubor schema.py a zapsat do něj kod pro schema a další metody spojené s indexací
+• main/settings.py > definovat cestu ke složce indexu INDEX_DIRECTORY
+• articles/views/search.py > přepsat kod aby zohlednoval vyhledávání v schématu
+$ pip install python-dateutil (Zpracování indexu datumu)
+• articles/models/article.py > přidat do metody save indexování článku
+• articles/models/article_author.py > přidat do metody save indexování jméno autora při jeho změně
+###

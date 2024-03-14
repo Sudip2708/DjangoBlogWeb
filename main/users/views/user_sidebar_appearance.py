@@ -1,3 +1,5 @@
+print("### main/users/views/user_sidebar_appearance.py")
+
 from django.http import JsonResponse
 
 def user_sidebar_appearance(request):

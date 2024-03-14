@@ -1,3 +1,5 @@
+print("### main/articles/forms/article_form.py")
+
 ### Definuje formuláře (na webu) pro pole s použitím TinyMCEWidget.
 
 from django import forms

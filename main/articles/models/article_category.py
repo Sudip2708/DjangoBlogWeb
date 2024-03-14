@@ -1,3 +1,5 @@
+print("### 14 main/articles/models/article_category.py")
+
 ### Definuje modely (tabulky) pro kategorie.
 
 from django.db import models

@@ -1,3 +1,5 @@
+print("### main/users/views/user_sidebar_movements.py")
+
 from django.http import HttpResponse, HttpResponseRedirect
 from django.urls import reverse
 

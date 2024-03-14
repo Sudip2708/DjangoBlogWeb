@@ -1,40 +1,44 @@
-### Definice třídy pohledu pro hledání v článcích
-
+from whoosh.qparser import MultifieldParser
+from whoosh import sorting
 from django.views.generic import ListView
-from django.db.models import Q
 from django.shortcuts import redirect
-from django.urls import reverse
 import ast
-from functools import reduce
-from operator import or_
-from articles.models.article import Article
 
+from whoosh.query import And, Term
+from whoosh.query import DateRange
+from dateutil.parser import parse as parse_date
+
+from django.urls import reverse
+from datetime import datetime
+
+from articles.models.article import Article
+from articles.models.article_author import ArticleAuthor
+from articles.schema import ArticleSchema
 from .article_common_contex_mixin import CommonContextMixin
 
 
 class SearchView(CommonContextMixin, ListView):
     '''
-    Pohled pro vyhledávání článků
+    Pohled pro zpracování dotazu pro vyhledávání v článcích.
     '''
 
-    # Použitý model pro zobrazení výsledků vyhledávání
     model = Article
-
-    # Cesta k šabloně pro zobrazení výsledků vyhledávání
     template_name = '3_articles/30__base__.html'
-
-    # Počet výsledků na stránku
     paginate_by = 4
-
     display_text = ""
 
     def get(self, request, *args, **kwargs):
         '''
-        Metoda pro zpracování dotazu ze stránky.
+        Metoda pro zpracování dotazu pro vyhledávání v článcích.
 
-        Metoda zjistí, zda se jedná o požadavek zadaný do vyhledávacího pole a nebo již touto metodou předspracovaný
+        Při prvním průchodu metoda předspracuje data a při druhém data předá dál na vyhledávání
+
+        :param request: Objekt HttpRequest, obsahující informace o HTTP požadavku.
+        :param args: Pozicí argumenty, které mohou být předány metodě.
+        :param kwargs: Klíčové argumenty, které mohou být předány metodě.
+        :return: HTTP odpověď s přesměrováním na výsledky vyhledávání nebo výsledek z předchozího volání nadřazené metody.
         '''
-        print("### get(self, request, *args, **kwargs)")
+
         current_url = request.build_absolute_uri()
         print("Current URL:", current_url)
 
@@ -53,83 +57,117 @@ class SearchView(CommonContextMixin, ListView):
         if any(value for value in search_parameters.values()):
             return redirect(reverse('article-search-results', kwargs={'query': search_parameters}))
 
-        # Pokud se jedná o zpětné přeposlání dotazu (má kwargs) posuň dotaz dál
+        # Pokud se jedná o zpětné přeposlání dotazu (má kwargs) pokračuj na vyhledání výsledku
         else:
             return super().get(request, *args, **kwargs)
 
     def get_queryset(self):
         '''
-        Metoda pro získání dotazu pro databázi
+        Metody pro získání dat z databáze na základě dotazu
 
-        :return:
+        :return: Výsledek pro dané hledání
         '''
 
-        # Získání hodnoty kwargs a převod na slovník
+        # Vytvoření dotazu pro hledání ve Whoosh
         search_parameters = ast.literal_eval(self.kwargs.get('query'))
+        article_schema = ArticleSchema()
+        query = self.create_query(search_parameters, article_schema)
 
-        # Kontrola zda slovník obsahuje i hodnoty
-        if any(value for value in search_parameters.values()):
+        # Vyhledání dotazu Whoosh a získání ID článků
+        if query:
+            with article_schema.ix.searcher() as searcher:
+                results = searcher.search(query, sortedby=sorting.FieldFacet('updated', reverse=True))
+                article_ids = [int(hit['id']) for hit in results]
 
-            # Základ dotazu pro získání všech článků
-            queryset = Article.objects.all()
-
-            # Přidání filtrace dle autora
-            if search_parameters['author']:
-                author = search_parameters['author']
-                queryset = queryset.filter(author=author)
-                author_instance = ArticleAuthor.objects.get(pk=author)
-                self.display_text += f"from { author_instance.author } "
-
-            # Přidání filtrace dle data před
-            if search_parameters['before']:
-                before = search_parameters['before']
-                queryset = queryset.filter(created__lte=before)
-                self.display_text += f"published before {before} "
-
-            # Přidání filtrace dle data po
-            if search_parameters['after']:
-                after = search_parameters['after']
-                queryset = queryset.filter(created__gte=after)
-                if search_parameters['before']:
-                    self.display_text += f"and after {after} "
-                else:
-                    self.display_text += f"published after {after} "
-
-            # Přidání filtrace podle pole pro dotaz
-            if search_parameters['query']:
-                fields = []
-                self.display_text += f"with term: {search_parameters['query']}"
-
-                # Když je zaškrtlé pole pro nadpis
-                if search_parameters['title']:
-                    fields.append('title')
-
-                # Když je zaškrtlé pole pro přehled
-                if search_parameters['overview']:
-                    fields.append('overview')
-
-                # Když je zaškrtlé pole pro obsah
-                if search_parameters['content']:
-                    fields.append('content')
-
-                # Vytvoření společného filtru
-                queryset = queryset.filter(
-                    reduce(or_, (Q(**{f"{field}__icontains": search_parameters['query']}) for field in fields))
-                )
-
-            # Navrácení dotazu
-            return queryset.distinct().order_by('-created')
-
-        # V případě, že slovník neobsahuje i hodnoty, vrátit prázdnou množinu
+        # Pokud nebyl zadán žádný parametr pro hledání
         else:
-            return Article.objects.none()
+            self.display_text = "No search parameters were provided."
+            article_ids = []
 
-    # Přidání kontext dat
+        # Získání článků z hlavní databáze podle nalezených ID
+        queryset = Article.objects.filter(id__in=article_ids)
+
+        return queryset
+
+
+    def create_query(self, search_parameters, article_schema):
+        '''
+        Metoda vytváří dotaz pro whoosh index na základě hledaných parametrů a schématu indexu
+
+        :param search_parameters: Hledané výrazy
+        :param article_schema: Schema pro Whoosh
+        :return: Dotaz pro hledání v indexech Whoosh
+        '''
+
+        # Vytvoření dotazu pro hledání dle zadaného slova:
+        term_query = None
+        if search_parameters['query']:
+            therm = search_parameters['query']
+            search_fields = [i for i in ('title', 'overview', 'content') if search_parameters[i]]
+            term_query = MultifieldParser(search_fields,
+                                          schema=article_schema.get_schema()).parse(therm)
+
+            # Vytvoření popisného textu pro výsledek hledání
+            self.display_text = f"with the therm {therm}"
+            if len(search_fields) == 1:
+                self.display_text += f" in {search_fields[0]}"
+            elif len(search_fields) == 2:
+                self.display_text += f" in {search_fields[0]} and {search_fields[1]}"
+            self.display_text += "<br>"
+
+        # Vytvoření dotazu pro hledání dle data:
+        date_query = None
+        if search_parameters['before'] or search_parameters['after']:
+            before_date = parse_date(search_parameters['before']) if search_parameters['before'] else None
+            after_date = parse_date(search_parameters['after']) if search_parameters['after'] else None
+            date_query = DateRange("updated", before_date, after_date, startexcl=False, endexcl=False)
+
+            def format_date(date):
+                '''
+                Metoda pro změnu formátu datumu
+
+                :param date: Datum z formuláře (%Y-%m-%d)
+                :return: Upravené datum (%d. %m. %Y)
+                '''
+                input_date = datetime.strptime(date, "%Y-%m-%d")
+                return input_date.strftime("%d. %m. %Y")
+
+            # Vytvoření popisného textu pro výsledek hledání
+            if before_date:
+                self.display_text += f"published before {format_date(search_parameters['before'])}"
+                if after_date:
+                    self.display_text += f" and after {format_date(search_parameters['after'])}"
+            elif after_date:
+                self.display_text += f"published after {format_date(search_parameters['after'])}"
+            self.display_text += "<br>"
+
+
+
+
+        # Vytvoření dotazu pro hledání dle autora:
+        author_query = None
+        if search_parameters['author']:
+            author_name = ArticleAuthor.objects.get(id=search_parameters['author']).author
+            author_query = Term('author', author_name.lower())
+
+            # Vytvoření popisného textu pro výsledek hledání
+            self.display_text += f"written by the author {author_name}"
+
+
+        # Vytvoření dotazu ze seznamu zadaných podmínek
+        query = None
+        queries = [i for i in (term_query, date_query, author_query) if i]
+        if queries:
+            query = queries[0] if len(queries) == 1 else And(queries)
+
+        return query
+
+
     def get_context_data(self, **kwargs):
         '''
         Metoda pro vložení kontextu
 
-        :return:
+        :return: Kontext s vloženými daty
         '''
 
         # Získání běžného kontextu a přidání vyhledávacího dotazu
@@ -137,8 +175,8 @@ class SearchView(CommonContextMixin, ListView):
 
         # Přidání výsledku dotazu
         context['query'] = self.kwargs.get('query') or self.request.GET.get('q')
+        print(repr(self.display_text))
         context['display_text'] = self.display_text
 
         # Navrácení kontextu
         return context
-

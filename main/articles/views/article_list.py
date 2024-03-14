@@ -1,10 +1,13 @@
+print("### main/articles/views/article_list.py")
+
 ### Definice třídy pohledu pro výpis článků
 
 from django.views.generic import ListView
 from django.shortcuts import get_object_or_404
 from taggit.models import Tag
 
-from articles.models.article import Article, ArticleCategory
+from articles.models.article import Article
+from articles.models.article_category import ArticleCategory
 from .article_common_contex_mixin import CommonContextMixin
 
 

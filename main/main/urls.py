@@ -1,3 +1,5 @@
+print("### main/main/urls.py")
+
 ### Definice URL patternů pro aplikaci
 
 from django.contrib import admin
@@ -13,6 +15,7 @@ from articles.views.article_detail import ArticleDetailView
 from articles.views.article_list import ArticleListView
 from articles.views.article_update import ArticleUpdateView
 from articles.views.search import SearchView
+
 from users.views.profile_update_user import profile_update_user
 from users.views.profile_update_author import profile_update_author
 from users.views.user_sidebar_movements import user_sidebar_movements

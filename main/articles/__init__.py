@@ -1,0 +1,1 @@
+print("### 06 main/articles/__init__.py")

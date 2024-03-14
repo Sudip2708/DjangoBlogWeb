@@ -1,3 +1,5 @@
+print("### 12 main/articles/models/article.py")
+
 import os
 from django.urls import reverse
 from django.db import models
@@ -11,6 +13,7 @@ from .article_author import ArticleAuthor
 from .article_category import ArticleCategory
 from .article_view import ArticleView
 from utilities.for_articles.create_other_sizes_of_main_picture import create_other_sizes_of_main_picture
+from articles.schema import ArticleSchema
 
 
 class Article(models.Model):
@@ -239,6 +242,9 @@ class Article(models.Model):
             # Ověří zda je vytvořené umístění pro soubory, pokud ne, pak ho vytvoří
             os.makedirs(Article.main_picture_path(), exist_ok=True)
 
+        # Indexace článku
+        ArticleSchema().index_article_content(self)
+
         # Kontrola, zda byl změněn hlavní obrázek.
         change_of_max_size_picture = self.main_picture_max_size_tracker.has_changed('main_picture_max_size')
 
@@ -248,4 +254,5 @@ class Article(models.Model):
         # Pokud byl změně profilový obrázek, bude změněna i jeho miniatura.
         if change_of_max_size_picture:
             create_other_sizes_of_main_picture(self)
+
 

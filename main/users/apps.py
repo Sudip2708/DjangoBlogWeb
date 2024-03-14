@@ -1,3 +1,5 @@
+print("### 05 main/users/apps.py")
+
 # users/apps.py
 from django.apps import AppConfig
 

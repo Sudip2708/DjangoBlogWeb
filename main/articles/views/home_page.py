@@ -1,3 +1,5 @@
+print("### main/articles/views/home_page.py")
+
 ### Definice třídy pohledu pro hlavní stránku
 
 from django.shortcuts import render, redirect

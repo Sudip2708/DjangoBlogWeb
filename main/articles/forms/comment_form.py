@@ -1,3 +1,5 @@
+print("### main/articles/forms/comment_form.py")
+
 ### Definuje formuláře (na webu) pro aplikaci.
 
 from django import forms

@@ -1,3 +1,5 @@
+print("### main/articles/views/article_create.py")
+
 ### Definice třídy pohledu pro vytvoření článku
 
 from django.shortcuts import redirect, reverse

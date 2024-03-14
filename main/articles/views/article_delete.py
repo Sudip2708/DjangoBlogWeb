@@ -1,3 +1,5 @@
+print("### main/articles/views/article_delete.py")
+
 ### Definice třídy pohledu pro smazání článku
 
 from django.views.generic import DeleteView

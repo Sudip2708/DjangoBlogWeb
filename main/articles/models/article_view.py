@@ -1,3 +1,5 @@
+print("### 15 main/articles/models/article_view.py")
+
 ### Definuje modely (tabulky) pro aplikaci.
 
 from django.db import models

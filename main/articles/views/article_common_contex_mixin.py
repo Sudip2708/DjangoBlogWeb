@@ -1,3 +1,5 @@
+print("### main/articles/views/article_common_contex_mixin.py")
+
 ### Definice třídy pro společný obsah
 
 from django.db.models import Count

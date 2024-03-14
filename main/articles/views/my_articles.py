@@ -1,3 +1,5 @@
+print("### main/articles/views/my_articles.py")
+
 ### Definice třídy pohledu pro výpis článků
 
 from django.views.generic import ListView

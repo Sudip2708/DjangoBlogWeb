@@ -1,3 +1,5 @@
+print("### 03 main/main/settings.py")
+
 """
 Django settings for main project.
 
@@ -275,3 +277,8 @@ SOCIALACCOUNT_PROVIDERS = {
 
 # Nastavení pro taggit, aby nerozlišoval mezi malým a velkým písmem
 TAGGIT_CASE_INSENSITIVE = True
+
+#############################################################################################
+
+# Nastavení cesty pro indexaci Whoosh
+INDEX_DIRECTORY = BASE_DIR / 'articles' / 'article_index'

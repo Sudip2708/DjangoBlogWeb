@@ -1,3 +1,5 @@
+print("### 16 main/articles/models/article_comment.py")
+
 ### Definuje modely (tabulky) pro komentáře.
 
 from django.db import models

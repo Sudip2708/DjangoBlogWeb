@@ -1,3 +1,5 @@
+print("### main/articles/views/article_update.py")
+
 ### Definice třídy pohledu pro úpravu článku
 
 

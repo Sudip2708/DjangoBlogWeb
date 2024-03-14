@@ -1,3 +1,5 @@
+print("### main/users/views/profile_update_user.py")
+
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required

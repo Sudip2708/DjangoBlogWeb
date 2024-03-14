@@ -1,3 +1,5 @@
+print("### 11 main/articles/admin.py")
+
 ### Registrace modelů pro zobrazení v administrátorském rozhraní Django
 
 from django.contrib import admin
