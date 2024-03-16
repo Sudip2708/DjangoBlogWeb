@@ -48,6 +48,7 @@ class ArticleListView(CommonContextMixin, ListView):
     def get_paginate_by(self, queryset):
         # Získání přihlášeného uživatele
         user = self.request.user
+
         # Pokud je uživatel přihlášený a má pole sidebar nastavené na False, nastavte paginate_by na 6, jinak na 4
         if user.is_authenticated and not user.sidebar:
             return 6

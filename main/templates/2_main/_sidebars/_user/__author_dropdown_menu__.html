@@ -8,14 +8,14 @@
     <!-- Button -->
     <button class="btn btn-link d-block drop-down-title"
             data-bs-toggle="collapse"
-            data-bs-target="#authorOptionsCollapse"
+            data-bs-target="#sidebar_user_author_menu"
             aria-expanded="{{ user.sidebar_user_author_menu }}"
-            aria-controls="authorOptionsCollapse">
+            aria-controls="sidebar_user_author_menu">
         Author Menu
     </button>
 
     <!-- Drop-down items -->
-    <div class="collapse {% if user.sidebar_user_author_menu %} show {% endif %}" id="authorOptionsCollapse">
+    <div class="collapse {% if user.sidebar_user_author_menu %} show {% endif %}" id="sidebar_user_author_menu">
 
         <!-- Create an Article -->
         <a class="d-block drop-down-text"

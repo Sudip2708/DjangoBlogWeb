@@ -8,24 +8,14 @@ from model_utils import FieldTracker
 import os
 
 from .managers import CustomUserManager
+from .user_settings_mixin import UserSettingsMixin
 from utilities.for_users.create_default_username import create_default_username
 from utilities.for_users.create_default_profile_picture import create_default_profile_picture
 
 from utilities.shared.create_thumbnail import create_thumbnail
 
-class OrderedBooleanField(models.Model):
-    """
-    Pole boolean s informací o pořadí.
-    """
-    value = models.BooleanField(default=False)
-    order = models.PositiveIntegerField(unique=True)
-    hash = models.CharField(max_length=50, null=True, blank=True)
 
-    def __str__(self):
-        return str(self.value)
-
-
-class CustomUser(AbstractUser):
+class CustomUser(AbstractUser, UserSettingsMixin):
     '''
     Rozšiřuje Django vestavěný model AbstractUser o pole pro profilové obrázky.
 
@@ -73,7 +63,6 @@ class CustomUser(AbstractUser):
     # Pole pro id Autora (je-li)
     linked_author_id = models.PositiveIntegerField(null=True, blank=True)
 
-
     # FieldTracker pro sledování změn v profile_picture
     profile_picture_tracker = FieldTracker(fields=['profile_picture'])
 
@@ -87,79 +76,8 @@ class CustomUser(AbstractUser):
     objects = CustomUserManager()
 
 
-    # Pole pro sidebar
-    sidebar = models.BooleanField(default=True)
-
-    # Pole pro sidebar > search
-    sidebar_search = OrderedBooleanField(value=True, order=1, hash="#search")
-
-    # Pole pro sidebar > search > options
-    sidebar_search_options = models.BooleanField(default=False)
-
-    # Pole pro sidebar > user
-    sidebar_user = OrderedBooleanField(value=True, order=2, hash="#user")
-
-    # Pole pro sidebar > user > __user_dropdown_menu__.html
-    sidebar_user_user_menu = models.BooleanField(default=False)
-
-    # Pole pro sidebar > user > author > __author_dropdown_menu__.html
-    sidebar_user_author_menu = models.BooleanField(default=False)
-
-    # Pole pro sidebar > category
-    sidebar_category = OrderedBooleanField(value=True, order=3, hash="#category")
-
-    # Pole pro sidebar > category > Zobrazení / Skrytí lišty navigace
-    sidebar_category_navigation = models.BooleanField(default=True)
-
-    # Pole pro sidebar > search
-    sidebar_tags = OrderedBooleanField(value=True, order=4, hash="#tags")
-
     def __str__(self):
         return self.username
-
-
-    @property
-    def sidebars(self):
-        return [self.sidebar_search, self.sidebar_user, self.sidebar_category, self.sidebar_tags]
-
-
-    def sidebar_move_up(self, sidebar):
-        """
-        Posune toto pole nahoru o jedno místo.
-        """
-        current_sidebar = None
-        for i in self.sidebars:
-            if sidebar.startswith(i.hash):
-                current_sidebar = i
-        current_sidebar_position = current_sidebar.order
-        previouse_sidebar_position = current_sidebar_position - 1
-        previouse_sidebar = None
-        for i in self.sidebars:
-            if i.order == previouse_sidebar_position:
-                previouse_sidebar = i
-        previouse_sidebar.order, current_sidebar.order = current_sidebar.order, previouse_sidebar.order
-        self.save()
-
-
-    def sidebar_move_down(self, sidebar):
-        """
-        Posune toto pole dolu o jedno místo.
-        """
-        sidebars = [self.sidebar_search, self.sidebar_user, self.sidebar_category, self.sidebar_tags]
-        current_sidebar = None
-        for i in self.sidebars:
-            if sidebar.startswith(i.hash):
-                current_sidebar = i
-        current_sidebar_position = current_sidebar.order
-        next_sidebar_position = current_sidebar_position + 1
-        next_sidebar = None
-        for i in self.sidebars:
-            if i.order == next_sidebar_position:
-                next_sidebar = i
-        next_sidebar.order, current_sidebar.order = current_sidebar.order, next_sidebar.order
-        self.save()
-
-
 
     @property
     def slugify_email(self):
@@ -173,6 +91,7 @@ class CustomUser(AbstractUser):
         [hint]
         slugify
         '''
+
         return f"{slugify(self.email.replace('@', '_').replace('.', '_'))}"
 
 
@@ -184,6 +103,7 @@ class CustomUser(AbstractUser):
         Přední část je slagifikovaný email.
         Dodatek tvoří zkrazka pro User Profile Picture (upp) a hodnota velikosti (300).
         '''
+
         return f"{self.slugify_email}_upp_300.jpg"
 
 
@@ -195,6 +115,7 @@ class CustomUser(AbstractUser):
         Přední část je slagifikovaný email.
         Dodatek tvoří zkrazka pro User Profile Picture a hodnota velikosti.
         '''
+
         return f"{self.slugify_email}_upp_150.jpg"
 
 
@@ -205,6 +126,7 @@ class CustomUser(AbstractUser):
 
         (složka profile_pictures obsahuje i složku authors pro profilové obrázky autora)
         '''
+
         return "images/profile_pictures/users/"
 
 
@@ -216,6 +138,7 @@ class CustomUser(AbstractUser):
         [hint]
         os.path.join
         '''
+
         return os.path.join(self.profile_picture_directory, self.profile_picture_name)
 
 
@@ -227,6 +150,7 @@ class CustomUser(AbstractUser):
         [hint]
         os.path.join
         '''
+
         return os.path.join(self.profile_picture_directory, self.profile_picture_thumbnail_name)
 
 

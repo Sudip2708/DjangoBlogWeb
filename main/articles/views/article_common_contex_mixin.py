@@ -57,17 +57,19 @@ class CommonContextMixin(ContextMixin):
 
         if not isinstance(user, AnonymousUser):
             sorted_panels = [
-                {'name': 'search', 'order': user.sidebar_search.order},
-                {'name': 'user', 'order': user.sidebar_user.order},
-                {'name': 'category', 'order': user.sidebar_category.order},
-                {'name': 'tags', 'order': user.sidebar_tags.order},
+                {'name': 'search', 'order': user.sidebar_search_order},
+                {'name': 'user', 'order': user.sidebar_user_order},
+                {'name': 'category', 'order': user.sidebar_category_order},
+                {'name': 'tags', 'order': user.sidebar_tags_order},
             ]
+
         else:
             sorted_panels = [
                 {'name': 'search', 'order': 1},
                 {'name': 'category', 'order': 2},
                 {'name': 'tags', 'order': 3},
             ]
+
         # Seřazení podle pořadí
         sorted_panels.sort(key=lambda x: x['order'])
         # Přidání seřazených panelů do kontextu

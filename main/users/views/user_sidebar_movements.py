@@ -12,42 +12,12 @@ def user_sidebar_movements(request, hash):
         # Získání přihlášeného uživatele
         user = request.user
 
-        # Změna hodnoty pole sidebar_user_user_menu na opačnou
+        # Pokud se jedná o změnu viditelnosti sidebaru
         if hash == "#sidebarCollapse":
-            user.sidebar = not user.sidebar
-            user.save()
-
-        # Posunu sidebaru nahoru
-        elif hash == "#userMoveUp":
-            user.sidebar_move_up(hash)
-
-        # Posunu sidebaru dolu
-        elif hash == "#userMoveDown":
-            user.sidebar_move_down(hash)
-
-        # Posunu sidebaru nahoru
-        elif hash == "#searchMoveUp":
-            user.sidebar_move_up(hash)
-
-        # Posunu sidebaru dolu
-        elif hash == "#searchMoveDown":
-            user.sidebar_move_down(hash)
-
-        # Posunu sidebaru nahoru
-        elif hash == "#categoryMoveUp":
-            user.sidebar_move_up(hash)
-
-        # Posunu sidebaru dolu
-        elif hash == "#categoryMoveDown":
-            user.sidebar_move_down(hash)
-
-        # Posunu sidebaru nahoru
-        elif hash == "#tagsMoveUp":
-            user.sidebar_move_up(hash)
-
-        # Posunu sidebaru dolu
-        elif hash == "#tagsMoveDown":
-            user.sidebar_move_down(hash)
+            user.change_sidebar_value('sidebar_appearance')
+        # Pokud se jedná o posun jednotlivých sidebarů
+        else:
+            user.sidebar_move(hash)
 
     # Získání odkazu na předchozí stránku
     previous_page = request.META.get('HTTP_REFERER', '/')

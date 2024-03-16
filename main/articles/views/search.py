@@ -120,7 +120,7 @@ class SearchView(CommonContextMixin, ListView):
         if search_parameters['before'] or search_parameters['after']:
             before_date = parse_date(search_parameters['before']) if search_parameters['before'] else None
             after_date = parse_date(search_parameters['after']) if search_parameters['after'] else None
-            date_query = DateRange("updated", before_date, after_date, startexcl=False, endexcl=False)
+            date_query = DateRange("updated", after_date, before_date, startexcl=False, endexcl=False)
 
             def format_date(date):
                 '''

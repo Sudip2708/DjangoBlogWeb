@@ -9,21 +9,21 @@
     <div class="d-flex justify-content-between">
         <!-- První dva prvky (zleva) -->
         <div class="d-inline-block">
-            {% include '2_main/_sidebars/_common/__button_collapse__.html' with ar_exp=user.sidebar_user ar_con='userCollapse' title='User Menu' %}
+            {% include '2_main/_sidebars/_common/__button_collapse__.html' with ar_exp=user.sidebar_user ar_con='sidebar_user' title='User Menu' %}
         </div>
         <div class="d-inline-block">
-            {% if user.sidebar_user.order != 1 %}
-                {% include '2_main/_sidebars/_common/__move_up__.html' with target='#userMoveUp' %}
+            {% if user.sidebar_user_order != 1 %}
+                {% include '2_main/_sidebars/_common/__move_up__.html' with target='#MoveUp_user' %}
             {% endif %}
             {% if atr != "last" %}
-                {% include '2_main/_sidebars/_common/__move_down__.html' with target='#userMoveDown' %}
+                {% include '2_main/_sidebars/_common/__move_down__.html' with target='#MoveDn_user' %}
             {% endif %}
         </div>
     </div>
 
 
     <!-- Drop-down items -->
-    <div class="collapse {% if user.sidebar_user.value %} show {% endif %}" id="userCollapse">
+    <div class="collapse {% if user.sidebar_user %} show {% endif %}" id="sidebar_user">
 
 
 

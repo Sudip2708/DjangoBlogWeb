@@ -19,7 +19,7 @@
 </style>
 
 <!-- Drop-down items -->
-<div class="collapse {% if user.sidebar_search_options %} show {% endif %}" id="searchOptionsCollapse">
+<div class="collapse {% if user.sidebar_search_options %} show {% endif %}" id="sidebar_search_options">
 
     <p class="sidebar-search-text1 mt-4">Where do you want to search?</p>
 
@@ -81,22 +81,24 @@
 
     <div class="row">
 
-        <!-- Before -->
-        <div class="col-6">
-            <input class="form-control"
-                   type="date"
-                   name="before_date"
-                   id="before_date"
-                   placeholder="Before">
-        </div>
-
         <!-- After -->
         <div class="col-6">
+            <small class="article-date-label">Published After:</small>
             <input class="form-control"
                    type="date"
                    name="after_date"
                    id="after_date"
                    placeholder="After">
+        </div>
+
+        <!-- Before -->
+        <div class="col-6">
+            <small class="article-date-label">Published Before:</small>
+            <input class="form-control"
+                   type="date"
+                   name="before_date"
+                   id="before_date"
+                   placeholder="Before">
         </div>
 
     </div>

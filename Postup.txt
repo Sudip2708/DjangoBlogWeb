@@ -674,3 +674,17 @@ $ pip install python-dateutil (Zpracování indexu datumu)
 • articles/models/article.py > přidat do metody save indexování článku
 • articles/models/article_author.py > přidat do metody save indexování jméno autora při jeho změně
 ###
+Zpráva postranního panelu
+• users/models.py > odebrat kod pro nastavení postranního panelu
+$ python manage.py makemigrations
+$ python manage.py migrate
+• users/ > vytvořit soubor user_settings_mixin.py a zapsat kod pro nastavení postranního panelu
+• users/models.py > importovat a připsat mixin třídu
+$ python manage.py makemigrations
+$ python manage.py migrate
+• articles/views/article_common_contex_mixin.py > přepsat kod pro získání pořadí postranních panelů
+• users/views/user_sidebar_appearance.py > oprava kodu aby využíval metody z user_settings_mixin.py
+• users/views/user_sidebar_movements.py > oprava kodu aby využíval metody z user_settings_mixin.py
+• templates/ > přispůsobení kodu novím podmínkám
+Oprava hledání podle datumu
+• main/articles/views/search.py > opravit pořadí hledání podle data před a po
