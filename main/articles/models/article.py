@@ -8,6 +8,7 @@ from django.utils.translation import gettext_lazy as _
 from autoslug import AutoSlugField
 from taggit.managers import TaggableManager
 from model_utils import FieldTracker
+from django.utils import timezone
 
 from .article_author import ArticleAuthor
 from .article_category import ArticleCategory
@@ -76,6 +77,10 @@ class Article(models.Model):
     # Datum poslední aktualizace článku
     updated = models.DateTimeField(auto_now=True)
 
+    # Datum zveřejnění článku
+    published = models.DateTimeField(_("publish_date"), null=True, blank=True)
+
+
     # Správce pro práci s tagy
     tags = TaggableManager(blank=True)
 
@@ -95,6 +100,7 @@ class Article(models.Model):
         choices=[('drafted', 'Drafted'), ('publish', 'Publish'), ('archive', 'Archive')],
         default='draft'
     )
+
 
     # Příznak, zda je článek označený jako "featured" pro hlavní stránku
     featured = models.BooleanField(default=False)
@@ -247,6 +253,12 @@ class Article(models.Model):
 
         # Kontrola, zda byl změněn hlavní obrázek.
         change_of_max_size_picture = self.main_picture_max_size_tracker.has_changed('main_picture_max_size')
+
+        # Kontrola zda je článek publikovaný a má i vyplněný datum publikace
+        if self.status == 'publish' and not self.publish_date:
+            self.publish_date = timezone.now()
+        elif self.status != 'publish' and self.publish_date:
+            self.publish_date = None
 
         # Uložení instance
         super().save(*args, **kwargs)

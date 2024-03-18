@@ -34,18 +34,14 @@
                         Category
                     </h3>
 
-                    <button class="btn btn-link drop-down-title p-0 light-grey-color"
-                            data-bs-toggle="collapse"
-                            data-bs-target="#categoryNavigationCollapse"
-                            aria-expanded="{{ user.sidebar_category_navigation }}"
-                            aria-controls="categoryNavigationCollapse"
-                            style="transition: none;">
+                    <a class="btn btn-link drop-down-title p-0 light-grey-color"
+                       href="{% url 'user_sidebar_movements' hash='#sidebar_category_navigation' %}">
                         {% if user.is_authenticated and not user.sidebar_category_navigation %}
                             Show Navigation
                         {% else %}
                             Hide Navigation
                         {% endif %}
-                    </button>
+                    </a>
 
                 </div>
 

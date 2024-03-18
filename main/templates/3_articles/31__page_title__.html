@@ -1,46 +1,77 @@
 <!-- Include for 3_articles/30__base__.html -->
 <!-- for Articles Header -->
 
+<!-- Zobrazení článků se záložkami kategorií -->
+{% if categories %}
+
+    <!-- Page title -->
+    <header>
+        <h2>Article Categories</h2>
+    </header>
+
+    <!-- Navigace pro stránku s vlastními články -->
+    <nav class="nav nav-tabs justify-content-end mb-5 pt-2">
+
+        <!-- Tab for all articles -->
+        <li class="nav-item {% if current_tab == 'all' %}active{% endif %}">
+            <a href="/articles/all" class="nav-link {% if current_tab == 'all' %}active{% endif %}">
+                All
+            </a>
+        </li>
+
+        {% for category in categories %}
+
+            <!-- Tab for categories -->
+            <li class="nav-item ">
+                <a href="/articles/category/{{ category.slug }}" class="nav-link {% if current_tab == category.slug %}active{% endif %}">
+                    {{ category }}
+                </a>
+            </li>
+
+        {% endfor %}
+
+    </nav>
+
+{% elif search_result %}
+
+            <!-- Navigace pro stránku s vlastními články -->
+    <nav class="nav nav-tabs justify-content-end mb-5 pt-4">
+
+            <!-- Tab for categories -->
+            <li class="nav-item ">
+                <a href="/articles/all" class="nav-link {% if current_tab == 'all' %}active{% endif %}">
+                    Search Result
+                </a>
+            </li>
+
+            <li class="nav-item ">
+                <a href="/articles/similar" class="nav-link {% if current_tab == 'similar' %}active{% endif %}">
+                    Similar Articles
+                </a>
+            </li>
 
 
-<!-- Zobrazení pro stránku s vlastními článkami -->
-{% if page_title == 'My Articles' %}
-    {% include '3_articles/_page_title/__my_articles__.html' %}
+    </nav>
 
-<!-- Pokud není Page Title -->
+
+<!-- Zobrazení článků pouze s popisem -->
 {% else %}
 
-    <!-- Articles Header -->
+    <!-- Page title and overview -->
     <header class="mb-5">
 
-        <!-- Zobrazení pro stránku s kategoriemi -->
-        {% if category_slug %}
-            {% include '3_articles/_page_title/__category__.html' %}
+        <!-- Zobrazení pro všechny články -->
+        {% if current_tab == 'all' %}
+            <h2>All Articles</h2>
+            <p class="text-lg fw-light text-secondary mt-2">To find a specific article, use the search box on the right.</p>
 
-        <!-- Zobrazení pro stránku s výsledky vyhledávání -->
-        {% elif query %}
-            {% include '3_articles/_page_title/__search_result__.html' %}
-
+        <!-- Zobrazení pro články dle kategorie -->
         {% else %}
-
-            <!-- Pokud je Tag slag -->
-            {% if tag_slug %}
-                <h2>Articles with tag: {{ tag_slug }}</h2>
-
-
-            <!-- Ve všech ostatních případech -->
-            {% else %}
-                <h2>All articles</h2>
-
-            {% endif %}
-
-            <!-- Text -->
-            <p class="text-lg fw-light">
-                To find a specific article, use the search box on the right.
-            </p>
-
+            <h2>Articles for Category: {{ current_tab_name }}</h2>
+            <p class="text-lg fw-light text-secondary mt-2">(To display categories menu, click on 'Show Navigation' in the sidebar.)</p>
         {% endif %}
 
     </header>
+
 
 {% endif %}

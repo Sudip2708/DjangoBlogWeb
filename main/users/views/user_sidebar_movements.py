@@ -13,8 +13,14 @@ def user_sidebar_movements(request, hash):
         user = request.user
 
         # Pokud se jedná o změnu viditelnosti sidebaru
-        if hash == "#sidebarCollapse":
+        if hash == "#sidebar_appearance":
             user.change_sidebar_value('sidebar_appearance')
+
+        # Pokud se jedná o zobrazení navigace kategorií
+        if hash == "#sidebar_category_navigation":
+            print("### #sidebar_category_navigation")
+            user.change_sidebar_value('sidebar_category_navigation')
+
         # Pokud se jedná o posun jednotlivých sidebarů
         else:
             user.sidebar_move(hash)

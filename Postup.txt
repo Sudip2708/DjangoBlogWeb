@@ -686,5 +686,21 @@ $ python manage.py migrate
 • users/views/user_sidebar_appearance.py > oprava kodu aby využíval metody z user_settings_mixin.py
 • users/views/user_sidebar_movements.py > oprava kodu aby využíval metody z user_settings_mixin.py
 • templates/ > přispůsobení kodu novím podmínkám
+###
 Oprava hledání podle datumu
 • main/articles/views/search.py > opravit pořadí hledání podle data před a po
+###
+Změna vyhledávání podle Authora
+• articles/models/article.py > přidat pole pro datum publikování a do metody save přidat kod pro jeho zápis
+$ python manage.py makemigrations
+$ python manage.py migrate
+• articles/schema.py > připsat pole pro indexaci a změnit indexace na ID tam kde to jde
+• articles/models/article_author.py > odebrat kod pro změnu jména autora při jeho změně - nyní je autor evidován dle ID
+• articles/views/search.py > přepsat kod pro vyhledávání dle autora
+###
+Nastavení přepínání mezi navigací pro kategorie a zobrazení bez ní
+• articles/models/article_category.py > dopsat třídní metody pro získávání kategorií
+• articles/views/article_list.py > přepsat kod pro zobrazení kategorií
+• users/views/user_sidebar_movements.py > dopsat kod pro skrývání a zobrazování navigace pro kategorie
+• templates/ > přispůsobení kodu novím podmínkám
+###

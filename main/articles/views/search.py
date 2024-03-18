@@ -147,10 +147,11 @@ class SearchView(CommonContextMixin, ListView):
         # Vytvoření dotazu pro hledání dle autora:
         author_query = None
         if search_parameters['author']:
-            author_name = ArticleAuthor.objects.get(id=search_parameters['author']).author
-            author_query = Term('author', author_name.lower())
+            author_id = search_parameters['author']
+            author_query = Term('author', str(author_id))
 
             # Vytvoření popisného textu pro výsledek hledání
+            author_name = ArticleAuthor.objects.get(id=author_id).author
             self.display_text += f"written by the author {author_name}"
 
 

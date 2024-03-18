@@ -2,7 +2,7 @@ print("### Schema: ArticleSchema")
 
 import os
 from whoosh.index import create_in, open_dir
-from whoosh.fields import SchemaClass, TEXT, DATETIME, ID
+from whoosh.fields import SchemaClass, TEXT, DATETIME, ID, KEYWORD
 from bs4 import BeautifulSoup
 from django.conf import settings
 
@@ -26,15 +26,19 @@ class ArticleSchema:
             whoosh.index.Index: Inicializovaný index Whoosh.
         """
 
+        # Vytvoření složky
         if not os.path.exists(settings.INDEX_DIRECTORY):
             os.makedirs(settings.INDEX_DIRECTORY)
 
+        # Načtení složky
         if not os.listdir(settings.INDEX_DIRECTORY):
             ix = create_in(settings.INDEX_DIRECTORY, self.get_schema())
         else:
             ix = open_dir(settings.INDEX_DIRECTORY)
 
+        # Navrácení složky
         return ix
+
 
     def get_schema(self):
         """
@@ -44,13 +48,75 @@ class ArticleSchema:
             whoosh.fields.Schema: Schéma pro indexování článků.
         """
         return SchemaClass(
-            id=ID(stored=True, unique=True),  # Přidání pole 'id'
+            id=ID(stored=True, unique=True),
+            slug=ID(stored=True),
+
             title=TEXT(stored=True),
             overview=TEXT(stored=True),
             content=TEXT(stored=True),
-            author=TEXT(stored=True),
-            updated=DATETIME(stored=True)
+
+            author=ID(stored=True),
+
+            created=DATETIME(stored=True),
+            updated=DATETIME(stored=True),
+            published=DATETIME(stored=True),
+
+            tags=ID(stored=True),
+            category=ID(stored=True),
+            status=TEXT(stored=True)
         )
+
+
+    def find_all_articles_by_status(self, status):
+        """
+        Vyhledá a vrátí seznam ID článků daného stavu seřazených podle data publikování.
+
+        Args:
+            status: Stav článků pro vyhledání (např. 'publish').
+
+        Returns:
+            List: Seznam ID článků.
+        """
+        print("### find_articles_by_status(self, status)")
+
+        article_ids = []
+
+        # Otevření searcheru
+        with self.ix.searcher() as searcher:
+            results = searcher.documents(status=status)
+
+            # Procházení výsledků a přidání ID článků do seznamu
+            for doc in results:
+                article_ids.append(doc['id'])
+
+        return article_ids
+
+
+    def find_all_articles_by_category(self, category_ID):
+        """
+        Vyhledá a vrátí seznam ID článků daného stavu seřazených podle data publikování.
+
+        Args:
+            status: Stav článků pro vyhledání (např. 'publish').
+
+        Returns:
+            List: Seznam ID článků.
+        """
+        print("### find_all_articles_by_category(self, category_ID)")
+
+        article_ids = []
+
+        # Otevření searcheru
+        with self.ix.searcher() as searcher:
+            results = searcher.documents(category=category_ID)
+
+            # Procházení výsledků a přidání ID článků do seznamu
+            for doc in results:
+                article_ids.append(doc['id'])
+
+        return article_ids
+
+
 
     def index_all_article_content(self, selected_articles):
         """
@@ -65,23 +131,39 @@ class ArticleSchema:
         for article in selected_articles:
             # Převod HTML obsahu na čistý text a normalizace na malá písmena
             soup = BeautifulSoup(article.content, 'html.parser')
-            content_text = soup.get_text(strip=True).lower()
+            normalized_content = soup.get_text(strip=True).lower()
 
             # Normalizace titulku, přehledu a autora na malá písmena
             normalized_title = article.title.lower()
             normalized_overview = article.overview.lower()
-            normalized_author = article.author.author.lower()
+
+            # Získání ID tagů
+            tag_ids = [str(tag.id) for tag in article.tags.all()]
+
 
             # Vložení aktualizovaného dokumentu
-            writer.add_document(id=str(article.id),
-                                title=normalized_title,
-                                overview=normalized_overview,
-                                content=content_text,
-                                author=normalized_author,
-                                updated=article.updated)
+            writer.add_document(
+                id=str(article.id),
+                slug=article.slug,
+
+                title=normalized_title,
+                overview=normalized_overview,
+                content=normalized_content,
+
+                author=str(article.author.id),
+
+                created=article.created,
+                updated=article.updated,
+                published=article.published,
+
+                tags=tag_ids,
+                category=str(article.category.id),
+                status=article.status
+            )
 
         # Uzavření writeru a commit změn mimo cyklus
         writer.commit()
+
 
     def index_article_content(self, article_instance):
         """
@@ -99,25 +181,35 @@ class ArticleSchema:
         # Normalizace titulku, přehledu a autora na malá písmena
         normalized_title = article_instance.title.lower()
         normalized_overview = article_instance.overview.lower()
-        normalized_author = article_instance.author.author.lower()
 
         # Převod HTML obsahu na čistý text a normalizace na malá písmena
         soup = BeautifulSoup(article_instance.content, 'html.parser')
         normalized_content = soup.get_text(strip=True).lower()
 
-        # Vložení aktualizovaného dokumentu
+        # Získání ID tagů
+        tag_ids = [str(tag.id) for tag in article_instance.tags.all()]
+
         writer.add_document(
-            id=str(article_instance.id),  # Přidání identifikátoru článku
+            id=str(article_instance.id),
+            slug=article_instance.slug,
+
             title=normalized_title,
             overview=normalized_overview,
             content=normalized_content,
-            author=normalized_author,
-            updated=article_instance.updated
+
+            author=str(article_instance.author.id),
+
+            created=article_instance.created,
+            updated=article_instance.updated,
+            published=article_instance.published,
+
+            tags=tag_ids,
+            category=str(article_instance.category.id),
+            status=article_instance.status
         )
 
         # Zapsání změn
         writer.commit()
-
 
 
     def print_all_index_articles_title(self):
@@ -142,6 +234,7 @@ class ArticleSchema:
         print("Indexované články:")
         for title in article_titles:
             print(title)
+
 
     def find_articles_by_author(self, author_name):
         """
@@ -175,6 +268,7 @@ class ArticleSchema:
             print("### article_id:", article_id)
 
         return article_id
+
 
     def update_author_name(self, old_author_name, new_author_name):
         """

@@ -30,7 +30,12 @@ urlpatterns = [
     path('', HomePageView.as_view(), name='home'),
 
     # URL pro seznam článků
-    path('articles/', ArticleListView.as_view(), name='article-list'),
+    path('articles/all', ArticleListView.as_view(), name='article-list'),
+
+    # URL pro zobrazení seznamu článků v dané kategorii
+    path('articles/category/<slug:category_slug>/', ArticleListView.as_view(), name='article-category-list'),
+
+
 
     # URL pro vytvoření nového článku
     path('articles/create/<str:current_tab>/', ArticleCreateView.as_view(), name='article-create'),
@@ -47,8 +52,7 @@ urlpatterns = [
     # URL pro zobrazení seznamu článků s daným tagem
     path('articles/tag/<slug:tag_slug>/', ArticleListView.as_view(), name='article-tag-list'),
 
-    # URL pro zobrazení seznamu článků v dané kategorii
-    path('articles/category/<slug:category_slug>/', ArticleListView.as_view(), name='article-category-list'),
+
 
 
 
