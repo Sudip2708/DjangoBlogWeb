@@ -3,6 +3,7 @@ from whoosh import sorting
 from django.views.generic import ListView
 from django.shortcuts import redirect
 import ast
+from django.urls import resolve
 
 from whoosh.query import And, Term
 from whoosh.query import DateRange
@@ -41,6 +42,9 @@ class SearchView(CommonContextMixin, ListView):
 
         current_url = request.build_absolute_uri()
         print("Current URL:", current_url)
+        # Získání informací o vyřešené URL z aktuálního požadavku
+        resolved_url = resolve(self.request.path_info)
+        print("### resolved_url: ",resolved_url)
 
         # Slovník pro jednotlivé položky z dotazu
         search_parameters = {

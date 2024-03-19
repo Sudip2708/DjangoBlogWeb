@@ -35,6 +35,12 @@ urlpatterns = [
     # URL pro zobrazení seznamu článků v dané kategorii
     path('articles/category/<slug:category_slug>/', ArticleListView.as_view(), name='article-category-list'),
 
+    # URL pro zobrazení seznamu článků s daným tagem
+    path('articles/tag/<slug:tag_slug>/', ArticleListView.as_view(), name='article-tag-list'),
+
+    # URL pro zobrazení podobných článků k článkům s daným tagem
+    path('articles/tag/<slug:tag_slug>/<str:similar>/', ArticleListView.as_view(), name='article-tag-list'),
+
 
 
     # URL pro vytvoření nového článku
@@ -49,8 +55,7 @@ urlpatterns = [
     # URL pro smazání článku s využitím jeho slugu
     path('articles/<slug:slug>/delete/', ArticleDeleteView.as_view(), name='article-delete'),
 
-    # URL pro zobrazení seznamu článků s daným tagem
-    path('articles/tag/<slug:tag_slug>/', ArticleListView.as_view(), name='article-tag-list'),
+
 
 
 

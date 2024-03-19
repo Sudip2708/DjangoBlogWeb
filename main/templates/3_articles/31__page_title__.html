@@ -9,12 +9,13 @@
         <h2>Article Categories</h2>
     </header>
 
-    <!-- Navigace pro stránku s vlastními články -->
+    <!-- Navigace pro stránku se všemi články a stránky s kategoriemi -->
     <nav class="nav nav-tabs justify-content-end mb-5 pt-2">
 
         <!-- Tab for all articles -->
         <li class="nav-item {% if current_tab == 'all' %}active{% endif %}">
-            <a href="/articles/all" class="nav-link {% if current_tab == 'all' %}active{% endif %}">
+            <a href="/articles/all"
+               class="nav-link {% if current_tab == 'all' %}active{% endif %}">
                 All
             </a>
         </li>
@@ -23,7 +24,8 @@
 
             <!-- Tab for categories -->
             <li class="nav-item ">
-                <a href="/articles/category/{{ category.slug }}" class="nav-link {% if current_tab == category.slug %}active{% endif %}">
+                <a href="/articles/category/{{ category.slug }}"
+                   class="nav-link {% if current_tab == category.slug %}active{% endif %}">
                     {{ category }}
                 </a>
             </li>
@@ -34,22 +36,51 @@
 
 {% elif search_result %}
 
-            <!-- Navigace pro stránku s vlastními články -->
+    <!-- Navigace pro stránku s výsledky vyhledávání -->
     <nav class="nav nav-tabs justify-content-end mb-5 pt-4">
 
-            <!-- Tab for categories -->
-            <li class="nav-item ">
-                <a href="/articles/all" class="nav-link {% if current_tab == 'all' %}active{% endif %}">
-                    Search Result
-                </a>
-            </li>
+        <!-- Tab for categories -->
+        <li class="nav-item ">
+            <a href="/articles/all"
+               class="nav-link {% if current_tab == 'all' %}active{% endif %}">
+                Search Result
+            </a>
+        </li>
 
-            <li class="nav-item ">
-                <a href="/articles/similar" class="nav-link {% if current_tab == 'similar' %}active{% endif %}">
-                    Similar Articles
-                </a>
-            </li>
+        <li class="nav-item ">
+            <a href="/articles/similar"
+               class="nav-link {% if current_tab == 'similar' %}active{% endif %}">
+                Similar Articles
+            </a>
+        </li>
 
+    </nav>
+
+{% elif current_tag_tab %}
+
+    <!-- Page title -->
+    <header>
+        <h2>Articles by tags</h2>
+    </header>
+
+
+    <!-- Navigace pro stránku s vyhledávání dle Tagů -->
+    <nav class="nav nav-tabs justify-content-end mb-5 pt-2">
+
+        <!-- Tab for categories -->
+        <li class="nav-item ">
+            <a href="/articles/tag/{{ tag_slug }}"
+               class="nav-link {% if not similar_tag_articles %}active{% endif %}">
+                {{ tag_slug|upper }}
+            </a>
+        </li>
+
+        <li class="nav-item ">
+            <a href="/articles/tag/{{ tag_slug }}/similar/"
+               class="nav-link {% if similar_tag_articles %}active{% endif %}">
+                Similar Articles
+            </a>
+        </li>
 
     </nav>
 
@@ -66,9 +97,19 @@
             <p class="text-lg fw-light text-secondary mt-2">To find a specific article, use the search box on the right.</p>
 
         <!-- Zobrazení pro články dle kategorie -->
+        {% elif current_tab_name %}
+            <h2>Articles for Category: {{ current_tab_name|upper }}</h2>
+            <p class="text-lg fw-light text-secondary mt-2">(To display categories menu, click on 'Show Navigation' in the Categories sidebar.)</p>
+
+        <!-- Zobrazení pro články dle tagů -->
+        {% elif tag_slug %}
+            <h2>Articles with tag: {{ tag_slug|upper }}</h2>
+            <p class="text-lg fw-light text-secondary mt-2">(To display similar articles, click on 'Show Tab for Similar' in the Tags sidebar.)</p>
+
+    <!-- Zobrazení pro články dle výsledků vyhledávání -->
         {% else %}
-            <h2>Articles for Category: {{ current_tab_name }}</h2>
-            <p class="text-lg fw-light text-secondary mt-2">(To display categories menu, click on 'Show Navigation' in the sidebar.)</p>
+            <h2>Search results for Articles</h2>
+            <h4 style="line-height: 1.5; color: grey;">{{ display_text|safe }}</h4>
         {% endif %}
 
     </header>

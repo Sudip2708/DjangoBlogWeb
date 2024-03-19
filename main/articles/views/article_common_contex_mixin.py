@@ -14,11 +14,14 @@ from utilities.for_articles.get_category_count import get_category_count
 
 
 class CommonContextMixin(ContextMixin):
+    print("### class CommonContextMixin(ContextMixin):")
     def get_context_data(self, **kwargs):
+        print("### def get_context_data(self, **kwargs):")
         context = super().get_context_data(**kwargs)
 
         # Získání kategorie a počtu
         category_count = get_category_count()
+        print("### category_count:", category_count)
         context['category_count'] = category_count
 
         # Získání nejčastěji zobrazovaných článků

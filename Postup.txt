@@ -704,3 +704,12 @@ Nastavení přepínání mezi navigací pro kategorie a zobrazení bez ní
 • users/views/user_sidebar_movements.py > dopsat kod pro skrývání a zobrazování navigace pro kategorie
 • templates/ > přispůsobení kodu novím podmínkám
 ###
+Nastavení navigace pro tagy
+• articles/views/article_list.py > dopsání logiky pro zobrazení tagů
+• articles/schema.py > připsání metody pro hledání dle tagů
+• main/urls.py > připsat URL pro hledání příbuzných tagů
+• templates/2_main/_sidebars/__tags__.html > dopsání kodu pro nabídku zobrazení záložek pro tagy
+• templates/3_articles/31__page_title__.html > dopsání kodu pro tagy
+• users/views/user_sidebar_movements.py > připsat kod pro zobrazení a skrytí navigace pro tagy
+• users/user_settings_mixin.pynahrazení definování property dynamickým přidáním vlastností na základě defaultních hodnot
+###

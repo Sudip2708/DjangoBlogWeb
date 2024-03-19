@@ -12,14 +12,15 @@ def user_sidebar_movements(request, hash):
         # Získání přihlášeného uživatele
         user = request.user
 
-        # Pokud se jedná o změnu viditelnosti sidebaru
-        if hash == "#sidebar_appearance":
-            user.change_sidebar_value('sidebar_appearance')
+        hash_to_process_values = (
+            "#sidebar",
+            "#sidebar_category_navigation",
+            "#show_tab_for_similar"
+        )
 
-        # Pokud se jedná o zobrazení navigace kategorií
-        if hash == "#sidebar_category_navigation":
-            print("### #sidebar_category_navigation")
-            user.change_sidebar_value('sidebar_category_navigation')
+        # Pokud se jedná o změnu viditelnosti sidebaru
+        if hash in hash_to_process_values:
+            user.change_sidebar_value(hash[1:])
 
         # Pokud se jedná o posun jednotlivých sidebarů
         else:

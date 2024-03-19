@@ -26,8 +26,23 @@
         <div class="card mb-4">
             <div class="card-body">
 
-                <!-- Section name -->
-                <h3 class="h6 mb-3">Tags</h3>
+                <div class="d-flex justify-content-between align-items-center mb-3">
+
+                    <!-- Section name -->
+                    <h3 class="h6 ">
+                        Tags
+                    </h3>
+
+                    <a class="btn btn-link drop-down-title p-0 light-grey-color"
+                       href="{% url 'user_sidebar_movements' hash='#show_tab_for_similar' %}">
+                        {% if user.is_authenticated and not user.show_tab_for_similar %}
+                            Show Tab for Similar
+                        {% else %}
+                            Hide Tab for Similar
+                        {% endif %}
+                    </a>
+
+                </div>
 
                 <ul class="list-inline mb-0">
                     {% for tag in tags %}

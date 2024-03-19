@@ -116,7 +116,29 @@ class ArticleSchema:
 
         return article_ids
 
+    def find_all_articles_by_tag(self, tag_ID):
+        """
+        Vyhledá a vrátí seznam ID článků s daným tagem seřazených podle data publikování.
 
+        Args:
+            tag_ID: ID tagu pro vyhledání.
+
+        Returns:
+            List: Seznam ID článků.
+        """
+        print("### find_all_articles_by_tag(self, tag_ID)")
+
+        article_ids = []
+
+        # Otevření searcheru
+        with self.ix.searcher() as searcher:
+            results = searcher.documents(tags=tag_ID)
+
+            # Procházení výsledků a přidání ID článků do seznamu
+            for doc in results:
+                article_ids.append(doc['id'])
+
+        return article_ids
 
     def index_all_article_content(self, selected_articles):
         """

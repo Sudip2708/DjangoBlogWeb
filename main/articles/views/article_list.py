@@ -6,6 +6,7 @@ from django.views.generic import ListView
 from django.shortcuts import get_object_or_404
 from taggit.models import Tag
 from django.urls import resolve
+from django.db.models import Q
 
 from articles.models.article import Article
 from articles.models.article_category import ArticleCategory
@@ -26,8 +27,26 @@ class ArticleListView(CommonContextMixin, ListView):
     # Počet článků na stránku
     paginate_by = 4
 
+    # Ověření, zda se jedná o stránku se všemi články a nebo o stránky s kategoriemi
+    category_page = False
+
+    # Ověření zda se jedná o zobrazení s navigací pro kategorie
+    category_navigation = False
+
     # Název pro aktuální záložku kategorií
     current_category_tab = None
+
+    # Ověření zda se jedná o stránku s tagy
+    tag_page = False
+
+    # Ověření zda se jedná o zobrazení s navigací pro tagy
+    tag_navigation = False
+
+    # Název pro aktuální záložku tagů
+    current_tag = None
+
+    # Kontrola zda jsme na záložce pro podobné články
+    similar_tag_articles = False
 
 
     def get_queryset(self, *args, **kwargs):
@@ -36,61 +55,73 @@ class ArticleListView(CommonContextMixin, ListView):
         resolved_url = resolve(self.request.path_info)
         print("### resolved_url: ",resolved_url)
 
-        # Když jsme na stránce pro zobrazení všech článků
-        if resolved_url.route == 'articles/all':
-            print("### if route == 'articles/all'")
+        # Získání přihlášeného uživatele
+        user = self.request.user
 
-            self.current_category_tab = 'all'
-            print("### current_tab: ", self.current_category_tab)
+        # Ověření, zda se jedná o stránku se všemi články a nebo o stránky s kategoriemi
+        if resolved_url.route == 'articles/all' or self.kwargs.get('category_slug'):
+            self.category_page = True
 
-            status = 'publish'
-            article_ids = ArticleSchema().find_all_articles_by_status(status)
-            print("### article_ids: ", article_ids)
 
-            queryset = Article.objects.filter(id__in=article_ids).order_by('-created')
+            # Ověření zda je uživatel přihlášen a má zaplé zobrazení navigace kategorií
+            if user.is_authenticated and user.sidebar_category_navigation:
+                self.category_navigation = True
 
-        # Když jsme na stránce pro zobrazení článků pro danou kategorii
-        elif self.kwargs.get('category_slug'):
-            print("### elif self.kwargs.get('category_slug')")
 
-            self.current_category_tab = self.kwargs.get('category_slug')
-            print("### current_tab: ", self.current_category_tab)
+            # Když jsme na stránce pro zobrazení všech článků
+            if resolved_url.route == 'articles/all':
+                print("### if route == 'articles/all'")
 
-            category_id = ArticleCategory().get_category_id_by_slug(self.current_category_tab)
-            article_ids = ArticleSchema().find_all_articles_by_category(str(category_id))
-            print("### article_ids: ", article_ids)
+                self.current_category_tab = 'all'
+                status = 'publish'
+                article_ids = ArticleSchema().find_all_articles_by_status(status)
 
-            queryset = Article.objects.filter(id__in=article_ids).order_by('-created')
+                queryset = Article.objects.filter(id__in=article_ids).order_by('-created')
 
-        # Když jsme na stránce pro zobrazení článků pro výsledek hledání
-        # tag_slug = self.kwargs.get('tag_slug')
-        # category_slug = self.kwargs.get('category_slug')
-        #
-        # if self.kwargs.get('current_tab'):
-        #     self.current_tab = self.kwargs.get('current_tab')
-        #     if self.current_tab == 'all':
-        #         queryset = self.current_queryset
-        #     elif self.current_tab == 'similar':
-        #         queryset = self.current_queryset
-        #
-        #     else:
-        #         print("### current_tab != all")
-        #         category = get_object_or_404(ArticleCategory, slug=self.current_tab)
-        #         queryset = Article.objects.filter(status='publish', category=category).order_by('-created')
-        #
-        # elif tag_slug:
-        #     # Pokud je k dispozici tag_slug, vyfiltrovat články podle tagu
-        #     tag = get_object_or_404(Tag, slug=tag_slug)
-        #     queryset = Article.objects.filter(status='publish', tags=tag).order_by('-created')
-        #
-        # elif category_slug:
-        #     # Pokud je k dispozici category_slug, vyfiltrovat články podle kategorie
-        #     category = get_object_or_404(ArticleCategory, slug=category_slug)
-        #     queryset = Article.objects.filter(status='publish', category=category).order_by('-created')
-        #
-        # else:
-        #     # Jinak vrátit všechny články, seřazené podle data vytvoření
-        #     queryset = Article.objects.filter(status='publish').order_by('-created')
+
+            # Když jsme na stránce pro zobrazení článků pro danou kategorii
+            elif self.kwargs.get('category_slug'):
+                print("### elif self.kwargs.get('category_slug')")
+
+                self.current_category_tab = self.kwargs.get('category_slug')
+                category_id = ArticleCategory().get_category_id_by_slug(self.current_category_tab)
+                article_ids = ArticleSchema().find_all_articles_by_category(str(category_id))
+
+                queryset = Article.objects.filter(id__in=article_ids).order_by('-created')
+
+
+        # Když jsme na stránce pro zobrazení článků pro daný tag
+        elif self.kwargs.get('tag_slug'):
+            print("### elif self.kwargs.get('tag_slug'):")
+
+            self.tag_page = True
+
+            # Ověření zda je uživatel přihlášen a má zaplé zobrazení navigace kategorií
+            if user.is_authenticated and user.show_tab_for_similar:
+                self.tag_navigation = True
+                self.current_tag = self.kwargs.get('tag_slug')
+
+            tag = get_object_or_404(Tag, slug=self.kwargs.get('tag_slug'))
+            article_ids = ArticleSchema().find_all_articles_by_tag(str(tag.id))
+
+            if self.kwargs.get('similar'):
+                print("similar")
+                self.similar_tag_articles = True
+
+                # Získání tagů článků na aktuální stránce
+                current_article_tags = Tag.objects.filter(article__id__in=article_ids)
+
+                # Filtrování článků podle podobných tagů
+                similar_articles = Article.objects.filter(
+                    ~Q(id__in=article_ids),  # Nezahrnuje články na aktuální stránce
+                    tags__in=current_article_tags  # Zahrnuje články s alespoň jedním stejným tagem
+                ).distinct().order_by('-created')
+
+                queryset = similar_articles
+
+            else:
+                queryset = Article.objects.filter(id__in=article_ids).order_by('-created')
+
 
         return queryset
 
@@ -116,25 +147,38 @@ class ArticleListView(CommonContextMixin, ListView):
         # Získání přihlášeného uživatele
         user = self.request.user
 
-        # Získání kategorií
-        if user.is_authenticated and user.sidebar_category_navigation:
+        # Kontext pro stránku se všemi články a nebo pro stránky s kategoriemi
+        if self.category_page:
 
-            # Přidání množiny kategorií do kontextu
-            categories = ArticleCategory.get_all_category_except_default()
-            context['categories'] = categories
+            # Získání kategorií pokud je zapnutá navigace pro kategorie
+            if self.category_navigation:
 
-            # Přidání jména aktuální záložky
-            context['current_tab'] = self.current_category_tab
+                # Přidání množiny kategorií do kontextu
+                categories = ArticleCategory.get_all_category_except_default()
+                context['categories'] = categories
 
-        else:
+                # Přidání jména aktuální záložky
+                context['current_tab'] = self.current_category_tab
 
+            else:
 
-            # Přidání jména aktuální záložky
-            context['current_tab'] = self.current_category_tab
+                # Přidání jména aktuální záložky
+                context['current_tab'] = self.current_category_tab
 
-            # Přidání jména aktuální záložky
-            category_id = ArticleCategory().get_category_title_by_slug(self.current_category_tab)
-            context['current_tab_name'] = category_id
+                # Přidání jména aktuální záložky
+                category_title = ArticleCategory().get_category_title_by_slug(self.current_category_tab)
+                context['current_tab_name'] = category_title
+
+        elif self.tag_page:
+            print("### elif self.tag_page:")
+
+            if self.tag_navigation:
+                print("### if self.tag_navigation:")
+                print("### self.current_tag_tab", self.current_tag)
+                context['current_tag_tab'] = self.current_tag
+                context['similar_tag_articles'] = self.similar_tag_articles
+            pass
+
 
 
         return context
