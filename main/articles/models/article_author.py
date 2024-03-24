@@ -8,7 +8,7 @@ from model_utils import FieldTracker
 from django.utils.text import slugify
 
 from utilities.shared.create_thumbnail import create_thumbnail
-from articles.schema import ArticleSchema
+
 
 class ArticleAuthor(models.Model):
     '''

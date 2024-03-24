@@ -713,3 +713,17 @@ Nastavení navigace pro tagy
 • users/views/user_sidebar_movements.py > připsat kod pro zobrazení a skrytí navigace pro tagy
 • users/user_settings_mixin.pynahrazení definování property dynamickým přidáním vlastností na základě defaultních hodnot
 ###
+Dotažení nastavení navigací ve vyhledávání a na stránkách s více články
+• main/urls.py > připsat URL pro zobrazení navigecí i na stránkách s více články
+• articles/ > vytvořit složku schema_search > přetahat sem všechny metody z pohledu search.py a udělat z nich funkce
+• articles/views/search.py > úprava kodu
+• articles/views/article_list.py > úprava kodu
+• templates/3_articles/31__page_title__.html > dopsání kodu pro tagy
+• templates/3_articles/32__articles__.html > dopsání kodu pro tagy
+• templates/3_articles/_page_title/__category__.html > přejmenovat na __category_result_page__.html + úprava kodu
+• templates/3_articles/_page_title/__search_result__.html > přejmenovat na __search_result_page__.html + úprava kodu
+• templates/3_articles/_page_title/ > vytvoření souboru __tag_result_page__.html + dopsání kodu pro tagy
+• articles/ > vytvořit složku schema_methods > přetahat sem všechny metody z schématu a udělat z nich funkce
+• articles/models/article.py > úprava kodu
+• articles/models/article_author.py > úprava kodu
+###

@@ -21,7 +21,6 @@ class CommonContextMixin(ContextMixin):
 
         # Získání kategorie a počtu
         category_count = get_category_count()
-        print("### category_count:", category_count)
         context['category_count'] = category_count
 
         # Získání nejčastěji zobrazovaných článků

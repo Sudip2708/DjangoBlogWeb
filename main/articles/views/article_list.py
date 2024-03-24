@@ -6,179 +6,196 @@ from django.views.generic import ListView
 from django.shortcuts import get_object_or_404
 from taggit.models import Tag
 from django.urls import resolve
-from django.db.models import Q
 
 from articles.models.article import Article
-from articles.models.article_category import ArticleCategory
 from .article_common_contex_mixin import CommonContextMixin
-from articles.schema import ArticleSchema
+from articles.schema_methods.find_all_articles_by_status import find_all_articles_by_status
+from articles.schema_methods.find_published_articles_by_tag import find_published_articles_by_tag
+from articles.schema_search.get_article_ids_for_similar_articles import get_article_ids_for_similar_articles
+from articles.schema_search.get_category_articles_ids import get_category_articles_ids
+from articles.schema_search.get_all_published_category import get_all_published_category
 
 
 class ArticleListView(CommonContextMixin, ListView):
+    '''
+    Pohled pro zobrazení seznamu článků
+
+    Pohled obsahuje logiku pro načítání dat z databáze a jejich zobrazení ve správném formátu.
+    Využívá model Article pro přístup k datům a definuje cestu k šabloně pro zobrazení.
+    Navíc obsahuje metodu get_queryset, která filtruje články na základě aktuálního kontextu stránky,
+    jako jsou kategorie nebo tagy.
+    Metoda get_paginate_by slouží k nastavení počtu článků na stránce v závislosti na tom,
+    zda je uživatel přihlášený a má zapnutý boční panel.
+    Nakonec metoda get_context_data přidává další informace do kontextu pro šablonu,
+    jako jsou aktuálně vybraná kategorie nebo tag
+    '''
+
     # Použitý model pro seznam článků
     model = Article
 
     # Cesta k šabloně pro zobrazení seznamu článků
     template_name = '3_articles/30__base__.html'
 
-    # Název objektu v kontextu (seznam článků)
-    context_object_name = 'queryset'
+    ## Název objektu pro výsledný seznam článků
+    context_object_name = 'articles_results'
 
-    # Počet článků na stránku
-    paginate_by = 4
+    # Jméno adresy URL
+    url_name = ""
 
-    # Ověření, zda se jedná o stránku se všemi články a nebo o stránky s kategoriemi
-    category_page = False
+    # Aktuálně přihlášený uživatel
+    user = None
 
-    # Ověření zda se jedná o zobrazení s navigací pro kategorie
-    category_navigation = False
+    # Výsledný seznam ID článků
+    article_ids = []
 
-    # Název pro aktuální záložku kategorií
-    current_category_tab = None
+    # Ověření zda má uživatel pro daný pohled zapnutou i navigaci
+    navigation = False
 
-    # Ověření zda se jedná o stránku s tagy
-    tag_page = False
+    # Slovník hodnot pro aktuální kategorii (nastaveno na první přepnutí na kategorie)
+    current_category_tab = {'id': 0, 'slug': 'first', 'title': ''}
 
-    # Ověření zda se jedná o zobrazení s navigací pro tagy
-    tag_navigation = False
+    # Slovník hodnot pro kategorie pro vytvoření záložek navigace
+    category_items = {}
 
-    # Název pro aktuální záložku tagů
-    current_tag = None
-
-    # Kontrola zda jsme na záložce pro podobné články
-    similar_tag_articles = False
+    # Slovník hodnot pro aktuální tag
+    current_tag_tab = {}
 
 
     def get_queryset(self, *args, **kwargs):
+        '''
+        Metoda slouží k získání souboru článků, které mají být zobrazeny na stránce na základě aktuálního požadavku.
 
-        # Získání informací o vyřešené URL z aktuálního požadavku
-        resolved_url = resolve(self.request.path_info)
-        print("### resolved_url: ",resolved_url)
+        Tato metoda slouží k vyhledání a filtrování článků na základě aktuálního kontextu stránky.
+        Nejprve analyzuje aktuální URL adresu, aby určila, zda se jedná o seznam všech článků,
+        seznam článků v kategorii nebo seznam článků pro konkrétní tag.
+        Poté na základě těchto informací získá relevantní články z databáze.
+        Pokud je uživatel přihlášen a má zapnutou navigaci podle kategorií,
+        metoda získává také informace o dostupných kategoriích.
+
+        :param args: Pozicí argumenty, které mohou být předány metodě.
+        :param kwargs: Klíčové argumenty, které mohou být předány metodě.
+        :return: Queryset obsahující relevantní články, které jsou následně zobrazeny na stránce.
+        '''
+
+        # Kontrolní tisk všech atributu z cesty:
+        # resolved_url = resolve(request.path_info)
+        # print("### resolved_url: ", resolved_url)
+
+        # Přiřazení jména URL adresy
+        self.url_name = resolve(self.request.path_info).url_name
 
         # Získání přihlášeného uživatele
-        user = self.request.user
+        self.user = self.request.user
 
         # Ověření, zda se jedná o stránku se všemi články a nebo o stránky s kategoriemi
-        if resolved_url.route == 'articles/all' or self.kwargs.get('category_slug'):
-            self.category_page = True
-
+        if self.url_name == 'article-list' or self.url_name == 'article-category-list':
 
             # Ověření zda je uživatel přihlášen a má zaplé zobrazení navigace kategorií
-            if user.is_authenticated and user.sidebar_category_navigation:
-                self.category_navigation = True
+            if self.user.is_authenticated and self.user.sidebar_category_navigation:
+                self.navigation = True
 
+            # Vyhledání ID článků v schematu pro všechny publikované články
+            self.article_ids = find_all_articles_by_status('publish')
 
-            # Když jsme na stránce pro zobrazení všech článků
-            if resolved_url.route == 'articles/all':
-                print("### if route == 'articles/all'")
+            # Pokud jsme na hlavní stránce pro všechny články
+            if self.url_name == 'article-list':
 
-                self.current_category_tab = 'all'
-                status = 'publish'
-                article_ids = ArticleSchema().find_all_articles_by_status(status)
+                # Nastavení záložky pro stránku se všemi články
+                self.current_category_tab = {'id': 0, 'slug': 'all', 'title': 'All'}
 
-                queryset = Article.objects.filter(id__in=article_ids).order_by('-created')
-
-
-            # Když jsme na stránce pro zobrazení článků pro danou kategorii
-            elif self.kwargs.get('category_slug'):
-                print("### elif self.kwargs.get('category_slug')")
-
-                self.current_category_tab = self.kwargs.get('category_slug')
-                category_id = ArticleCategory().get_category_id_by_slug(self.current_category_tab)
-                article_ids = ArticleSchema().find_all_articles_by_category(str(category_id))
-
-                queryset = Article.objects.filter(id__in=article_ids).order_by('-created')
-
+                # Ověření, zda má uživatel zapnuté kategorie azískání všech kategoriích
+                if self.navigation:
+                    self.category_items = get_all_published_category()
 
         # Když jsme na stránce pro zobrazení článků pro daný tag
         elif self.kwargs.get('tag_slug'):
-            print("### elif self.kwargs.get('tag_slug'):")
-
-            self.tag_page = True
 
             # Ověření zda je uživatel přihlášen a má zaplé zobrazení navigace kategorií
-            if user.is_authenticated and user.show_tab_for_similar:
-                self.tag_navigation = True
-                self.current_tag = self.kwargs.get('tag_slug')
+            if self.user.is_authenticated and self.user.show_tab_for_similar:
+                self.navigation = True
 
+            # Vyhledání tagu a přiřazení do atributu
             tag = get_object_or_404(Tag, slug=self.kwargs.get('tag_slug'))
-            article_ids = ArticleSchema().find_all_articles_by_tag(str(tag.id))
+            self.current_tag_tab = {'id': tag.id, 'slug': tag.slug, 'title': tag.name}
 
-            if self.kwargs.get('similar'):
-                print("similar")
-                self.similar_tag_articles = True
+            # Získání ID článků pro zadaný tag
+            self.article_ids = find_published_articles_by_tag(str(tag.id))
 
-                # Získání tagů článků na aktuální stránce
-                current_article_tags = Tag.objects.filter(article__id__in=article_ids)
+            # Získání ID článků pro podobné články pro zadaný tag
+            if 'similar' in self.url_name:
+                self.article_ids = get_article_ids_for_similar_articles(self.article_ids)
 
-                # Filtrování článků podle podobných tagů
-                similar_articles = Article.objects.filter(
-                    ~Q(id__in=article_ids),  # Nezahrnuje články na aktuální stránce
-                    tags__in=current_article_tags  # Zahrnuje články s alespoň jedním stejným tagem
-                ).distinct().order_by('-created')
+        # Získání kategorií pro zobrazení stránky s kategoriema
+        if 'category' in self.url_name:
 
-                queryset = similar_articles
+            # Vytažení aktuální záložky z URL adresy
+            current_category_tab_slug = self.kwargs['category_slug']
 
-            else:
-                queryset = Article.objects.filter(id__in=article_ids).order_by('-created')
+            # Získání ID článků a aktuální kategorie a seznamu kategorií dle zadaných parametrů
+            ids, tab, cat = get_category_articles_ids(self.article_ids, current_category_tab_slug)
+            self.article_ids = ids
+            self.current_category_tab = tab
+            self.category_items = cat
 
-
+        # Získání a navrácení článků z databáze dle ID nalezených ve schématu
+        queryset = Article.objects.filter(id__in=self.article_ids).order_by('-created')
         return queryset
 
 
     def get_paginate_by(self, queryset):
-        print("### def get_paginate_by(self, queryset):")
+        '''
+        Metoda pro určení počtu článků na stránce při stránkování výsledků vyhledávání.
 
-        # Získání přihlášeného uživatele
-        user = self.request.user
+        Tato metoda získává přihlášeného uživatele a na základě toho, zda má postranní panel,
+        určuje počet článků na stránce. Pokud je uživatel přihlášený a nemá zobrazen postranní panel,
+        vrátí hodnotu 6, jinak vrátí hodnotu 4.
 
-        # Pokud je uživatel přihlášený a má pole sidebar nastavené na False, nastavte paginate_by na 6, jinak na 4
-        if user.is_authenticated and not user.sidebar:
+        :param queryset: Queryset obsahující výsledky vyhledávání.
+        :return: Počet článků na stránce pro stránkování.
+        '''
+
+        # Pokud je uživatel přihlášený a nemá zobrazen postranní panel, stránkuj po 6, jinak po 4
+        if self.user.is_authenticated and not self.user.sidebar:
             return 6
         return 4
 
 
     def get_context_data(self, **kwargs):
-        print("### def get_context_data(self, **kwargs):")
+        '''
+        Metoda pro vytvoření kontextu pro šablonu.
+
+        Tato metoda vytváří kontext pro šablonu, který obsahuje data, která jsou použita k vykreslení stránky.
+        Nejprve získá běžný kontext voláním nadřazené metody `super().get_context_data(**kwargs)`.
+        Poté přidává další informace do kontextu jako je jméno URL, ověření zobrazení navigace,
+        aktuálně vybraná kategorie a tag (pokud je relevantní), seznam zobrazených kategorií a další.
+
+        :param kwargs: Klíčové argumenty, které mohou být předány metodě.
+        :return: Kontext s vloženými daty pro šablonu.
+        '''
 
         # Získání kontextu od rodičovské třídy
         context = super().get_context_data(**kwargs)
 
-        # Získání přihlášeného uživatele
-        user = self.request.user
+        # Přidání jména URL
+        context['url_name'] = self.url_name
 
-        # Kontext pro stránku se všemi články a nebo pro stránky s kategoriemi
-        if self.category_page:
+        # Přidání ověření, zda má být zobrazena navigace
+        context['navigation'] = self.navigation
 
-            # Získání kategorií pokud je zapnutá navigace pro kategorie
-            if self.category_navigation:
+        # Přidání aktuálně vybranou kategorii
+        context['current_category_tab'] = self.current_category_tab
 
-                # Přidání množiny kategorií do kontextu
-                categories = ArticleCategory.get_all_category_except_default()
-                context['categories'] = categories
+        # Pokud jsme na stránce s podobnýmy články na základě tagu
+        if self.kwargs.get('tag_slug'):
 
-                # Přidání jména aktuální záložky
-                context['current_tab'] = self.current_category_tab
+            # Přidání aktuálně vybraný tag
+            context['current_tag_tab'] = self.current_tag_tab
 
-            else:
+        # Pokud je zapnuté navigace pro podobné články
+        if self.navigation:
 
-                # Přidání jména aktuální záložky
-                context['current_tab'] = self.current_category_tab
+            # Přidání seznamu zobrazených kategorií
+            context['category_items'] = self.category_items
 
-                # Přidání jména aktuální záložky
-                category_title = ArticleCategory().get_category_title_by_slug(self.current_category_tab)
-                context['current_tab_name'] = category_title
-
-        elif self.tag_page:
-            print("### elif self.tag_page:")
-
-            if self.tag_navigation:
-                print("### if self.tag_navigation:")
-                print("### self.current_tag_tab", self.current_tag)
-                context['current_tag_tab'] = self.current_tag
-                context['similar_tag_articles'] = self.similar_tag_articles
-            pass
-
-
-
+        # Navrácení kontextu
         return context

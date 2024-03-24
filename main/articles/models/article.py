@@ -14,7 +14,7 @@ from .article_author import ArticleAuthor
 from .article_category import ArticleCategory
 from .article_view import ArticleView
 from utilities.for_articles.create_other_sizes_of_main_picture import create_other_sizes_of_main_picture
-from articles.schema import ArticleSchema
+from articles.schema_methods.index_article_content import index_article_content
 
 
 class Article(models.Model):
@@ -249,7 +249,7 @@ class Article(models.Model):
             os.makedirs(Article.main_picture_path(), exist_ok=True)
 
         # Indexace článku
-        ArticleSchema().index_article_content(self)
+        index_article_content(self)
 
         # Kontrola, zda byl změněn hlavní obrázek.
         change_of_max_size_picture = self.main_picture_max_size_tracker.has_changed('main_picture_max_size')

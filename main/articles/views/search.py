@@ -1,32 +1,65 @@
-from whoosh.qparser import MultifieldParser
-from whoosh import sorting
+print("### main/articles/views/search.py")
+
+### Definice třídy pohledu pro vyhledávání
+
 from django.views.generic import ListView
 from django.shortcuts import redirect
-import ast
 from django.urls import resolve
-
-from whoosh.query import And, Term
-from whoosh.query import DateRange
-from dateutil.parser import parse as parse_date
-
 from django.urls import reverse
-from datetime import datetime
+import ast
 
 from articles.models.article import Article
-from articles.models.article_author import ArticleAuthor
-from articles.schema import ArticleSchema
 from .article_common_contex_mixin import CommonContextMixin
+from articles.schema_search.get_article_ids_by_search_params import get_article_ids_by_search_params
+from articles.schema_search.get_category_articles_ids import get_category_articles_ids
+from articles.schema_search.get_article_ids_for_similar_articles import get_article_ids_for_similar_articles
+
 
 
 class SearchView(CommonContextMixin, ListView):
     '''
-    Pohled pro zpracování dotazu pro vyhledávání v článcích.
+    Pohled pohled, který zpracovává dotazy pro vyhledávání článků
+
+    Tento pohled umožňuje uživatelům zadat různé parametry pro hledání, jako je klíčové slovo, datum, autor atd.
+    Pokud jsou zadány platné parametry, pohled vrátí seznam článků odpovídajících hledání.
+    Pokud nejsou zadány žádné parametry, vrátí prázdný seznam.
+    Pohled obsahuje metodu get, která zpracovává data zaslaná z vyhledávacího pole a předává je dál na vyřízení.
+    Dále obsahuje metodu get_queryset, která získává a filtrová data z databáze na základě zadaných parametrů hledání.
+    Metoda get_context_data pak přidává další informace do kontextu pro šablonu,
+    jako je jméno URL, dotaz, popis výsledku vyhledávání
+    a seznam zobrazených kategorií, pokud je zapnutá navigace pro podobné články.
     '''
 
+    # Použitý model pro seznam článků
     model = Article
+
+    # Cesta k šabloně pro zobrazení seznamu článků
     template_name = '3_articles/30__base__.html'
-    paginate_by = 4
+
+    # Název objektu pro výsledný seznam článků
+    context_object_name = 'articles_results'
+
+    # Jméno adresy URL
+    url_name = ""
+
+    # Aktuálně přihlášený uživatel
+    user = None
+
+    # Výsledný seznam ID článků
+    article_ids = []
+
+    # Výsledný popisný text
     display_text = ""
+
+    # Slovník hodnot pro aktuální kategorii (nastaveno na první přepnutí na kategorie)
+    current_category_tab = {'id': 0, 'slug': 'first', 'title': ''}
+
+    # Slovník hodnot pro kategorie pro vytvoření záložek navigace
+    category_items = {}
+
+    # Atribut pro záznam prázdného dotazu
+    empty_query = False
+
 
     def get(self, request, *args, **kwargs):
         '''
@@ -40,148 +73,176 @@ class SearchView(CommonContextMixin, ListView):
         :return: HTTP odpověď s přesměrováním na výsledky vyhledávání nebo výsledek z předchozího volání nadřazené metody.
         '''
 
-        current_url = request.build_absolute_uri()
-        print("Current URL:", current_url)
-        # Získání informací o vyřešené URL z aktuálního požadavku
-        resolved_url = resolve(self.request.path_info)
-        print("### resolved_url: ",resolved_url)
+        # Kontrolní tisk všech atributu z cesty:
+        # resolved_url = resolve(request.path_info)
+        # print("### resolved_url: ", resolved_url)
 
-        # Slovník pro jednotlivé položky z dotazu
-        search_parameters = {
-            'query': self.request.GET.get('q', ''),
-            'title': self.request.GET.get('title_checkbox', ''),
-            'overview': self.request.GET.get('overview_checkbox', ''),
-            'content': self.request.GET.get('content_checkbox', ''),
-            'before': self.request.GET.get('before_date', ''),
-            'after': self.request.GET.get('after_date', ''),
-            'author': self.request.GET.get('author_select', '')
-        }
+        # Přiřazení jména URL adresy
+        self.url_name = resolve(request.path_info).url_name
 
-        # Zpětné přeposlání zpracovaného dotazu
-        if any(value for value in search_parameters.values()):
-            return redirect(reverse('article-search-results', kwargs={'query': search_parameters}))
+        # Získání přihlášeného uživatele
+        self.user = self.request.user
 
-        # Pokud se jedná o zpětné přeposlání dotazu (má kwargs) pokračuj na vyhledání výsledku
+        # Ověření, zda se jedná o data zaslaná z vyhledávacího pole
+        if self.url_name == 'article-search':
+
+            # Vytažení dat z dotazu a vytvoření slovníku pro parametry hledání
+            search_parameters = {
+                'query': self.request.GET.get('q', ''),
+                'title': self.request.GET.get('title_checkbox', ''),
+                'overview': self.request.GET.get('overview_checkbox', ''),
+                'content': self.request.GET.get('content_checkbox', ''),
+                'before': self.request.GET.get('before_date', ''),
+                'after': self.request.GET.get('after_date', ''),
+                'author': self.request.GET.get('author_select', '')
+            }
+
+            # Přeposlání zpracovaného dotazu na vyřízení
+            if any(value for value in search_parameters.values()):
+                return redirect(reverse('article-search-results', kwargs={'query': search_parameters}))
+
+        # Pokud se již jedná o před-zpracovaný dotaz, bude posunut dál
         else:
             return super().get(request, *args, **kwargs)
 
+
     def get_queryset(self):
         '''
-        Metody pro získání dat z databáze na základě dotazu
+        Metoda slouží k získání a filtrování dat z databáze na základě zadaných parametrů hledání.
 
-        :return: Výsledek pro dané hledání
+        Metoda get_queryset(self) zpracovává požadavky na vyhledávání článků na základě zadaných parametrů.
+        Nejprve získává parametry hledání a poté na jejich základě vyhledává odpovídající články v databázi.
+        Pokud jsou zadány platné parametry, metoda vrátí seznam článků odpovídajících hledání.
+        Pokud nejsou zadány žádné parametry, vrátí prázdný seznam.
+
+        :return: Queryset, který obsahuje všechny relevantní články
         '''
 
-        # Vytvoření dotazu pro hledání ve Whoosh
+        # Získání parametrů pro hledání
         search_parameters = ast.literal_eval(self.kwargs.get('query'))
-        article_schema = ArticleSchema()
-        query = self.create_query(search_parameters, article_schema)
+        print("### search_parameters: ", search_parameters)
 
-        # Vyhledání dotazu Whoosh a získání ID článků
-        if query:
-            with article_schema.ix.searcher() as searcher:
-                results = searcher.search(query, sortedby=sorting.FieldFacet('updated', reverse=True))
-                article_ids = [int(hit['id']) for hit in results]
+        # Seznam klíčů k ověření
+        check_list = ['query', 'before', 'after', 'author']
+
+        # Kontrola, zda je alespoň jedna položka vyplněná
+        if any(search_parameters[key] for key in check_list):
+
+            # Získání ID článků a popisného textu dle zadaných parametrů
+            self.article_ids, self.display_text = get_article_ids_by_search_params(search_parameters)
+
+            # Získání výsledku pro stránku s podobnými článkami důle tagů
+            if self.kwargs.get('similar'):
+
+                # Získání ID článků a popisného textu dle zadaných parametrů
+                self.article_ids = get_article_ids_for_similar_articles(self.article_ids)
+
+            # Získání kategorií
+            if self.kwargs.get('category'):
+
+                # Vytažení aktuální záložky z URL adresy
+                current_category_tab_slug = self.kwargs['category_slug']
+
+                # Ověření, zda je vyfiltrovaný alespoň jeden článek
+                if self.article_ids:
+
+                    # Získání ID článků a aktuální kategorie dle zadaných parametrů
+                    ids, tab, cat = get_category_articles_ids(self.article_ids, current_category_tab_slug)
+                    self.article_ids = ids
+                    self.current_category_tab = tab
+                    self.category_items = cat
+
+                # Pokud není vyfiltrovaný žádná článek navrácení False
+                else:
+                    self.category_items = False
 
         # Pokud nebyl zadán žádný parametr pro hledání
         else:
+
+            # Nastavení hodnoty atributu záznam o prázdném dotazu
+            self.empty_query = True
+
+            # Vytvoření popisného textu a prázdného seznamu ID
             self.display_text = "No search parameters were provided."
-            article_ids = []
+            self.article_ids = []
 
-        # Získání článků z hlavní databáze podle nalezených ID
-        queryset = Article.objects.filter(id__in=article_ids)
-
+        # Získání a navrácení článků z databáze dle ID nalezených ve schématu
+        queryset = Article.objects.filter(id__in=self.article_ids)
         return queryset
 
 
-    def create_query(self, search_parameters, article_schema):
+    def get_paginate_by(self, queryset):
         '''
-        Metoda vytváří dotaz pro whoosh index na základě hledaných parametrů a schématu indexu
+        Metoda pro určení počtu článků na stránce při stránkování výsledků vyhledávání.
 
-        :param search_parameters: Hledané výrazy
-        :param article_schema: Schema pro Whoosh
-        :return: Dotaz pro hledání v indexech Whoosh
+        Tato metoda získává přihlášeného uživatele a na základě toho, zda má postranní panel,
+        určuje počet článků na stránce. Pokud je uživatel přihlášený a nemá zobrazen postranní panel,
+        vrátí hodnotu 6, jinak vrátí hodnotu 4.
+
+        :param queryset: Queryset obsahující výsledky vyhledávání.
+        :return: Počet článků na stránce pro stránkování.
         '''
 
-        # Vytvoření dotazu pro hledání dle zadaného slova:
-        term_query = None
-        if search_parameters['query']:
-            therm = search_parameters['query']
-            search_fields = [i for i in ('title', 'overview', 'content') if search_parameters[i]]
-            term_query = MultifieldParser(search_fields,
-                                          schema=article_schema.get_schema()).parse(therm)
-
-            # Vytvoření popisného textu pro výsledek hledání
-            self.display_text = f"with the therm {therm}"
-            if len(search_fields) == 1:
-                self.display_text += f" in {search_fields[0]}"
-            elif len(search_fields) == 2:
-                self.display_text += f" in {search_fields[0]} and {search_fields[1]}"
-            self.display_text += "<br>"
-
-        # Vytvoření dotazu pro hledání dle data:
-        date_query = None
-        if search_parameters['before'] or search_parameters['after']:
-            before_date = parse_date(search_parameters['before']) if search_parameters['before'] else None
-            after_date = parse_date(search_parameters['after']) if search_parameters['after'] else None
-            date_query = DateRange("updated", after_date, before_date, startexcl=False, endexcl=False)
-
-            def format_date(date):
-                '''
-                Metoda pro změnu formátu datumu
-
-                :param date: Datum z formuláře (%Y-%m-%d)
-                :return: Upravené datum (%d. %m. %Y)
-                '''
-                input_date = datetime.strptime(date, "%Y-%m-%d")
-                return input_date.strftime("%d. %m. %Y")
-
-            # Vytvoření popisného textu pro výsledek hledání
-            if before_date:
-                self.display_text += f"published before {format_date(search_parameters['before'])}"
-                if after_date:
-                    self.display_text += f" and after {format_date(search_parameters['after'])}"
-            elif after_date:
-                self.display_text += f"published after {format_date(search_parameters['after'])}"
-            self.display_text += "<br>"
+        # Pokud je uživatel přihlášený a nemá zobrazen postranní panel, stránkuj po 6, jinak po 4
+        if self.user.is_authenticated and not self.user.sidebar:
+            return 6
+        return 4
 
 
+    def search_navigation_check(self):
+        '''
+        Metoda pro ověření, zda má uživatel zapnutou navigaci pro zobrazení podobných článků na základě tagů.
 
+        Tato metoda získává přihlášeného uživatele z aktuálního požadavku a ověřuje, zda je uživatel přihlášený
+        a má zapnutou navigaci pro zobrazení podobných článků na základě tagů. Pokud je to pravda, vrátí True,
+        jinak vrátí False.
 
-        # Vytvoření dotazu pro hledání dle autora:
-        author_query = None
-        if search_parameters['author']:
-            author_id = search_parameters['author']
-            author_query = Term('author', str(author_id))
+        :return: True, pokud je navigace zapnutá, jinak False.
+        '''
 
-            # Vytvoření popisného textu pro výsledek hledání
-            author_name = ArticleAuthor.objects.get(id=author_id).author
-            self.display_text += f"written by the author {author_name}"
-
-
-        # Vytvoření dotazu ze seznamu zadaných podmínek
-        query = None
-        queries = [i for i in (term_query, date_query, author_query) if i]
-        if queries:
-            query = queries[0] if len(queries) == 1 else And(queries)
-
-        return query
+        # Ověření zda je uživatel přihlášen a má zaplé zobrazení navigace pro podobné články
+        if self.user.is_authenticated and self.user.show_tab_for_similar:
+            return True
+        return False
 
 
     def get_context_data(self, **kwargs):
         '''
-        Metoda pro vložení kontextu
+        Metoda pro vytvoření kontextu pro šablonu.
 
-        :return: Kontext s vloženými daty
+        Tato metoda vytváří kontext pro šablonu, který obsahuje data, která jsou použita k vykreslení stránky.
+        Nejprve získá běžný kontext voláním nadřazené metody `super().get_context_data(**kwargs)`.
+        Poté přidává další informace do kontextu jako je jméno URL, dotaz z vyhledávání, potvrzení pro skrytí navigace,
+        text s popisem výsledku vyhledávání a další.
+
+        :param kwargs: Klíčové argumenty, které mohou být předány metodě.
+        :return: Kontext s vloženými daty pro šablonu.
         '''
 
-        # Získání běžného kontextu a přidání vyhledávacího dotazu
+        # Získání běžného kontextu
         context = super().get_context_data(**kwargs)
 
-        # Přidání výsledku dotazu
-        context['query'] = self.kwargs.get('query') or self.request.GET.get('q')
-        print(repr(self.display_text))
+        # Přidání jména URL
+        context['url_name'] = self.url_name
+
+        # Přidání dotazu
+        query = self.kwargs.get('query') or self.request.GET.get('q')
+        context['search_query'] = query
+
+        # Přidání potvrzení pro skyrí navigace pokud je zadán prázdný dotaz
+        context['empty_query'] = self.empty_query
+
+        # Přidání textu s popisem výsledku vyhledávání
         context['display_text'] = self.display_text
+
+        # pokud má uživatel zapnutou navigaci pro podobné články
+        if self.search_navigation_check():
+
+            # Přidání seznamu zobrazených kategorií
+            context['category_items'] = self.category_items
+
+            # Přidání aktuálně vybrané kategorie
+            context['current_category_slug'] = self.current_category_tab['slug']
 
         # Navrácení kontextu
         return context

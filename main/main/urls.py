@@ -29,17 +29,28 @@ urlpatterns = [
     # URL pro domovskou stránku
     path('', HomePageView.as_view(), name='home'),
 
+
+
     # URL pro seznam článků
     path('articles/all', ArticleListView.as_view(), name='article-list'),
 
     # URL pro zobrazení seznamu článků v dané kategorii
     path('articles/category/<slug:category_slug>/', ArticleListView.as_view(), name='article-category-list'),
 
+
+
     # URL pro zobrazení seznamu článků s daným tagem
     path('articles/tag/<slug:tag_slug>/', ArticleListView.as_view(), name='article-tag-list'),
 
+    # URL pro zobrazení seznamu článků s daným tagem
+    path('articles/tag/<slug:tag_slug>/<str:category>/<slug:category_slug>/', ArticleListView.as_view(), name='article-tag-list-category'),
+
     # URL pro zobrazení podobných článků k článkům s daným tagem
-    path('articles/tag/<slug:tag_slug>/<str:similar>/', ArticleListView.as_view(), name='article-tag-list'),
+    path('articles/tag/<slug:tag_slug>/<str:similar>/', ArticleListView.as_view(), name='article-tag-list-similar'),
+
+    # URL pro zobrazení podobných článků k článkům s daným tagem
+    path('articles/tag/<slug:tag_slug>/<str:similar>/<str:category>/<slug:category_slug>/', ArticleListView.as_view(), name='article-tag-list-similar-category'),
+
 
 
 
@@ -59,13 +70,20 @@ urlpatterns = [
 
 
 
-
-
     # URL pro vyhledávání článků
     path('search/', SearchView.as_view(), name='article-search'),
 
     # URL pro zobrazení výsledků vyhledávání s daným dotazem
     path('search/<str:query>/', SearchView.as_view(), name='article-search-results'),
+
+    # URL pro zobrazení výsledků vyhledávání s daným dotazem
+    path('search/<str:query>/<str:category>/<slug:category_slug>/', SearchView.as_view(), name='article-search-results-category'),
+
+    # URL pro zobrazení výsledků vyhledávání s daným dotazem
+    path('search/<str:query>/<str:similar>/', SearchView.as_view(), name='article-search-similar'),
+
+    # URL pro zobrazení výsledků vyhledávání s daným dotazem
+    path('search/<str:query>/<str:similar>/<str:category>/<slug:category_slug>/', SearchView.as_view(), name='article-search-similar-category'),
 
 
 

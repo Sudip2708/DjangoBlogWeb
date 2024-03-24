@@ -1,0 +1,77 @@
+    {% if not navigation %}
+
+        <header class="mb-5">
+            <h2>Articles with tag: {{ current_tag_tab.title  }}</h2>
+            <p class="text-lg fw-light text-secondary mt-2">(To display similar articles, click on 'Show Tab for Similar' in the Tags sidebar.)</p>
+        </header>
+
+    {% else %}
+
+        <!-- Page title -->
+        <header>
+            <h2>Articles by tags</h2>
+        </header>
+
+
+        <!-- Navigace pro stránku s vyhledávání dle Tagů -->
+        <nav class="nav nav-tabs justify-content-end mb-5 pt-2">
+
+            <!-- Zobrazení pokud není navigace přepnutá na kategorie -->
+            {% if not category_items %}
+
+                <!-- Tab for categories -->
+                <li class="nav-item ">
+                    <a href="{% url 'article-tag-list' tag_slug=current_tag_tab.slug %}"
+                       class="nav-link {% if url_name == 'article-tag-list' %}active{% endif %}">
+                        {{ current_tag_tab.title  }}
+                    </a>
+                </li>
+
+                <li class="nav-item ">
+                    <a href="{% url 'article-tag-list-similar' tag_slug=current_tag_tab.slug similar='similar' %}"
+                       class="nav-link {% if url_name == 'article-tag-list-similar' %}active{% endif %}">
+                        Similar Tag Articles
+                    </a>
+                </li>
+
+                <li class="nav-item ">
+                    {% if url_name == 'article-tag-list' %}
+                        <a href="{% url 'article-tag-list-category' tag_slug=current_tag_tab.slug category='category' category_slug='first' %}" class="nav-link">
+                    {% elif url_name == 'article-tag-list-similar' %}
+                        <a href="{% url 'article-tag-list-similar-category' tag_slug=current_tag_tab.slug similar='similar' category='category' category_slug='first' %}" class="nav-link">
+                    {% endif %}
+                        Show Category
+                    </a>
+                </li>
+
+            <!-- Zobrazení pokud je navigace přepnutá na kategorie -->
+            {% else %}
+
+                <!-- Tab for categories -->
+                {% for category in category_items %}
+                    {% if url_name == 'article-tag-list-category' %}
+                        <a href="{% url 'article-tag-list-category' tag_slug=current_tag_tab.slug category='category' category_slug=category.slug %}"
+                           class="nav-link {% if current_category_tab.slug == category.slug %}active{% endif %}">
+                    {% elif url_name == 'article-tag-list-similar-category' %}
+                        <a href="{% url 'article-tag-list-similar-category' tag_slug=current_tag_tab.slug similar='similar' category='category' category_slug=category.slug %}"
+                           class="nav-link {% if current_category_tab.slug == category.slug %}active{% endif %}">
+                    {% endif %}
+                        {{ category.title }}
+                    </a>
+                {% endfor %}
+
+
+                <li class="nav-item ">
+                    {% if url_name == 'article-tag-list-category' %}
+                        <a href="{% url 'article-tag-list' tag_slug=current_tag_tab.slug %}" class="nav-link">
+                    {% elif url_name == 'article-tag-list-similar-category' %}
+                        <a href="{% url 'article-tag-list-similar' tag_slug=current_tag_tab.slug similar='similar' %}" class="nav-link">
+                    {% endif %}
+                        Hide Category
+                    </a>
+                </li>
+
+            {% endif %}
+        </nav>
+
+    {% endif %}
