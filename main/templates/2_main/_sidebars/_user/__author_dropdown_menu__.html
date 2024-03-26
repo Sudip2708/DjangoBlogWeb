@@ -2,34 +2,12 @@
 <!-- for Drop-down menu -->
 
 
-<!-- Drop-down menu -->
-<div class="px-1">
+<style>
+    /* Definice třídy pro odsazení obrázku z leva */
+    .left-margin-sidebar-author {
+        margin-left: 40px; /* Změňte hodnotu podle potřeby */
+    }
 
-    <!-- Button -->
-    <button class="btn btn-link d-block drop-down-title"
-            data-bs-toggle="collapse"
-            data-bs-target="#sidebar_user_author_menu"
-            aria-expanded="{{ user.sidebar_user_author_menu }}"
-            aria-controls="sidebar_user_author_menu">
-        Author Menu
-    </button>
-
-    <!-- Drop-down items -->
-    <div class="collapse {% if user.sidebar_user_author_menu %} show {% endif %}" id="sidebar_user_author_menu">
-
-        <!-- Create an Article -->
-        <a class="d-block drop-down-text"
-           href="{% url 'article-create' current_tab='overview'  %}"><button class="btn btn-light">
-            Create an Article
-        </button></a>
-
-        <!-- My Articles -->
-        <a class="d-block drop-down-text"
-           href="{% url 'my-articles' current_tab='all' %}"><button class="btn btn-light">
-            My Articles
-        </button></a>
-
-    </div>
+</style>
 
 
-</div>

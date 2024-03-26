@@ -15,7 +15,11 @@ def user_sidebar_movements(request, hash):
         hash_to_process_values = (
             "#sidebar",
             "#sidebar_category_navigation",
-            "#show_tab_for_similar"
+            "#show_tab_for_similar",
+            "#sidebar_category_menu",
+            "#sidebar_user_user_menu",
+            "#sidebar_user_author_menu",
+            "#sidebar_search_options"
         )
 
         # Pokud se jedná o změnu viditelnosti sidebaru

@@ -727,3 +727,10 @@ Dotažení nastavení navigací ve vyhledávání a na stránkách s více člá
 • articles/models/article.py > úprava kodu
 • articles/models/article_author.py > úprava kodu
 ###
+Dotažení funkcionality skrývání a zobrazování nabídek postranních panelů
+• users/user_settings_mixin.py > dopsat pole pro skrývání nabídky kategorií a tagů
+• templates > v nabídce pro navigaci stránky přidat zobrazení navigace pro kategorie a podobné čláánky
+• templates > v bočních panelech přepsat kod a nastavit skrývání nabídky pro kategorie a navigace
+• templates > přepsat script pro zachytávání tlačítek tak, aby měnil i jejich text
+• templates > předpříprava výklopné nabídky v horní liště navigace
+###

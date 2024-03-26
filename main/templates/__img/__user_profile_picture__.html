@@ -71,4 +71,17 @@
     {% endif %}
 
 
+
+<!-- For Navigation Thumbnail2 -->
+{% elif atr == "user_navigation2" %}
+
+    <!-- If User Exist -->
+    {% if user.profile_picture_thumbnail %}
+        <img alt="User Profile Picture"
+             src="{{ user.profile_picture_thumbnail.url }}?{% now 'U' %}"
+             class="img-fluid m-2"
+             width="40"/>
+
+    {% endif %}
+
 {% endif %}

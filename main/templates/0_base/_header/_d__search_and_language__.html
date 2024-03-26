@@ -1,22 +1,14 @@
 <!-- Include for 0_base/02__header__.html -->
 <!-- for Navigation for Search and Language -->
 
-<li class="nav-item mt-2 mt-lg-0">
+<li class="nav-item mt-2 mt-lg-0 ">
     <ul class="list-inline d-flex align-items-center">
 
         <!-- Search -->
-        <li class="list-inline-item mx-lg-2 px-2 border-start border-end">
-            <a class="search-btn nav-link small py-0 text-dark" href="#">
-                <i class="fas fa-search"></i>
-            </a>
-        </li>
+        {% include '0_base/_header/_navigation/__search__.html' %}
 
         <!-- Languages -->
-        <li class="list-inline-item d-flex align-items-end small">
-            <a class="text-dark" href="#">EN</a>
-            <span class="underscore mb-1"></span>
-            <a class="text-gray-500" href="#">ES</a>
-        </li>
+        {% include '0_base/_header/_navigation/__language__.html' %}
 
     </ul>
 </li>

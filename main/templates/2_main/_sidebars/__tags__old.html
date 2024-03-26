@@ -33,39 +33,26 @@
                         Tags
                     </h3>
 
-
-                    <!-- Button -->
-                    <button class="btn btn-link drop-down-title p-0 light-grey-color"
-                            data-bs-toggle="collapse"
-                            data-bs-target="#sidebar_tags_options"
-                            aria-expanded="{{ user.sidebar_tags_options }}"
-                            aria-controls="sidebar_tags_options">
-                        {% if display_text %}
-                            {{ display_text }}
-                        {% elif user.is_authenticated and not user.sidebar_tags_options %}
-                            Show Content
+                    <a class="btn btn-link drop-down-title p-0 light-grey-color"
+                       href="{% url 'user_sidebar_movements' hash='#show_tab_for_similar' %}">
+                        {% if user.is_authenticated and not user.show_tab_for_similar %}
+                            Show Tab for Similar
                         {% else %}
-                            Hide Content
+                            Hide Tab for Similar
                         {% endif %}
-                    </button>
-
-
-                </div>
-
-                <!-- Drop-down items -->
-                <div class="collapse {% if user.sidebar_tags_options %} show {% endif %}" id="sidebar_tags_options">
-
-                    <ul class="list-inline mb-0">
-                        {% for tag in tags %}
-                            <li class="list-inline-item">
-                                <a class="tag" href="{% url 'article-tag-list' tag_slug=tag.slug %}">
-                                    {{ tag }}
-                                </a>
-                            </li>
-                        {% endfor %}
-                    </ul>
+                    </a>
 
                 </div>
+
+                <ul class="list-inline mb-0">
+                    {% for tag in tags %}
+                        <li class="list-inline-item">
+                            <a class="tag" href="{% url 'article-tag-list' tag_slug=tag.slug %}">
+                                {{ tag }}
+                            </a>
+                        </li>
+                    {% endfor %}
+                </ul>
 
             </div>
         </div>

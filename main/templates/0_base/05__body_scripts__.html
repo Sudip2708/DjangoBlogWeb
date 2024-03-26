@@ -233,7 +233,7 @@ document.addEventListener("DOMContentLoaded", function () {
     function toggleMenu(menuId) {
 
         // Výpis ID objektu do konzole
-        console.log('ID objektu:', menuId);
+        // console.log('ID objektu:', menuId);
 
         // Získání CSRF tokenu
         var csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
@@ -270,10 +270,45 @@ document.addEventListener("DOMContentLoaded", function () {
             // Získání id nabídky z atributu data-bs-target
             var menuId = button.getAttribute('data-bs-target');
 
-            // Spuštění funkce toggleMenu
+            // Spuštění funkce changeButtonText pro změnu textu
+            changeButtonText(menuId);
+
+            // Spuštění funkce toggleMenu pro změnu hodnoty v databázy
             toggleMenu(menuId);
         });
     });
+
+
+    // Funkce pro změnu textu tlačítka na základě id nabídky
+    function changeButtonText(menuId) {
+        // Získání tlačítka na základě id nabídky
+        var toggleBtn = document.querySelector('[data-bs-target="' + menuId + '"]');
+
+        // Získání aktuálního textu tlačítka
+        var currentText = toggleBtn.textContent.trim();
+
+        // Seznam hodnot, na které se neaplikuje změna textu
+        var excludedTexts = ['Search', 'User Menu', 'Category', 'Tags'];
+
+        // Pokud je aktuální text tlačítka v seznamu vyloučených hodnot, neaplikuj změnu textu
+        if (!excludedTexts.includes(currentText)) {
+            // Rozdělení textu na část s Hide/Show a zbytek textu
+            var splitText = currentText.split(' ');
+            var actionText = splitText[0]; // Hide nebo Show
+            var remainingText = splitText.slice(1).join(' '); // Zbytek textu za Hide/Show
+
+            // Získání hodnoty aria-expanded
+            var ariaExpanded = toggleBtn.getAttribute('aria-expanded');
+
+            // Aktualizace textu tlačítka podle hodnoty aria-expanded
+            if (ariaExpanded === 'true') {
+                toggleBtn.textContent = 'Hide ' + remainingText;
+            } else {
+                toggleBtn.textContent = 'Show ' + remainingText;
+            }
+        }
+    }
+
 </script>
 
 

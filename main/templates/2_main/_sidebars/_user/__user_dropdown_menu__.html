@@ -1,17 +1,29 @@
 <!-- Include for 2_main/____user__.html -->
 <!-- for Drop-down menu -->
 
+<style>
+    /* Definice třídy pro odsazení obrázku z leva */
+    .left-margin-sidebar-user {
+        margin-left: 15px; /* Změňte hodnotu podle potřeby */
+    }
+</style>
 
 <!-- Drop-down menu -->
 <div class="px-1">
 
     <!-- Button -->
-    <button class="btn btn-link d-block drop-down-title"
+    <button class="btn btn-link d-block drop-down-title  p-0 light-grey-color left-margin-sidebar-user"
             data-bs-toggle="collapse"
             data-bs-target="#sidebar_user_user_menu"
             aria-expanded="{{ user.sidebar_user_user_menu }}"
             aria-controls="sidebar_user_user_menu">
-        User Menu
+        {% if display_text %}
+            {{ display_text }}
+        {% elif not user.sidebar_user_user_menu %}
+            Show User Menu
+        {% else %}
+            Hide User Menu
+        {% endif %}
     </button>
 
     <!-- Drop-down items -->

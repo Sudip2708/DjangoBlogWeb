@@ -34,56 +34,68 @@
                         Category
                     </h3>
 
-                    <a class="btn btn-link drop-down-title p-0 light-grey-color"
-                       href="{% url 'user_sidebar_movements' hash='#sidebar_category_navigation' %}">
-                        {% if user.is_authenticated and not user.sidebar_category_navigation %}
-                            Show Navigation
+
+                    <!-- Button -->
+                    <button class="btn btn-link drop-down-title p-0 light-grey-color"
+                            data-bs-toggle="collapse"
+                            data-bs-target="#sidebar_category_options"
+                            aria-expanded="{{ user.sidebar_category_options }}"
+                            aria-controls="sidebar_category_options">
+                        {% if display_text %}
+                            {{ display_text }}
+                        {% elif user.is_authenticated and not user.sidebar_category_options %}
+                            Show Content
                         {% else %}
-                            Hide Navigation
+                            Hide Content
                         {% endif %}
-                    </a>
+                    </button>
+
 
                 </div>
 
+                <!-- Drop-down items -->
+                <div class="collapse {% if user.sidebar_category_options %} show {% endif %}" id="sidebar_category_options">
 
-                <!-- Loop through category_count-->
-                {% for category in category_count %}
+                    <!-- Loop through category_count-->
+                    {% for category in category_count %}
 
-                    <!-- Display for odd row -->
-                    {% if not forloop.counter|divisibleby:2 %}
-                        <div class="p-2 d-flex justify-content-between fw-bold text-gray-600 bg-light">
+                        <!-- Display for odd row -->
+                        {% if not forloop.counter|divisibleby:2 %}
+                            <div class="p-2 d-flex justify-content-between fw-bold text-gray-600 bg-light">
 
-                            <!-- category title -->
-                            <a class="text-reset" href="{% url 'article-category-list' category_slug=category.category__slug %}">
-                                {{ category.category__title }}
-                            </a>
+                                <!-- category title -->
+                                <a class="text-reset" href="{% url 'article-category-list' category_slug=category.category__slug %}">
+                                    {{ category.category__title }}
+                                </a>
 
-                            <!-- category count -->
-                            <span>
-                                {{ category.category__title__count }}
-                            </span>
+                                <!-- category count -->
+                                <span>
+                                    {{ category.category__title__count }}
+                                </span>
 
-                        </div>
-                    {% endif %}
+                            </div>
+                        {% endif %}
 
-                    <!-- Display for even row -->
-                    {% if forloop.counter|divisibleby:2 %}
-                        <div class="p-2 d-flex justify-content-between fw-bold text-gray-600 1">
+                        <!-- Display for even row -->
+                        {% if forloop.counter|divisibleby:2 %}
+                            <div class="p-2 d-flex justify-content-between fw-bold text-gray-600 1">
 
-                            <!-- category title -->
-                            <a class="text-reset" href="{% url 'article-category-list' category_slug=category.category__slug %}">
-                                {{ category.category__title }}
-                            </a>
+                                <!-- category title -->
+                                <a class="text-reset" href="{% url 'article-category-list' category_slug=category.category__slug %}">
+                                    {{ category.category__title }}
+                                </a>
 
-                            <!-- category count -->
-                            <span>
-                                {{ category.category__title__count }}
-                            </span>
+                                <!-- category count -->
+                                <span>
+                                    {{ category.category__title__count }}
+                                </span>
 
-                        </div>
-                    {% endif %}
+                            </div>
+                        {% endif %}
 
-                {% endfor %}
+                    {% endfor %}
+
+                </div>
 
             </div>
         </div>

@@ -1,6 +1,34 @@
 <!-- Include for 0_base/00__base__.html -->
 <!-- for Page Navigation -->
 
+<style>
+    /* Definice třídy pro odsazení obrázku z leva */
+    .left-margin {
+        margin-left: 0px; /* Změňte hodnotu podle potřeby */
+        background-color: blue;
+    }
+    .left-padding {
+        padding-left: 0px; /* Změňte hodnotu podle potřeby */
+        background-color: yellow;
+    }
+
+    .right-padding {
+        padding-right: 5px; /* Změňte hodnotu podle potřeby */
+    }
+
+    .hidden-element {
+        display: none !important;
+        visibility: hidden !important;
+        width: 0 !important;
+        height: 0 !important;
+        opacity: 0 !important;
+        overflow: hidden !important;
+        position: absolute !important;
+    }
+
+</style>
+
+
 
 <!-- Header -->
 <nav class="navbar navbar-expand-lg navbar-light bg-white border-bottom py-3">
@@ -9,24 +37,24 @@
         <!-- Main title -->
         {% include '0_base/_header/_a__main_title__.html' %}
 
-        <!-- Drop Down Menu for Mobile Device -->
-        {% include '0_base/_header/_b__dropdown_menu_mobile__.html' %}
-
         <!-- Page navigations -->
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <div class="collapse navbar-collapse right-padding" id="navbarSupportedContent">
             <ul class="navbar-nav ms-auto mb-2 mb-lg-0 align-items-lg-center">
 
                 <!-- Items for all users -->
                 {% include '0_base/_header/_c__navigation__.html' %}
 
+                <!-- Items for special offer -->
+                {% include '0_base/_header/__special_offer__.html' %}
+
                 <!-- Search and Languages -->
                 {% include '0_base/_header/_d__search_and_language__.html' %}
 
-                <!-- Drop Down Menu -->
-                {% include '0_base/_header/_e__dropdown_menu__.html' %}
-
             </ul>
         </div>
+
+        <!-- Drop Down Menu for Mobile Device -->
+        {% include '0_base/_header/_b__dropdown_menu_mobile_new__.html' %}
 
     </div>
 </nav>

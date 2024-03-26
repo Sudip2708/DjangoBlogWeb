@@ -17,9 +17,9 @@
     </div>
 
     <!-- Pagination -->
-    {% include '3_articles/33__pagination__.html' %}
-
-
+    {% if page_obj.has_next or page_obj.has_previous %}
+        {% include '3_articles/33__pagination__.html' %}
+    {% endif %}
 
 <!-- End of block for the parent template -->
 {% endblock inner_content %}

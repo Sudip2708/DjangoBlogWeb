@@ -1,0 +1,31 @@
+<!-- Special Offer-->
+
+
+
+<!-- Nabídka pro zobrazení a skrytí navigace podle kategorií -->
+{% if url_name == 'article-list' or url_name == 'article-category-list' %}
+    <li class="nav-item">
+        <a class="btn btn-link drop-down-title p-0 light-grey-color"
+           href="{% url 'user_sidebar_movements' hash='#sidebar_category_navigation' %}">
+            {% if user.is_authenticated and not user.sidebar_category_navigation %}
+                Show Category
+            {% else %}
+                Hide Category
+            {% endif %}
+        </a>
+    </li>
+
+<!-- Nabídka pro zobrazení a skrytí navigace podle tagů -->
+{% elif search_query or tag_slug %}
+    <li class="nav-item">
+        <a class="btn btn-link drop-down-title p-0 light-grey-color"
+           href="{% url 'user_sidebar_movements' hash='#show_tab_for_similar' %}">
+            {% if user.is_authenticated and not user.show_tab_for_similar %}
+                Show Similar
+            {% else %}
+                Hide Similar
+            {% endif %}
+        </a>
+    </li>
+
+{% endif %}

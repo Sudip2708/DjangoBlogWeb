@@ -1,6 +1,36 @@
 <!-- Include for 2_main/____user__.html -->
 <!-- for Author Sidebar -->
 
+<style>
+
+    /* Definice třídy pro odsazení obrázku z leva */
+    .left-margin-sidebar-author {
+        margin-left: 5px; /* Změňte hodnotu podle potřeby */
+    }
+
+    /* Definice třídy pro odsazení obrázku z leva */
+    .left-margin-sidebar-author-name {
+        margin-left: 6px; /* Změňte hodnotu podle potřeby */
+    }
+
+    /* Definice třídy pro odsazení obrázku z leva */
+    .left-margin-sidebar-author-items {
+        margin-left: 45px; /* Změňte hodnotu podle potřeby */
+    }
+
+    .sidebar-author-text {
+        font-size: 0.8rem;
+        color: #a0a0a0;
+    }
+
+    .sidebar-author-name {
+        font-size: 1rem;
+        font-weight: bold;
+
+    }
+
+
+</style>
 
 <!-- Separate Line -->
 <div class="pt-3"><hr class="border-top " style="color: grey;"></div>
@@ -9,32 +39,72 @@
 <div class="d-flex align-items-center">
 
     <!-- Title -->
-    <div class="w-25 author-section align-self-start">Author</div>
+    <div class="w-10 author-section align-self-start sidebar-author-text">Author</div>
 
     <!-- Author section -->
-    <div class="w-75">
+    <div class="w-90">
 
         <!-- Author -->
-        <div class="pt-2">
+        <div class="pt-2 ">
+
 
             <!-- Link to the author -->
-            <a class="d-flex align-items-center flex-wrap text-reset"
-               href="{% url 'article-from-author-list' author_slug=author.slug %}">
+            <div class="d-flex align-items-center" href="{% url 'article-from-author-list' author_slug=author.slug %}">
 
-              <!-- Profile picture -->
-              <div class="avatar flex-shrink-0">
-                {% include '__img/__author_profile_picture__.html' with atr="author_thumbnail" %}
-              </div>
 
-              <!-- Name -->
-              {{ author.author }}
+                <!-- Profile picture -->
+                <div class="avatar flex-shrink-0 left-margin-sidebar-author ">
+                    {% include '__img/__author_profile_picture__.html' with atr="author_thumbnail" %}
+                </div>
 
-            </a>
+                <!-- Author name & Menu -->
+                <div class="left-margin-sidebar-author-name">
+
+                    <!-- Author name -->
+                    <p class="d-block mb-0 sidebar-author-name">
+                        <span>{{ author.author }}</span>
+                    </p>
+
+
+                    <!-- Button -->
+                    <button class="btn btn-link d-block drop-down-title  p-0 light-grey-color"
+                            data-bs-toggle="collapse"
+                            data-bs-target="#sidebar_user_author_menu"
+                            aria-expanded="{{ user.sidebar_user_author_menu }}"
+                            aria-controls="sidebar_user_author_menu">
+                        {% if user.sidebar_user_author_menu %}
+                            Hide Author Menu
+                        {% else %}
+                            Show Author Menu
+                        {% endif %}
+                    </button>
+
+                </div>
+
+
+
+
 
         </div>
 
-        <!-- Drop-down menu -->
-        {% include '2_main/_sidebars/_user/__author_dropdown_menu__.html' %}
+        <!-- Drop-down items -->
+        <div class="collapse {% if user.sidebar_user_author_menu %} show {% endif %} left-margin-sidebar-author-items" id="sidebar_user_author_menu">
+
+            <!-- Create an Article -->
+            <a class="d-block drop-down-text"
+               href="{% url 'article-create' current_tab='overview'  %}"><button class="btn btn-light">
+                Create an Article
+            </button></a>
+
+            <!-- My Articles -->
+            <a class="d-block drop-down-text"
+               href="{% url 'my-articles' current_tab='all' %}"><button class="btn btn-light">
+                My Articles
+            </button></a>
+
+        </div>
+
+
 
     </div>
 

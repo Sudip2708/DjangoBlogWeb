@@ -18,8 +18,10 @@ class UserSettingsMixin(models.Model):
         "sidebar_user_user_menu": False,
         "sidebar_user_author_menu": False,
         "sidebar_category": {"value": True, "order": 3},
+        "sidebar_category_options": True,
         "sidebar_category_navigation": True,
         "sidebar_tags": {"value": True, "order": 4},
+        "sidebar_tags_options": True,
         "show_tab_for_similar": True,
     }
 
@@ -58,11 +60,11 @@ class UserSettingsMixin(models.Model):
         # Ověření zda je hodnota přítomna jako klíč v sidebar_data
         if field_key in self.sidebar_data:
 
-            # Ověří, zda se jedná o bool hodnotu
+            # Ověří, zda se jedná o bool hodnotu, pokud ano, změní ji
             if isinstance(self.sidebar_data[field_key], bool):
                 self.sidebar_data[field_key] = not self.sidebar_data[field_key]
 
-            # Ověří, zda se jedná o slovník
+            # Ověří, zda se jedná o slovník,pokud ano, změní v něm hodnotu
             elif isinstance(self.sidebar_data[field_key], dict):
                 self.sidebar_data[field_key]["value"] = not self.sidebar_data[field_key]["value"]
 
