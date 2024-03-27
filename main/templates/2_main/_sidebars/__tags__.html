@@ -40,9 +40,7 @@
                             data-bs-target="#sidebar_tags_options"
                             aria-expanded="{{ user.sidebar_tags_options }}"
                             aria-controls="sidebar_tags_options">
-                        {% if display_text %}
-                            {{ display_text }}
-                        {% elif user.is_authenticated and not user.sidebar_tags_options %}
+                        {% if user.is_authenticated and not user.sidebar_tags_options %}
                             Show Content
                         {% else %}
                             Hide Content

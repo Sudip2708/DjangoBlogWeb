@@ -41,9 +41,7 @@
                             data-bs-target="#sidebar_category_options"
                             aria-expanded="{{ user.sidebar_category_options }}"
                             aria-controls="sidebar_category_options">
-                        {% if display_text %}
-                            {{ display_text }}
-                        {% elif user.is_authenticated and not user.sidebar_category_options %}
+                        {% if user.is_authenticated and not user.sidebar_category_options %}
                             Show Content
                         {% else %}
                             Hide Content

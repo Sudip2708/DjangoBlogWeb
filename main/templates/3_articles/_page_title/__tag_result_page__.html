@@ -34,15 +34,17 @@
                     </a>
                 </li>
 
-                <li class="nav-item ">
-                    {% if url_name == 'article-tag-list' %}
-                        <a href="{% url 'article-tag-list-category' tag_slug=current_tag_tab.slug category='category' category_slug='first' %}" class="nav-link">
-                    {% elif url_name == 'article-tag-list-similar' %}
-                        <a href="{% url 'article-tag-list-similar-category' tag_slug=current_tag_tab.slug similar='similar' category='category' category_slug='first' %}" class="nav-link">
-                    {% endif %}
-                        Show Category
-                    </a>
-                </li>
+                {% if articles_results %}
+                    <li class="nav-item ">
+                        {% if url_name == 'article-tag-list' %}
+                            <a href="{% url 'article-tag-list-category' tag_slug=current_tag_tab.slug category='category' category_slug='first' %}" class="nav-link">
+                        {% elif url_name == 'article-tag-list-similar' %}
+                            <a href="{% url 'article-tag-list-similar-category' tag_slug=current_tag_tab.slug similar='similar' category='category' category_slug='first' %}" class="nav-link">
+                        {% endif %}
+                            Show Category
+                        </a>
+                    </li>
+                {% endif %}
 
             <!-- Zobrazení pokud je navigace přepnutá na kategorie -->
             {% else %}

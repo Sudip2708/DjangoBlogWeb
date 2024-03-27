@@ -4,9 +4,7 @@
         data-bs-target="#sidebar_search_options"
         aria-expanded="{{ user.sidebar_search_options }}"
         aria-controls="sidebar_search_options">
-    {% if display_text %}
-        {{ display_text }}
-    {% elif not user.sidebar_search_options %}
+    {% if not user.sidebar_search_options %}
         Show Search Options
     {% else %}
         Hide Search Options

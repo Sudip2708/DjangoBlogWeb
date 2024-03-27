@@ -26,15 +26,17 @@
                             </a>
                         </li>
 
-                        <li class="nav-item ">
-                            {% if url_name == 'article-search-results' %}
-                                <a href="{% url 'article-search-results-category' query=search_query category='category' category_slug=current_category_slug %}" class="nav-link">
-                            {% elif url_name == 'article-search-similar' %}
-                                <a href="{% url 'article-search-similar-category' query=search_query similar='similar' category='category' category_slug=current_category_slug %}" class="nav-link">
-                            {% endif %}
-                                Show Category
-                            </a>
-                        </li>
+                        {% if articles_results %}
+                            <li class="nav-item ">
+                                {% if url_name == 'article-search-results' %}
+                                    <a href="{% url 'article-search-results-category' query=search_query category='category' category_slug=current_category_slug %}" class="nav-link">
+                                {% elif url_name == 'article-search-similar' %}
+                                    <a href="{% url 'article-search-similar-category' query=search_query similar='similar' category='category' category_slug=current_category_slug %}" class="nav-link">
+                                {% endif %}
+                                    Show Category
+                                </a>
+                            </li>
+                        {% endif %}
 
                     <!-- Zobrazení pokud je navigace přepnutá na kategorie -->
                     {% else %}

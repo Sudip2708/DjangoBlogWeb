@@ -734,3 +734,7 @@ Dotažení funkcionality skrývání a zobrazování nabídek postranních panel
 • templates > přepsat script pro zachytávání tlačítek tak, aby měnil i jejich text
 • templates > předpříprava výklopné nabídky v horní liště navigace
 ###
+Dotažení pohybu a nastavení panelů postranní nabídky a navigace
+• users/views/user_sidebar_movements.py > zjednodušení kodu pro podmínku mezi posunem a vzhledem
+• templates > úprava příslušných částí kodu
+###

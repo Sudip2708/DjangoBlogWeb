@@ -17,9 +17,7 @@
             data-bs-target="#sidebar_user_user_menu"
             aria-expanded="{{ user.sidebar_user_user_menu }}"
             aria-controls="sidebar_user_user_menu">
-        {% if display_text %}
-            {{ display_text }}
-        {% elif not user.sidebar_user_user_menu %}
+        {% if not user.sidebar_user_user_menu %}
             Show User Menu
         {% else %}
             Hide User Menu

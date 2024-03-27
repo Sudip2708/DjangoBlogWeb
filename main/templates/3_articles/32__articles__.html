@@ -4,6 +4,9 @@
 <!-- Import static files -->
 {% load static %}
 
+{% if not articles_results and 'similar' in url_name %}
+<h6 style="color: grey;">There are no other articles with tags that have articles in the result.</h6>
+{% endif %}
 
 {% for article in articles_results %}
 

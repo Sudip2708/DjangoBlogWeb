@@ -12,26 +12,25 @@ def user_sidebar_movements(request, hash):
         # Získání přihlášeného uživatele
         user = request.user
 
-        hash_to_process_values = (
-            "#sidebar",
-            "#sidebar_category_navigation",
-            "#show_tab_for_similar",
-            "#sidebar_category_menu",
-            "#sidebar_user_user_menu",
-            "#sidebar_user_author_menu",
-            "#sidebar_search_options"
-        )
+        # Pokud se jedná o posun jednotlivých sidebarů
+        if hash.startswith('#Move'):
+            user.sidebar_move(hash)
 
         # Pokud se jedná o změnu viditelnosti sidebaru
-        if hash in hash_to_process_values:
-            user.change_sidebar_value(hash[1:])
-
-        # Pokud se jedná o posun jednotlivých sidebarů
         else:
-            user.sidebar_move(hash)
+            user.change_sidebar_value(hash[1:])
 
     # Získání odkazu na předchozí stránku
     previous_page = request.META.get('HTTP_REFERER', '/')
+
+    # Odstranění '/similar/' a všeho za ním z URL
+    if '/similar/' in previous_page:
+        previous_page = previous_page.split('/similar/')[0]
+
+
+    # Odstranění '/category/' a všeho za ním z URL
+    elif '/category/' in previous_page:
+        previous_page = previous_page.split('/category/')[0]
 
     # Přesměrování zpět na předchozí stránku
     return HttpResponseRedirect(previous_page)
