@@ -1,17 +1,56 @@
-<!-- Include for 3_articles/30__base__.html -->
-<!-- for Articles Cycle -->
+<!-- Rozšíření pro 3_articles/30__base__.html -->
+<!-- Zobrazení článků -->
 
-<!-- Import static files -->
+<!-- Udělení přístupu do statických souborů -->
 {% load static %}
 
+
+
+<!-- Nastavení dodatečných stylů -->
+<style>
+    .grey-text {
+        color: #808080;
+    }
+</style>
+
+
+
+<!-- Kontrola, zda záložka similar obsahuje nějaké články -->
 {% if not articles_results and 'similar' in url_name %}
-<h6 style="color: grey;">There are no other articles with tags that have articles in the result.</h6>
+
+    <!-- Pokud ne, zobrazí se tento text -->
+    <h6 class="grey-text">
+        There are no other articles with tags that have articles in the result.</h6>
+
 {% endif %}
 
+
+
+<!-- Cyklus pro zobrazení článků -->
 {% for article in articles_results %}
 
-    <!-- Articles per row -->
-    {% include '3_articles/32__articles_visibility__.html' %}
+    <!-- Určení, na kolik sloupců se má dělit prostor pro zobrazené články -->
+    <!-- Pokud je uživatel přihlášen a nemá zapnutý sidebar -->
+    {% if user.is_authenticated and user.sidebar %}
+
+        <!-- Postranní panel se zobrazuje pouze na zařízeních XL -->
+        <!-- Pro tuto velikost (XL) se zobrazí 2 články na řádek (12/6) -->
+        <!-- Pro velikost LG (kde už se nezobrazuje sidebar) zobraz 3 články na řádek (12/4)  -->
+        <!-- Pro velikost MD zobraz 2 články na řádek (12/6) -->
+        <!-- Pro velikost SM zobraz 1 články na řádek (12/12) -->
+        <div class="col-xl-6 col-lg-4 col-md-6 col-sm-12 mb-3">
+
+    <!-- Ve všech ostatních případech -->
+    {% else %}
+
+        <!-- Pro velikost XL a LG zobraz 3 články na řádek (12/4) -->
+        <!-- Pro velikost MD zobraz 2 články na řádek (12/6) -->
+        <!-- Pro velikost SM zobraz 1 články na řádek (12/12) -->
+        <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12 mb-3">
+
+    {% endif %}
+
+
 
         <!-- Main Picture -->
         <a class="mb-3" href="article.html">

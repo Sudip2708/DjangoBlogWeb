@@ -4,9 +4,8 @@
 
 <!-- Home Page -->
 <li class="nav-item">
-    <a class="nav-link active "
+    <a class="nav-link {% if request.path == '/' %}active{% endif %}"
        href="/">
         Home
     </a>
 </li>
-

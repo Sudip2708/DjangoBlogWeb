@@ -19,41 +19,41 @@
              <!-- Sidebar -->
             <li class="nav-item">
                   <a class="dropdown-item dropdown-font" href="{% url 'user_sidebar_movements' hash='#sidebar' %}">
-                        Sidebar</a></li>
+                        Show Sidebar</a></li>
 
 
 
             <!-- Dropdown divider -->
-            <li class="nav-item"><hr class="dropdown-divider"></li>
+            <li class="nav-item d-lg-none"><hr class="dropdown-divider"></li>
 
             <!-- Homepage -->
-            <li class="nav-item">
+            <li class="nav-item d-lg-none">
                   <a class="dropdown-item dropdown-font" href="{% url 'home' %}">
                         Homepage</a></li>
 
             <!-- Articles -->
-            <li class="nav-item">
+            <li class="nav-item d-lg-none">
                   <a class="dropdown-item dropdown-font" href="{% url 'article-list' %}">
                         Articles</a></li>
 
 
             <!-- Search -->
-            <li id="searchArticlesDropdown" class="nav-item">
+            <li id="searchArticlesDropdown" class="nav-item d-lg-none">
                   <a class="dropdown-item dropdown-font " href="#">
                         Search in Articles</a></li>
 
 
 
             <!-- Dropdown divider -->
-            <li class="nav-item"><hr class="dropdown-divider"></li>
+            <li class="nav-item  d-lg-none"><hr class="dropdown-divider"></li>
 
             <!-- Search -->
-            <li class="nav-item">
+            <li class="nav-item  d-lg-none">
                   <a class="dropdown-item dropdown-font " href="#">
                         Show Category</a></li>
 
             <!-- Search -->
-            <li class="nav-item">
+            <li class="nav-item  d-lg-none">
                   <a class="dropdown-item dropdown-font " href="#">
                         Show Similar</a></li>
 
@@ -92,8 +92,23 @@
                   <a class="dropdown-item dropdown-font" href="{% url 'account_logout' %}">
                         Logout</a></li>
 
+            <!-- Dropdown divider -->
+            <li class="nav-item"><hr class="dropdown-divider"></li>
 
+            <li class="nav-item">
+                  <p class="dropdown-item  dropdown-font t-0 m-0" >
+                      Category
+                  </p>
 
+                  <ul class="dropdown-menu dropdown-submenu dropdown-font text-left">
+                      <li><a class="dropdown-item" href="#">Submenu item 1</a></li>
+                      <li><a class="dropdown-item" href="#">Submenu item 2</a></li>
+                      <li><a class="dropdown-item" href="#">Submenu item 3</a></li>
+                      <li><a class="dropdown-item" href="#">Submenu item 4</a></li>
+                      <li><a class="dropdown-item" href="#">Submenu item 5</a></li>
+                  </ul>
+
+            </li>
 
       </ul>
 </div>

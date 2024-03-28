@@ -13,7 +13,15 @@
             <div class="row gy-5">
 
                 <!-- Container for main context -->
-                {% include '2_main/21__size_of_main__.html' %}
+                <!-- Nastavení pro počtu sloupců v kontejneru -->
+                <!-- Když je uživatel přihlášen a má zapnutý sidebar -->
+                {% if user.is_authenticated and user.sidebar %}
+                <main class="col-xl-8">
+                <!-- Ve všech ostatních případech -->
+                {% else %}
+                <main class="col-xl-12">
+                {% endif %}
+
                     <div class="container">
 
                         <!-- Context -->

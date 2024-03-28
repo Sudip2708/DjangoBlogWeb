@@ -6,6 +6,8 @@ from django.db.models import Count
 from taggit.models import Tag
 from django.views.generic.base import ContextMixin
 from django.contrib.auth.models import AnonymousUser
+from django.urls import resolve
+
 
 from articles.models.article import Article
 from articles.models.article_author import ArticleAuthor
@@ -81,5 +83,10 @@ class CommonContextMixin(ContextMixin):
         # Poslání všech autoru do sidebaru pro vyhledávání
         all_authors = ArticleAuthor.objects.all()
         context['all_authors'] = all_authors
+
+        # Přiřazení jména URL adresy
+        self.url_name = resolve(self.request.path_info).url_name
+        print("########## url_name: ", self.url_name)
+        context['url_name'] = self.url_name
 
         return context

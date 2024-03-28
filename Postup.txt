@@ -738,3 +738,7 @@ Dotažení pohybu a nastavení panelů postranní nabídky a navigace
 • users/views/user_sidebar_movements.py > zjednodušení kodu pro podmínku mezi posunem a vzhledem
 • templates > úprava příslušných částí kodu
 ###
+Responzivní chování článků a tlačítka menu
+• templates > úprava příslušných částí kodu pro správné responzivní chování zobrazení článků
+• templates > zobrazování a skrývání položek v nabídce menu
+###

@@ -102,28 +102,5 @@ label[for="usercomment"] {
     --tag-hover: var(--tag-bg);
 }
 
-/* Nastavení skrytí bočního panelu při šířce menší než 960px */
-@media (max-width: 1200px) {
-    aside {
-        display: none;
-    }
-}
-
-/* Seskupení odesílacích tlačítek pro malá zařízení */
-@media (max-width: 767px) {
-    .mobile-buttons {
-        display: flex;
-        flex-direction: column;
-    }
-}
-
-/* Seskupení odesílacích tlačítek  pro větší zařízení */
-@media (min-width: 768px) {
-    .mobile-buttons {
-        display: flex;
-        flex-direction: row;
-    }
-}
 
 ************************************************************************************************************/
-

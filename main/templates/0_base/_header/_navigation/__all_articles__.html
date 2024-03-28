@@ -4,7 +4,7 @@
 
 <!-- Articles -->
 <li class="nav-item">
-    <a class="nav-link "
+    <a class="nav-link {% if request.path == '/articles/all' %}active{% endif %}"
        href="/articles/all">
         Articles
     </a>

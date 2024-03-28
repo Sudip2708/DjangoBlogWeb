@@ -1,25 +1,29 @@
-<!-- Linking to the parent template -->
+<!-- Odkaz na nadřazenou šablonu -->
 {% extends '2_main/20__base__.html' %}
 
-<!-- Start of block for the parent template -->
+<!-- Začátek vnitřního bloku znadřazené šablony -->
 {% block inner_content %}
 
 
-    <!-- Articles -->
+    <!-- Část pro zobrazení článků -->
+    <!-- (row: Vytváří flexbox container, který umožňuje uspořádat elementy do řádků.) -->
+    <!-- (gy-4: Udává vertikální odsazení mezi flexboxy v řádku. [4 odpovídá 16px odsazení]) -->
+    <!-- (mb-5: Udává odsazení dolní části elementu. [5 odpovídá 40px odsazení.]) -->
     <div class="row gy-4 mb-5">
 
-        <!-- Articles Header -->
+        <!-- Zobrazení nadpisů -->
         {% include '3_articles/31__page_title__.html' %}
 
-        <!-- Articles -->
+        <!-- Zobrazení článků -->
         {% include '3_articles/32__articles__.html' %}
 
     </div>
 
-    <!-- Pagination -->
+    <!-- Zobratzení stránkování -->
+    <!-- (Stránkování se objeví pouze, pokud exisutje předchozí, nebo následující stránka) -->
     {% if page_obj.has_next or page_obj.has_previous %}
         {% include '3_articles/33__pagination__.html' %}
     {% endif %}
 
-<!-- End of block for the parent template -->
+<!-- Konec vnitřního bloku znadřazené šablony -->
 {% endblock inner_content %}
