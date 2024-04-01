@@ -154,6 +154,11 @@ class CustomUser(AbstractUser, UserSettingsMixin):
         return os.path.join(self.profile_picture_directory, self.profile_picture_thumbnail_name)
 
 
+    @property
+    def is_anonymous(self):
+        '''Metoda pro určení, zda je uživatel anonymní.'''
+        return False
+
     def save(self, *args, **kwargs):
         '''
         Nastavení metody pro uložení instance.

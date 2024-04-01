@@ -11,7 +11,7 @@ from django.urls import resolve
 
 from articles.models.article import Article
 from articles.models.article_author import ArticleAuthor
-
+from articles.schema_search.get_all_published_category import get_all_published_category
 from utilities.for_articles.get_category_count import get_category_count
 
 
@@ -46,7 +46,7 @@ class CommonContextMixin(ContextMixin):
 
         # Získání autora - je-li
         author = None
-        if not self.request.user.is_anonymous:
+        if self.request.user.is_authenticated:
             try:
                 user = self.request.user
                 author = ArticleAuthor.objects.get(id=user.linked_author_id)
@@ -59,19 +59,19 @@ class CommonContextMixin(ContextMixin):
         # Seřazení panelů podle jejich pořadí uživatele
         user = self.request.user
 
-        if not isinstance(user, AnonymousUser):
+        if user.is_anonymous:
             sorted_panels = [
                 {'name': 'search', 'order': user.sidebar_search_order},
-                {'name': 'user', 'order': user.sidebar_user_order},
                 {'name': 'category', 'order': user.sidebar_category_order},
                 {'name': 'tags', 'order': user.sidebar_tags_order},
             ]
 
         else:
             sorted_panels = [
-                {'name': 'search', 'order': 1},
-                {'name': 'category', 'order': 2},
-                {'name': 'tags', 'order': 3},
+                {'name': 'search', 'order': user.sidebar_search_order},
+                {'name': 'user', 'order': user.sidebar_user_order},
+                {'name': 'category', 'order': user.sidebar_category_order},
+                {'name': 'tags', 'order': user.sidebar_tags_order},
             ]
 
         # Seřazení podle pořadí
@@ -84,9 +84,8 @@ class CommonContextMixin(ContextMixin):
         all_authors = ArticleAuthor.objects.all()
         context['all_authors'] = all_authors
 
-        # Přiřazení jména URL adresy
-        self.url_name = resolve(self.request.path_info).url_name
-        print("########## url_name: ", self.url_name)
-        context['url_name'] = self.url_name
+        # Vytažení všech publikovaných kategorií
+        published_category = get_all_published_category()
+        context['published_category'] = published_category
 
         return context

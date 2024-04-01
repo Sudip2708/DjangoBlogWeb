@@ -742,3 +742,15 @@ Responzivní chování článků a tlačítka menu
 • templates > úprava příslušných částí kodu pro správné responzivní chování zobrazení článků
 • templates > zobrazování a skrývání položek v nabídce menu
 ###
+Nastavení postranního panelu pro nepřihlášeného uživatele
+• users > anonymus_user_settings.py > Zapsat kod pro AnonymousUserSettingsMiddleware a AnonymousUserWithSettings
+• main/settings.py > přidat do MIDDLEWARE vytvořenou třídu a nastavení pro Session
+• users/views/user_sidebar_appearance.py > upravit kod, aby bral v úvahu i nepřihlášeného uživatele
+• users/views/user_sidebar_movements.py > upravit kod, aby bral v úvahu i nepřihlášeného uživatele
+• articles/views/article_common_contex_mixin.py > oprava části kodu pro zobrazení bočního panelu tak, aby fungovali i pro nepřihlášeného uživatele
+• articles/views/article_list.py > oprava části kodu pro zobrazení bočního panelu tak, aby fungovali i pro nepřihlášeného uživatele
+• articles/views/search.py > oprava části kodu pro zobrazení bočního panelu tak, aby fungovali i pro nepřihlášeného uživatele
+• templates/0_base > oprava všech části kodu pro zobrazení bočního panelu tak, aby fungovali i pro nepřihlášeného uživatele
+• templates/2_main > oprava všech části kodu pro zobrazení bočního panelu tak, aby fungovali i pro nepřihlášeného uživatele
+• templates/3_articles > oprava všech části kodu pro zobrazení bočního panelu tak, aby fungovali i pro nepřihlášeného uživatele
+###

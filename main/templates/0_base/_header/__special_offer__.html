@@ -7,10 +7,10 @@
     <li class="nav-item">
         <a class="btn btn-link drop-down-title p-0 light-grey-color"
            href="{% url 'user_sidebar_movements' hash='#sidebar_category_navigation' %}">
-            {% if user.is_authenticated and not user.sidebar_category_navigation %}
-                Show Category
-            {% else %}
+            {% if user.sidebar_category_navigation %}
                 Hide Category
+            {% else %}
+                Show Category
             {% endif %}
         </a>
     </li>
@@ -20,10 +20,10 @@
     <li class="nav-item">
         <a class="btn btn-link drop-down-title p-0 light-grey-color"
            href="{% url 'user_sidebar_movements' hash='#show_tab_for_similar' %}">
-            {% if user.is_authenticated and not user.show_tab_for_similar %}
-                Show Similar
-            {% else %}
+            {% if user.show_tab_for_similar %}
                 Hide Similar
+            {% else %}
+                Show Similar
             {% endif %}
         </a>
     </li>

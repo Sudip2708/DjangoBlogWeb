@@ -1,8 +1,13 @@
 <!-- Button -->
-<button class=" btn btn-link dropdown-toggle dropdown-font"
-        type="button"
-        id="dropdownMenuButton2"
-        data-bs-toggle="dropdown"
-        aria-expanded="false">
-    {% include '__img/__user_profile_picture__.html' with atr="user_navigation" %}
-</button>
+      <button type="button"
+              class="btn btn-link dropdown-toggle"
+              data-bs-toggle="dropdown"
+              aria-expanded="false">
+            {% if user.is_authenticated %}
+                  <img alt="User Profile Picture" src="{{ user.profile_picture_thumbnail.url }}?{% now 'U' %}"  width="40"/>
+            {% else %}
+                  <span></span>
+                  <span></span>
+                  <span></span>
+            {% endif %}
+      </button>

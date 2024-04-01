@@ -27,72 +27,53 @@
 <!-- Sidebars -->
 <aside class="col-lg-4 ">
 
+    <!-- Zobrazení postranního panelu, když je uživatel přihlášený a je na stránce pro správu účtu -->
+    {% if user_form or author_form %}
 
-    <!-- Zobrazení postranního panelu, když je uživatel přihlášený -->
-    {% if user.is_authenticated %}
+        <!-- User -->
+        {% include '2_main/_sidebars/__user__.html' %}
 
-        <!-- Zobrazení postranního panelu, když je uživatel přihlášený a je na stránce pro správu účtu -->
-        {% if user_form or author_form %}
-
-            <!-- User -->
-            {% include '2_main/_sidebars/__user__.html' %}
-
-        <!-- Zobrazení postranního panelu, když je uživatel přihlášený a je na stránkách pro články -->
-        {% else %}
-
-            <!-- Cyklus pro procházení v seznamu panelů -->
-            {% for panel in sorted_panels %}
-
-                <!-- Search -->
-                {% if panel.name == 'search' %}
-                    {% if forloop.last %}
-                        {% include '2_main/_sidebars/__search__.html' with atr='last' %}
-                    {% else %}
-                        {% include '2_main/_sidebars/__search__.html'%}
-                    {% endif %}
-
-                <!-- User -->
-                {% elif panel.name == 'user' %}
-                    {% if forloop.last %}
-                        {% include '2_main/_sidebars/__user__.html' with atr='last' %}
-                    {% else %}
-                        {% include '2_main/_sidebars/__user__.html' %}
-                    {% endif %}
-
-                <!-- Category -->
-                {% elif panel.name == 'category' %}
-                    {% if forloop.last %}
-                        {% include '2_main/_sidebars/__category__.html' with atr='last' %}
-                    {% else %}
-                        {% include '2_main/_sidebars/__category__.html' %}
-                    {% endif %}
-
-                <!-- Tags -->
-                {% elif panel.name == 'tags' %}
-                    {% if forloop.last %}
-                        {% include '2_main/_sidebars/__tags__.html' with atr='last' %}
-                    {% else %}
-                        {% include '2_main/_sidebars/__tags__.html' %}
-                    {% endif %}
-
-                {% endif %}
-            {% endfor %}
-        {% endif %}
-
-    <!-- Zobrazení postranního panelu, když uživatel není přihlášený -->
+    <!-- Zobrazení postranního panelu, když je uživatel přihlášený a je na stránkách pro články -->
     {% else %}
 
-        <!-- Search -->
-        {% include '2_main/_sidebars/__search__.html' %}
+        <!-- Cyklus pro procházení v seznamu panelů -->
+        {% for panel in sorted_panels %}
 
-        <!-- Category -->
-        {% include '2_main/_sidebars/__category__.html' %}
+            <!-- Search -->
+            {% if panel.name == 'search' %}
+                {% if forloop.last %}
+                    {% include '2_main/_sidebars/__search__.html' with atr='last' %}
+                {% else %}
+                    {% include '2_main/_sidebars/__search__.html'%}
+                {% endif %}
 
-        <!-- Tags -->
-        {% include '2_main/_sidebars/__tags__.html' %}
+            <!-- User -->
+            {% elif panel.name == 'user' %}
+                {% if forloop.last %}
+                    {% include '2_main/_sidebars/__user__.html' with atr='last' %}
+                {% else %}
+                    {% include '2_main/_sidebars/__user__.html' %}
+                {% endif %}
 
+            <!-- Category -->
+            {% elif panel.name == 'category' %}
+                {% if forloop.last %}
+                    {% include '2_main/_sidebars/__category__.html' with atr='last' %}
+                {% else %}
+                    {% include '2_main/_sidebars/__category__.html' %}
+                {% endif %}
+
+            <!-- Tags -->
+            {% elif panel.name == 'tags' %}
+                {% if forloop.last %}
+                    {% include '2_main/_sidebars/__tags__.html' with atr='last' %}
+                {% else %}
+                    {% include '2_main/_sidebars/__tags__.html' %}
+                {% endif %}
+
+            {% endif %}
+        {% endfor %}
     {% endif %}
-
 
 
 </aside>

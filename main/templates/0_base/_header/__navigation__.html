@@ -3,17 +3,26 @@
 
 
 <!-- Home Page -->
-{% include '0_base/_header/_navigation/__homepage__.html' %}
+<li class="nav-item">
+    <a class="nav-link {% if request.path == '/' %}active{% endif %}"
+       href="/">
+        Home</a></li>
 
 <!-- Articles -->
-{% include '0_base/_header/_navigation/__all_articles__.html' %}
+<li class="nav-item">
+    <a class="nav-link {% if request.path == '/articles/all' %}active{% endif %}"
+       href="/articles/all">
+        Articles</a></li>
 
 
 <!-- If User is not login -->
 {% if not user.is_authenticated %}
 
     <!-- Log In -->
-    {% include '0_base/_header/_navigation/__login__.html' %}
+    <li class="nav-item">
+        <a class="nav-link "
+           href="{% url 'account_login' %}">
+            Login</a></li>
 
 {% endif %}
 

@@ -5,10 +5,18 @@
     <ul class="list-inline d-flex align-items-center">
 
         <!-- Search -->
-        {% include '0_base/_header/_navigation/__search__.html' %}
+          <li class="list-inline-item mx-lg-2 px-2 border-start border-end">
+              <a class="search-btn nav-link small py-0 text-dark" href="#">
+                  <i class="fas fa-search"></i>
+              </a>
+          </li>
 
         <!-- Languages -->
-        {% include '0_base/_header/_navigation/__language__.html' %}
+        <li class="list-inline-item d-flex align-items-end small ">
+            <a class="text-dark" href="#">EN</a>
+            <span class="underscore mb-1"></span>
+            <a class="text-gray-500" href="#">ES</a>
+        </li>
 
     </ul>
 </li>

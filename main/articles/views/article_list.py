@@ -90,8 +90,8 @@ class ArticleListView(CommonContextMixin, ListView):
         # Ověření, zda se jedná o stránku se všemi články a nebo o stránky s kategoriemi
         if self.url_name == 'article-list' or self.url_name == 'article-category-list':
 
-            # Ověření zda je uživatel přihlášen a má zaplé zobrazení navigace kategorií
-            if self.user.is_authenticated and self.user.sidebar_category_navigation:
+            # Ověření zda uživatel má zaplé zobrazení navigace kategorií
+            if self.user.sidebar_category_navigation:
                 self.navigation = True
 
             # Vyhledání ID článků v schematu pro všechny publikované články
@@ -103,15 +103,15 @@ class ArticleListView(CommonContextMixin, ListView):
                 # Nastavení záložky pro stránku se všemi články
                 self.current_category_tab = {'id': 0, 'slug': 'all', 'title': 'All'}
 
-                # Ověření, zda má uživatel zapnuté kategorie azískání všech kategoriích
+                # Ověření, zda má uživatel zapnuté kategorie a získání všech kategoriích
                 if self.navigation:
                     self.category_items = get_all_published_category()
 
         # Když jsme na stránce pro zobrazení článků pro daný tag
         elif self.kwargs.get('tag_slug'):
 
-            # Ověření zda je uživatel přihlášen a má zaplé zobrazení navigace kategorií
-            if self.user.is_authenticated and self.user.show_tab_for_similar:
+            # Ověření zda uživatel má zaplé zobrazení navigace kategorií
+            if self.user.show_tab_for_similar:
                 self.navigation = True
 
             # Vyhledání tagu a přiřazení do atributu
@@ -154,10 +154,10 @@ class ArticleListView(CommonContextMixin, ListView):
         :return: Počet článků na stránce pro stránkování.
         '''
 
-        # Pokud je uživatel přihlášený a nemá zobrazen postranní panel, stránkuj po 6, jinak po 4
-        if self.user.is_authenticated and not self.user.sidebar:
-            return 6
-        return 4
+        # Pokud uživatel má zobrazen postranní panel, stránkuj po 4, jinak po 6
+        if self.user.sidebar:
+            return 4
+        return 6
 
 
     def get_context_data(self, **kwargs):

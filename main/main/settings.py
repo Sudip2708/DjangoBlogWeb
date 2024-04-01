@@ -61,7 +61,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    "allauth.account.middleware.AccountMiddleware",
+    'allauth.account.middleware.AccountMiddleware',
+    'users.anonymous_user_settings.AnonymousUserSettingsMiddleware',
 ]
 
 ROOT_URLCONF = 'main.urls'
@@ -139,6 +140,16 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 #############################################################################################
 ### Vlasní nastavení:
+# Nastavení pro Session pro ukládání dat pro nepřihlášené uživatele
+
+# Nastavení pro ukládání session dat do databáze
+SESSION_ENGINE = 'django.contrib.sessions.backends.db'
+
+# Další SESSION související nastavení
+SESSION_COOKIE_AGE = 3600  # Doba platnosti session cookie v sekundách (např. 1 hodina)
+SESSION_SAVE_EVERY_REQUEST = True  # Ukládat session data na každý request
+
+#############################################################################################
 
 # Do INSTALLED_APPS zasat co je třeba
 # Do TEMPLATES zapsat: 'DIRS': [BASE_DIR / 'templates'],

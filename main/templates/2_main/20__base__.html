@@ -15,12 +15,13 @@
                 <!-- Container for main context -->
                 <!-- Nastavení pro počtu sloupců v kontejneru -->
                 <!-- Když je uživatel přihlášen a má zapnutý sidebar -->
-                {% if user.is_authenticated and user.sidebar %}
-                <main class="col-xl-8">
-                <!-- Ve všech ostatních případech -->
+                {% if user.sidebar %}
+                    <main class="col-xl-8">
                 {% else %}
-                <main class="col-xl-12">
+                    <!-- Jiné případy pro přihlášeného uživatele -->
+                    <main class="col-xl-12">
                 {% endif %}
+
 
                     <div class="container">
 
@@ -32,7 +33,9 @@
                 </main>
 
                 <!-- Sidebar -->
-                {% include '2_main/22__sidebar_visibility__.html' %}
+                {% if user.sidebar %}
+                    {% include '2_main/23__sidebar__.html' %}
+                {% endif %}
 
             </div>
 

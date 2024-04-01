@@ -6,21 +6,21 @@
     <div class="d-flex justify-content-between">
         <!-- První dva prvky (zleva) -->
         <div class="d-inline-block">
-            {% include '2_main/_sidebars/_common/__button_collapse__.html' with ar_exp=user.sidebar_category ar_con='sidebar_category' title='Category' %}
+            {% include '2_main/_sidebars/_movement/__button_collapse__.html' with ar_exp=user.sidebar_category ar_con='sidebar_category' title='Category' %}
         </div>
         <div class="d-inline-block">
             {% if user.sidebar_category_order != 1 %}
-                {% include '2_main/_sidebars/_common/__move_up__.html' with target='#MoveUp_category' %}
+                {% include '2_main/_sidebars/_movement/__move_up__.html' with target='#MoveUp_category' %}
             {% endif %}
             {% if atr != "last" %}
-                {% include '2_main/_sidebars/_common/__move_down__.html' with target='#MoveDn_category' %}
+                {% include '2_main/_sidebars/_movement/__move_down__.html' with target='#MoveDn_category' %}
             {% endif %}
         </div>
     </div>
 
 
     <!-- Drop-down items -->
-    <div class="{% if user.is_authenticated and not user.sidebar_category %} collapse {% else %} collapse show {% endif %}" id="sidebar_category">
+    <div class="collapse {% if user.sidebar_category %} show {% endif %}" id="sidebar_category">
 
 
         <div class="card mb-4">
@@ -41,10 +41,10 @@
                             data-bs-target="#sidebar_category_options"
                             aria-expanded="{{ user.sidebar_category_options }}"
                             aria-controls="sidebar_category_options">
-                        {% if user.is_authenticated and not user.sidebar_category_options %}
-                            Show Content
-                        {% else %}
+                        {% if user.sidebar_category_options %}
                             Hide Content
+                        {% else %}
+                            Show Content
                         {% endif %}
                     </button>
 

@@ -13,6 +13,12 @@
         margin-right: 0px;
 
     }
+
+    .left-margin-hide-sb-icon {
+        margin-left: 28px;
+        margin-right: 0px;
+
+    }
     .left-padding {
         padding-left: 0px; /* Změňte hodnotu podle potřeby */
         background-color: yellow;
@@ -38,13 +44,10 @@
     .dropdown-menu .dropdown-submenu {
           display: none;
           position: absolute;
-          left: 100%;
+          right: 100%;
           top: -7px;
     }
-    .dropdown-menu .dropdown-submenu-left {
-          right: 100%;
-          left: auto;
-    }
+
     .dropdown-menu > li:hover > .dropdown-submenu {
           display: block;
     }
@@ -85,7 +88,9 @@
     <div class="container py-1">
 
         <!-- Main title -->
-        {% include '0_base/_header/__main_title__.html' %}
+        <a class="navbar-brand text-sm fw-bold text-dark"href="/">
+            Bootstrap Blog
+        </a>
 
         <!-- Page navigations -->
         <div class="collapse navbar-collapse right-padding" id="navbarSupportedContent">
@@ -103,21 +108,35 @@
             </ul>
         </div>
 
-    <!-- Když je uživatel přihlášený a má zapnutý postranní panel -->
-    {% if user.is_authenticated and user.sidebar%}
-        <!-- Zobraz ikonu pro skrytí postranního panelu -->
-        <a class="p-2 left-margin"
-           href="{% url 'user_sidebar_movements' hash='#sidebar' %}">
-            <img alt="Hide Side Pavel Icon"
-                 src="{% static 'img/hide_side_panel[150]2.jpg' %}"
-                 width="38"/>
-        </a>
+        <!-- Nastavení pro zobrazení menu a bočního panelu pro XL velikost a větší -->
+        <div class="d-none d-xl-block">
 
-    <!-- Ve všech ostatních případech -->
-    {% else %}
-        <!-- Zobraz uživatelovo rozklápěcí menu -->
-        {% include '0_base/_header/__dropdown_menu__.html' %}
-    {% endif %}
+            <!-- Když uživatel má zapnutý postranní panel a nejsme na domácí stránce -->
+            {% if user.sidebar and not request.path == '/' %}
+
+                <!-- Zobraz ikonu pro skrytí postranního panelu -->
+                <a class="p-0 left-margin-hide-sb-icon "
+                   href="{% url 'user_sidebar_movements' hash='#sidebar' %}">
+                    <img alt="Hide Side-Panel Icon"
+                         src="{% static 'img/hide_side_panel[150].jpg' %}"
+                         width="38"/>
+                </a>
+
+            <!-- Ve všech ostatních případech -->
+            {% else %}
+
+                <!-- Zobraz uživatelovo rozklápěcí menu -->
+                {% include '0_base/_header/__dropdown_menu__.html' %}
+            {% endif %}
+
+        </div>
+
+        <!-- Nastavení pro zobrazení menu a bočního panelu pro LG velikost a menší -->
+        <div class="d-xl-none">
+            {% include '0_base/_header/__dropdown_menu__.html' %}
+        </div>
+
+
 
     </div>
 </nav>

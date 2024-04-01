@@ -183,10 +183,10 @@ class SearchView(CommonContextMixin, ListView):
         :return: Počet článků na stránce pro stránkování.
         '''
 
-        # Pokud je uživatel přihlášený a nemá zobrazen postranní panel, stránkuj po 6, jinak po 4
-        if self.user.is_authenticated and not self.user.sidebar:
-            return 6
-        return 4
+        # Pokud uživatel má zobrazen postranní panel, stránkuj po 4, jinak po 6
+        if self.user.sidebar:
+            return 4
+        return 6
 
 
     def search_navigation_check(self):
@@ -200,8 +200,8 @@ class SearchView(CommonContextMixin, ListView):
         :return: True, pokud je navigace zapnutá, jinak False.
         '''
 
-        # Ověření zda je uživatel přihlášen a má zaplé zobrazení navigace pro podobné články
-        if self.user.is_authenticated and self.user.show_tab_for_similar:
+        # Ověření zda uživatel má zaplé zobrazení navigace pro podobné články
+        if self.user.show_tab_for_similar:
             return True
         return False
 

@@ -1,36 +1,45 @@
 print("### main/users/views/user_sidebar_movements.py")
 
-from django.http import HttpResponse, HttpResponseRedirect
-from django.urls import reverse
-
+from django.http import HttpResponseRedirect
 
 def user_sidebar_movements(request, hash):
+    '''
+    Pohled pro manipulaci s bočním panelem uživatele.
 
-    # Ověření, zda je uživatel přihlášený
-    if request.user.is_authenticated:
+    Argumenty request a hash jsou přijímány,
+    kde request je HttpRequest objekt reprezentující aktuální požadavek
+    a hash je hashování identifikující, jaká akce se má provést s bočním panelem.
+    Funkce pak provádí požadovanou akci a následně přesměrovává uživatele zpět na předchozí stránku.
 
-        # Získání přihlášeného uživatele
-        user = request.user
+    :param request: HttpRequest objekt reprezentující aktuální požadavek.
+    :param hash: Hashování, které identifikuje, jaká akce se má provést s bočním panelem.
+    :return: HttpResponse objekt přesměrovávající uživatele zpět na předchozí stránku.
+    '''
 
-        # Pokud se jedná o posun jednotlivých sidebarů
-        if hash.startswith('#Move'):
-            user.sidebar_move(hash)
+    # Pokud se jedná o posun jednotlivých sidebarů
+    if hash.startswith('#Move'):
+        request.user.sidebar_move(hash)
 
-        # Pokud se jedná o změnu viditelnosti sidebaru
-        else:
-            user.change_sidebar_value(hash[1:])
+    # Pokud se jedná o změnu viditelnosti sidebaru
+    else:
+        request.user.change_sidebar_value(hash[1:])
 
     # Získání odkazu na předchozí stránku
     previous_page = request.META.get('HTTP_REFERER', '/')
 
-    # Odstranění '/similar/' a všeho za ním z URL
-    if '/similar/' in previous_page:
-        previous_page = previous_page.split('/similar/')[0]
+    # Pokud jsme na stránce pro tagy (po odstranění navigace návrat na daný tag)
+    if '/tag/' in previous_page:
+
+        # Pokud jsme na záložce pro podobné články
+        if '/similar/' in previous_page:
+            # Odstranění '/similar/' a všeho za ním z URL
+            previous_page = previous_page.split('/similar/')[0]
 
 
-    # Odstranění '/category/' a všeho za ním z URL
-    elif '/category/' in previous_page:
-        previous_page = previous_page.split('/category/')[0]
+        # Pokud jsme na záložce pro kategorie
+        elif '/category/' in previous_page:
+            # Odstranění '/category/' a všeho za ním z URL
+            previous_page = previous_page.split('/category/')[0]
 
     # Přesměrování zpět na předchozí stránku
     return HttpResponseRedirect(previous_page)

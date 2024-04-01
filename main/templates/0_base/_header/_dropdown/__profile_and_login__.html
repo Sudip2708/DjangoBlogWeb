@@ -1,0 +1,22 @@
+
+    <!-- If User is not login -->
+    {% if user.is_authenticated %}
+
+        <!-- Manage profile link -->
+        <li class="nav-item">
+              <a class="dropdown-item dropdown-font" href="{% url 'profile_update_user' %}">
+                    Manage Profile</a></li>
+
+        <!-- Logout -->
+        <li class="nav-item">
+              <a class="dropdown-item dropdown-font" href="{% url 'account_logout' %}">
+                    Logout</a></li>
+
+    {% else %}
+
+        <!-- Login -->
+        <li class="nav-item">
+              <a class="dropdown-item dropdown-font" href="{% url 'account_login' %}">
+                    Login</a></li>
+
+    {% endif %}

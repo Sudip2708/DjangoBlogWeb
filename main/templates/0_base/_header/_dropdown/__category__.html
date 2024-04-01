@@ -1,0 +1,52 @@
+
+
+
+    <!-- Nabídka pro zobrazení a skrytí navigace podle kategorií -->
+    {% if url_name == 'article-list' or url_name == 'article-category-list' %}
+          <li class="nav-item  d-lg-none">
+                <a class="dropdown-item dropdown-font " href="{% url 'user_sidebar_movements' hash='#sidebar_category_navigation' %}">
+                      {% if user.sidebar_category_navigation %}
+                          Hide Category Tab
+                      {% else %}
+                          Show Category Tab
+                      {% endif %}
+                </a>
+          </li>
+
+    <!-- Nabídka pro zobrazení a skrytí navigace podle tagů -->
+    {% elif search_query or tag_slug %}
+          <li class="nav-item  d-lg-none">
+                <a class="dropdown-item dropdown-font " href="{% url 'user_sidebar_movements' hash='#show_tab_for_similar' %}">
+                      {% if user.show_tab_for_similar %}
+                          Hide Similar Tab
+                      {% else %}
+                          Show Similar Tab
+                      {% endif %}
+                </a>
+          </li>
+
+    {% endif %}
+
+
+
+
+    <!-- Category -->
+    <li class="nav-item">
+          <p class="dropdown-item  dropdown-font t-0 m-0" >
+              Category
+          </p>
+
+          <ul class="dropdown-menu dropdown-submenu dropdown-font">
+                {% for category in published_category %}
+                    <li><a class="dropdown-item"
+                           href="{% url 'article-category-list' category_slug=category.slug %}">
+                          {{ category.title }}</a></li>
+                {% endfor %}
+          </ul>
+
+    </li>
+
+
+
+    <!-- Dropdown divider -->
+    <li class="nav-item"><hr class="dropdown-divider"></li>

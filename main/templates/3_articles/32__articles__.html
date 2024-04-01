@@ -31,10 +31,10 @@
 
     <!-- Určení, na kolik sloupců se má dělit prostor pro zobrazené články -->
     <!-- Pokud je uživatel přihlášen a nemá zapnutý sidebar -->
-    {% if user.is_authenticated and user.sidebar %}
+    {% if user.sidebar %}
 
         <!-- Postranní panel se zobrazuje pouze na zařízeních XL -->
-        <!-- Pro tuto velikost (XL) se zobrazí 2 články na řádek (12/6) -->
+        <!-- Pro velikost XL se zobrazí 2 články na řádek (12/6) -->
         <!-- Pro velikost LG (kde už se nezobrazuje sidebar) zobraz 3 články na řádek (12/4)  -->
         <!-- Pro velikost MD zobraz 2 články na řádek (12/6) -->
         <!-- Pro velikost SM zobraz 1 články na řádek (12/12) -->
