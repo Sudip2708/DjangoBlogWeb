@@ -3,6 +3,21 @@
 
 <!-- Import static files -->
 {% load static %}
+{% load crispy_forms_tags %}
+
+
+<style>
+
+    .edit-text-white {
+        color: #808080;
+        font-family: Times New Roman, sans-serif; /* Nastavení fontu */
+        font-style: italic; /* Kurzíva */
+        font-weight: bold; /* Tučné písmo */
+        margin-top: 10px; /* Nastavení marginu top */
+        margin-bottom: 10px; /* Nastavení marginu bottom */
+    }
+
+</style>
 
 
 <!-- Hero Section-->
@@ -11,16 +26,35 @@
         <div class="row py-lg-5">
             <div class="col-lg-7">
 
+                <!-- Edit Hero Section Toggle Button -->
+                {% if request.path == '/edit/' %}
+                    <a class="edit-text-white" type="button" data-bs-toggle="collapse" data-bs-target="#heroSectionCollapse" aria-expanded="false" aria-controls="heroSectionCollapse">
+                        Show Edit Options For This Section
+                    </a>
+                {% endif %}
+
                 <!-- Title -->
                 <h1>
-                    Bootstrap 5 Blog - A free template by Bootstrapious
+                    {{ hero_form.hero_title.value }}
                 </h1>
 
                 <!-- Link -->
-                <a class="link-underline mt-3"
-                   href="#!">
-                    Discover More
+                <a class="link-underline mt-3" href="{{ hero_form.hero_link.value }}">
+                    {{ hero_form.hero_link_title.value }}
                 </a>
+
+
+
+                <!-- Hero Section Edit Form -->
+                <div class="collapse mt-3" id="heroSectionCollapse">
+                    <div class="card card-body">
+                        <form method="POST" enctype="multipart/form-data" action="{% url 'edit-hero-section' %}">
+                            {% csrf_token %}
+                            {{ hero_form|crispy }}
+                            <button type="submit" class="btn btn-primary">Save Changes</button>
+                        </form>
+                    </div>
+                </div>
 
             </div>
         </div>

@@ -2,16 +2,19 @@ print("### main/articles/views/home_page.py")
 
 ### Definice třídy pohledu pro hlavní stránku
 
-from django.shortcuts import render, redirect
-from django.contrib import messages
+from django.shortcuts import render
 from django.views.generic import View
 from django.db.models import Count
 
 from articles.models.article import Article
 
+from homepage.forms.hero_section_form import HomePageHeroSectionForm
+from homepage.models.hero_section import HomePageHeroSection
 
 
 class HomePageView(View):
+
+
 
 
     def get(self, request, *args, **kwargs):
@@ -25,8 +28,14 @@ class HomePageView(View):
             .order_by('-views_count')[:4]
         )
 
+        # Určení zda je uživatel Super User
+        superuser = False
+        if request.user.is_superuser:
+            superuser = True
+
         # Předání dat do kontextu pro zobrazení na domovské stránce
         context = {
+            'superuser': superuser,
             'object_list': featured,
             'latest': latest,
             'most_viewed': most_viewed,
@@ -35,14 +44,6 @@ class HomePageView(View):
         return render(request, '1_home/10__base__.html', context)
 
     def post(self, request, *args, **kwargs):
-        # # Zpracování odeslaného formuláře pro přihlášení k odběru e-mailů
-        # email = request.POST.get("email")
-        # new_signup = Signup()
-        # new_signup.email = email
-        # new_signup.save()
-        #
-        # # Zobrazení informační zprávy po úspěšném přihlášení k odběru
-        # messages.info(request, "Successfully subscribed")
-        # return redirect("home")
+
         pass
 

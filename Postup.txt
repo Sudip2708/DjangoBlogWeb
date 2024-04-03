@@ -754,3 +754,25 @@ Nastavení postranního panelu pro nepřihlášeného uživatele
 • templates/2_main > oprava všech části kodu pro zobrazení bočního panelu tak, aby fungovali i pro nepřihlášeného uživatele
 • templates/3_articles > oprava všech části kodu pro zobrazení bočního panelu tak, aby fungovali i pro nepřihlášeného uživatele
 ###
+Vytvoření aplikace pro správu domácí stránky superuživatelem
+$ python manage.py startapp homepage
+• main/settings.py > dopsat aplikaci do INSTALLED_APPS
+• homepage > vytvořit složku models s initem a smazat soubor models.py
+• homepage/models > vytvořit modely pro jednotlivé sekce a zapsat je do initu
+$ python manage.py makemigrations
+$ python manage.py migrate
+• homepage > vytvořit složku views s initem a smazat soubor views.py
+• homepage/views > přesunout sem soubor pro hopepage view z articles/views
+Rozdělení urls.py na jednotlivé aplikace
+• homepage > vytvořit soubor urls.py a přetahat sem kod pro adresy z této sekce
+• articles > vytvořit soubor urls.py a přetahat sem kod pro adresy z této sekce
+• users > vytvořit soubor urls.py a přetahat sem kod pro adresy z této sekce
+• main/urls.py > odebrat přetažené kody a zapsat include
+Vytvoření prvního formuláře a jeho aplikace do stránky
+• homepage > vytvořit složku forms s initem
+• homepage/forms > založit soubor pro formulář pro hero sekci
+• homepage/views > vytvořit soubor pro zpracování tohoto formuláře
+• homepage/views/homepage.py > Připsat kod pro přesměrování na stránku editace
+• homepage/urls.py > připsat adresu pro zpracování formuláře a adresu pro úpravu homepage
+• templates/ > upravit kod pro hero sekci a zobrazení tlačítka pro úpravu homepage
+###

@@ -10,15 +10,18 @@
     {% if atr == "preview" %}
         <img alt="Article Main Picture Preview"
              src="{{ article.main_picture_preview.url }}?{% now 'U' %}"
-             class="img-fluid"/>
+             style="width: 100%; height: auto"/>
 
 
     <!-- For Article -->
     {% elif atr == "for_article" %}
         <img alt="Article Main Picture"
              src="{{ article.main_picture_for_article.url }}?{% now 'U' %}"
-             class="img-fluid"/>
+             class="img-fluid d-xs-block d-sm-block d-md-block d-lg-none d-xl-block"/>
 
+        <img alt="Article Main Picture"
+             src="{{ article.main_picture_preview.url }}?{% now 'U' %}"
+             class="img-fluid d-none d-lg-block d-xl-none"/>
 
     {% endif %}
 
