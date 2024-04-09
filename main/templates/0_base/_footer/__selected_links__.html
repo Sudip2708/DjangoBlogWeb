@@ -1,0 +1,38 @@
+<!-- Část pro vybrané odkazy -->
+<!-- Rozšířenní pro 0_base/04__footer__.html -->
+
+
+<!-- Hlavní kontejner -->
+<div class="col-md-4">
+    <div class="d-flex">
+
+        <!-- Odkazy umístěné v pravo (první 4) -->
+        <ul class="list-unstyled text-sm me-4">
+            {% for title, url in footer_data.pages_links.items %}
+                {% if forloop.counter <= 4 %}
+                    <li class="mb-2">
+                        <a class="text-reset fw-light"
+                           href="{{ url|default:'#' }}">
+                            {{ title }}
+                        </a>
+                    </li>
+                {% endif %}
+            {% endfor %}
+        </ul>
+
+        <!-- Odkazy umístěné v levo (druhé 4) -->
+        <ul class="list-unstyled text-sm me-4">
+            {% for title, url in footer_data.pages_links.items %}
+                {% if forloop.counter > 4 %}
+                    <li class="mb-2">
+                        <a class="text-reset fw-light"
+                           href="{{ url|default:'#' }}">
+                            {{ title }}
+                        </a>
+                    </li>
+                {% endif %}
+            {% endfor %}
+        </ul>
+
+    </div>
+</div>

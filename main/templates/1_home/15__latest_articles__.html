@@ -1,60 +1,44 @@
 <!-- Include for 1_home/10__base__.html -->
 <!-- for Latest articles -->
 
-<!-- Import static files -->
-{% load static %}
 
+<!-- Podmínka kontrolující, zda má být sekce viditelná -->
+{% if latest_data.display_latest_section %}
 
-<!-- Latest articles -->
-<section>
-    <div class="container">
+    <!-- Hlavní kontejner -->
+    <section>
+        <div class="container">
 
-        <!-- Section Title and Description -->
-        <header class="mb-5">
+            <!-- Hlavička sekce -->
+            <header class="mb-5">
 
-            <!-- Title -->
-            <h2> Latest from the blog </h2>
+                <!-- Tlačítko pro skrytí/zobrazení editačního formuláře sekce (pouze pro url edit a superuser) -->
+                {% if user.is_superuser and request.path == '/edit/' %}
+                {% include '1_home/_common/__edit_button__.html' with name='Latest' %}
+                {% endif %}
 
-            <!-- Description -->
-            <p class="text-lg fw-light">
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-            </p>
+                <!-- Hlavní část: Nadpis a popis -->
+                {% include '1_home/_latest_articles/__page_texts__.html' %}
 
-        </header>
+            </header>
 
-        <!-- Articles -->
-        <div class="row gy-4">
+            <!-- Editační formulář sekce (pouze pro url edit a superuser) -->
+            {% if user.is_superuser and request.path == '/edit/' %}
+            {% include '1_home/_latest_articles/__edit_section__.html' %}
+            {% endif %}
 
-            <!-- Articles cycle -->
-            {% for article in latest %}
-                <div class="col-md-4">
-
-                    <!-- Main Picture -->
-                    <a class="mb-3" href="article.html">
-                        {% include '__img/__article_main_picture__.html' with atr="preview" %}
-                    </a>
-
-                    <!-- Created and Category -->
-                    <div class="d-flex align-items-center justify-content-between mb-2">
-
-                        <!-- Created -->
-                        {% include '__article/__date_created__.html' with atr="date" %}
-
-                        <!-- Category -->
-                        {% include '__article/__category__.html' %}
-
-                    </div>
-
-                    <!-- Title -->
-                    {% include '__article/__title__.html' with atr="latest" %}
-
-                    <!-- Overview -->
-                    {% include '__article/__overview__.html' with atr="latest" %}
-
-                </div>
-            {% endfor %}
+            <!-- Hlavní část: Zobrazení článků -->
+            {% include '1_home/_latest_articles/__page_articles__.html' %}
 
         </div>
+    </section>
 
-    </div>
-</section>
+<!-- Pokud je sekce skrytá -->
+{% else %}
+
+    <!-- Tlačítko pro zobrazení sekce (pouze pro url edit a superuser) -->
+    {% if user.is_superuser and request.path == '/edit/' %}
+    {% include '1_home/_common/__section_display__.html' with section_url='edit-latest-section' name='Latest' %}
+    {% endif %}
+
+{% endif %}

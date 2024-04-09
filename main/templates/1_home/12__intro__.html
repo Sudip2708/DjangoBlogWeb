@@ -2,26 +2,39 @@
 <!-- for Intro Section -->
 
 
-<!-- Intro Section-->
-<section id="intro">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-8">
+<!-- Podmínka kontrolující, zda má být sekce viditelná -->
+{% if intro_data.display_intro_section %}
 
-                <!-- Title -->
-                <h2 class="h3">
-                    Some great intro here
-                </h2>
+    <!-- Hlavní kontejner -->
+    <section id="intro">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8">
 
-                <!-- Intro -->
-                <p class="text-lg fw-light lh-lg mb-0">
-                    Place a nice <strong>introduction</strong> here <strong>to catch reader's attention</strong>. /
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut /
-                    labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud nisi ut aliquip ex ea /
-                    commodo consequat. Duis aute irure dolor in reprehenderi.
-                </p>
+                    <!-- Tlačítko pro skrytí/zobrazení editačního formuláře sekce (pouze pro url edit a superuser) -->
+                    {% if user.is_superuser and request.path == '/edit/' %}
+                    {% include '1_home/_common/__edit_button__.html' with name='Intro' %}
+                    {% endif %}
 
+                    <!-- Hlavní část: Nadpis a úvodní text -->
+                    {% include '1_home/_intro/__page_texts__.html' %}
+
+                    <!-- Editační formulář sekce (pouze pro url edit a superuser) -->
+                    {% if user.is_superuser and request.path == '/edit/' %}
+                    {% include '1_home/_intro/__edit_section__.html' %}
+                    {% endif %}
+
+                </div>
             </div>
         </div>
-    </div>
-</section>
+    </section>
+
+<!-- Pokud je sekce skrytá -->
+{% else %}
+
+    <!-- Tlačítko pro zobrazení sekce (pouze pro url edit a superuser) -->
+    {% if user.is_superuser and request.path == '/edit/' %}
+    {% include '1_home/_common/__section_display__.html' with section_url='edit-intro-section' name='Intro' %}
+    {% endif %}
+
+{% endif %}

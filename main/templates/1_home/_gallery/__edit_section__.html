@@ -1,0 +1,56 @@
+<!-- Editační část sekce -->
+<!-- Rozšířenní pro 1_home/17__gallery__.html -->
+
+
+<!-- Načtení šablonových tagů -->
+{% load crispy_forms_tags %}
+{% load widget_tweaks %}
+
+<!-- Hlavní kontejner -->
+<div class="collapse" id="gallerySectionCollapse">
+    <div class="card card-body">
+
+        <!-- Formulář -->
+        <form method="POST"
+              action="{% url 'edit-gallery-section' %}">
+            {% csrf_token %}
+
+            <!-- Kontejner pro výběr článků -->
+            <div class="row">
+                <div class="col-lg-3">
+                    {{ gallery_edit_form.gallery_article_1|as_crispy_field }}
+                </div>
+                <div class="col-lg-3">
+                    {{ gallery_edit_form.gallery_article_2|as_crispy_field }}
+                </div>
+                <div class="col-lg-3">
+                    {{ gallery_edit_form.gallery_article_3|as_crispy_field }}
+                </div>
+                <div class="col-lg-3">
+                    {{ gallery_edit_form.gallery_article_4|as_crispy_field }}
+                </div>
+            </div>
+
+            <!-- Kontejner pro odesílací tlačítko a zaškrtávací tlačítko pro zobrazení/skrytí sekce -->
+            <div class="d-flex flex-wrap align-items-center justify-content-between">
+
+                <!-- Odesílací tlačítko -->
+                <button type="submit" class="btn btn-primary">
+                    Save Changes
+                </button>
+
+                <!-- Tlačítko pro zobrazení/skrytí sekce -->
+                <div class="form-group mb-4 text-end">
+                    {{ gallery_edit_form.display_gallery_section|add_class:"form-check-input" }}
+                    <label for="{{ gallery_edit_form.display_gallery_section.id_for_label }}"
+                           class="checkbox-label">
+                        Display Gallery Section
+                    </label>
+                </div>
+
+            </div>
+
+        </form>
+
+    </div>
+</div>

@@ -1,0 +1,58 @@
+<!-- Část pro adresu a odkazy na sociální sítě v patičce -->
+<!-- Rozšířenní pro 0_base/04__footer__.html -->
+
+
+<!-- Hlavní kontejner -->
+<div class="col-md-4">
+
+    <!-- Jméno společnosti -->
+    <h6 class="text-white">
+        {{ footer_data.address.company_name }}
+    </h6>
+
+    <!-- Adresa -->
+    <p class="fw-light mb-1">
+        {{ footer_data.address.address }}
+    </p>
+
+    <!-- Telefon -->
+    <p class="fw-light mb-1">
+        Phone: {{ footer_data.address.phone }}
+    </p>
+
+    <!-- Email -->
+    <p class="fw-light mb-4">
+        Email:
+        <a class="text-decoration-underline text-reset"
+           href="mailto:{{ footer_edit_form.email.value }}">
+            {{ footer_data.address.email }}
+        </a>
+    </p>
+
+    <!-- Sociální sítě -->
+    <ul class="list-unstyled">
+
+        <!-- Procházení sociálních sítí a přidání příslušné ikony -->
+        {% for media, url in footer_data.social_links.items %}
+            {% if url %}
+                <li class="list-inline-item">
+                    <a class="text-reset me-2" href="{{ url }}">
+                        {% if media == 'Facebook' %}
+                            <i class="fab fa-facebook-f"></i>
+                        {% elif media == 'Twitter' %}
+                            <i class="fab fa-twitter"></i>
+                        {% elif media == 'Instagram' %}
+                            <i class="fab fa-instagram"></i>
+                        {% elif media == 'Behance' %}
+                            <i class="fab fa-behance"></i>
+                        {% elif media == 'Pinterest' %}
+                            <i class="fab fa-pinterest"></i>
+                        {% endif %}
+                    </a>
+                </li>
+            {% endif %}
+        {% endfor %}
+
+    </ul>
+
+</div>

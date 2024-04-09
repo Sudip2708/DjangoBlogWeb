@@ -1,0 +1,39 @@
+<!-- Část pro články sekce -->
+<!-- Rozšířenní pro 1_home/17__gallery__.html -->
+
+
+<!-- Hlavní kontejner -->
+<div class="row g-0">
+
+    <!-- Procházení článků -->
+    {% for article in gallery_data.articles %}
+
+        <!-- Kontrola, článek obsahuje data -->
+        {% if article %}
+
+            <!-- Kontejner pro obsah článku -->
+            <div class="col-lg-3 col-md-3 col-sm-6">
+
+                <!-- ??? -->
+                <div class="glightbox d-block position-relative"
+                     data-gallery="gallery"
+                     data-glightbox="{{ article.title }}">
+
+                    <!-- Hlavní obrázek  -->
+                    {% include '__img/__article_main_picture__.html' with atr="preview" %}
+
+                    <!-- Icona lupy + nadpis článku -->
+                    <div class="fsc-hover-overlay">
+                        <i class="fas fa-search fsc-hover-overlay-icon">
+                            {{ article.title }}
+                        </i>
+                    </div>
+
+                </div>
+            </div>
+
+        {% endif %}
+
+    {% endfor %}
+
+</div>

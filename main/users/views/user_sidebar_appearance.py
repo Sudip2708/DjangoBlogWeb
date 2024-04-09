@@ -19,9 +19,11 @@ def user_sidebar_appearance(request):
 
     # Jedná li se o POST požadavek
     if request.method == 'POST' and request.headers.get('X-Requested-With') == 'XMLHttpRequest':
+        print('### if request.method == POST and request.headers.get(X-Requested-With) == XMLHttpRequest:')
 
         # Získání unikátního identifikátoru nabídky z AJAX požadavku
         menu_id = request.POST.get('menu_id')
+        print('### menu_id: ', menu_id)
 
         # Odstranění hashe
         field_id = menu_id[1:]

@@ -1,0 +1,18 @@
+<!-- Část s texty sekce -->
+<!-- Rozšířenní pro 1_home/16__newsletter__.html -->
+
+
+<!-- Kontejner pro tuto část -->
+<div class="col-md-6">
+
+    <!-- Nadpis sekce -->
+    <h2 class="mb-2">
+        {{ newsletter_data.newsletter_title|safe }}
+    </h2>
+
+    <!-- Podnadpis sekce -->
+    <div class="fw-light mb-4" >
+        {{ newsletter_data.newsletter_description|safe }}
+    </div>
+
+</div>

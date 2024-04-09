@@ -1,9 +1,26 @@
 <!-- Linking to the parent template -->
 {% extends '0_base/00__base__.html' %}
 
+
 <!-- Start of block for the parent template -->
 {% block main_content %}
 
+    <!-- CSS pro tuto část  -->
+    <style>
+        .edit-homepage-button {
+            color: #808080;
+            font-family: Times New Roman, sans-serif;
+            font-style: italic;
+            font-weight: bold;
+            margin-top: 10px;
+            margin-bottom: 10px;
+        }
+
+        .checkbox-label {
+            font-size: 0.8rem;
+            color: grey;
+        }
+    </style>
 
     <!-- Hero Section-->
     {% include '1_home/11__hero__.html' %}
@@ -29,3 +46,9 @@
 
 <!-- End of block for the parent template -->
 {% endblock main_content %}
+
+
+<!-- Import static files -->
+{% load static %}
+{% load crispy_forms_tags %}
+{% load widget_tweaks %}

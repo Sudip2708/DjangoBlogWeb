@@ -1,28 +1,46 @@
 <!-- Include for 1_home/10__base__.html -->
 <!-- for Divider Section -->
 
-<!-- Import static files -->
-{% load static %}
 
+<!-- Podmínka kontrolující, zda má být sekce viditelná -->
+{% if divider_data.display_divider_section %}
 
-<!-- Divider Section -->
-<section class="divider" style="background: url({% static 'img/divider-bg.jpg' %}); background-size: cover; background-position: center bottom">
-    <div class="container text-white">
-        <div class="row">
-            <div class="col-md-7">
+    <!-- Obrázek v pozadí -->
+    <section class="divider"
+             style="background: url({{ divider_data.divider_image }});
+                     background-size: cover;
+                     background-position: center bottom">
 
-                <!-- Text -->
-                <h2>
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit, /
-                    sed do eiusmod tempor incididunt ut labore et dolore magna aliqua
-                </h2>
+        <!-- Hlavní kontejner -->
+        <div class="container text-white">
+            <div class="row">
+                <div class="col-md-7">
 
-                <!-- Link -->
-                <a class="link-underline mt-3" href="#!">
-                    View More
-                </a>
+                    <!-- Tlačítko pro skrytí/zobrazení editačního formuláře sekce (pouze pro url edit a superuser) -->
+                    {% if user.is_superuser and request.path == '/edit/' %}
+                    {% include '1_home/_common/__edit_button__.html' with name='Divider' %}
+                    {% endif %}
 
+                    <!-- Hlavní část: Popis a odkaz -->
+                    {% include '1_home/_divider/__page_texts__.html' %}
+
+                    <!-- Editační formulář sekce (pouze pro url edit a superuser) -->
+                    {% if user.is_superuser and request.path == '/edit/' %}
+                    {% include '1_home/_divider/__edit_section__.html' %}
+                    {% endif %}
+
+                </div>
             </div>
         </div>
-    </div>
-</section>
+
+    </section>
+
+<!-- Pokud je sekce skrytá -->
+{% else %}
+
+    <!-- Tlačítko pro zobrazení sekce (pouze pro url edit a superuser) -->
+    {% if user.is_superuser and request.path == '/edit/' %}
+    {% include '1_home/_common/__section_display__.html' with section_url='edit-divider-section' name='Divider' %}
+    {% endif %}
+
+{% endif %}

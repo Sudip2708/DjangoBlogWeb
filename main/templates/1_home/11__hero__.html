@@ -1,62 +1,46 @@
 <!-- Include for 1_home/10__base__.html -->
-<!-- for Hero Section -->
-
-<!-- Import static files -->
-{% load static %}
-{% load crispy_forms_tags %}
+<!-- Hero Section -->
 
 
-<style>
+<!-- Podmínka kontrolující, zda má být sekce viditelná -->
+{% if hero_data.display_hero_section %}
 
-    .edit-text-white {
-        color: #808080;
-        font-family: Times New Roman, sans-serif; /* Nastavení fontu */
-        font-style: italic; /* Kurzíva */
-        font-weight: bold; /* Tučné písmo */
-        margin-top: 10px; /* Nastavení marginu top */
-        margin-bottom: 10px; /* Nastavení marginu bottom */
-    }
+    <!-- Obrázek v pozadí -->
+    <section class="hero"
+             style="background: url({{ hero_data.hero_image }});
+                    background-size: cover;
+                    background-position: center center">
 
-</style>
+        <!-- Hlavní kontejner -->
+        <div class="container text-white py-5">
+            <div class="row py-lg-5">
+                <div class="col-lg-7">
 
+                    <!-- Tlačítko pro skrytí/zobrazení editačního formuláře sekce (pouze pro url edit a superuser) -->
+                    {% if user.is_superuser and request.path == '/edit/' %}
+                    {% include '1_home/_common/__edit_button__.html' with name='Hero' %}
+                    {% endif %}
 
-<!-- Hero Section-->
-<section style="background: url({% static 'img/hero.jpg' %}); background-size: cover; background-position: center center" class="hero">
-    <div class="container text-white py-5">
-        <div class="row py-lg-5">
-            <div class="col-lg-7">
+                    <!-- Hlavní část: Nadpis a odkaz -->
+                    {% include '1_home/_hero/__page_texts__.html' %}
 
-                <!-- Edit Hero Section Toggle Button -->
-                {% if request.path == '/edit/' %}
-                    <a class="edit-text-white" type="button" data-bs-toggle="collapse" data-bs-target="#heroSectionCollapse" aria-expanded="false" aria-controls="heroSectionCollapse">
-                        Show Edit Options For This Section
-                    </a>
-                {% endif %}
+                    <!-- Editační formulář sekce (pouze pro url edit a superuser) -->
+                    {% if user.is_superuser and request.path == '/edit/' %}
+                    {% include '1_home/_hero/__edit_section__.html' %}
+                    {% endif %}
 
-                <!-- Title -->
-                <h1>
-                    {{ hero_form.hero_title.value }}
-                </h1>
-
-                <!-- Link -->
-                <a class="link-underline mt-3" href="{{ hero_form.hero_link.value }}">
-                    {{ hero_form.hero_link_title.value }}
-                </a>
-
-
-
-                <!-- Hero Section Edit Form -->
-                <div class="collapse mt-3" id="heroSectionCollapse">
-                    <div class="card card-body">
-                        <form method="POST" enctype="multipart/form-data" action="{% url 'edit-hero-section' %}">
-                            {% csrf_token %}
-                            {{ hero_form|crispy }}
-                            <button type="submit" class="btn btn-primary">Save Changes</button>
-                        </form>
-                    </div>
                 </div>
-
             </div>
         </div>
-    </div>
-</section>
+
+    </section>
+
+<!-- Pokud je sekce skrytá -->
+{% else %}
+
+    <!-- Tlačítko pro zobrazení sekce (pouze pro url edit a superuser) -->
+    {% if user.is_superuser and request.path == '/edit/' %}
+    {% include '1_home/_common/__section_display__.html' with section_url='edit-hero-section' name='Hero' %}
+    {% endif %}
+
+{% endif %}

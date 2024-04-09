@@ -2,50 +2,45 @@
 <!-- for Newsletter Section -->
 
 
-<!-- Newsletter Section -->
-<section class="pt-0">
-    <div class="container">
-        <div class="row">
+<!-- Podmínka kontrolující, zda má být sekce viditelná -->
+{% if newsletter_data.display_newsletter_section %}
 
-            <!-- Title & Description -->
-            <div class="col-md-6">
+    <!-- Hlavní kontejner -->
+    <section class="pt-0">
+        <div class="container">
+            <div class="row">
 
-                <!-- Title -->
-                <h2>
-                    Subscribe to Newsletter
-                </h2>
+                <!-- Tlačítko pro skrytí/zobrazení editačního formuláře sekce (pouze pro url edit a superuser) -->
+                {% if user.is_superuser and request.path == '/edit/' %}
+                {% include '1_home/_common/__edit_button__.html' with name='Newsletter' %}
+                {% endif %}
 
-                <!-- Description -->
-                <p class="text-lg lh-lg fw-light mb-4">
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod /
-                    tempor incididunt ut labore et dolore magna aliqua.
-                </p>
+                <!-- Hlavní část: Nadpis a popis -->
+                {% include '1_home/_newsletter/__page_texts__.html' %}
+
+                <!-- Formuláře -->
+                <div class="col-md-8">
+
+                    <!-- Editační formulář sekce (pouze pro url edit a superuser) -->
+                    {% if user.is_superuser and request.path == '/edit/' %}
+                    {% include '1_home/_newsletter/__edit_section__.html' %}
+                    {% endif %}
+
+                    <!-- Hlavní část: Pole pro vložení a odeslání emailu -->
+                    {% include '1_home/_newsletter/__input_email_field__.html' %}
+
+                </div>
 
             </div>
-
-            <!-- Form -->
-            <div class="col-md-8">
-                <form action="." method="article">
-                    {% csrf_token %}
-                    <div class="input-group">
-
-                        <!-- Email input field -->
-                        <input class="form-control p-3"
-                             type="email"
-                             name="email"
-                             id="email"
-                             placeholder="Type your email address">
-
-                        <!-- Submit button -->
-                        <button class="btn btn-dark"
-                              type="submit">
-                          Subscribe
-                        </button>
-
-                    </div>
-                </form>
-            </div>
-
         </div>
-    </div>
-</section>
+    </section>
+
+<!-- Pokud je sekce skrytá -->
+{% else %}
+
+    <!-- Tlačítko pro zobrazení sekce (pouze pro url edit a superuser) -->
+    {% if user.is_superuser and request.path == '/edit/' %}
+    {% include '1_home/_common/__section_display__.html' with section_url='edit-newsletter-section' name='Newsletter' %}
+    {% endif %}
+
+{% endif %}

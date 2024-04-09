@@ -750,29 +750,38 @@ Nastavení postranního panelu pro nepřihlášeného uživatele
 • articles/views/article_common_contex_mixin.py > oprava části kodu pro zobrazení bočního panelu tak, aby fungovali i pro nepřihlášeného uživatele
 • articles/views/article_list.py > oprava části kodu pro zobrazení bočního panelu tak, aby fungovali i pro nepřihlášeného uživatele
 • articles/views/search.py > oprava části kodu pro zobrazení bočního panelu tak, aby fungovali i pro nepřihlášeného uživatele
-• templates/0_base > oprava všech části kodu pro zobrazení bočního panelu tak, aby fungovali i pro nepřihlášeného uživatele
-• templates/2_main > oprava všech části kodu pro zobrazení bočního panelu tak, aby fungovali i pro nepřihlášeného uživatele
-• templates/3_articles > oprava všech části kodu pro zobrazení bočního panelu tak, aby fungovali i pro nepřihlášeného uživatele
+• templates/0_base/ > oprava všech části kodu pro zobrazení bočního panelu tak, aby fungovali i pro nepřihlášeného uživatele
+• templates/2_main/ > oprava všech části kodu pro zobrazení bočního panelu tak, aby fungovali i pro nepřihlášeného uživatele
+• templates/3_articles/ > oprava všech části kodu pro zobrazení bočního panelu tak, aby fungovali i pro nepřihlášeného uživatele
 ###
 Vytvoření aplikace pro správu domácí stránky superuživatelem
 $ python manage.py startapp homepage
 • main/settings.py > dopsat aplikaci do INSTALLED_APPS
-• homepage > vytvořit složku models s initem a smazat soubor models.py
-• homepage/models > vytvořit modely pro jednotlivé sekce a zapsat je do initu
+• homepage/ > vytvořit složku models s initem a smazat soubor models.py
+• homepage/models/ > vytvořit modely pro jednotlivé sekce a zapsat je do initu
 $ python manage.py makemigrations
 $ python manage.py migrate
-• homepage > vytvořit složku views s initem a smazat soubor views.py
+• homepage/ > vytvořit složku views s initem a smazat soubor views.py
 • homepage/views > přesunout sem soubor pro hopepage view z articles/views
 Rozdělení urls.py na jednotlivé aplikace
-• homepage > vytvořit soubor urls.py a přetahat sem kod pro adresy z této sekce
-• articles > vytvořit soubor urls.py a přetahat sem kod pro adresy z této sekce
-• users > vytvořit soubor urls.py a přetahat sem kod pro adresy z této sekce
+• homepage/ > vytvořit soubor urls.py a přetahat sem kod pro adresy z této sekce
+• articles/ > vytvořit soubor urls.py a přetahat sem kod pro adresy z této sekce
+• users/ > vytvořit soubor urls.py a přetahat sem kod pro adresy z této sekce
 • main/urls.py > odebrat přetažené kody a zapsat include
 Vytvoření prvního formuláře a jeho aplikace do stránky
 • homepage > vytvořit složku forms s initem
-• homepage/forms > založit soubor pro formulář pro hero sekci
-• homepage/views > vytvořit soubor pro zpracování tohoto formuláře
+• homepage/forms/ > založit soubor pro formulář pro hero sekci
+• homepage/views/ > vytvořit soubor pro zpracování tohoto formuláře
 • homepage/views/homepage.py > Připsat kod pro přesměrování na stránku editace
 • homepage/urls.py > připsat adresu pro zpracování formuláře a adresu pro úpravu homepage
 • templates/ > upravit kod pro hero sekci a zobrazení tlačítka pro úpravu homepage
+###
+Dokončení aplikace pro správu domácí stránky superuživatelem
+• homepage/models/ > přidání modelu singleton pro jedinou instanci modelů a následná úprava všech modelů
+• homepage/forms/ > dopsat formuláře pro všechny ostatní sekce
+• homepage/views/ > dopsat pohledy pro ostatní sekce
+• homepage/views/ > vytvořit základní třídu BaseHomePageView a kod pro home page rozdělit na dvě části - pro pohled na stránku a pro její editaci
+• homepage/urls.py > připsat všechny ostatní pohedy pro úpravu sekcí
+• templates/1_home/ > přepsat kod a upravit aby byl lépe čitelný a odpovídal novému nastavení
+• templates/0_base/_footer/ > přepsat kod a upravit aby byl lépe čitelný a odpovídal novému nastavení
 ###

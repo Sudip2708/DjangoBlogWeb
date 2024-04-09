@@ -1,0 +1,25 @@
+<!-- Část pro pole pro zadání emailu -->
+<!-- Rozšířenní pro 1_home/16__newsletter__.html -->
+
+<!-- Formulář -->
+<form action="." method="article">
+    {% csrf_token %}
+
+    <!-- Kontejner pro vstupní pole a odesílací tlačítko -->
+    <div class="input-group">
+
+        <!-- Vstupní pole pro email -->
+        <input class="form-control p-3"
+               type="email"
+               name="email"
+               id="email"
+               placeholder="Type your email address">
+
+        <!-- Odesílací tlačítko -->
+        <button class="btn btn-dark" type="submit">
+            Subscribe
+        </button>
+
+    </div>
+
+</form>

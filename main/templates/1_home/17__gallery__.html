@@ -1,39 +1,36 @@
 <!-- Include for 1_home/10__base__.html -->
 <!-- for Gallery Section -->
 
-<!-- Import static files -->
-{% load static %}
+
+<!-- Podmínka kontrolující, zda má být sekce viditelná -->
+{% if gallery_data.display_gallery_section %}
+
+    <!-- Hlavní kontejner -->
+    <section class="p-0">
 
 
-<!-- Temporary style settings for displaying photos -->
-{% include '1_home/____gallery__style__.html' %}
+        <!-- Podmínka pro zobrazení pouze na URL edit a pro SuperUser -->
+        {% if user.is_superuser and request.path == '/edit/' %}
 
-<!-- Gallery Section (Most Views) -->
-<section class="p-0">
-    <div class="row g-0">
+            <!-- Tlačítko pro skrytí/zobrazení editačního formuláře sekce  -->
+            {% include '1_home/_common/__edit_button__.html' with name='Gallery' %}
 
-        <!-- Articles cycle -->
-        {% for article in most_viewed %}
-            <div class="col-lg-3 col-md-3 col-sm-6">
+            <!-- Editační formulář sekce -->
+            {% include '1_home/_gallery/__edit_section__.html' %}
 
-                <!-- Link -->
-                <div class="glightbox d-block position-relative"
-                     data-gallery="gallery"
-                     data-glightbox="{{ article.title }}">
+        {% endif %}
 
-                    <!-- Picture -->
-                    {% include '__img/__article_main_picture__.html' with atr="preview" %}
+        <!-- Hlavní část: Zobrazení obrázků vybraných článků -->
+        {% include '1_home/_gallery/__page_articles__.html' %}
 
-                    <!-- Icon -->
-                    <div class="fsc-hover-overlay">
-                        <i class="fas fa-search fsc-hover-overlay-icon">
-                            {{ article.title }}
-                        </i>
-                    </div>
+    </section>
 
-                </div>
-            </div>
-        {% endfor %}
+<!-- Pokud je sekce skrytá -->
+{% else %}
 
-    </div>
-</section>
+    <!-- Tlačítko pro zobrazení sekce (pouze pro url edit a superuser) -->
+    {% if user.is_superuser and request.path == '/edit/' %}
+    {% include '1_home/_common/__section_display__.html' with section_url='edit-gallery-section' name='Gallery' %}
+    {% endif %}
+
+{% endif %}

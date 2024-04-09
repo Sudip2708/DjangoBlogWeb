@@ -1,0 +1,14 @@
+<!-- Část s texty sekce -->
+<!-- Rozšířenní pro 1_home/11__hero__.html -->
+
+
+<!-- Nadpis sekce -->
+<h1>
+    {{ hero_data.hero_title|safe }}
+</h1>
+
+<!-- Odkaz sekce -->
+<a class="link-underline mt-3"
+   href="{{ hero_data.hero_link }}">
+    {{ hero_data.hero_link_title }}
+</a>

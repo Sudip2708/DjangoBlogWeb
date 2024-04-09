@@ -3,9 +3,12 @@
 
 
 <!-- Article Category -->
-<div class="mb-1">
-    <a class="text-uppercase text-dark small fw-bold"
-       href="{% url 'article-category-list' category_slug=article.category.slug %}">
-        {{ article.category }}
-    </a>
-</div>
+<!-- url 'article-category-list' category_slug=article.category.slug -->
+{% if article.category.slug %}
+    <div class="mb-1">
+        <a class="text-uppercase text-dark small fw-bold"
+           href="{% url 'article-category-list' category_slug=article.category.slug %}">
+            {{ article.category }}
+        </a>
+    </div>
+{% endif %}

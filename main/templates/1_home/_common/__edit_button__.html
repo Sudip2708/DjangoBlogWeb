@@ -1,0 +1,14 @@
+<!-- Tlačítko pro rozevírací nabídku editace sekce  -->
+<!-- Rozšířenní pro jednotlivé sekce HomePage -->
+
+
+<!-- Odkaz na rozevření a skrytí nabídky -->
+<!-- (odkaz má na sebe navázaný script pro změnu prvního slova v textu Show na Hide a naopak) -->
+<a class="edit-homepage-button"
+   type="button"
+   data-bs-toggle="collapse"
+   data-bs-target="#{{ name|lower }}SectionCollapse"
+   aria-expanded="false"
+   aria-controls="{{ name|lower }}SectionCollapse">
+    Show Edit Options For {{ name }} Section
+</a>

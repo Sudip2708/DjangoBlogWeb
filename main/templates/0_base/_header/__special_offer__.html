@@ -30,14 +30,14 @@
     </li>
 
 <!-- Nabídka pro zobrazení a skrytí tlačítek pro úpravu hlavní stránky -->
-{% elif request.path == '/' %}
+{% elif user.is_superuser and request.path == '/' %}
     <li class="nav-item">
         <a class="btn btn-link drop-down-title p-0 light-grey-color" href="{% url 'home-page-edit' %}">
             Show Edit Buttons
         </a>
     </li>
 
-{% elif request.path == '/edit/' %}
+{% elif user.is_superuser and request.path == '/edit/' %}
     <li class="nav-item">
         <a class="btn btn-link drop-down-title p-0 light-grey-color" href="{% url 'home' %}">
             Hide Edit Buttons

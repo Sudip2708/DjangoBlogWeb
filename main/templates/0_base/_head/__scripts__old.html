@@ -1,0 +1,130 @@
+<!-- Include for 0_base/01__head__.html -->
+<!-- for Scripts -->
+
+
+<!-- Bootstrap JS -->
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/5.1.3/js/bootstrap.min.js" integrity="sha384-KyZXEAg3QhqLMpG8r+Knujsl5+z24KTNF7RnquisJ8nFyyMfsPvu1hFw6spzx5L6" crossorigin="anonymous"></script>
+
+
+<!-- Tagify CSS -->
+<script src="https://cdn.jsdelivr.net/npm/@yaireo/tagify"></script>
+<script src="https://cdn.jsdelivr.net/npm/@yaireo/tagify/dist/tagify.polyfills.min.js"></script>
+
+
+<!-- TinyMCE CDN odkaz -->
+<script
+        type="text/javascript"
+        src="https://cdn.tiny.cloud/1/53fmtiuk9mhttvevp087nqfy6cmqgzl08wvnya7iy2sbyk4d/tinymce/6/tinymce.min.js"
+        referrerpolicy="origin">
+</script>
+
+
+<!-- 'TinyMCE settings' -->
+<script>
+    tinymce.init({
+        selector: 'textarea#id_content',
+        min_height: 800,
+        imagetools_cors_hosts: ['picsum.photos'],
+
+        plugins: ['advlist', 'anchor', 'autoresize', 'autosave', 'autolink',
+          'charmap', 'code', 'codesample', 'emoticons', 'fullscreen', 'help',
+          'image', 'insertdatetime', 'link', 'lists', 'media', 'nonbreaking',
+          'pagebreak', 'preview', 'quickbars', 'searchreplace', 'table', 'template',
+          'visualblocks', 'visualchars', 'wordcount'
+        ],
+        menubar: 'file edit view insert format tools table help',
+        toolbar:  'undo redo |' +
+                  'styles fontfamily fontsize lineheight forecolor backcolor |' +
+                  'bold italic underline |  charmap searchreplace selectall |' +
+                  'aligncenter alignjustify alignleft alignnone alignright |' +
+                  'indent outdent | bullist numlist  |' +
+                  'strikethrough subscript superscript removeformat hr nonbreaking |' +
+                  'blockquote visualblocks visualchars code codesample |' +
+                  'image emoticons insertdatetime anchor link openlink |' +
+                  'cut copy paste pastetext | wordcount preview fullscreen |',
+        toolbar_sticky: true,
+        toolbar_drawer: 'sliding',
+
+        quickbars_selection_toolbar: 'bold italic | quicklink h2 h3 blockquote quickimage quicktable',
+        contextmenu: "link image imagetools table",
+        content_style: ".mymention{ color: green; }",
+        content_style: '.mce-annotation { background: #fff0b7; } .tc-active-annotation {background: #ffe168; color: black; }',
+
+        autosave_ask_before_unload: true,
+        image_advtab: true,
+        importcss_append: true,
+        image_caption: true,
+        noneditable_noneditable_class: "mceNonEditable",
+
+    });
+</script>
+
+
+
+    // **Nastavení inicializace TinyMCE pro obsah článku**
+    tinymce.init({
+
+        // **Výběr elementu pomocí selektoru CSS **
+        selector: 'textarea#id_content',
+
+        // **Minimální výška editoru v pixelech**
+        min_height: 800,
+
+        // **Povolené URL pro načítání obrázků (kvůli CORS)**
+        imagetools_cors_hosts: ['picsum.photos'],
+
+        // **Načtené pluginy TinyMCE**
+        plugins: ['advlist', 'anchor', 'autoresize', 'autosave', 'autolink',
+                  'charmap', 'code', 'codesample', 'emoticons', 'fullscreen', 'help',
+                  'image', 'insertdatetime', 'link', 'lists', 'media', 'nonbreaking',
+                  'pagebreak', 'preview', 'quickbars', 'searchreplace', 'table', 'template',
+                  'visualblocks', 'visualchars', 'wordcount'
+                 ],
+
+        // **Zobrazené položky v menu**
+        menubar: 'file edit view insert format tools table help',
+
+        // **Nástrojová lišta - část 1**
+        toolbar:  'undo redo |' +
+                  'styles fontfamily fontsize lineheight forecolor backcolor |' +
+                  'bold italic underline |  charmap searchreplace selectall |' +
+                  'aligncenter alignjustify alignleft alignnone alignright |' +
+                  'indent outdent | bullist numlist  |' +
+                  'strikethrough subscript superscript removeformat hr nonbreaking |' +
+                  'blockquote visualblocks visualchars code codesample |' +
+                  'image emoticons insertdatetime anchor link openlink |' +  // **Nástrojová lišta - část 2**
+                  'cut copy paste pastetext | wordcount preview fullscreen |',
+
+        // **Udržuje nástrojovou lištu nahoře při scrollování**
+        toolbar_sticky: true,
+
+        // **Způsob zobrazení rozbalovací nabídky nástrojů**
+        toolbar_drawer: 'sliding',
+
+        // **Nástrojová lišta pro výběr textu**
+        quickbars_selection_toolbar: 'bold italic | quicklink h2 h3 blockquote quickimage quicktable',
+
+        // **Kontextové menu pro pravý klik**
+        contextmenu: "link image imagetools table",
+
+        // **Vlastní styl pro třídu mymention**
+        // **Styly pro anotace TinyMCE**
+        content_style: ".mymention{ color: green; }",
+                     '.mce-annotation { background: #fff0b7; } .tc-active-annotation {background: #ffe168; color: black; }',
+
+        // **Upozornění na neuložené změny**
+        autosave_ask_before_unload: true,
+
+        // **Zobrazení rozšířené záložky obrázků**
+        image_advtab: true,
+
+        // **Připojení vlastního CSS**
+        importcss_append: true,
+
+        // **Povolení popisků obrázků**
+        image_caption: true,
+
+        // **Třída pro neupravitelné prvky**
+        noneditable_noneditable_class: "mceNonEditable",
+
+    });
