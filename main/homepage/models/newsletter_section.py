@@ -7,6 +7,14 @@ from .singleton_model import SingletonModel
 
 
 class HomePageNewsletterSection(SingletonModel):
+    '''
+    Databázový model pro Home Page Newsletter Section
+
+    Obsahuje pole pro nastavení zobrazení této sekce, nadpisu, popisu a pole prozadávání emailů.
+    Pole pro zadávání emailu je provázané s modelem NewsletterSubscriber.
+    Metoda __str__ definuje textovou reprezentaci instance tohoto modelu.
+    Metoda get_divider_settings slouží k získání všech editovatelných hodnot tohoto modelu.
+    '''
 
     display_newsletter_section = models.BooleanField(
         _('Display Newsletter Section'),
@@ -38,7 +46,10 @@ class HomePageNewsletterSection(SingletonModel):
     @property
     def get_newsletter_settings(self):
         '''
-        Navrácení všech hodnot pro vykreslení sekce v Home Page
+        Vlastnost, která slouží k získání hodnot všech editovatelných polí tohoto modelu.
+
+        Vrací slovník obsahující následující informace:
+        zobrazení sekce, nadpis a popis sekce.
         '''
 
         return {

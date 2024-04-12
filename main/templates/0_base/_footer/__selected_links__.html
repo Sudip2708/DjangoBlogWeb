@@ -8,12 +8,12 @@
 
         <!-- Odkazy umístěné v pravo (první 4) -->
         <ul class="list-unstyled text-sm me-4">
-            {% for title, url in footer_data.pages_links.items %}
+            {% for link, data in footer_data.pages_links.items %}
                 {% if forloop.counter <= 4 %}
                     <li class="mb-2">
                         <a class="text-reset fw-light"
-                           href="{{ url|default:'#' }}">
-                            {{ title }}
+                           href="{{ data.url }}">
+                            {{ data.name }}
                         </a>
                     </li>
                 {% endif %}
@@ -22,12 +22,12 @@
 
         <!-- Odkazy umístěné v levo (druhé 4) -->
         <ul class="list-unstyled text-sm me-4">
-            {% for title, url in footer_data.pages_links.items %}
+            {% for link, data in footer_data.pages_links.items %}
                 {% if forloop.counter > 4 %}
                     <li class="mb-2">
                         <a class="text-reset fw-light"
-                           href="{{ url|default:'#' }}">
-                            {{ title }}
+                           href="{{ data.url }}">
+                            {{ data.name }}
                         </a>
                     </li>
                 {% endif %}

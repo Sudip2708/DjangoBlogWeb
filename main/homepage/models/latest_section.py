@@ -6,13 +6,19 @@ from tinymce.models import HTMLField
 
 
 class HomePageLatestArticles(SingletonModel):
+    '''
+    Databázový model pro Home Page Latest Articles Section
+
+    Obsahuje pole pro nastavení zobrazení sekce, nadpisu, popisu a článků této sekce.
+    Metoda __str__ definuje textovou reprezentaci instance tohoto modelu.
+    Metoda get_divider_settings slouží k získání všech hodnot tohoto modelu.
+    '''
 
     display_latest_section = models.BooleanField(
         _('Display Latest Section'),
         default=True,
     )
 
-    # Latest Articles
     latest_title = HTMLField(
         _('Latest Articles Title'),
         null=True, blank=True
@@ -47,43 +53,52 @@ class HomePageLatestArticles(SingletonModel):
         verbose_name=_('Latest Article 3')
     )
 
-
-
     def __str__(self):
         return "Homepage Latest Articles Configuration"
-
 
     @property
     def latest_articles(self):
         """
-        Property to return instances of the featured articles.
-        """
-        latest_articles = list(Article.objects.filter(status='publish').order_by('-created')[:3])
+        Vlastnost, která slouží k získání hodnot tří nejnovějších článků pro tento model.
 
-        # Check if any of the latest articles are already assigned
+        Vrátí seznam tří nejnovějších článků přiřazených k modelu
+        nebo doplní seznam novými články, pokud některé položky nejsou definovány.
+
+        :return: Seznam tří nejnovějších přiřazených článků nebo seznam nových článků.
+        """
+
+        # Načtení uložených článků v tomto modelu
         assigned_articles = [
             self.latest_article_1,
             self.latest_article_2,
             self.latest_article_3
         ]
 
-        # First loop: Check if any assigned articles are already in the latest articles list
-        for index, article in enumerate(assigned_articles):
-            if article in latest_articles:
-                latest_articles = [a for a in latest_articles if a != article]
+        # Kontrola, zda některé z polí neobsahuje id článku
+        if not all(assigned_articles):
 
-        # Second loop: Fill null fields with the latest articles
-        for index, article in enumerate(assigned_articles):
-            if article is None:
-                assigned_articles[index] = latest_articles.pop(0)
+            # Načtení tří nejnovějších článků
+            latest_articles = list(Article.objects.filter(status='publish').order_by('-created')[:3])
 
+            # Odfiltrování článků, které se již vyskytují v nabídce modelu
+            for index, article in enumerate(assigned_articles):
+                if article in latest_articles:
+                    latest_articles = [a for a in latest_articles if a != article]
+
+            # Doplnění chybějících článků modelu
+            for index, article in enumerate(assigned_articles):
+                if article is None:
+                    assigned_articles[index] = latest_articles.pop(0)
 
         return assigned_articles
 
     @property
     def get_latest_settings(self):
         '''
-        Navrácení všech hodnot pro vykreslení sekce v Home Page
+        Vlastnost, která slouží k získání hodnot všech polí tohoto modelu.
+
+        Vrací slovník obsahující následující informace:
+        zobrazení sekce, nadpis, popis a články sekce.
         '''
 
         return {

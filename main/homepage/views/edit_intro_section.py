@@ -19,10 +19,27 @@ class EditIntroSection(View):
     '''
 
     def post(self, request, *args, **kwargs):
+        '''
+        Zpracování HTTP POST požadavku.
+
+        Tato metoda zpracovává odeslaný formulář pro úpravu HomePageIntroSection na domovské stránce.
+        Pokud je formulář validní, aktualizuje hodnoty v databázi
+        a přesměruje uživatele na stránku pro úpravu domovské stránky.
+        Pokud formulář není validní, zobrazí chybovou zprávu
+        a přesměruje uživatele zpět na stránku pro úpravu s neuloženými změnami.
+
+        :param request: Objekt HttpRequest obsahující data zaslaná klientem.
+        :param args: Další pozicinální argumenty.
+        :param kwargs: Další klíčové argumenty.
+        :return: HttpResponse objekt reprezentující odpověď serveru na požadavek.
+        '''
+
+        # Načtení formuláře
         form = IntroSectionForm(request.POST)
 
+        # Kontrola, zda je formulář validní
         if form.is_valid():
-            # Zde můžete provést další validaci, pokud je to potřeba
+
             # Získání nebo vytvoření instance modelu HomePageIntroSection
             intro_section = HomePageIntroSection.singleton()
 
@@ -31,33 +48,39 @@ class EditIntroSection(View):
             intro_section.intro_description = form.cleaned_data['intro_description']
             intro_section.display_intro_section = form.cleaned_data['display_intro_section']
 
-            # Uložení změn do databáze
+            # Uložení změn do databáze a přesměrování na stránku home-page-edit
             intro_section.save()
-
-            # Přesměrování na stránku home-page-edit
             return redirect('home-page-edit')
 
+        # Pokud formulář validní není
         else:
-
-            # Vrať se zpět na stránku úprav a zobraz zprávu o neúspěchu
+            # Navrácení na stránku úprav a zobrazení zprávu o neúspěchu
             messages.error(request, "Provedené úpravy nebyly uloženy.")
             return redirect('home-page-edit')
+
     def get(self, request, *args, **kwargs):
+        '''
+        Zpracování HTTP GET požadavku.
 
+        Tato metoda kontroluje, zda požadavek GET obsahuje parametr 'show_intro_section'.
+        Pokud ano, nastaví hodnotu pro zobrazení sekce patičky na True a provede přesměrování
+        na stránku pro úpravu domovské stránky. Jinak pokračuje v běžném chování.
 
-        # Zkontroluj, zda byla kliknuta kotva
+        :param request: Objekt HttpRequest obsahující data zaslaná klientem.
+        :param args: Další pozicinální argumenty.
+        :param kwargs: Další klíčové argumenty.
+        :return: HttpResponse objekt reprezentující odpověď serveru na požadavek.
+        '''
+
+        # Kontrola zda požadavek get v sobě obsahuje pořadavek na zviditelnění sekce
         if 'show_intro_section' in request.GET:
 
-            # Získání nebo vytvoření instance modelu HomePageIntroSection
+            # Pokud ano - změna hodnoty a návrat na stránku pro úpravu HomePage
             intro_section = HomePageIntroSection.singleton()
-
-            # Nastavení pole display_intro_section na True
             intro_section.display_intro_section = True
             intro_section.save()
-
-            # Přesměrování na stránku home-page-edit
             return redirect('home-page-edit')
 
+        # Pokud ne, pokračuj normálně
         else:
-            # Pokud nebyla kliknuta kotva, pokračuj normálně
             return super().get(request, *args, **kwargs)

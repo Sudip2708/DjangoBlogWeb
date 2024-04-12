@@ -5,6 +5,13 @@ from .singleton_model import SingletonModel
 
 
 class HomePageHeroSection(SingletonModel):
+    '''
+    Databázový model pro Home Page Hero Section
+
+    Obsahuje pole pro nastavení zobrazení, obrázku, textu a odkazu.
+    Metoda __str__ definuje textovou reprezentaci instance tohoto modelu.
+    Metoda get_divider_settings slouží k získání všech hodnot tohoto modelu.
+    '''
 
     display_hero_section = models.BooleanField(
         _('Display Hero Section'),
@@ -43,12 +50,14 @@ class HomePageHeroSection(SingletonModel):
     @property
     def get_hero_settings(self):
         '''
-        Navrácení všech hodnot pro vykreslení sekce v Home Page
+        Vlastnost, která slouží k získání hodnot všech polí tohoto modelu.
+
+        Pokud není k dispozici obrázek pro oddělovač, jeho URL bude None.
+        Vrací slovník obsahující následující informace:
+        zobrazení sekce, URL obrázku, nadpis sekce, popisu odkazu a URL odkazu.
         '''
 
-        # Dosazení defaultního obrázku, když není
-        # hero_image_url = self.hero_image.url if self.hero_image else self._meta.get_field('hero_image').get_default()
-        # Dosazení None, když není obrázek
+        # Dosazení hodnoty None, když není obrázek
         hero_image_url = self.hero_image.url if self.hero_image else None
 
         return {

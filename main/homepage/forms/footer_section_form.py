@@ -1,65 +1,126 @@
 from django import forms
+
 from homepage.models.footer_section import FooterSettings
+from articles.models.article import Article
+
 
 class FooterSettingsForm(forms.ModelForm):
+    '''
+    Formulář pro editaci nastavení patičky.
+
+    Tato třída formuláře slouží k vytvoření formuláře pro úpravu nastavení této sekce.
+    Obsahuje pole pro zobrazení a editaci jednotlivých nastavení,
+    jako je například zobrazení sekce a výběr významných článků.
+    Také obsahuje inicializační metodu pro úpravu widgetů
+    a naplnění polí výběrovými možnostmi.
+    '''
 
     class Meta:
-        # Model pro tento formulář
+        '''
+        Meta třída pro specifikaci modelu a polí, která budou zahrnuta ve formuláři.
+
+        Tato meta třída definuje strukturu a vzhled formuláře pro editaci nastavení této sekce.
+        Obsahuje informace o tom, který model je použit pro tento formulář,
+        jaká pole jsou zahrnuta a jaké widgety jsou použity pro jejich zobrazení.
+        '''
+
+        # Nastavení modelu a prázdného seznamu pro pole sekce
         model = FooterSettings
+        fields = []
 
-        # Vytovření seznamu položek pro formulář
-        fields = [
-            'display_footer_section',
-            'display_footer_end_section',
-        ]
+    def __init__(self, *args, **kwargs):
+        '''
+        Inicializační metoda formuláře.
 
-        # Seznam pro položky adresy
-        address = ['company_name', 'address', 'phone', 'email']
+        Tato metoda slouží k inicializaci instance formuláře.
+        Přijímá libovolný počet pozicinálních argumentů a klíčových argumentů,
+        které jsou dále předány nadřazené třídě.
 
-        # Seznam pro položky sociálních účtů
-        social_accounts = ['facebook_url', 'twitter_url', 'instagram_url', 'behance_url', 'pinterest_url']
+        :param args: Pozicinální argumenty pro inicializaci.
+        :param kwargs: Klíčové argumenty pro inicializaci.
+        '''
 
-        # Seznam pro položky vybraných odkazů
-        selected_links = [f'name_field_{number}' for number in range(1, 9)]
-        selected_links_urls = [f'url_field_{number}_url' for number in range(1, 9)]
+        # Volání initu nadřazené třídy
+        super().__init__(*args, **kwargs)
 
-        # Seznam pro položky vybraných článků
-        selected_articles = [f'footer_article_{number}' for number in range(1, 4)]
+        # Načtení instance pro footer
+        instance = FooterSettings.singleton()
 
-        # Seznam pro položky koncové patičky
-        footer_end = ['end_right_text', 'end_left_text', 'end_left_link_text', 'end_left_link_url']
+        # Pole pro zobrazení footeru
+        self.fields['display_footer_section'] = forms.BooleanField(
+            label='Display Footer Section',
+            initial=instance.display_footer_section,
+            required=False
+        )
 
-        # Seskupení položek do sekcí
-        section_fields = {
-            'address': address,
-            'social_accounts': social_accounts,
-            'selected_links': selected_links + selected_links_urls,
-            'selected_articles': selected_articles,
-            'footer_end': footer_end
-        }
+        # Cyklus pro vytvoření polí pro zobrazení adresy
+        for key, value in instance.address_values.items():
+            # Pokud jde o email vytvoř pole pro email
+            if key == 'email':
+                self.fields[key] = forms.EmailField(
+                    label=value["label"],
+                    initial=value["value"],
+                    required=False
+                )
+            # Ve všech ostatních případech vytvoř textové pole
+            else:
+                self.fields[key] = forms.CharField(
+                    label=value["label"],
+                    initial=value["value"],
+                    required=False
+                )
 
-        # Přidání položek do fields
-        for fields_list in section_fields.values():
-            fields += fields_list
+        # Cyklus pro vytvoření textových polí pro zadání url sociálních sítí
+        for key, value in instance.social_media.items():
+            self.fields[key] = forms.CharField(
+                label=value["label"],
+                initial=value["url"],
+                required=False
+            )
 
-        # Vytvoření slovníku pro vykreslení položek
-        widgets = {
-            'display_footer_section': forms.CheckboxInput(attrs={'class': 'form-check-input'}),
-            'display_footer_end_section': forms.CheckboxInput(attrs={'class': 'form-check-input'}),
-        }
+        # Cyklus pro vytvoření textových polí pro zadání odkazů na vybrané stránky
+        for n, (name, dic) in enumerate(instance.site_links.items(), start=1):
+            # Pole pro pojmenování odkazu (zobrazí se v patičce)
+            self.fields[f"name_field_{n}"] = forms.CharField(
+                label=f"{n}. Name",
+                initial=dic["name"],
+                required=False
+            )
+            # Pole pro zadání odkazu
+            self.fields[f"url_field_{n}"] = forms.CharField(
+                label=f"{n}. URL",
+                initial=dic["url"],
+                required=False
+            )
 
-        # Nastavení widgetů pro jednotlivé položky
-        for section, fields_list in section_fields.items():
-            for field in fields_list:
+        # Získání seznamu článků z databáze a vytvoření seznamu s tuple pro ID a název článku
+        articles = Article.objects.all().order_by('title')
+        choices = [(article.id, article.title) for article in articles]
 
-                # Pokud je pole součástí sociálních účtů nebo končí URL
-                if field in social_accounts or field.endswith('_url'):
-                    widgets[field] = forms.URLInput(attrs={'class': 'form-control'})
+        # Cyklus pro vytvoření polí pro výběr článků
+        for n, (key, value) in enumerate(instance.articles.items(), start=1):
+            # Načtení aktuální hodnoty a následné přidání na začátek seznamu
+            initial_choice = (value["article_id"], value["title"])
+            self.fields[key] = forms.ChoiceField(
+                label=f"{n}. Article",
+                choices= [initial_choice] + choices,
+                widget=forms.Select(attrs={'class': 'form-control'})
+            )
 
-                # Pokud je pole součástí vybraných článků
-                elif section == 'selected_articles':
-                    widgets[field] = forms.Select(attrs={'class': 'form-control'})
+        # Cyklus pro vytvoření polí pro editaci hodnot posledního řádku
+        for key, value in instance.end_line.items():
+            # Pro nastavením viditelnosti vytvoř boolean pole
+            if key == "display_footer_end_section":
+                self.fields[key] = forms.BooleanField(
+                    label=value["label"],
+                    initial=value["value"],
+                    required=False
+                )
+            # Pro všechny ostatní položky vytvoř textové pole
+            else:
+                self.fields[key] = forms.CharField(
+                    label=value["label"],
+                    initial=value["value"],
+                    required=False
+                )
 
-                # Pro ostatní sekce
-                else:
-                    widgets[field] = forms.TextInput(attrs={'class': 'form-control'})

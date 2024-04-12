@@ -5,6 +5,13 @@ from .singleton_model import SingletonModel
 
 
 class HomePageFeaturedArticles(SingletonModel):
+    '''
+    Databázový model pro Home Page Featured Articles Section
+
+    Obsahuje pole pro nastavení zobrazení a článků této sekce.
+    Metoda __str__ definuje textovou reprezentaci instance tohoto modelu.
+    Metoda get_divider_settings slouží k získání všech hodnot tohoto modelu.
+    '''
 
     display_featured_section = models.BooleanField(
         _('Display Featured Section'),
@@ -36,27 +43,24 @@ class HomePageFeaturedArticles(SingletonModel):
         verbose_name=_('Featured Article 3')
     )
 
-    @property
-    def featured_articles(self):
-        """
-        Property to return instances of the featured articles.
-        """
-        return [
-            self.featured_article_1,
-            self.featured_article_2,
-            self.featured_article_3
-        ]
-
     def __str__(self):
         return "Homepage Featured Articles Configuration"
+
 
     @property
     def get_featured_settings(self):
         '''
-        Navrácení všech hodnot pro vykreslení sekce v Home Page
+        Vlastnost, která slouží k získání hodnot všech polí tohoto modelu.
+
+        Vrací slovník obsahující následující informace:
+        zobrazení sekce a seznam článků.
         '''
 
         return {
             'display_featured_section': self.display_featured_section,
-            'articles': self.featured_articles,
+            'articles': [
+                self.featured_article_1,
+                self.featured_article_2,
+                self.featured_article_3
+            ],
         }

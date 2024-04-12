@@ -19,11 +19,25 @@ class EditHeroSection(View):
     '''
 
     def post(self, request, *args, **kwargs):
+        '''
+        Zpracování HTTP POST požadavku.
+
+        Tato metoda zpracovává odeslaný formulář pro úpravu HomePageHeroSection na domovské stránce.
+        Pokud je formulář validní, aktualizuje hodnoty v databázi
+        a přesměruje uživatele na stránku pro úpravu domovské stránky.
+        Pokud formulář není validní, zobrazí chybovou zprávu
+        a přesměruje uživatele zpět na stránku pro úpravu s neuloženými změnami.
+
+        :param request: Objekt HttpRequest obsahující data zaslaná klientem.
+        :param args: Další pozicinální argumenty.
+        :param kwargs: Další klíčové argumenty.
+        :return: HttpResponse objekt reprezentující odpověď serveru na požadavek.
+        '''
 
         # Načtení formuláře
         form = HeroSectionForm(request.POST, request.FILES)
 
-        # Kontrola, zda data odpovídají formuláři
+        # Kontrola, zda je formulář validní
         if form.is_valid():
 
             # Získání nebo vytvoření instance modelu HomePageHeroSection
@@ -36,36 +50,39 @@ class EditHeroSection(View):
             hero_section.hero_link = form.cleaned_data['hero_link']
             hero_section.display_hero_section = form.cleaned_data['display_hero_section']
 
-            # Uložení změn do databáze
+            # Uložení změn do databáze a přesměrování na stránku home-page-edit
             hero_section.save()
-
-            # Přesměrování na stránku home-page-edit
             return redirect('home-page-edit')
 
-        # Pokud data neodpovídají formuláři
+        # Pokud formulář validní není
         else:
-
-            # Vrať se zpět na stránku úprav a zobraz zprávu o neúspěchu
+            # Navrácení na stránku úprav a zobrazení zprávu o neúspěchu
             messages.error(request, "Provedené úpravy nebyly uloženy.")
             return redirect('home-page-edit')
 
     def get(self, request, *args, **kwargs):
+        '''
+        Zpracování HTTP GET požadavku.
 
+        Tato metoda kontroluje, zda požadavek GET obsahuje parametr 'show_hero_section'.
+        Pokud ano, nastaví hodnotu pro zobrazení sekce patičky na True a provede přesměrování
+        na stránku pro úpravu domovské stránky. Jinak pokračuje v běžném chování.
 
+        :param request: Objekt HttpRequest obsahující data zaslaná klientem.
+        :param args: Další pozicinální argumenty.
+        :param kwargs: Další klíčové argumenty.
+        :return: HttpResponse objekt reprezentující odpověď serveru na požadavek.
+        '''
 
-        # Zkontroluj, zda byla kliknuta kotva
+        # Kontrola zda požadavek get v sobě obsahuje pořadavek na zviditelnění sekce
         if 'show_hero_section' in request.GET:
 
-            # Získání nebo vytvoření instance modelu HomePageHeroSection
+            # Pokud ano - změna hodnoty a návrat na stránku pro úpravu HomePage
             hero_section = HomePageHeroSection.singleton()
-
-            # Nastavení pole display_hero_section na True
             hero_section.display_hero_section = True
             hero_section.save()
-
-            # Přesměrování na stránku home-page-edit
             return redirect('home-page-edit')
 
+        # Pokud ne, pokračuj normálně
         else:
-            # Pokud nebyla kliknuta kotva, pokračuj normálně
             return super().get(request, *args, **kwargs)

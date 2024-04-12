@@ -1,32 +1,48 @@
-# Import modelu pro pro ukládání emailů pro odebírání novinek
+# Model pro Newsletter Subscriber (pro zběr emailů v Newsletter sekci)
 from .newsletter_subscriber import NewsletterSubscriber
 
-# Import modelu pro upravenou třídu Singleton z které dědí všechny další modely
+# Abstraktní Singleton třída z které dědí všechny dále uvedené modely
 from .singleton_model import SingletonModel
 
-# Import modelu pro nastavení hero sekce na domovské stránce
+# Model pro Hero sekci na domovské stránce
 from .hero_section import HomePageHeroSection
 
-# Import modelu pro nastavení intra na domovské stránce
+# Model pro Intro sekci na domovské stránce
 from .intro_section import HomePageIntroSection
 
-# Import modelu pro nastavení vybraných článků na domovské stránce
+# Model pro Featured sekci na domovské stránce
 from .featured_section import HomePageFeaturedArticles
 
-# Import modelu pro nastavení oddělovací sekce na domovské stránce
+# Model pro Divider sekci na domovské stránce
 from .divider_section import HomePageDividerSection
 
-# Import modelu pro nastavení posledních tří článků na domovské stránce
+# Model pro Latest sekci na domovské stránce
 from .latest_section import HomePageLatestArticles
 
-# Import modelu pro nastavení sekce pro zanechání emailu pro odebírání novinek na domovské stránce
+# Model pro Newsletter sekci na domovské stránce
 from .newsletter_section import HomePageNewsletterSection
 
-# Import modelu pro nastavení sekce galerie na domovské stránce
+# Model pro Gallery sekci na domovské stránce
 from .gallery_section import HomePageGallerySection
 
-# Import modelu pro nastavení patičky stránek
+# Defaultní hodnoty pro sekci Footer
+from .footer_section_default import (
+    DEFAULT_ADDRESS_VALUES,
+    DEFAULT_SOCIAL_MEDIA,
+    DEFAULT_SITE_LINKS,
+    DEFAULT_ARTICLES,
+    DEFAULT_END_LINE
+)
+
+# Model pro Footer sekci na domovské stránce
 from .footer_section import FooterSettings
+
+
+
+
+
+
+
 
 
 

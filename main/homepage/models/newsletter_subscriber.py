@@ -2,6 +2,13 @@ from django.db import models
 from users.models import CustomUser
 
 class NewsletterSubscriber(models.Model):
+    '''
+    Databázový model pro uchovávání informací o zájemcích o zasílání novinek.
+
+    Obsahuje pole pro e-mailovou adresu, odkaz na uživatele, který se přihlásil k odběru (v případě, že existuje),
+    a datum, kdy se uživatel přihlásil k odběru.
+    '''
+
 
     email = models.EmailField(
         unique=True,

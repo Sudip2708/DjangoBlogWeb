@@ -1,7 +1,3 @@
-from django.shortcuts import render
-
-from .home_page import BaseHomePageView
-
 from homepage.models.hero_section import HomePageHeroSection
 from homepage.models.intro_section import HomePageIntroSection
 from homepage.models.featured_section import HomePageFeaturedArticles
@@ -20,27 +16,52 @@ from homepage.forms.newsletter_section_form import NewsletterSectionForm
 from homepage.forms.gallery_section_form import GallerySectionForm
 from homepage.forms.footer_section_form import FooterSettingsForm
 
-
-class HomePageEditView(BaseHomePageView):
+class HomePageViewMixin:
     '''
-    Třída pro úpravu obsahu domovské stránky.
-
-    Tato třída dědí z BaseHomePageView a používá metodu `get_home_page_data` pro získání dat
-    pro zobrazení domovské stránky a následně přidává formuláře pro úpravu obsahu různých sekcí.
+    Mixin pro získání dat domovské stránky.
     '''
 
-    def get(self, request, *args, **kwargs):
+    def get_home_page_data(self):
         '''
-        Metoda pro získání dat a zobrazení stránky pro úpravu obsahu domovské stránky.
+        Metoda pro získání dat domovské stránky.
 
-        :param request: HttpRequest
-        :param args: Pozicinální argumenty
-        :param kwargs: Klíčové argumenty
-        :return: HttpResponse
+        :return: Slovník obsahující data pro zobrazení domovské stránky.
         '''
 
-        # Načtení kontextu z BaseHomePageView
-        context = self.get_home_page_data()
+        # Načtení dat pro vytvoření základního kontextu pro HomePage
+        hero_data = HomePageHeroSection.singleton().get_hero_settings
+        intro_data = HomePageIntroSection.singleton().get_intro_settings
+        featured_data = HomePageFeaturedArticles.singleton().get_featured_settings
+        divider_data = HomePageDividerSection.singleton().get_divider_settings
+        latest_data = HomePageLatestArticles.singleton().get_latest_settings
+        newsletter_data = HomePageNewsletterSection.singleton().get_newsletter_settings
+        gallery_data = HomePageGallerySection.singleton().get_gallery_settings
+        footer_data = FooterSettings.singleton().get_footer_settings
+
+        # Přidání dat do kontextu
+        return {
+            'hero_data': hero_data,
+            'intro_data': intro_data,
+            'featured_data': featured_data,
+            'divider_data': divider_data,
+            'latest_data': latest_data,
+            'newsletter_data': newsletter_data,
+            'gallery_data': gallery_data,
+            'footer_data': footer_data,
+        }
+
+
+class HomePageEditViewMixin:
+    '''
+    Mixin pro přidání formulářů pro úpravu obsahu domovské stránky do kontextu.
+    '''
+
+    def add_edit_forms_to_context(self, context):
+        '''
+        Metoda pro přidání formulářů pro úpravu obsahu domovské stránky do kontextu.
+
+        :param context: Kontext pro zobrazení šablony.
+        '''
 
         # Přidání formulářů pro editaci stránky
         hero_edit_form = HeroSectionForm(instance=HomePageHeroSection.singleton())
@@ -63,6 +84,3 @@ class HomePageEditView(BaseHomePageView):
             'gallery_edit_form': gallery_edit_form,
             'footer_edit_form': footer_edit_form,
         })
-
-        # Navrácení stránky
-        return render(request, '1_home/10__base__.html', context)

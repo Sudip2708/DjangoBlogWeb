@@ -16,9 +16,9 @@ It is part of the license conditions. Thanks for understanding :) -->
             <div class="col-md-6 text-md-start">
 
                 <!-- Podmínka pro kontrolu zda jsou data pro pravou část -->
-                {% if footer_data.end_line.end_right_text %}
+                {% if footer_data.end_line.right_text.value %}
                     <p class="mb-0 fw-light text-sm">
-                        {{ footer_data.end_line.end_right_text }}</p>
+                        {{ footer_data.end_line.right_text.value }}</p>
                 {% endif %}
 
             </div>
@@ -28,15 +28,15 @@ It is part of the license conditions. Thanks for understanding :) -->
                 <p class="mb-0 text-sm">
 
                     <!-- Podmínka pro kontrolu zda jsou data pro levou část (text) -->
-                    {% if footer_data.end_line.end_left_text %}
-                        {{ footer_data.end_line.end_left_text }}
+                    {% if footer_data.end_line.left_text.value %}
+                        {{ footer_data.end_line.left_text.value }}
                     {% endif %}
 
                     <!-- Podmínka pro kontrolu zda jsou data pro levou část (odkaz) -->
-                    {% if footer_data.end_line.end_left_link_text %}
+                    {% if footer_data.end_line.left_link_text.value %}
                         <a class="text-reset fw-light"
-                           href="{{ footer_end.end_left_link_url }}">
-                            {{ footer_data.end_line.end_left_link_text }}
+                           href="{{ footer_data.end_line.left_link_url.value|default:'#' }}">
+                            {{ footer_data.end_line.left_link_text.value }}
                         </a>
                     {% endif %}
 

@@ -1,8 +1,7 @@
 ### Definice URL patternů pro aplikaci
 
 from django.urls import path
-from .views.home_page import HomePageView
-from .views.home_page_edit import HomePageEditView
+from .views.home_page_view import HomePageView
 from .views.edit_hero_section import EditHeroSection
 from .views.edit_intro_section import EditIntroSection
 from .views.edit_featured_section import EditFeaturedArticlesSection
@@ -16,7 +15,7 @@ urlpatterns = [
 
     # URL pro domovskou stránku
     path('', HomePageView.as_view(), name='home'),
-    path('edit/', HomePageEditView.as_view(), name='home-page-edit'),
+    path('edit/', HomePageView.as_view(), name='home-page-edit'),
     path('edit/hero/', EditHeroSection.as_view(), name='edit-hero-section'),
     path('edit/intro/', EditIntroSection.as_view(), name='edit-intro-section'),
     path('edit/featured/', EditFeaturedArticlesSection.as_view(), name='edit-featured-section'),

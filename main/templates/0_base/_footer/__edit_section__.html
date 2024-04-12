@@ -19,51 +19,61 @@
             <!-- Kontejner pro sloupce nastavení patičky -->
             <div class="row">
 
-                <!-- Sloupec 1: Adresa a sociální účty -->
+                <!-- Sloupec 1 -->
                 <div class="col-lg-3">
-                    {% for field in footer_edit_form.visible_fields %}
-                        {% if field.name in footer_edit_form.Meta.address or field.name in footer_edit_form.Meta.social_accounts %}
-                            <div class="form-group mb-3">
-                                {{ field|as_crispy_field }}
-                            </div>
-                        {% endif %}
-                    {% endfor %}
+
+                    <!-- Nastavení položek pro adresu -->
+                    {{ footer_edit_form.company_name|as_crispy_field }}
+                    {{ footer_edit_form.address|as_crispy_field }}
+                    {{ footer_edit_form.phone|as_crispy_field }}
+                    {{ footer_edit_form.email|as_crispy_field }}
+
+                    <!-- Nastavení položek pro odkazi na sociální sítě -->
+                    {{ footer_edit_form.facebook|as_crispy_field }}
+                    {{ footer_edit_form.twitter|as_crispy_field }}
+                    {{ footer_edit_form.instagram|as_crispy_field }}
+                    {{ footer_edit_form.behance|as_crispy_field }}
+                    {{ footer_edit_form.pinterest|as_crispy_field }}
+
                 </div>
 
-                <!-- Sloupec 2: Názvy pro vybrané odkazy -->
+                <!-- Sloupec 2 -->
                 <div class="col-lg-3">
-                    {% for field in footer_edit_form.visible_fields %}
-                        {% if field.name in footer_edit_form.Meta.selected_links %}
-                            <div class="form-group mb-3">
-                                {{ field|as_crispy_field }}
-                            </div>
-                        {% endif %}
-                    {% endfor %}
+
+                    <!-- Nastavení položek pro názvy pro vybrané odkazy -->
+                    {{ footer_edit_form.name_field_1|as_crispy_field }}
+                    {{ footer_edit_form.name_field_2|as_crispy_field }}
+                    {{ footer_edit_form.name_field_3|as_crispy_field }}
+                    {{ footer_edit_form.name_field_4|as_crispy_field }}
+                    {{ footer_edit_form.name_field_5|as_crispy_field }}
+                    {{ footer_edit_form.name_field_6|as_crispy_field }}
+                    {{ footer_edit_form.name_field_7|as_crispy_field }}
+                    {{ footer_edit_form.name_field_8|as_crispy_field }}
+
                 </div>
 
-                <!-- Sloupec 3: Linky pro vybrané odkazy -->
+                <!-- Sloupec 3 -->
                 <div class="col-lg-3">
-                    {% for field in footer_edit_form.visible_fields %}
-                        {% if field.name in footer_edit_form.Meta.selected_links_urls %}
-                            <div class="form-group mb-3">
-                                {{ field|as_crispy_field }}
-                            </div>
-                        {% endif %}
-                    {% endfor %}
+
+                    <!-- Nastavení položek pro vybrané odkazy -->
+                    {{ footer_edit_form.url_field_1|as_crispy_field  }}
+                    {{ footer_edit_form.url_field_2|as_crispy_field  }}
+                    {{ footer_edit_form.url_field_3|as_crispy_field  }}
+                    {{ footer_edit_form.url_field_4|as_crispy_field  }}
+                    {{ footer_edit_form.url_field_5|as_crispy_field  }}
+                    {{ footer_edit_form.url_field_6|as_crispy_field  }}
+                    {{ footer_edit_form.url_field_7|as_crispy_field  }}
+                    {{ footer_edit_form.url_field_8|as_crispy_field  }}
+
                 </div>
 
-                <!-- Column 4: Vybrané články a Nastavení posledního řádku patičky -->
+                <!-- Column 4 -->
                 <div class="col-lg-3">
 
-
-                    <!-- Vybrané články -->
-                    {% for field in footer_edit_form.visible_fields %}
-                        {% if field.name in footer_edit_form.Meta.selected_articles %}
-                            <div class="form-group mb-3">
-                                {{ field|as_crispy_field }}
-                            </div>
-                        {% endif %}
-                    {% endfor %}
+                    <!-- Nastavení položek pro vybrané články -->
+                    {{ footer_edit_form.article_1|as_crispy_field }}
+                    {{ footer_edit_form.article_2|as_crispy_field }}
+                    {{ footer_edit_form.article_3|as_crispy_field }}
 
                     <!-- Nastavení viditelnosti posledního řádku patičky (první div je jen pro odskočení řádku) -->
                     <div class="mt-4">.</div>
@@ -76,13 +86,10 @@
                     </div>
 
                     <!-- Nastavení položek posledního řádku patičky -->
-                    {% for field in footer_edit_form.visible_fields %}
-                        {% if field.name in footer_edit_form.Meta.footer_end %}
-                            <div class="form-group mb-3">
-                                {{ field|as_crispy_field }}
-                            </div>
-                        {% endif %}
-                    {% endfor %}
+                    {{ footer_edit_form.right_text|as_crispy_field }}
+                    {{ footer_edit_form.left_text|as_crispy_field }}
+                    {{ footer_edit_form.left_link_text|as_crispy_field }}
+                    {{ footer_edit_form.left_link_url|as_crispy_field }}
 
                 </div>
 

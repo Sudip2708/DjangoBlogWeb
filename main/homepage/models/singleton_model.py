@@ -4,13 +4,11 @@ class SingletonModel(models.Model):
     '''
     Abstraktní třída pro implementaci Singleton návrhového vzoru v modelech Django.
 
-    Tato abstraktní třída poskytuje základní funkcionalitu pro implementaci Singletonu,
-    což znamená, že vytváří nebo získává jedinou instanci modelu a zajistí, že existuje pouze jedna instance
-    tohoto modelu v rámci celé aplikace.
-
-    Attributes:
-        abstract (bool): Bool hodnota, která indikuje, že se jedná o abstraktní třídu,
-            která nemá odpovídající tabulku v databázi.
+    Tato abstraktní třída poskytuje základní funkcionalitu pro implementaci Singletonu.
+    Třída vytváří nebo získává jedinou instanci modelu a zajistí,
+    že existuje pouze jedna instance tohoto modelu v rámci celé aplikace.
+    Atribut abstract indikuje, že se jedná o abstraktní třídu,
+    která není mapována na žádnou tabulku v databázi.
     '''
 
     class Meta:
@@ -19,29 +17,23 @@ class SingletonModel(models.Model):
     @classmethod
     def singleton(cls):
         '''
-        Metoda třídy pro získání jediné instance modelu.
+        Třídní metoda pro získání jediné instance modelu.
 
-        Tato metoda vrací jedinou instanci modelu a pokud tato instance neexistuje,
-        vytvoří ji.
-
-        Returns:
-            instance: Jedna instance modelu.
-            created (bool): Bool hodnota, která indikuje, zda byla instance vytvořena (True) nebo získána (False).
+        Tato metoda vrací jedinou instanci modelu a pokud tato instance neexistuje, vytvoří ji.
+        Navrací instanci modelau a Bool hodnotu, zda byla vytvořena (True) nebo získána (False).
         '''
+
         obj, created = cls.objects.get_or_create(pk=1)
         return obj
 
     def save(self, *args, **kwargs):
         '''
-        Metoda pro uložení instance modelu.
+        Přetížení metoda save.
 
-        Tato metoda přepisuje standardní metodu pro uložení instance modelu
-        tak, aby vždy nastavila primární klíč na hodnotu 1, což zajišťuje, že v databázi bude
-        pouze jedna instance tohoto modelu.
-
-        Args:
-            *args: Volitelné pozicové argumenty.
-            **kwargs: Volitelné klíčové argumenty.
+        Tato metoda přepisuje standardní metodu pro uložení instance modelu tak,
+        aby vždy nastavila primární klíč na hodnotu 1, a tím zajišťuje,
+        že v databázi bude pouze jedna instance tohoto modelu.
         '''
+
         self.pk = 1
         super().save(*args, **kwargs)

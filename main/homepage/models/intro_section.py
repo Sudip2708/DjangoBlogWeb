@@ -6,6 +6,13 @@ from .singleton_model import SingletonModel
 
 
 class HomePageIntroSection(SingletonModel):
+    '''
+    Databázový model pro Home Page Intro Section
+
+    Obsahuje pole pro nastavení zobrazení, nadpisu a textu.
+    Metoda __str__ definuje textovou reprezentaci instance tohoto modelu.
+    Metoda get_divider_settings slouží k získání všech hodnot tohoto modelu.
+    '''
 
     display_intro_section = models.BooleanField(
         _('Display Intro Section'),
@@ -31,7 +38,10 @@ class HomePageIntroSection(SingletonModel):
     @property
     def get_intro_settings(self):
         '''
-        Navrácení všech hodnot pro vykreslení sekce v Home Page
+        Vlastnost, která slouží k získání hodnot všech polí tohoto modelu.
+
+        Vrací slovník obsahující následující informace:
+        zobrazení sekce, nadpisu a popisu sekce.
         '''
 
         return {

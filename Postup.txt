@@ -785,3 +785,19 @@ Dokončení aplikace pro správu domácí stránky superuživatelem
 • templates/1_home/ > přepsat kod a upravit aby byl lépe čitelný a odpovídal novému nastavení
 • templates/0_base/_footer/ > přepsat kod a upravit aby byl lépe čitelný a odpovídal novému nastavení
 ###
+Přepsání footeru na slovníky
+• homepage/models/footer_section.py > přepsání polí databáze
+• homepage/models/ > přidání souboru pro defaultní hodnoty patičky
+• homepage/forms/footer_section_form.py > přepsání kodu aby odpovídal novým podmínkám
+• homepage/views/edi_footer_section.py > přepsání kodu aby odpovídal novým podmínkám
+• homepage/views/ > vytvořit soubor save_footer_data.py pro logiku ukládání dat do modelu pro footer
+• templates/0_base/_footer/ > přepsání kodu aby odpovídal novým podmínkám
+Změna logiky pohledu pro home page
+• homepage/views/ > vytvořit soubor home_page_mixin.py pro vytvoření dat mixinů pro home page
+• homepage/views/ > vytvořit soubor home_page_view.py pro nastavení zobrazení domácí stránky
+• homepage/views/ > smazání původních souborů pro domácí stránku
+Dopsání popisků
+• homepage/models/ > dopsání a úprava popisků u všech souborů
+• homepage/forms/ > dopsání a úprava popisků u všech souborů
+• homepage/views/ > dopsání a úprava popisků u všech souborů
+###

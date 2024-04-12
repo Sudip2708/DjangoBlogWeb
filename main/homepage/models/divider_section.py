@@ -1,17 +1,24 @@
 from django.utils.translation import gettext_lazy as _
 from django.db import models
 from tinymce.models import HTMLField
+
 from .singleton_model import SingletonModel
 
 
 class HomePageDividerSection(SingletonModel):
+    '''
+    Databázový model pro Home Page Divider Section
+
+    Obsahuje pole pro nastavení zobrazení této sekce, obrázku, textu a odkazu.
+    Metoda __str__ definuje textovou reprezentaci instance tohoto modelu.
+    Metoda get_divider_settings slouží k získání všech hodnot tohoto modelu.
+    '''
 
     display_divider_section = models.BooleanField(
         _('Display Divider Section'),
         default=True,
     )
 
-    # Divider Section
     divider_image = models.ImageField(
         _('Divider Section Image'),
         default='images/homepage/default/divider-bg.jpg',
@@ -21,7 +28,8 @@ class HomePageDividerSection(SingletonModel):
 
     divider_text = HTMLField(
         _('Divider Section Text'),
-        default="<h2>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua</h2>",
+        default=("<h2>Lorem ipsum dolor sit amet, consectetur adipisicing elit, " +
+                 "sed do eiusmod tempor incididunt ut labore et dolore magna aliqua</h2>"),
         null=True, blank=True
     )
 
@@ -44,12 +52,14 @@ class HomePageDividerSection(SingletonModel):
     @property
     def get_divider_settings(self):
         '''
-        Navrácení všech hodnot pro vykreslení sekce v Home Page
+        Vlastnost, která slouží k získání hodnot všech polí tohoto modelu.
+
+        Pokud není k dispozici obrázek pro oddělovač, jeho URL bude None.
+        Vrací slovník obsahující následující informace:
+        zobrazení sekce, URL obrázku, text sekce, popis odkazu a URL odkazu.
         '''
 
-        # Dosazení defaultního obrázku, když není
-        # hero_image_url = self.hero_image.url if self.hero_image else self._meta.get_field('hero_image').get_default()
-        # Dosazení None, když není obrázek
+        # Dosazení hodnoty None, když není obrázek
         divider_image_url = self.divider_image.url if self.divider_image else None
 
         return {

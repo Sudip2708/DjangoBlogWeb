@@ -19,10 +19,27 @@ class EditDividerSection(View):
     '''
 
     def post(self, request, *args, **kwargs):
+        '''
+        Zpracování HTTP POST požadavku.
+
+        Tato metoda zpracovává odeslaný formulář pro úpravu HomePageDividerSection na domovské stránce.
+        Pokud je formulář validní, aktualizuje hodnoty v databázi
+        a přesměruje uživatele na stránku pro úpravu domovské stránky.
+        Pokud formulář není validní, zobrazí chybovou zprávu
+        a přesměruje uživatele zpět na stránku pro úpravu s neuloženými změnami.
+
+        :param request: Objekt HttpRequest obsahující data zaslaná klientem.
+        :param args: Další pozicinální argumenty.
+        :param kwargs: Další klíčové argumenty.
+        :return: HttpResponse objekt reprezentující odpověď serveru na požadavek.
+        '''
+
+        # Načtení formuláře
         form = DividerSectionForm(request.POST, request.FILES)
 
+        # Kontrola, zda je formulář validní
         if form.is_valid():
-            # Zde můžete provést další validaci, pokud je to potřeba
+
             # Získání nebo vytvoření instance modelu HomePageDividerSection
             divider_section = HomePageDividerSection.singleton()
 
@@ -32,29 +49,39 @@ class EditDividerSection(View):
             divider_section.divider_link = form.cleaned_data['divider_link']
             divider_section.display_divider_section = form.cleaned_data['display_divider_section']
 
-            # Uložení změn do databáze
+            # Uložení změn do databáze a přesměrování na stránku home-page-edit
             divider_section.save()
-
-            # Přesměrování na stránku home-page-edit
             return redirect('home-page-edit')
 
+        # Pokud formulář validní není
         else:
-
-            # Vrať se zpět na stránku úprav a zobraz zprávu o neúspěchu
+            # Navrácení na stránku úprav a zobrazení zprávu o neúspěchu
             messages.error(request, "Provedené úpravy nebyly uloženy.")
             return redirect('home-page-edit')
 
     def get(self, request, *args, **kwargs):
+        '''
+        Zpracování HTTP GET požadavku.
 
-        # Zkontroluj, zda byla kliknuta kotva
+        Tato metoda kontroluje, zda požadavek GET obsahuje parametr 'show_divider_section'.
+        Pokud ano, nastaví hodnotu pro zobrazení sekce patičky na True a provede přesměrování
+        na stránku pro úpravu domovské stránky. Jinak pokračuje v běžném chování.
+
+        :param request: Objekt HttpRequest obsahující data zaslaná klientem.
+        :param args: Další pozicinální argumenty.
+        :param kwargs: Další klíčové argumenty.
+        :return: HttpResponse objekt reprezentující odpověď serveru na požadavek.
+        '''
+
+        # Kontrola zda požadavek get v sobě obsahuje pořadavek na zviditelnění sekce
         if 'show_divider_section' in request.GET:
 
-            # Pokud ano - zapiš hodnotu do databáze a vrať se zpátky na stránku pro úpravi HomePage
+            # Pokud ano - změna hodnoty a návrat na stránku pro úpravu HomePage
             divider_section = HomePageDividerSection.singleton()
             divider_section.display_divider_section = True
             divider_section.save()
             return redirect('home-page-edit')
 
+        # Pokud ne, pokračuj normálně
         else:
-            # Pokud nebyla kliknuta kotva, pokračuj normálně
             return super().get(request, *args, **kwargs)
