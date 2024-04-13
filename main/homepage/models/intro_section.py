@@ -9,9 +9,13 @@ class HomePageIntroSection(SingletonModel):
     '''
     Databázový model pro Home Page Intro Section
 
-    Obsahuje pole pro nastavení zobrazení, nadpisu a textu.
+    Obsahuje pole pro nastavení zobrazení této sekce, nadpisu a textu.
     Metoda __str__ definuje textovou reprezentaci instance tohoto modelu.
-    Metoda get_divider_settings slouží k získání všech hodnot tohoto modelu.
+    Metoda get_intro_settings slouží k získání všech hodnot tohoto modelu.
+
+    display_intro_section - je Boolean pole pro hodnotu reprezentující zobrazení nebo skrytí sekce
+    intro_title - je HTML pole pro vložení nadpisu, který bude zobrazen v této sekci
+    intro_description - je HTML pole pro vložení textu, který bude zobrazen v této sekci
     '''
 
     display_intro_section = models.BooleanField(

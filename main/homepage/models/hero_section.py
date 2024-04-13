@@ -8,9 +8,15 @@ class HomePageHeroSection(SingletonModel):
     '''
     Databázový model pro Home Page Hero Section
 
-    Obsahuje pole pro nastavení zobrazení, obrázku, textu a odkazu.
+    Obsahuje pole pro nastavení zobrazení této sekce, obrázku, textu a odkazu.
     Metoda __str__ definuje textovou reprezentaci instance tohoto modelu.
-    Metoda get_divider_settings slouží k získání všech hodnot tohoto modelu.
+    Metoda get_hero_settings slouží k získání všech hodnot tohoto modelu.
+
+    display_hero_section - je Boolean pole pro hodnotu reprezentující zobrazení nebo skrytí sekce
+    hero_image - je pole pro upload obrázku, který bude zobrazen v této sekci
+    hero_title - je HTML pole pro vložení textu, který bude zobrazen v této sekci
+    hero_link_title - je pole typu CharField pro titulek odkazu, který bude zobrazen v této sekci
+    hero_link - je pole typu URLField pro vložení URL odkazu, který bude zobrazen v této sekci
     '''
 
     display_hero_section = models.BooleanField(

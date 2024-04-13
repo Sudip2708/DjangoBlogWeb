@@ -809,3 +809,9 @@ $ python manage.py migrate
 • homepage/forms/gallery_section_form.py > přepsání kodu tak aby pracoval se slovníky
 • homepage/views/edit_gallery_section.py > přepsání kodu tak aby pracoval se slovníky
 ###
+Dodatečné úpravy pro Home Page
+• articles/views/article_common_contex_mixin.py > připsat context pro footer
+• homepage/views/ > vytvoření nového souboru home_page_view_edit.py pro editaci domácí stránky a zapsat kod pro pohled pro editaci
+• homepage/views/home_page_view.py > odmazat část pro editaci a jen ponechat část pro zobrazení (pro snížení zátěže)
+• homepage/urls.py > dopsat nový pohled pro editaci stránky
+###

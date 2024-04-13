@@ -11,6 +11,11 @@ class HomePageFeaturedArticles(SingletonModel):
     Obsahuje pole pro nastavení zobrazení a článků této sekce.
     Metoda __str__ definuje textovou reprezentaci instance tohoto modelu.
     Metoda get_divider_settings slouží k získání všech hodnot tohoto modelu.
+
+    display_divider_section - je Boolean pole pro hodnotu reprezentující zobrazení nebo skrytí sekce
+    featured_article_1 - je cizí klíč na první doporučený článek, který bude zobrazen v této sekci
+    featured_article_2 - je cizí klíč na druhý doporučený článek, který bude zobrazen v této sekci
+    featured_article_3 - je cizí klíč na třetí doporučený článek, který bude zobrazen v této sekci
     '''
 
     display_featured_section = models.BooleanField(

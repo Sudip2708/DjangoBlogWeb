@@ -9,9 +9,16 @@ class HomePageLatestArticles(SingletonModel):
     '''
     Databázový model pro Home Page Latest Articles Section
 
-    Obsahuje pole pro nastavení zobrazení sekce, nadpisu, popisu a článků této sekce.
+    Obsahuje pole pro nastavení zobrazení této sekce, nadpisu, popisu a článků této sekce.
     Metoda __str__ definuje textovou reprezentaci instance tohoto modelu.
-    Metoda get_divider_settings slouží k získání všech hodnot tohoto modelu.
+    Metoda get_latest_settings slouží k získání všech hodnot tohoto modelu.
+
+    display_latest_section - je Boolean pole pro hodnotu reprezentující zobrazení nebo skrytí této sekce
+    latest_title - je HTML pole pro vložení nadpisu, který bude zobrazen v této sekci
+    latest_description - je HTML pole pro vložení popisu, který bude zobrazen v této sekci
+    latest_article_1 - je ForeignKey pole pro výběr prvního nejnovějšího článku
+    latest_article_2 - je ForeignKey pole pro výběr druhého nejnovějšího článku
+    latest_article_3 - je ForeignKey pole pro výběr třetího nejnovějšího článku
     '''
 
     display_latest_section = models.BooleanField(

@@ -12,6 +12,12 @@ class HomePageDividerSection(SingletonModel):
     Obsahuje pole pro nastavení zobrazení této sekce, obrázku, textu a odkazu.
     Metoda __str__ definuje textovou reprezentaci instance tohoto modelu.
     Metoda get_divider_settings slouží k získání všech hodnot tohoto modelu.
+
+    display_divider_section - je Boolean pole pro hodnotu reprezentující zobrazení nebo skrytí sekce
+    divider_image - je pole pro upload obrázku, který bude zobrazen v této sekci
+    divider_text - je HTML pole pro vložení textu, který bude zobrazen v této sekci
+    divider_link_title - je pole typu CharField pro titulek odkazu, který bude zobrazen v této sekci
+    divider_link - je pole typu URLField pro vložení URL odkazu, který bude zobrazen v této sekci
     '''
 
     display_divider_section = models.BooleanField(

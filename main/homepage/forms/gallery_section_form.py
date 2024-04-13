@@ -30,9 +30,9 @@ class GallerySectionForm(forms.ModelForm):
         '''
         Inicializační metoda formuláře.
 
-        Tato metoda slouží k inicializaci instance formuláře.
-        Přijímá libovolný počet pozicinálních argumentů a klíčových argumentů,
-        které jsou dále předány nadřazené třídě.
+        Tato metoda inicializuje instanci formuláře pro úpravu sekce galerie na domovské stránce.
+        Vytváří pole pro jednotlivé části formuláře pomocí metody self.fields, která přidává pole do formuláře.
+        Každé pole má svůj vlastní widget, který určuje, jak bude pole zobrazeno ve webovém rozhraní.
 
         :param args: Pozicinální argumenty pro inicializaci.
         :param kwargs: Klíčové argumenty pro inicializaci.

@@ -10,10 +10,15 @@ class HomePageNewsletterSection(SingletonModel):
     '''
     Databázový model pro Home Page Newsletter Section
 
-    Obsahuje pole pro nastavení zobrazení této sekce, nadpisu, popisu a pole prozadávání emailů.
+    Obsahuje pole pro nastavení zobrazení této sekce, nadpisu, popisu a pole pro zadávání emailů.
     Pole pro zadávání emailu je provázané s modelem NewsletterSubscriber.
     Metoda __str__ definuje textovou reprezentaci instance tohoto modelu.
-    Metoda get_divider_settings slouží k získání všech editovatelných hodnot tohoto modelu.
+    Metoda get_newsletter_settings slouží k získání všech editovatelných hodnot tohoto modelu.
+
+    display_newsletter_section - je Boolean pole pro hodnotu reprezentující zobrazení nebo skrytí této sekce
+    newsletter_title - je HTML pole pro vložení nadpisu, který bude zobrazen v této sekci
+    newsletter_description - je HTML pole pro vložení popisu, který bude zobrazen v této sekci
+    newsletter_subscribers - je ForeignKey pole pro propojení s modelem NewsletterSubscriber a ukládání odběratelů newsletteru
     '''
 
     display_newsletter_section = models.BooleanField(

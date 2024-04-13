@@ -13,6 +13,7 @@ from articles.models.article import Article
 from articles.models.article_author import ArticleAuthor
 from articles.schema_search.get_all_published_category import get_all_published_category
 from utilities.for_articles.get_category_count import get_category_count
+from homepage.models.footer_section import FooterSettings
 
 
 class CommonContextMixin(ContextMixin):
@@ -87,5 +88,8 @@ class CommonContextMixin(ContextMixin):
         # Vytažení všech publikovaných kategorií
         published_category = get_all_published_category()
         context['published_category'] = published_category
+
+        footer_data = FooterSettings.singleton().get_footer_settings
+        context['footer_data'] = footer_data
 
         return context
