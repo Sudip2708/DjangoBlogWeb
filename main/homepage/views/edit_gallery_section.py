@@ -1,8 +1,11 @@
 from django.shortcuts import redirect
 from django.views.generic import View
+from django.contrib import messages
+
 from homepage.forms.gallery_section_form import GallerySectionForm
 from homepage.models.gallery_section import HomePageGallerySection
-from django.contrib import messages
+from articles.models.article import Article
+
 
 
 class EditGallerySection(View):
@@ -41,17 +44,35 @@ class EditGallerySection(View):
         if form.is_valid():
 
             # Získání nebo vytvoření instance modelu HomePageGallerySection
-            gallery_section = HomePageGallerySection.singleton()
+            gallery_instance = HomePageGallerySection.singleton()
 
-            # Nastavení hodnot z formuláře do instance modelu
-            gallery_section.gallery_article_1 = form.cleaned_data['gallery_article_1']
-            gallery_section.gallery_article_2 = form.cleaned_data['gallery_article_2']
-            gallery_section.gallery_article_3 = form.cleaned_data['gallery_article_3']
-            gallery_section.gallery_article_4 = form.cleaned_data['gallery_article_4']
-            gallery_section.display_gallery_section = form.cleaned_data['display_gallery_section']
+            # Uložení hodnot do slovníku pro vybrané články
+            for n in range(1, 5):
+
+                # Načtení ID článku
+                article_field = f"gallery_article_{n}"
+                article_id = form.cleaned_data.get(article_field)
+
+                # Pokud ID článku nerovná se 0 (nejedná se o defaultní článek)
+                if article_id != "0":
+
+                    # Načtení dat z modelu článku
+                    article = Article.objects.get(pk=article_id)
+
+                    # Získání aktuálního slovníku pro článek
+                    gallery_article_dict = getattr(gallery_instance, article_field)
+
+                    # Aktualizace hodnot ve slovníku
+                    gallery_article_dict["picture_preview_path"] = article.main_picture_for_article.url
+                    gallery_article_dict["picture_max_size_path"] = article.main_picture_max_size.url
+                    gallery_article_dict["title"] = article.title
+                    gallery_article_dict["article_id"] = article.id
+
+                    # Aktualizace slovníku v instanci modelu
+                    setattr(gallery_instance, article_field, gallery_article_dict)
 
             # Uložení změn do databáze a přesměrování na stránku home-page-edit
-            gallery_section.save()
+            gallery_instance.save()
             return redirect('home-page-edit')
 
         # Pokud formulář validní není

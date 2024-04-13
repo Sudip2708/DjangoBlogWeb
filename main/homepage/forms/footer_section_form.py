@@ -93,9 +93,9 @@ class FooterSettingsForm(forms.ModelForm):
                 required=False
             )
 
-        # Získání seznamu článků z databáze a vytvoření seznamu s tuple pro ID a název článku
-        articles = Article.objects.all().order_by('title')
-        choices = [(article.id, article.title) for article in articles]
+        # Získání seznamu s tuples obsahujících ID a názvy všech článků
+        articles = Article.objects.all().order_by('title').values_list('id', 'title')
+        articles_choices = list(articles)
 
         # Cyklus pro vytvoření polí pro výběr článků
         for n, (key, value) in enumerate(instance.articles.items(), start=1):
@@ -103,7 +103,7 @@ class FooterSettingsForm(forms.ModelForm):
             initial_choice = (value["article_id"], value["title"])
             self.fields[key] = forms.ChoiceField(
                 label=f"{n}. Article",
-                choices= [initial_choice] + choices,
+                choices= [initial_choice] + articles_choices,
                 widget=forms.Select(attrs={'class': 'form-control'})
             )
 

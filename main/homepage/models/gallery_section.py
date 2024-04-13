@@ -1,7 +1,10 @@
 from django.utils.translation import gettext_lazy as _
 from django.db import models
+from django.db.models import JSONField
+
 from articles.models.article import Article
 from .singleton_model import SingletonModel
+from .gallery_section_default import DEFAULT_ARTICLE
 
 
 class HomePageGallerySection(SingletonModel):
@@ -12,40 +15,26 @@ class HomePageGallerySection(SingletonModel):
     )
 
     # Gallery Section
-    gallery_article_1 = models.ForeignKey(
-        Article,
-        related_name='gallery_article_1',
-        on_delete=models.SET_NULL,
-        null=True, blank=True,
-        verbose_name=_('Home Page Gallery Article 1')
-    )
+    gallery_article_1 = JSONField(default=dict)
 
-    gallery_article_2 = models.ForeignKey(
-        Article,
-        related_name='gallery_article_2',
-        on_delete=models.SET_NULL,
-        null=True, blank=True,
-        verbose_name=_('Home Page Gallery Article 2')
-    )
+    gallery_article_2 = JSONField(default=dict)
 
-    gallery_article_3 = models.ForeignKey(
-        Article,
-        related_name='gallery_article_3',
-        on_delete=models.SET_NULL,
-        null=True, blank=True,
-        verbose_name=_('Home Page Gallery Article 3')
-    )
+    gallery_article_3 = JSONField(default=dict)
 
-    gallery_article_4 = models.ForeignKey(
-        Article,
-        related_name='gallery_article_4',
-        on_delete=models.SET_NULL,
-        null=True, blank=True,
-        verbose_name=_('Home Page Gallery Article 4')
-    )
+    gallery_article_4 = JSONField(default=dict)
 
     def __str__(self):
         return "Homepage Gallery Section Configuration"
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        # Cyklus pro přidání defaultních hodnot (jen pokud nejsou zadané žádné hodnoty v databázy)
+        for i in range(1, 5):
+            gallery_article_attr = getattr(self, f'gallery_article_{i}')
+            if not gallery_article_attr:
+                setattr(self, f'gallery_article_{i}', DEFAULT_ARTICLE[f'article_{i}'])
+
 
     @property
     def gallery_articles(self):
@@ -64,6 +53,7 @@ class HomePageGallerySection(SingletonModel):
         '''
         Navrácení všech hodnot pro vykreslení sekce v Home Page
         '''
+        print("### self.gallery_articles: ", self.gallery_articles)
 
         return {
             'display_gallery_section': self.display_gallery_section,

@@ -801,3 +801,11 @@ Dopsání popisků
 • homepage/forms/ > dopsání a úprava popisků u všech souborů
 • homepage/views/ > dopsání a úprava popisků u všech souborů
 ###
+Úprava modelu Gallery aby namísto odkazů na model Article používal slovník s daty
+• homepage/models/gallery_section.py > přepsání polí z models.ForeignKey na JSONField
+$ python manage.py makemigrations
+$ python manage.py migrate
+• homepage/models/ > vytvoření souboru gallery_section_default.py a zapsat defaultní hodnoty pro tuto sekci
+• homepage/forms/gallery_section_form.py > přepsání kodu tak aby pracoval se slovníky
+• homepage/views/edit_gallery_section.py > přepsání kodu tak aby pracoval se slovníky
+###

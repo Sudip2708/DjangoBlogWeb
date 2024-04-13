@@ -1,6 +1,14 @@
 <!-- Část pro články sekce -->
 <!-- Rozšířenní pro 1_home/17__gallery__.html -->
 
+<style>
+    .article-image {
+        width: auto;
+        height: calc(25vw * 0.75);
+        object-fit: cover;
+    }
+</style>
+
 
 <!-- Hlavní kontejner -->
 <div class="row g-0">
@@ -8,32 +16,32 @@
     <!-- Procházení článků -->
     {% for article in gallery_data.articles %}
 
-        <!-- Kontrola, článek obsahuje data -->
+        <!-- Kontrola, zda článek obsahuje data -->
         {% if article %}
-
             <!-- Kontejner pro obsah článku -->
             <div class="col-lg-3 col-md-3 col-sm-6">
 
-                <!-- ??? -->
-                <div class="glightbox d-block position-relative"
+                <!-- Kontejner pro Glighbox -->
+                <a class="glightbox d-block position-relative"
+                     href="{{ article.picture_max_size_path }}"
                      data-gallery="gallery"
                      data-glightbox="{{ article.title }}">
 
                     <!-- Hlavní obrázek  -->
-                    {% include '__img/__article_main_picture__.html' with atr="preview" %}
+                    <img class="img-fluid article-image"
+                         alt="Article Main Picture Preview"
+                         src="{{ article.picture_preview_path }}"/>
 
                     <!-- Icona lupy + nadpis článku -->
                     <div class="fsc-hover-overlay">
-                        <i class="fas fa-search fsc-hover-overlay-icon">
-                            {{ article.title }}
-                        </i>
+                        <i class="fas fa-search fsc-hover-overlay-icon"></i>
                     </div>
 
-                </div>
+                </a>
             </div>
-
         {% endif %}
 
     {% endfor %}
 
 </div>
+
