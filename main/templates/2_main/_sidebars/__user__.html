@@ -9,14 +9,16 @@
     <div class="d-flex justify-content-between">
         <!-- První dva prvky (zleva) -->
         <div class="d-inline-block">
-            {% include '2_main/_sidebars/_movement/__button_collapse__.html' with ar_exp=user.sidebar_user ar_con='sidebar_user' title='User Menu' %}
+            {% with ar_exp=user.sidebar_user ar_con='sidebar_user' title='User Menu' %}
+                {% include '2_main/_sidebars/_common/__button_collapse__.html' %}
+            {% endwith %}
         </div>
         <div class="d-inline-block">
             {% if user.sidebar_user_order != 1 %}
-                {% include '2_main/_sidebars/_movement/__move_up__.html' with target='#MoveUp_user' %}
+                {% include '2_main/_sidebars/_common/__move_up__.html' with target='#MoveUp_user' %}
             {% endif %}
             {% if atr != "last" %}
-                {% include '2_main/_sidebars/_movement/__move_down__.html' with target='#MoveDn_user' %}
+                {% include '2_main/_sidebars/_common/__move_down__.html' with target='#MoveDn_user' %}
             {% endif %}
         </div>
     </div>

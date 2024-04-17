@@ -118,9 +118,14 @@ class SearchView(CommonContextMixin, ListView):
         :return: Queryset, který obsahuje všechny relevantní články
         '''
 
+        # Pokud nebyly zadány žádné parametry hledání, vrátit prázdný queryset
+        # Toto je zde proto, aby načítání postranních panelů nevyvolalo při načítání scriptu
+        # pro zprávu vyklápěcí nabídky postranních panelů ValueError
+        if not self.request.GET:
+            return Article.objects.none()
+
         # Získání parametrů pro hledání
         search_parameters = ast.literal_eval(self.kwargs.get('query'))
-        print("### search_parameters: ", search_parameters)
 
         # Seznam klíčů k ověření
         check_list = ['query', 'before', 'after', 'author']

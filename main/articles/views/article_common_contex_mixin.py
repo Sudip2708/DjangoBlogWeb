@@ -17,9 +17,7 @@ from homepage.models.footer_section import FooterSettings
 
 
 class CommonContextMixin(ContextMixin):
-    print("### class CommonContextMixin(ContextMixin):")
     def get_context_data(self, **kwargs):
-        print("### def get_context_data(self, **kwargs):")
         context = super().get_context_data(**kwargs)
 
         # Získání kategorie a počtu
@@ -36,7 +34,10 @@ class CommonContextMixin(ContextMixin):
 
         # Získání všech tagů
         tags = Tag.objects.all()
+        print("### tags: ", repr(tags))
         context['tags'] = tags
+
+
 
         # Předání slugů z URL
         context['tag_slug'] = self.kwargs.get('tag_slug')

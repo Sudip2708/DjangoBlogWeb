@@ -18,14 +18,12 @@
 
         <!-- Kontrola, zda článek obsahuje data -->
         {% if article %}
-            <!-- Kontejner pro obsah článku -->
+            <!-- Kontejner obrázek článku -->
             <div class="col-lg-3 col-md-3 col-sm-6">
 
-                <!-- Kontejner pro Glighbox -->
-                <a class="glightbox d-block position-relative"
-                     href="{{ article.picture_max_size_path }}"
-                     data-gallery="gallery"
-                     data-glightbox="{{ article.title }}">
+                <!-- Kotva pro zobrazení maximální velikosti obrázku, zobrazující obrázek náhledu -->
+                <a class="d-block position-relative"
+                     href="{{ article.picture_max_size_path }}">
 
                     <!-- Hlavní obrázek  -->
                     <img class="img-fluid article-image"

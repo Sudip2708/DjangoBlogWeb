@@ -12,6 +12,7 @@ from .views.user_sidebar_appearance import user_sidebar_appearance
 
 urlpatterns = [
 
+    # Adresy začínající s 'accounts/'
     # URL pro účet uživatele (registrace, přihlášení, atd.)
     path('', include('allauth.urls')),
 
@@ -25,7 +26,7 @@ urlpatterns = [
     path('signup/', SignupView.as_view(), name='account_signup'),
 
 
-
+    # Adresy začínající s 'profile/'
     # URL pro nastavení uživatelského účtu
     path('update/user', profile_update_user, name='profile_update_user'),
 
@@ -33,7 +34,7 @@ urlpatterns = [
     path('update/author', profile_update_author, name='profile_update_author'),
 
 
-
+    # Adresy začínající s 'user_sidebar/'
     # URL pro aktualizaci stavu otevřených postranních panelů (ajax)
     path('appearance/', user_sidebar_appearance, name='user_sidebar_appearance'),
 

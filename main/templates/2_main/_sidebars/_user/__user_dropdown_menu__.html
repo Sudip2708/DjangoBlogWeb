@@ -12,17 +12,14 @@
 <div class="px-1">
 
     <!-- Button -->
-    <button class="btn btn-link d-block drop-down-title  p-0 light-grey-color left-margin-sidebar-user"
-            data-bs-toggle="collapse"
-            data-bs-target="#sidebar_user_user_menu"
-            aria-expanded="{{ user.sidebar_user_user_menu }}"
-            aria-controls="sidebar_user_user_menu">
-        {% if not user.sidebar_user_user_menu %}
-            Show User Menu
-        {% else %}
-            Hide User Menu
-        {% endif %}
-    </button>
+    <div class="left-margin-sidebar-user">
+        {% with ar_con='sidebar_user_user_menu' ar_exp=user.sidebar_user_user_menu %}
+            {% with title='User Menu' %}
+                {% include '2_main/_sidebars/_common/__button_collapse_ajax__.html' %}
+            {% endwith %}
+        {% endwith %}
+    </div>
+
 
     <!-- Drop-down items -->
     <div class="collapse {% if user.sidebar_user_user_menu %} show {% endif %}" id="sidebar_user_user_menu">

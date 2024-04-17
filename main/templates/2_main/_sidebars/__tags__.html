@@ -6,14 +6,16 @@
     <div class="d-flex justify-content-between">
         <!-- První dva prvky (zleva) -->
         <div class="d-inline-block">
-            {% include '2_main/_sidebars/_movement/__button_collapse__.html' with ar_exp=user.sidebar_tags ar_con='sidebar_tags' title='Tags' %}
+            {% with ar_exp=user.sidebar_tags ar_con='sidebar_tags' title='Tags' %}
+                {% include '2_main/_sidebars/_common/__button_collapse__.html' %}
+            {% endwith %}
         </div>
         <div class="d-inline-block">
             {% if user.sidebar_tags_order != 1 %}
-                {% include '2_main/_sidebars/_movement/__move_up__.html' with target='#MoveUp_tags' %}
+                {% include '2_main/_sidebars/_common/__move_up__.html' with target='#MoveUp_tags' %}
             {% endif %}
             {% if atr != "last" %}
-                {% include '2_main/_sidebars/_movement/__move_down__.html' with target='#MoveDn_tags' %}
+                {% include '2_main/_sidebars/_common/__move_down__.html' with target='#MoveDn_tags' %}
             {% endif %}
         </div>
     </div>
@@ -35,18 +37,9 @@
 
 
                     <!-- Button -->
-                    <button class="btn btn-link drop-down-title p-0 light-grey-color"
-                            data-bs-toggle="collapse"
-                            data-bs-target="#sidebar_tags_options"
-                            aria-expanded="{{ user.sidebar_tags_options }}"
-                            aria-controls="sidebar_tags_options">
-                        {% if user.sidebar_tags_options %}
-                            Hide Content
-                        {% else %}
-                            Show Content
-                        {% endif %}
-                    </button>
-
+                    {% with ar_con='sidebar_tags_options' ar_exp=user.sidebar_tags_options title='Content' %}
+                        {% include '2_main/_sidebars/_common/__button_collapse_ajax__.html' %}
+                    {% endwith %}
 
                 </div>
 

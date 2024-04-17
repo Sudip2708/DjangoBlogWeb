@@ -7,14 +7,16 @@
     <div class="d-flex justify-content-between">
         <!-- První dva prvky (zleva) -->
         <div class="d-inline-block">
-            {% include '2_main/_sidebars/_movement/__button_collapse__.html' with ar_exp=user.sidebar_search ar_con='sidebar_search' title='Search' %}
+            {% with ar_exp=user.sidebar_search ar_con='sidebar_search' title='Search' %}
+                {% include '2_main/_sidebars/_common/__button_collapse__.html' %}
+            {% endwith %}
         </div>
         <div class="d-inline-block">
             {% if user.sidebar_search_order != 1 %}
-                {% include '2_main/_sidebars/_movement/__move_up__.html' with target='#MoveUp_search' %}
+                {% include '2_main/_sidebars/_common/__move_up__.html' with target='#MoveUp_search' %}
             {% endif %}
             {% if atr != "last" %}
-                {% include '2_main/_sidebars/_movement/__move_down__.html' with target='#MoveDn_search' %}
+                {% include '2_main/_sidebars/_common/__move_down__.html' with target='#MoveDn_search' %}
             {% endif %}
         </div>
     </div>
@@ -33,7 +35,12 @@
                     <!-- Section name -->
                     <h3 class="h6">Search the blog</h3>
 
-                    {% include '2_main/_sidebars/_search/__search_dropdown_button__.html' %}
+                    <!-- Button -->
+                    {% with ar_con='sidebar_search_options' ar_exp=user.sidebar_search_options %}
+                        {% with title='Search Options' %}
+                            {% include '2_main/_sidebars/_common/__button_collapse_ajax__.html' %}
+                        {% endwith %}
+                    {% endwith %}
 
                 </div>
 

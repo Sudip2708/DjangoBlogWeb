@@ -8,8 +8,12 @@ def user_sidebar_movements(request, hash):
 
     Argumenty request a hash jsou přijímány,
     kde request je HttpRequest objekt reprezentující aktuální požadavek
-    a hash je hashování identifikující, jaká akce se má provést s bočním panelem.
-    Funkce pak provádí požadovanou akci a následně přesměrovává uživatele zpět na předchozí stránku.
+    a hash je identifikátor akce, která se má provést.
+    Pohled má nastarost spracování těchto požadavků:
+    Posouvání bočních panelů v rámci jejich pořadí.
+    Zobrazení a skrytí navigačních lišt pro kategorie a podobné články na základě tagů.
+    Zobrazení a skrytí bočního panelu.
+    Funkce pak provádí požadovanou akci a následně přesměrovává uživatele zpět na stránku.
 
     :param request: HttpRequest objekt reprezentující aktuální požadavek.
     :param hash: Hashování, které identifikuje, jaká akce se má provést s bočním panelem.

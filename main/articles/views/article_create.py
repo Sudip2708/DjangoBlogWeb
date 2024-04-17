@@ -5,6 +5,7 @@ print("### main/articles/views/article_create.py")
 from django.shortcuts import redirect, reverse
 from django.views.generic import CreateView
 import pdb
+from taggit.models import Tag
 
 from articles.forms.article_form import ArticleForm
 from .article_common_contex_mixin import CommonContextMixin
@@ -35,6 +36,13 @@ class ArticleCreateView(CreateView, CommonContextMixin):
     def get_context_data(self, **kwargs):
         # Získání běžného kontextu a přidání vlastního názvu pro stránku
         context = super().get_context_data(**kwargs)
+
+        # Kontext pro výběr tagů za pomocí tagify
+        tags = Tag.objects.all()
+        tag_names = [tag.name for tag in tags]
+        tags_name_str = ','.join(tag_names)
+        context['tags_name_str'] = tags_name_str
+
         context['title'] = 'Create an Article'
         return context
 

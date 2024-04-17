@@ -815,3 +815,5 @@ Dodatečné úpravy pro Home Page
 • homepage/views/home_page_view.py > odmazat část pro editaci a jen ponechat část pro zobrazení (pro snížení zátěže)
 • homepage/urls.py > dopsat nový pohled pro editaci stránky
 ###
+Pročištění projektu od nepoužívaného JS a přepis vlastních JS z šablon do samostatných souborů
+###

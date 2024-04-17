@@ -14,6 +14,7 @@ from .views.my_articles import MyArticlesView
 
 urlpatterns = [
 
+    # Adresy začínající s 'articles/'
     # URL pro seznam článků
     path('all', ArticleListView.as_view(), name='article-list'),
 
@@ -41,7 +42,7 @@ urlpatterns = [
     path('my-articles/<str:current_tab>/', MyArticlesView.as_view(), name='my-articles'),
 
 
-
+    # Adresy začínající s 'article/'
     # URL pro vytvoření nového článku
     path('create/<str:current_tab>/', ArticleCreateView.as_view(), name='article-create'),
 
@@ -55,7 +56,7 @@ urlpatterns = [
     path('<slug:slug>/delete/', ArticleDeleteView.as_view(), name='article-delete'),
 
 
-
+    # Adresy začínající s 'search/'
     # URL pro vyhledávání článků
     path('', SearchView.as_view(), name='article-search'),
 

@@ -67,17 +67,12 @@
 
 
                     <!-- Button -->
-                    <button class="btn btn-link d-block drop-down-title  p-0 light-grey-color"
-                            data-bs-toggle="collapse"
-                            data-bs-target="#sidebar_user_author_menu"
-                            aria-expanded="{{ user.sidebar_user_author_menu }}"
-                            aria-controls="sidebar_user_author_menu">
-                        {% if user.sidebar_user_author_menu %}
-                            Hide Author Menu
-                        {% else %}
-                            Show Author Menu
-                        {% endif %}
-                    </button>
+                    {% with ar_con='sidebar_user_author_menu' ar_exp=user.sidebar_user_author_menu %}
+                        {% with title='Author Menu' %}
+                            {% include '2_main/_sidebars/_common/__button_collapse_ajax__.html' %}
+                        {% endwith %}
+                    {% endwith %}
+
 
                 </div>
 

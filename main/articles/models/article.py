@@ -92,14 +92,14 @@ class Article(models.Model):
         null=True, blank=True
     )
 
-    # Obrázek reprezentující článek - náhledová varianta (450px)
+    # Obrázek reprezentující článek - náhledová varianta (520px)
     main_picture_preview = models.ImageField(
         _('Article Main Picture Preview'),
         upload_to='images/articles/main_picture/',
         null=True, blank=True
     )
 
-    # Obrázek reprezentující článek - miniatura (60px)
+    # Obrázek reprezentující článek - miniatura (150px)
     main_picture_miniature = models.ImageField(
         _('Article Main Picture Miniature'),
         upload_to='images/articles/main_picture/',
