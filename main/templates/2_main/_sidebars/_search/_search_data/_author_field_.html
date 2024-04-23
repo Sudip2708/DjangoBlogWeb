@@ -1,0 +1,24 @@
+<!-- Pole pro vyhledávání dle autora -->
+<!-- Určeno pro 2_main/_sidebars/_search/_search_data/__autor_section__.html -->
+
+
+<!-- Kontejner pro prvky pro výběr dle autora -->
+<div class="form-group">
+    <select class="form-control"
+            id="author_select"
+            name="author_select">
+
+        <!-- Nastavení textu pole -->
+        <option value="">
+            Choose author...
+        </option>
+
+        <!-- Vytvoření seznamu autorů -->
+        {% for author in all_authors %}
+            <option value="{{ author.id }}">
+              {{ author.author }}
+            </option>
+        {% endfor %}
+
+    </select>
+</div>

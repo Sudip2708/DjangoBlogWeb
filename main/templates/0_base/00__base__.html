@@ -1,25 +1,33 @@
+<!-- Výchozí šablona pro všechny stránky projektu -->
+
+
+<!-- Definování typu dokumentu jako HTML soubor -->
 <!DOCTYPE html>
+
+
+<!-- Základní kontejner definující začátek a konec HTML souboru -->
 <html>
 
-    <!-- Head -->
+    <!-- Head - skrytá část stránky určená pro prohlížeče -->
     {% include '0_base/01__head__.html' %}
 
+    <!-- Body - viditelná část stránky určená pro zobrazený obsah -->
     <body>
 
-        <!-- Header -->
+        <!-- Header - část pro základní navigační prvky stránky -->
         {% include '0_base/02__header__.html' %}
 
-        <!-- Flash messages -->
+        <!-- Flash messages - část pro zobrazení jednorázových oznamů (není-li oznam je skrytá) -->
         {% include '0_base/03__messages__.html' %}
 
-        <!-- Main content -->
+        <!-- Main content - část pro vložení navázaných šablon s vlastním obsahem stránky -->
         {% block main_content %}
         {% endblock main_content %}
 
-        <!-- Footer -->
+        <!-- Footer - spodní část stránky určená pro všeobecné informace -->
         {% include '0_base/04__footer__.html' %}
 
-        <!-- Scripts -->
+        <!-- Scripts - část pro soubory ovlivňující funkčnost a chování stránky -->
         {% include '0_base/05__body_scripts__.html' %}
 
     </body>

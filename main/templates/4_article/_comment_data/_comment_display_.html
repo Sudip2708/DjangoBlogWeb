@@ -1,0 +1,23 @@
+<!-- Zobrazení komentáře s jménem autora a data vytvoření -->
+<!-- Určeno pro 4_article/43__display_comments__.html -->
+
+
+<!-- Kontejner sdružující vnitřní prvky -->
+<div class="pb-4 ms-3 mb-4">
+
+    <!-- Uživatelské jméno -->
+    <strong>
+        {{ comment.user.username }}
+    </strong>
+
+    <!-- Datum komentáře -->
+    <p class="small text-gray-500">
+        {{ comment.created|timesince }} ago
+    </p>
+
+    <!-- Komentář -->
+    <p class="mb-0 text-sm">
+        {{ comment.content }}
+    </p>
+
+</div>

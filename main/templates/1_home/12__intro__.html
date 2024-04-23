@@ -1,5 +1,5 @@
-<!-- Include for 1_home/10_base__.html -->
-<!-- for Intro Section -->
+<!-- Intro Section - úvodní text stránky -->
+<!-- Určeno pro 1_home/10__base__.html -->
 
 
 <!-- Podmínka kontrolující, zda má být sekce viditelná -->
@@ -12,16 +12,23 @@
                 <div class="col-lg-8">
 
                     <!-- Tlačítko pro skrytí/zobrazení editačního formuláře sekce (pouze pro url edit a superuser) -->
-                    {% if user.is_superuser and request.path == '/edit/' %}
-                    {% include '1_home/_common/__edit_button__.html' with name='Intro' %}
-                    {% endif %}
+                    {% with name='Intro' %}
+                    {% include '1_home/_home_data/_edit_button_.html' %}
+                    {% endwith %}
 
-                    <!-- Hlavní část: Nadpis a úvodní text -->
-                    {% include '1_home/_intro/__page_texts__.html' %}
+                    <!-- Nadpis -->
+                    {% with text=intro_data.intro_title %}
+                    {% include '1_home/_home_data/_display_h2_text_.html' %}
+                    {% endwith %}
+
+                    <!-- Text -->
+                    {% with text=intro_data.intro_description %}
+                    {% include '1_home/_home_data/_display_div_text_.html'%}
+                    {% endwith %}
 
                     <!-- Editační formulář sekce (pouze pro url edit a superuser) -->
                     {% if user.is_superuser and request.path == '/edit/' %}
-                    {% include '1_home/_intro/__edit_section__.html' %}
+                    {% include '1_home/_home_edit/__intro__.html' %}
                     {% endif %}
 
                 </div>
@@ -33,8 +40,8 @@
 {% else %}
 
     <!-- Tlačítko pro zobrazení sekce (pouze pro url edit a superuser) -->
-    {% if user.is_superuser and request.path == '/edit/' %}
-    {% include '1_home/_common/__section_display__.html' with section_url='edit-intro-section' name='Intro' %}
-    {% endif %}
+    {% with section_url='edit-intro-section' name='Intro' %}
+    {% include '1_home/_home_data/_section_display_.html' %}
+    {% endwith %}
 
 {% endif %}

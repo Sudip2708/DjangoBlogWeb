@@ -1,0 +1,37 @@
+<!-- Položky záložky overview pro obrázek, název a popis -->
+<!-- Určeno pro 5_create_article/52__form__.html -->
+
+
+<!-- Kontejner sdružující prvky pro obrázek a nadpis -->
+<div class="row">
+
+    <!-- Zobrazení aktuálního obrázku -->
+    {% with class='col-md-5 mb-4 mt-4 order-md-2' %}
+    {% include '5_create_article/_form/_data/_main_picture_view_.html' %}
+    {% endwith %}
+
+    <!-- Kontejner sdružující pole pro obrázek a nadpis -->
+    <div class="col-md-7 align-middle order-md-1">
+
+        <!-- Vstupní pole pro obrázek -->
+        {% include '5_create_article/_form/_data/_input_main_picture_.html' %}
+
+        <!-- Odesílací tlačítko pro uložení obrázku s návratem na stránku -->
+        {% with title='Save Changes & Continue Editing' value='overview' class='mb-5' %}
+        {% include '5_create_article/_form/_data/_submit_button_.html' %}
+        {% endwith %}
+
+        <!-- Vstupní pole pro nadpis -->
+        {% include '5_create_article/_form/_data/_input_title_.html' %}
+
+    </div>
+
+</div>
+
+<!-- Vstupní pole pro úvod k článku -->
+{% include '5_create_article/_form/_data/_input_overview_.html' %}
+
+<!-- Odesílací tlačítka -->
+{% with current_tab='overview' %}
+{% include '5_create_article/_form/_data/__buttons_both__.html' %}
+{% endwith %}

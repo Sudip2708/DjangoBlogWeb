@@ -1,1 +1,0 @@
-print("### main/utilities/for_articles/__init__.py")

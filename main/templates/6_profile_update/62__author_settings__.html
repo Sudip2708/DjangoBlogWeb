@@ -1,0 +1,39 @@
+<!-- Nastavení pro autora -->
+<!-- Určeno pro 6_profile_update/60__base__.html -->
+
+
+<!-- Nadpis -->
+{% include '6_profile_update/_data/_page_title_.html' %}
+
+<!-- Navigace -->
+{% include '6_profile_update/_data/__page_navigation__.html' %}
+
+<!-- Formulář -->
+<form method="POST" enctype="multipart/form-data">
+
+    <!-- Zabezpečení přenosu dat -->
+    {% csrf_token %}
+
+    <div class="row">
+
+        <!-- Profilový obrázek -->
+        {% with name='Author' picture_path=author_form.instance.profile_picture.url %}
+        {% include '6_profile_update/_data/_profile_picture_.html' %}
+        {% endwith %}
+
+        <div class="col-md-8">
+
+            <!-- Pole formuláře -->
+            {% with form=author_form %}
+            {% include '6_profile_update/_data/_form_.html' %}
+            {% endwith %}
+
+            <!-- Odesílací tlačítko -->
+            {% with name='submit_author' %}
+            {% include '6_profile_update/_data/_submit_button_.html' %}
+            {% endwith %}
+
+        </div>
+
+    </div>
+</form>

@@ -1,0 +1,30 @@
+<!-- Nastavení datumu pro vyhledávání -->
+<!-- Určeno pro 0_base/_header/__search_popup__.html -->
+
+
+<!-- Kontejner združíjící popis a položky této části -->
+<div class="col min-width-xl mobile_margin-top">
+    <div class="main-div">
+
+        <!-- Popis této části -->
+        {% with title='Need to specify the Date?' %}
+        {% include '0_base/_header/_search_popup/_data/_title_.html' %}
+        {% endwith %}
+
+        <!-- Kontejner združující jednotlivé nabídky -->
+        <div class="sub-div row mt-3">
+
+            <!-- Pole pro vyhledávání článků publikovaných po zadaném datu-->
+            {% with label='Articles published After:' id='after_date' name='After' %}
+            {% include '0_base/_header/_search_popup/_data/_date_.html' %}
+            {% endwith %}
+
+            <!-- Pole pro vyhledávání článků publikovaných před zadaným datem -->
+            {% with label='Articles published Before:' id='before_date' name='Before' %}
+            {% include '0_base/_header/_search_popup/_data/_date_.html' %}
+            {% endwith %}
+
+        </div>
+
+    </div>
+</div>

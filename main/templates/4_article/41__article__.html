@@ -1,67 +1,38 @@
-<!-- Include for 4_article/40__base__.html -->
-<!-- for Article Content -->
+<!-- Zobrazení článku -->
+<!-- Určeno pro 4_article/40__base__.html -->
 
 
-<!-- Main Picture -->
+<!-- Hlavní obrázek -->
+{% include '4_article/_article_data/_main_picture_.html' %}
 
-<!-- Kontejner obrázek článku -->
+<!-- Kategorie -->
+{% include '3_articles/_articles/_article_data/_category_.html' %}
 
-<div class="w-100 mb-4 text-center"> <!-- Přidáno text-center pro vycentrování obsahu -->
-    <div class="d-flex justify-content-center"> <!-- Přidáno d-flex a justify-content-center pro vycentrování obrázku -->
-
-        <!-- Kotva pro zobrazení maximální velikosti obrázku, zobrazující obrázek náhledu -->
-        <a class="d-block position-relative"
-             href="{{ article.main_picture_max_size.url }}">
-
-            <!-- Hlavní obrázek (pro zařízení MD a větší - 768px<) -->
-            <img alt="Article Main Picture"
-                 src="{{ article.main_picture_for_article.url }}?{% now 'U' %}"
-                 class="img-fluid d-none d-md-block"/>
-
-            <!-- Hlavní obrázek (pro zařízení menší než MD - <768px) -->
-            <img alt="Article Main Picture"
-                 src="{{ article.main_picture_preview.url }}?{% now 'U' %}"
-                 class="img-fluid d-md-none"/>
-
-            <!-- Icona lupy + nadpis článku -->
-            <div class="fsc-hover-overlay">
-                <i class="fas fa-search fsc-hover-overlay-icon"></i>
-            </div>
-
-        </a>
-    </div>
-</div>
-
-
-
-<!-- Category -->
-{% include '__article/__category__.html' %}
-
-<!-- Title -->
-{% include '__article/__title__.html' with atr="article" %}
-
+<!-- Nadpis -->
+{% include '4_article/_article_data/_title_.html' %}
 
 <!-- Info -->
 <ul class="list-inline list-separated text-gray-500 mb-4">
 
-    <!-- Link to the author -->
-    {% include '__article/__author__.html' %}
+    <!-- Odkaz na autora -->
+    {% include '3_articles/_articles/_article_data/_author_.html' %}
 
-    <!-- Created Ago -->
-    {% include '__article/__date_created__.html' with atr="ago" %}
+    <!-- Stáří článku -->
+    {% include '3_articles/_articles/_article_data/_published_ago_.html' %}
 
-    <!-- Comment Count -->
-    {% include '__article/__comment_count__.html' %}
+    <!-- Počet komentářů -->
+    {% include '3_articles/_articles/_article_data/_comment_count_.html' %}
 
-    <!-- Apdate of the article -->
-    {% include '__article/__update_article__.html' %}
+    <!-- Odkaz na úpravu článku -->
+    {% include '4_article/_article_data/_update_article_.html' %}
 
 </ul>
 
-<!-- Article overview -->
-{% include '__article/__overview__.html' with atr="article" %}
+<!-- Úvod k článku -->
+{% include '4_article/_article_data/_overview_.html' %}
 
-<!-- Article content -->
-{% if request.user.is_authenticated %}
-    {% include '__article/__content__.html' %}
-{% endif %}
+<!-- Obsah článku -->
+{% include '4_article/_article_data/_content_.html' %}
+
+<!-- Tagy -->
+{% include '4_article/_article_data/_tags_.html' %}

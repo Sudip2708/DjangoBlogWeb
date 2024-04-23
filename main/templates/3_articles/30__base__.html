@@ -1,17 +1,17 @@
+<!-- Základní šablona pro stránky s výpisem článků -->
+
+
 <!-- Odkaz na nadřazenou šablonu -->
 {% extends '2_main/20__base__.html' %}
 
-<!-- Začátek vnitřního bloku znadřazené šablony -->
+
+<!-- Začátek vnitřního bloku -->
 {% block inner_content %}
 
-
-    <!-- Část pro zobrazení článků -->
-    <!-- (row: Vytváří flexbox container, který umožňuje uspořádat elementy do řádků.) -->
-    <!-- (gy-4: Udává vertikální odsazení mezi flexboxy v řádku. [4 odpovídá 16px odsazení]) -->
-    <!-- (mb-5: Udává odsazení dolní části elementu. [5 odpovídá 40px odsazení.]) -->
+    <!-- Kontejner sdružující nadpis a zobrazení článků -->
     <div class="row gy-4 mb-5">
 
-        <!-- Zobrazení nadpisů -->
+        <!-- Nadpis -->
         {% include '3_articles/31__page_title__.html' %}
 
         <!-- Zobrazení článků -->
@@ -19,11 +19,8 @@
 
     </div>
 
-    <!-- Zobratzení stránkování -->
-    <!-- (Stránkování se objeví pouze, pokud exisutje předchozí, nebo následující stránka) -->
-    {% if page_obj.has_next or page_obj.has_previous %}
-        {% include '3_articles/33__pagination__.html' %}
-    {% endif %}
+    <!-- Stránkování (pouze, pokud exisutje předchozí, nebo následující stránka) -->
+    {% include '3_articles/33__pagination__.html' %}
 
-<!-- Konec vnitřního bloku znadřazené šablony -->
+
 {% endblock inner_content %}

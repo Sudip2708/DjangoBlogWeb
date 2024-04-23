@@ -1,0 +1,21 @@
+<!-- Sekce pro vyhledávání dle datumu -->
+<!-- Určeno pro 2_main/_sidebars/_search/_search_data/__search_form__.html -->
+
+
+<!-- Úvodní text -->
+{% include '2_main/_sidebars/_search/_search_data/_date_title_.html' %}
+
+<!-- Kontejner sdružující vnitřní prvky -->
+<div class="row">
+
+    <!-- Pole pro stanovení data od kterého hledat -->
+    {% with title='After' id='after_date' %}
+    {% include '2_main/_sidebars/_search/_search_data/_date_input_.html' %}
+    {% endwith %}
+
+    <!-- Pole pro stanovení data před kterým hledat -->
+    {% with title='Before' id='before_date' %}
+    {% include '2_main/_sidebars/_search/_search_data/_date_input_.html' %}
+    {% endwith %}
+
+</div>

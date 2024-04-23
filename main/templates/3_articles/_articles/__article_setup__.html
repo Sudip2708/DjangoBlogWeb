@@ -1,0 +1,40 @@
+<!-- Nastavení pro zobrazení článku -->
+<!-- Určeno pro 3_articles/32__articles__.html -->
+
+
+<!-- Hlavní obrázek -->
+{% include '3_articles/_articles/_article_data/_main_picture_.html' %}
+
+<!-- Kontejner sdružující datum a kategorii -->
+<div class="d-flex align-items-center justify-content-between">
+
+    <!-- Datum -->
+    {% include '3_articles/_articles/_article_data/_published_date_.html' %}
+
+    <!-- Kategorie -->
+    {% include '3_articles/_articles/_article_data/_category_.html' %}
+
+</div>
+
+<!-- Tagy -->
+{% include '3_articles/_articles/_article_data/_tags_.html' %}
+
+<!-- Nadpis -->
+{% include '3_articles/_articles/_article_data/_title_.html' %}
+
+<!-- Popis -->
+{% include '3_articles/_articles/_article_data/_overview_.html' %}
+
+<!-- Doplňující informace k článku -->
+<ul class="list-inline list-separated text-gray-500 mb-0">
+
+    <!-- Odkaz na autora -->
+    {% include '3_articles/_articles/_article_data/_author_.html' %}
+
+    <!-- Stáří článku -->
+    {% include '3_articles/_articles/_article_data/_published_ago_.html' %}
+
+    <!-- Počet komentářů -->
+    {% include '3_articles/_articles/_article_data/_comment_count_.html' %}
+
+</ul>

@@ -1,0 +1,16 @@
+<!-- Hlavní obrázek s odkazem na článek -->
+<!-- Určeno pro 1_home/_home_data/__latest_articles__.html -->
+<!-- Určeno pro 3_articles/_articles/__article_setup__.html -->
+
+
+<!-- Odkaz na článek -->
+<a class="mb-3"
+   href="{{ article.get_absolute_url }}">
+
+    <!-- Obrázek článku -->
+    <img alt="Article Main Picture Preview"
+         src="{{ article.main_picture_preview.url }}?{% now 'U' %}"
+         style="width: 100%; height: auto"/>
+
+</a>
+

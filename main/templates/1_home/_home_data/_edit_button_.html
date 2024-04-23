@@ -1,0 +1,30 @@
+<!-- Tlačítko pro rozevírací nabídku editace jednotlivích sekcí HomePage  -->
+<!-- Na tento kod je navázaný script pro změnu prvního slova v textu Show na Hide a naopak -->
+<!-- 0_base/04__footer__.html -->
+<!-- Rozšířenní pro 1_home/11__hero__.html -->
+<!-- Rozšířenní pro 1_home/12__intro__.html -->
+<!-- Rozšířenní pro 1_home/13__featured_articles__.html -->
+<!-- Rozšířenní pro 1_home/14__divider__.html -->
+<!-- Rozšířenní pro 1_home/15__latest_articles__.html -->
+<!-- Rozšířenní pro 1_home/16__newsletter__.html -->
+<!-- Rozšířenní pro 1_home/17__gallery__.html -->
+
+
+
+<!-- CSS pro tuto část -->
+{% include '1_home/css/css_edit_homepage_button.html' %}
+
+<!-- Kontrola zda je přihlášen super uživatel a zda je na stránce pro úpravu domácí stránky  -->
+{% if user.is_superuser and request.path == '/edit/' %}
+
+    <!-- Odkaz na rozevření a skrytí nabídky -->
+    <a class="edit-homepage-button"
+       type="button"
+       data-bs-toggle="collapse"
+       data-bs-target="#{{ name|lower }}SectionCollapse"
+       aria-expanded="false"
+       aria-controls="{{ name|lower }}SectionCollapse">
+        Show Edit Options For {{ name }} Section
+    </a>
+
+{% endif %}

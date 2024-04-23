@@ -1,0 +1,28 @@
+<!-- Sekce pro upřesnění kde se má vyhledávat -->
+<!-- Určeno pro 2_main/_sidebars/_search/_search_data/__search_form__.html -->
+
+
+<!-- Úvodní text -->
+{% include '2_main/_sidebars/_search/_search_data/_checkbox_title_.html' %}
+
+<!-- Kontejner sdružující prvky zaškrtávacích tlačítek -->
+<div class="mt-1">
+    <div class="row">
+
+        <!-- Zaškrtávací tlačítko pro hledání v názvech článků -->
+        {% with title='Titles' id='title_checkbox' %}
+        {% include '2_main/_sidebars/_search/_search_data/_checkbox_.html' %}
+        {% endwith %}
+
+        <!-- Zaškrtávací tlačítko pro hledání v popisech článků -->
+        {% with title='Overview' id='overview_checkbox' %}
+        {% include '2_main/_sidebars/_search/_search_data/_checkbox_.html' %}
+        {% endwith %}
+
+        <!-- Zaškrtávací tlačítko pro hledání v obsahu článků -->
+        {% with title='Content' id='content_checkbox' %}
+        {% include '2_main/_sidebars/_search/_search_data/_checkbox_.html' %}
+        {% endwith %}
+
+    </div>
+</div>

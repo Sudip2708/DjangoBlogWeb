@@ -1,39 +1,20 @@
-<!-- Linking to the parent template -->
+<!-- Šablona stránky pro úpravu uživatelského (a autorského) účtu -->
+
+
+<!-- Odkaz na nadřazenou šablonu -->
 {% extends '2_main/20__base__.html' %}
 
-<!-- Start of block for the parent template -->
+
+<!-- Začátek vnitřního bloku -->
 {% block inner_content %}
 
+    <!-- Nastavení pro uživatele -->
+    {% if user_form %}
+    {% include '6_profile_update/61__user_settings__.html' %}
 
-    <!-- Title -->
-    {% include '6_profile_update/61__page_title__.html' %}
+    <!-- Nastavení pro autora -->
+    {% else %}
+    {% include '6_profile_update/62__author_settings__.html' %}
+    {% endif %}
 
-    <!-- Navigation -->
-    {% include '6_profile_update/62__page_navigation__.html' %}
-
-    <!-- Form -->
-    <form method="POST" enctype="multipart/form-data">
-
-        {% csrf_token %}
-
-        <div class="row">
-
-            <!-- Profile Picture -->
-            {% include '6_profile_update/63__profile_picture__.html' %}
-
-            <div class="col-md-8">
-
-                <!-- Form Fields -->
-                {% include '6_profile_update/64__form__.html' %}
-
-                <!-- Submit Button -->
-                {% include '6_profile_update/65__submit_button__.html' %}
-
-            </div>
-
-        </div>
-    </form>
-
-
-<!-- End of block for the parent template -->
 {% endblock inner_content %}

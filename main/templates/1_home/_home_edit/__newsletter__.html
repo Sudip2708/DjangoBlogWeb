@@ -1,0 +1,35 @@
+<!-- Editační část sekce -->
+<!-- Rozšířenní pro 1_home/16__newsletter__.html -->
+
+
+<!-- Hlavní kontejner -->
+<div class="collapse mb-5" id="newsletterSectionCollapse">
+    <div class="card card-body">
+
+        <!-- Formulář -->
+        <form method="POST"
+              action="{% url 'edit-newsletter-section' %}">
+
+            <!-- Zabezpečení přenosu dat -->
+            {% csrf_token %}
+
+            <!-- Nadpis sekce -->
+            {% with field=newsletter_edit_form.newsletter_title label='Newsletter Section Title' %}
+            {% include '1_home/_home_edit/_edit_data/_edit_html_field_.html' %}
+            {% endwith %}
+
+            <!-- Popis sekce -->
+            {% with field=newsletter_edit_form.newsletter_description label='Newsletter Section Description' %}
+            {% include '1_home/_home_edit/_edit_data/_edit_html_field_.html' %}
+            {% endwith %}
+
+            <!-- Odesílací tlačítko a zaškrtávací pole pro nastavení viditelnosti sekce -->
+            {% with checkbox=newsletter_edit_form.display_newsletter_section title='Newsletter' %}
+            {% include '1_home/_home_edit/_edit_data/_submit_button_with_display_checkbox_.html' %}
+            {% endwith %}
+
+        </form>
+
+    </div>
+</div>
+

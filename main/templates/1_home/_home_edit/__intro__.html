@@ -1,0 +1,35 @@
+<!-- Editační část sekce -->
+<!-- Rozšířenní pro 1_home/12__intro__.html -->
+
+
+<!-- Hlavní kontejner -->
+<div class="collapse mt-3" id="introSectionCollapse">
+    <div class="card card-body">
+
+        <!-- Formulář -->
+        <form method="POST"
+              enctype="multipart/form-data"
+              action="{% url 'edit-intro-section' %}">
+
+            <!-- Zabezpečení přenosu dat -->
+            {% csrf_token %}
+
+            <!-- Nadpis sekce -->
+            {% with field=intro_edit_form.intro_title label='Intro Title' %}
+            {% include '1_home/_home_edit/_edit_data/_edit_html_field_.html' %}
+            {% endwith %}
+
+            <!-- Popis sekce -->
+            {% with field=intro_edit_form.intro_description label='Intro Description' %}
+            {% include '1_home/_home_edit/_edit_data/_edit_html_field_.html' %}
+            {% endwith %}
+
+            <!-- Odesílací tlačítko a zaškrtávací pole pro nastavení viditelnosti sekce -->
+            {% with checkbox=intro_edit_form.display_intro_section title='Intro' %}
+            {% include '1_home/_home_edit/_edit_data/_submit_button_with_display_checkbox_.html' %}
+            {% endwith %}
+
+        </form>
+
+    </div>
+</div>

@@ -1,0 +1,26 @@
+<!-- Nastavení zobrazení rozklápěcího tlačítka navigační lišty pro různé velikosti zařízení -->
+<!-- Určeno pro 0_base/02__header__.html -->
+
+
+<!-- Nastavení pro zobrazení menu pro XL velikost a větší -->
+<div class="d-none d-xl-block">
+
+    <!-- Podmínka - Když uživatel má zapnutý postranní panel a nejsme na domácí stránce -->
+    <!-- Zobrazit ikonu pro skrytí postranního panelu -->
+    {% if user.sidebar and not request.path == '/' %}
+    {% include '0_base/_header/_dropdown_display/_data/_sidebar_icon_.html' %}
+
+    <!-- Ve všech ostatních případech zobrazit rozklápěcí menu -->
+    {% else %}
+    {% include '0_base/_header/_dropdown_display/__dropdown_menu__.html' %}
+    {% endif %}
+
+</div>
+
+<!-- Nastavení pro zobrazení menu pro LG velikost a menší -->
+<div class="d-xl-none">
+
+    <!-- Zobrazit rozklápěcí menu -->
+    {% include '0_base/_header/_dropdown_display/__dropdown_menu__.html' %}
+
+</div>

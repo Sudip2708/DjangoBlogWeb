@@ -1,28 +1,19 @@
-<!-- Include for 0_base/02__header__.html -->
-<!-- for Navigation for all (Unlog & Log) Users -->
+<!-- Prvky navigační lišty -->
+<!-- Určeno pro 0_base/02__header__.html -->
 
 
-<!-- Home Page -->
-<li class="nav-item">
-    <a class="nav-link {% if request.path == '/' %}active{% endif %}"
-       href="/">
-        Home</a></li>
+<!-- Kontejner slučující jednotlivé prvky navigace -->
+<div class="collapse navbar-collapse right-padding" id="navbarSupportedContent">
+    <ul class="navbar-nav ms-auto mb-2 mb-lg-0 align-items-lg-center">
 
-<!-- Articles -->
-<li class="nav-item">
-    <a class="nav-link {% if request.path == '/articles/all' %}active{% endif %}"
-       href="/articles/all">
-        Articles</a></li>
+        <!-- Základní položky pro všechny uživatele (přihlášené i nepřihlášené) -->
+        {% include '0_base/_header/_navigation/__navigation_items__.html' %}
 
+        <!-- Položky pro zobrazení dodatečných nabídek pro dané prvky stránky -->
+        {% include '0_base/_header/_navigation/__special_offer__.html' %}
 
-<!-- If User is not login -->
-{% if not user.is_authenticated and request.path != '/accounts/login/' %}
+        <!-- Položky hledání a nastavení jazyka -->
+        {% include '0_base/_header/_navigation/_data/_search_and_language_.html' %}
 
-    <!-- Log In -->
-    <li class="nav-item">
-        <a class="nav-link "
-           href="{% url 'account_login' %}">
-            Login</a></li>
-
-{% endif %}
-
+    </ul>
+</div>

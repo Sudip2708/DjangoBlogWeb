@@ -1,0 +1,40 @@
+<!-- Editační část sekce -->
+<!-- Rozšířenní pro 1_home/14__divider__.html -->
+
+
+<!-- Hlavní kontejner -->
+<div class="collapse mt-3" id="dividerSectionCollapse">
+    <div class="card card-body">
+
+        <!-- Formulář -->
+        <form method="POST"
+              enctype="multipart/form-data"
+              action="{% url 'edit-latest-section' %}">
+
+            <!-- Zabezpečení přenosu dat -->
+            {% csrf_token %}
+
+            <!-- Obrázek -->
+            {% with field=hero_edit_form.hero_image %}
+            {% include '1_home/_home_edit/_edit_data/_edit_background_image_.html' %}
+            {% endwith %}
+
+            <!-- Text -->
+            {% with field=divider_edit_form.divider_text label='Divider Text' %}
+            {% include '1_home/_home_edit/_edit_data/_edit_html_field_.html' %}
+            {% endwith %}
+
+            <!-- Odkaz s popisem -->
+            {% with field=divider_edit_form.divider_link label=divider_edit_form.divider_link_title %}
+            {% include '1_home/_home_edit/_edit_data/_edit_link_.html' %}
+            {% endwith %}
+
+            <!-- Odesílací tlačítko a zaškrtávací pole pro nastavení viditelnosti sekce -->
+            {% with checkbox=divider_edit_form.display_divider_section title='Divider' %}
+            {% include '1_home/_home_edit/_edit_data/_submit_button_with_display_checkbox_.html' %}
+            {% endwith %}
+
+        </form>
+
+    </div>
+</div>

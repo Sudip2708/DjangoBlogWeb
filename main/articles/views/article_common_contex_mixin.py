@@ -12,7 +12,7 @@ from django.urls import resolve
 from articles.models.article import Article
 from articles.models.article_author import ArticleAuthor
 from articles.schema_search.get_all_published_category import get_all_published_category
-from utilities.for_articles.get_category_count import get_category_count
+from articles.utilities.get_category_count import get_category_count
 from homepage.models.footer_section import FooterSettings
 
 

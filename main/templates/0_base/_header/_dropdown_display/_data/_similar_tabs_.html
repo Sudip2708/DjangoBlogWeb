@@ -1,0 +1,20 @@
+<!-- Odkaz pro zobrazení lišty pro podobné šlánky na základě tagu -->
+<!-- Určeno pro 0_base/_header/_dropdown_display/_data/__non_homepage_items__.html -->
+
+
+<!-- Zobrazí se poze na stránce s výsledkem vyhledávání a na stránce s tagy -->
+{% if search_query or tag_slug %}
+
+    <!-- Nabídka pro zobrazení a skrytí navigace podle tagů -->
+    <li class="nav-item d-lg-none">
+        <a class="dropdown-item dropdown-font "
+           href="{% url 'user_sidebar_movements' hash='#show_tab_for_similar' %}">
+            {% if user.show_tab_for_similar %}
+                Hide Similar Tab
+            {% else %}
+                Show Similar Tab
+            {% endif %}
+        </a>
+    </li>
+
+{% endif %}

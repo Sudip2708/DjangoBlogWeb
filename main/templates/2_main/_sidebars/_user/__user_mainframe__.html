@@ -1,0 +1,24 @@
+<!-- Vnitřní obsah panelu pro uživatele -->
+<!-- Určeno pro 2_main/_sidebars/__user__.html -->
+
+
+<!-- Kontejner pro zobrazení a skrytí panelu -->
+<div class="collapse {% if user.sidebar_user %} show {% endif %}"
+     id="sidebar_user">
+
+    <!-- Hlavní kontejenr sdružující vnitřní prvky -->
+    <div class="card mb-4">
+        <div class="card-body">
+
+            <!-- Část pro položky pro uživatele -->
+            {% include '2_main/_sidebars/_user/__user__.html' %}
+
+            <!-- Část pro položky pro autora -->
+            {% if author %}
+            {% include '2_main/_sidebars/_user/__author__.html' %}
+            {% endif %}
+
+        </div>
+    </div>
+
+</div>

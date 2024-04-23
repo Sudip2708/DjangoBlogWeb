@@ -1,0 +1,13 @@
+<!-- Položky záložky content pro obsah článku -->
+<!-- Určeno pro 5_create_article/52__form__.html -->
+
+
+<!-- Vstupní pole pro obsah článku (html pole s editorem TinyMCE) -->
+{{ form.content }}
+
+<!-- Odesílací tlačítka -->
+<div class="pt-4">
+    {% with current_tab='content' %}
+    {% include '5_create_article/_form/_data/__buttons_both__.html' %}
+    {% endwith %}
+</div>

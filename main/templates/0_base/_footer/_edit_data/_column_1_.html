@@ -1,0 +1,23 @@
+<!-- Nastavení položek 1. sloupce editační části patičky -->
+<!-- Rozšířenní pro 0_base/_footer/_edit_data/__columns_setting__.html -->
+
+
+<!-- Načtení šablonových tagů -->
+{% load crispy_forms_tags %}
+
+<div class="col-lg-3">
+
+    <!-- Nastavení položek pro adresu -->
+    {{ footer_edit_form.company_name|as_crispy_field }}
+    {{ footer_edit_form.address|as_crispy_field }}
+    {{ footer_edit_form.phone|as_crispy_field }}
+    {{ footer_edit_form.email|as_crispy_field }}
+
+    <!-- Nastavení položek pro odkazi na sociální sítě -->
+    {{ footer_edit_form.facebook|as_crispy_field }}
+    {{ footer_edit_form.twitter|as_crispy_field }}
+    {{ footer_edit_form.instagram|as_crispy_field }}
+    {{ footer_edit_form.behance|as_crispy_field }}
+    {{ footer_edit_form.pinterest|as_crispy_field }}
+
+</div>

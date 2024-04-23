@@ -1,0 +1,10 @@
+<!-- Záložka pro zobrazení podobných článků -->
+<!-- Určeno pro 3_articles/_page_title/__for_search_results__.html -->
+
+
+<li class="nav-item ">
+    <a href="{% url 'article-search-similar' query=search_query similar='similar' %}"
+       class="nav-link {% if url_name == 'article-search-similar' %}active{% endif %}">
+        Similar Tag Articles
+    </a>
+</li>

@@ -2,119 +2,32 @@
 <!-- Rozšířenní pro 0_base/04__footer__.html -->
 
 
-<!-- Načtení šablonových tagů -->
-{% load crispy_forms_tags %}
-{% load widget_tweaks %}
+<!-- Kontrola zda je přihlášen super uživatel a zda je na stránce pro úpravu domácí stránky  -->
+{% if user.is_superuser and request.path == '/edit/' %}
 
-<!-- Hlavní kontejner -->
-<div class="collapse mt-3" id="footerSectionCollapse">
-    <div class="card card-body">
+    <!-- Hlavní kontejner -->
+    <div class="collapse mt-3" id="footerSectionCollapse">
+        <div class="card card-body">
 
-        <!-- Formulář -->
-        <form method="POST"
-              enctype="multipart/form-data"
-              action="{% url 'edit-footer-section' %}">
-            {% csrf_token %}
+            <!-- Formulář -->
+            <form method="POST"
+                  enctype="multipart/form-data"
+                  action="{% url 'edit-footer-section' %}">
 
-            <!-- Kontejner pro sloupce nastavení patičky -->
-            <div class="row">
+                <!-- Zabezpečení přenosu dat -->
+                {% csrf_token %}
 
-                <!-- Sloupec 1 -->
-                <div class="col-lg-3">
+                <!-- Nastavení sloupců pro nastavení patičky -->
+                {% include '0_base/_footer/_edit_data/__columns_setting__.html' %}
 
-                    <!-- Nastavení položek pro adresu -->
-                    {{ footer_edit_form.company_name|as_crispy_field }}
-                    {{ footer_edit_form.address|as_crispy_field }}
-                    {{ footer_edit_form.phone|as_crispy_field }}
-                    {{ footer_edit_form.email|as_crispy_field }}
+                <!-- Odesílací tlačítko a zaškrtávací pole pro nastavení viditelnosti sekce -->
+                {% with checkbox=footer_edit_form.display_footer_section title='Footer' %}
+                {% include '1_home/_home_edit/_edit_data/_submit_button_with_display_checkbox_.html' %}
+                {% endwith %}
 
-                    <!-- Nastavení položek pro odkazi na sociální sítě -->
-                    {{ footer_edit_form.facebook|as_crispy_field }}
-                    {{ footer_edit_form.twitter|as_crispy_field }}
-                    {{ footer_edit_form.instagram|as_crispy_field }}
-                    {{ footer_edit_form.behance|as_crispy_field }}
-                    {{ footer_edit_form.pinterest|as_crispy_field }}
+            </form>
 
-                </div>
-
-                <!-- Sloupec 2 -->
-                <div class="col-lg-3">
-
-                    <!-- Nastavení položek pro názvy pro vybrané odkazy -->
-                    {{ footer_edit_form.name_field_1|as_crispy_field }}
-                    {{ footer_edit_form.name_field_2|as_crispy_field }}
-                    {{ footer_edit_form.name_field_3|as_crispy_field }}
-                    {{ footer_edit_form.name_field_4|as_crispy_field }}
-                    {{ footer_edit_form.name_field_5|as_crispy_field }}
-                    {{ footer_edit_form.name_field_6|as_crispy_field }}
-                    {{ footer_edit_form.name_field_7|as_crispy_field }}
-                    {{ footer_edit_form.name_field_8|as_crispy_field }}
-
-                </div>
-
-                <!-- Sloupec 3 -->
-                <div class="col-lg-3">
-
-                    <!-- Nastavení položek pro vybrané odkazy -->
-                    {{ footer_edit_form.url_field_1|as_crispy_field  }}
-                    {{ footer_edit_form.url_field_2|as_crispy_field  }}
-                    {{ footer_edit_form.url_field_3|as_crispy_field  }}
-                    {{ footer_edit_form.url_field_4|as_crispy_field  }}
-                    {{ footer_edit_form.url_field_5|as_crispy_field  }}
-                    {{ footer_edit_form.url_field_6|as_crispy_field  }}
-                    {{ footer_edit_form.url_field_7|as_crispy_field  }}
-                    {{ footer_edit_form.url_field_8|as_crispy_field  }}
-
-                </div>
-
-                <!-- Column 4 -->
-                <div class="col-lg-3">
-
-                    <!-- Nastavení položek pro vybrané články -->
-                    {{ footer_edit_form.article_1|as_crispy_field }}
-                    {{ footer_edit_form.article_2|as_crispy_field }}
-                    {{ footer_edit_form.article_3|as_crispy_field }}
-
-                    <!-- Nastavení viditelnosti posledního řádku patičky (první div je jen pro odskočení řádku) -->
-                    <div class="mt-4">.</div>
-                    <div class="form-group mb-3 mt-4">
-                        {{ footer_edit_form.display_footer_end_section|add_class:"form-check-input" }}
-                        <label for="{{ footer_edit_form.display_footer_end_section.id_for_label }}"
-                               class="checkbox-label">
-                            Display Footer End Section
-                        </label>
-                    </div>
-
-                    <!-- Nastavení položek posledního řádku patičky -->
-                    {{ footer_edit_form.right_text|as_crispy_field }}
-                    {{ footer_edit_form.left_text|as_crispy_field }}
-                    {{ footer_edit_form.left_link_text|as_crispy_field }}
-                    {{ footer_edit_form.left_link_url|as_crispy_field }}
-
-                </div>
-
-            </div>
-
-            <!-- Kontejner pro odesílací tlačítko a zaškrtávací tlačítko pro zobrazení/skrytí sekce -->
-            <div class="d-flex flex-wrap align-items-center justify-content-between">
-
-                <!-- Odesílací tlačítko -->
-                <button type="submit" class="btn btn-primary">
-                    Save Changes
-                </button>
-
-                <!-- Tlačítko pro zobrazení/skrytí sekce -->
-                <div class="form-group mb-4 text-end">
-                    {{ footer_edit_form.display_footer_section|add_class:"form-check-input" }}
-                    <label for="{{ footer_edit_form.display_footer_section.id_for_label }}"
-                           class="checkbox-label">
-                        Display Footer Section
-                    </label>
-                </div>
-
-            </div>
-
-        </form>
-
+        </div>
     </div>
-</div>
+
+{% endif %}

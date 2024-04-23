@@ -1,54 +1,34 @@
-<!-- Linking to the parent template -->
+<!-- Výchozí šablona pro domácí stránku -->
+
+
+<!-- Odkaz na nadřazenou šablonu -->
 {% extends '0_base/00__base__.html' %}
 
 
-<!-- Start of block for the parent template -->
+<!-- Začátek vnitřního bloku -->
 {% block main_content %}
 
-    <!-- CSS pro tuto část  -->
-    <style>
-        .edit-homepage-button {
-            color: #808080;
-            font-family: Times New Roman, sans-serif;
-            font-style: italic;
-            font-weight: bold;
-            margin-top: 10px;
-            margin-bottom: 10px;
-        }
-
-        .checkbox-label {
-            font-size: 0.8rem;
-            color: grey;
-        }
-    </style>
-
-    <!-- Hero Section-->
+    <!-- Hero Section - úvodní obrázek stránky -->
     {% include '1_home/11__hero__.html' %}
 
-    <!-- Intro Section-->
+    <!-- Intro Section - úvodní text stránky -->
     {% include '1_home/12__intro__.html' %}
 
-    <!-- Featured articles -->
+    <!-- Featured articles - 3 vybrané články -->
     {% include '1_home/13__featured_articles__.html' %}
 
-    <!-- Divider Section-->
+    <!-- Divider Section - oddělovač stránky -->
     {% include '1_home/14__divider__.html' %}
 
-    <!-- Latest articles -->
+    <!-- Latest articles - 3 nejnovější články -->
     {% include '1_home/15__latest_articles__.html' %}
 
-    <!-- Newsletter Section -->
+    <!-- Newsletter Section - část pro objednání zasílání novinek -->
     {% include '1_home/16__newsletter__.html' %}
 
-    <!-- Gallery Section-->
+    <!-- Gallery Section - galerie hlavních obrázků (pro 4 články) -->
     {% include '1_home/17__gallery__.html' %}
-
 
 <!-- End of block for the parent template -->
 {% endblock main_content %}
 
-
-<!-- Import static files -->
-{% load static %}
-{% load crispy_forms_tags %}
-{% load widget_tweaks %}

@@ -1,0 +1,18 @@
+<!-- Script pro zobrazení nabídky s možnostmi vyhledávání -->
+<script>
+
+    document.addEventListener('DOMContentLoaded', function () {
+        // ---------------------------------------------- //
+        // Search in Articles Dropdown
+        // ---------------------------------------------- //
+        document.querySelector('#searchArticlesDropdown').addEventListener('click', function (e) {
+            e.preventDefault();
+            document.querySelector('.search-area').style.display = 'block';
+        });
+        document.querySelector('.search-area .close-btn').addEventListener('click', function (e) {
+            e.preventDefault();
+            document.querySelector('.search-area').style.display = 'none';
+        });
+    });
+
+</script>

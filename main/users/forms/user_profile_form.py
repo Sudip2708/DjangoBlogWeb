@@ -3,7 +3,7 @@ print("### main/users/forms/user_profile_form.py")
 from django import forms
 
 from users.models import CustomUser
-from utilities.shared.hide_current_from_image_field import hide_current_from_image_field
+from users.utilities.shared.hide_current_from_image_field import hide_current_from_image_field
 
 
 

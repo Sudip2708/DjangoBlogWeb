@@ -1,96 +1,23 @@
-<!-- Rozšíření pro 3_articles/30__base__.html -->
 <!-- Zobrazení článků -->
-
-<!-- Udělení přístupu do statických souborů -->
-{% load static %}
+<!-- Určeno pro 3_articles/30__base__.html -->
 
 
-
-<!-- Nastavení dodatečných stylů -->
-<style>
-    .grey-text {
-        color: #808080;
-    }
-</style>
-
+{% include '3_articles/css/css_articles.html' %}
 
 
 <!-- Kontrola, zda záložka similar obsahuje nějaké články -->
-{% if not articles_results and 'similar' in url_name %}
-
-    <!-- Pokud ne, zobrazí se tento text -->
-    <h6 class="grey-text">
-        There are no other articles with tags that have articles in the result.</h6>
-
-{% endif %}
-
-
+{% include '3_articles/_articles/_similar_article_check_.html' %}
 
 <!-- Cyklus pro zobrazení článků -->
 {% for article in articles_results %}
 
-    <!-- Určení, na kolik sloupců se má dělit prostor pro zobrazené články -->
-    <!-- Pokud je uživatel přihlášen a nemá zapnutý sidebar -->
-    {% if user.sidebar %}
+    <!-- Při zapnutém postranním panelu a velikosti xl, zaberou články pouze 2/3 plochy -->
+    <div class="{% if user.sidebar %}col-xl-6{% else %}col-xl-4{% endif %} col-lg-4 col-md-6 col-sm-12 mb-3">
 
-        <!-- Postranní panel se zobrazuje pouze na zařízeních XL -->
-        <!-- Pro velikost XL se zobrazí 2 články na řádek (12/6) -->
-        <!-- Pro velikost LG (kde už se nezobrazuje sidebar) zobraz 3 články na řádek (12/4)  -->
-        <!-- Pro velikost MD zobraz 2 články na řádek (12/6) -->
-        <!-- Pro velikost SM zobraz 1 články na řádek (12/12) -->
-        <div class="col-xl-6 col-lg-4 col-md-6 col-sm-12 mb-3">
+        <!-- Definice položek článku -->
+        {% include '3_articles/_articles/__article_setup__.html' %}
 
-    <!-- Ve všech ostatních případech -->
-    {% else %}
-
-        <!-- Pro velikost XL a LG zobraz 3 články na řádek (12/4) -->
-        <!-- Pro velikost MD zobraz 2 články na řádek (12/6) -->
-        <!-- Pro velikost SM zobraz 1 články na řádek (12/12) -->
-        <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12 mb-3">
-
-    {% endif %}
-
-
-
-        <!-- Main Picture -->
-        <a class="mb-3" href="{{ article.get_absolute_url }}">
-            {% include '__img/__article_main_picture__.html' with atr="preview" %}
-        </a>
-
-        <!-- Time and category -->
-        <div class="d-flex align-items-center justify-content-between">
-
-            <!-- Time -->
-            {% include '__article/__date_created__.html' with atr="date" %}
-
-            <!-- Category -->
-            {% include '__article/__category__.html' %}
-
-        </div>
-
-        <!-- Tags -->
-        {% include '__article/__tags__.html' with atr="articles" %}
-
-        <!-- Title -->
-        {% include '__article/__title__.html' with atr="articles" %}
-
-        <!-- Overview -->
-        {% include '__article/__overview__.html' with atr="articles" %}
-
-        <!-- Article info -->
-        <ul class="list-inline list-separated text-gray-500 mb-0">
-
-            <!-- Link to the author -->
-            {% include '__article/__author__.html' %}
-
-            <!-- Created Ago -->
-            {% include '__article/__date_created__.html' with atr="ago" %}
-
-            <!-- Comment Count -->
-            {% include '__article/__comment_count__.html' %}
-
-        </ul>
-
+    <!-- Závírající div pro nastavení responzivního chování stránky -->
     </div>
 
 {% endfor %}

@@ -1,0 +1,31 @@
+<!-- Nadpis a navigacepro stránky s vlastními články -->
+<!-- Určeno pro 3_articles/31__page_title__.html -->
+
+
+<!-- Nadpis -->
+{% include '3_articles/_page_title/_my_articles_data/_tab_header_.html' %}
+
+<!-- Navigace pro stránku s vlastními články -->
+<nav class="nav nav-tabs justify-content-end mb-5 ">
+
+    <!-- Záložka pro všechny články -->
+    {% with title='All' tab_name='all' %}
+    {% include '3_articles/_page_title/_my_articles_data/_tab_for_my_articles_.html' %}
+    {% endwith %}
+
+    <!-- Záložka pro rozepsané články -->
+    {% with title='Drafted' tab_name='drafted' %}
+    {% include '3_articles/_page_title/_my_articles_data/_tab_for_my_articles_.html' %}
+    {% endwith %}
+
+    <!-- Záložka pro publikované články -->
+    {% with title='Publish' tab_name='publish' %}
+    {% include '3_articles/_page_title/_my_articles_data/_tab_for_my_articles_.html' %}
+    {% endwith %}
+
+    <!-- Záložka pro archivované články -->
+    {% with title='Archive' tab_name='archive' %}
+    {% include '3_articles/_page_title/_my_articles_data/_tab_for_my_articles_.html' %}
+    {% endwith %}
+
+</nav>

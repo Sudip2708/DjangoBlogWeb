@@ -10,7 +10,6 @@ from .views.article_detail import ArticleDetailView
 from .views.article_list import ArticleListView
 from .views.article_update import ArticleUpdateView
 from .views.search import SearchView
-from .views.my_articles import MyArticlesView
 
 urlpatterns = [
 
@@ -38,8 +37,6 @@ urlpatterns = [
     # URL pro zobrazení seznamu článků od určitého autora
     path('from/<slug:author_slug>/', ArticleListView.as_view(), name='article-from-author-list'),
 
-    # URL pro seznam článků od přihlášeného uživatele (autora)
-    path('my-articles/<str:current_tab>/', MyArticlesView.as_view(), name='my-articles'),
 
 
     # Adresy začínající s 'article/'

@@ -1,0 +1,13 @@
+<!-- Výběr článku -->
+<!-- Rozšířenní pro 1_home/_home_edit/__featured__.html -->
+<!-- Rozšířenní pro 1_home/_home_edit/__latest__.html -->
+<!-- Rozšířenní pro 1_home/_home_edit/__gallery__.html -->
+
+
+<!-- Načtení tagu pro přidání crispy vzhledu -->
+{% load crispy_forms_tags %}
+
+<div class="{{ class }}">
+    {{ article|as_crispy_field }}
+</div>
+

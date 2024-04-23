@@ -239,6 +239,7 @@ class SearchView(CommonContextMixin, ListView):
 
         # Přidání textu s popisem výsledku vyhledávání
         context['display_text'] = self.display_text
+        print("### self.display_text", self.display_text)
 
         # pokud má uživatel zapnutou navigaci pro podobné články
         if self.search_navigation_check():

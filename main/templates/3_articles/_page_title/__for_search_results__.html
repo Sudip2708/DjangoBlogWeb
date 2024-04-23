@@ -1,0 +1,25 @@
+<!-- Nadpis a navigace pro výsledek hledání -->
+<!-- Určeno pro 3_articles/31__page_title__.html -->
+
+
+<!-- Nadpis -->
+{% include '3_articles/_page_title/_search_result/_header_for_search_.html' %}
+
+<!-- Kontrola, zda je obdržen slug katgorie a výsledek hledání -->
+{% if current_category_slug and not empty_query %}
+
+    <!-- Navigace pro stránku s výsledky vyhledávání -->
+    <nav class="nav nav-tabs justify-content-end mb-2 ">
+
+        <!-- Zobrazení pokud není navigace přepnutá na kategorie -->
+        {% if not category_items %}
+        {% include '3_articles/_page_title/_search_result/__basic_tabs__.html' %}
+
+        <!-- Zobrazení pokud je navigace přepnutá na kategorie -->
+        {% else %}
+        {% include '3_articles/_page_title/_search_result/__category_tabs__.html' %}
+        {% endif %}
+
+    </nav>
+
+{% endif %}

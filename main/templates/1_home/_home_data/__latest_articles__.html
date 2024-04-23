@@ -1,0 +1,43 @@
+<!-- Část pro články sekce -->
+<!-- Rozšířenní pro 1_home/15__latest_articles__.html -->
+
+
+<!-- Hlavní kontejner -->
+<div class="row gy-4">
+
+    <!-- Procházení článků -->
+    {% for article in latest_data.articles %}
+
+        <!-- Kontrola, článek obsahuje data -->
+        {% if article %}
+
+            <!-- Kontejner pro obsah článku -->
+            <div class="col-md-4">
+
+                <!-- Hlavní obrázek -->
+                {% include '3_articles/_articles/_article_data/_main_picture_.html' %}
+
+                <!-- Kontejner pro datum vytvoření a kategorii -->
+                <div class="d-flex align-items-center justify-content-between mb-2">
+
+                    <!-- Datum vytvoření -->
+                    {% include '3_articles/_articles/_article_data/_published_date_.html' %}
+
+                    <!-- Kategorie -->
+                    {% include '3_articles/_articles/_article_data/_category_.html' %}
+
+                </div>
+
+                <!-- Nadpis -->
+                {% include '3_articles/_articles/_article_data/_title_.html' %}
+
+                <!-- Popis -->
+                {% include '3_articles/_articles/_article_data/_overview_.html' %}
+
+            </div>
+
+        {% endif %}
+
+    {% endfor %}
+
+</div>

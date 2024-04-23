@@ -1,0 +1,21 @@
+<!-- Profilový obrázek autora -->
+<!-- Určeno pro 2_main/_sidebars/_user/__user__.html -->
+
+
+<div class="w-25 align-self-start">
+
+    <!-- Podmínka kontrolující, jestli existuje obrázek uživatele -->
+    {% if user.profile_picture_thumbnail %}
+        <img alt="User Profile Picture"
+             src="{{ user.profile_picture_thumbnail.url }}?{% now 'U' %}"
+             class="img-fluid w-100"/>
+
+    <!-- Pokud ne, zobrazí defaultní obrázek -->
+    {% else %}
+        {% load static %}
+        <img alt="Default Profile Picture"
+             src="{% static 'img/default_profile_picture.jpg' %}"
+             class="img-fluid w-100"/>
+
+    {% endif %}
+</div>

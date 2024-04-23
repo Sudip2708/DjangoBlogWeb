@@ -1,0 +1,20 @@
+<!-- Odkaz na zobrazení lišty pro kategorie -->
+<!-- Určeno pro 0_base/_header/_dropdown_display/_data/__non_homepage_items__.html -->
+
+
+<!-- Zobrazí se pouze na stránce s články a stránce pro kategorie -->
+{% if url_name == 'article-list' or url_name == 'article-category-list' %}
+
+    <!-- Nabídka pro zobrazení a skrytí navigace podle kategorií -->
+    <li class="nav-item d-lg-none">
+        <a class="dropdown-item dropdown-font "
+           href="{% url 'user_sidebar_movements' hash='#sidebar_category_navigation' %}">
+            {% if user.sidebar_category_navigation %}
+                Hide Category Tab
+            {% else %}
+                Show Category Tab
+            {% endif %}
+        </a>
+    </li>
+
+{% endif %}

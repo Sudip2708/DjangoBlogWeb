@@ -1,52 +1,21 @@
-<!-- Linking to the parent template -->
+<!-- Šablona stránky pro vytvoření nebo úpravu článku -->
+
+
+<!-- Odkaz na nadřazenou šablonu -->
 {% extends '2_main/20__base__.html' %}
 
-<!-- Import static files -->
-{% load static %}
 
-
-<!-- Start of block for the parent template -->
+<!-- Začátek vnitřního bloku -->
 {% block inner_content %}
 
+    <!-- Nadpis a navigace stránky -->
+    {% include '5_create_article/51__title_and_navigation__.html' %}
 
-    <!-- Title -->
-    {% include '5_create_article/51__page_title__.html' %}
+    <!-- Formulář -->
+    {% include '5_create_article/52__form__.html' %}
 
-    <!-- Navigation -->
-    {% include '5_create_article/52__page_navigation__.html' %}
-
-    <!-- Forms data -->
-    <form method="POST" enctype="multipart/form-data">
-        {% csrf_token %}
-        <div class="tab-content">
-
-            <!-- Content for article overview tab -->
-            <div class="tab-pane fade show active" id="overview">
-                {% include '5_create_article/53__overview__.html' %}
-            </div>
-
-            <!-- Content for article content tab -->
-            <div class="tab-pane fade pt-4" id="content">
-                {% include '5_create_article/54__content__.html' %}
-            </div>
-
-            <!-- Content for article settings tab -->
-            <div class="tab-pane fade" id="settings">
-                {% include '5_create_article/55__settings__.html' %}
-            </div>
-
-        </div>
-    </form>
-
-<!-- Script pro našeptávač tagů pro Tagify -->
-<script>var tags_name_str = "{{ tags_name_str }}";</script>
-<script src="{% static 'js/_tagify_input.js' %}"></script>
-
-<!-- Script pro změnu části adresy pro záložku, při přepnutí záložky -->
-<script type="module" src="{% static 'js/_change_url_to_current_tab_[el].js' %}"></script>
-
-<!-- Script pro přepnutí na záložku dle nastavení z adresy -->
-<script src="{% static 'js/_change_tab_by_ur_value.js' %}"></script>
+    <!-- Skripty navázané na tuto stránku -->
+    {% include '5_create_article/53__scripts__.html' %}
 
 <!-- End of block for the parent template -->
 {% endblock inner_content %}

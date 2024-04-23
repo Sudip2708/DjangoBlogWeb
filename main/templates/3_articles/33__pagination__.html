@@ -1,23 +1,28 @@
-<!-- Include for 3_articles/30__base__.html -->
-<!-- for Articles Pagination -->
+<!-- Zobrazení stránkování -->
+<!-- Určeno pro 3_articles/30__base__.html -->
 
 
-<!-- Pagination -->
-<nav aria-label="Page navigation example">
-    <ul class="pagination pagination-template d-flex justify-content-center">
+<!-- Kontrola, zda má stránka více stránek -->
+{% if page_obj.has_next or page_obj.has_previous %}
 
-        <!-- If previous -->
-        {% if page_obj.has_previous %}
-            {% include '3_articles/_pagination/__previous__.html' %}
-        {% endif %}
+    <!-- Navigace pro čísla stránek -->
+    <nav aria-label="Page navigation example">
+        <ul class="pagination pagination-template d-flex justify-content-center">
 
-        <!-- Display of current page number -->
-        {% include '3_articles/_pagination/__current__.html' %}
+            <!-- Zobrazení předchozí stránky (pokud existuje) -->
+            {% if page_obj.has_previous %}
+                {% include '3_articles/_pagination_data/_previous_.html' %}
+            {% endif %}
 
-        <!-- If next -->
-        {% if page_obj.has_next %}
-            {% include '3_articles/_pagination/__next__.html' %}
-        {% endif %}
+            <!-- Zobrazení aktuální stránky -->
+            {% include '3_articles/_pagination_data/_current_.html' %}
 
-    </ul>
-</nav>
+            <!-- Zobrazení následující stránky (pokud existuje) -->
+            {% if page_obj.has_next %}
+                {% include '3_articles/_pagination_data/_next_.html' %}
+            {% endif %}
+
+        </ul>
+    </nav>
+
+{% endif %}

@@ -1,0 +1,24 @@
+<!-- Pole pro výběr tagů článku -->
+<!-- Určeno pro 5_create_article/_form/__settings__.html -->
+
+
+<div id="" class="mb-4">
+
+    <!-- Popis pole -->
+    <label for="{{ form.tags.id_for_label }}"
+           class="form-label requiredField">
+        {{ form.tags.label }}
+    </label>
+
+    <!-- Vstupní pole (využívá scriptu pro tagify) -->
+    <input name='tags'
+           value="{% for tag in form.tags.value %}{{ tag }}{% if not forloop.last %}, {% endif %}{% endfor %}"
+           class='form-control tags-input'
+           placeholder='Add tag' >
+
+    <!-- Informační text -->
+    <div class="explain-input">
+        Use a comma or enter to separate individual tags.
+    </div>
+
+</div>

@@ -1,16 +1,16 @@
-<!-- Include for 0_base/00__base__.html -->
-<!-- for Page Scripts -->
-<!-- Scripty potřebné pro na obsluhu tlačítek rozklápěcí nabídky pro postranní panely a pro nastavení domácí stránky -->
+<!-- Část pro soubory ovlivňující funkčnost a chování stránky -->
+<!-- Určeno pro 0_base/00__base__.html -->
 
 
 <!-- Import static files -->
 {% load static %}
 
-<!-- Načtení jQuery library pro AJAX -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<!-- Scripty potřebné pro na obsluhu tlačítek rozklápěcí nabídky pro postranní panely a pro nastavení domácí stránky -->
+    <!-- Načtení jQuery library pro AJAX -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
-<!-- Vytvoření proměné pro CSRF token  -->
-<script>var csrftoken = "{{ csrf_token }}";</script>
+    <!-- Vytvoření proměné pro CSRF token  -->
+    <script>var csrftoken = "{{ csrf_token }}";</script>
 
-<!-- Scripty obsluhu tlačítek pro rozklápěcí nabídky (používá csrftoken a jQuery library) -->
-<script type="module" src="{% static 'js/_sidebar_settings_[el].js' %}"></script>
+    <!-- Scripty obsluhu tlačítek pro rozklápěcí nabídky (používá csrftoken a jQuery library) -->
+    <script type="module" src="{% static 'js/_sidebar_settings_[el].js' %}"></script>

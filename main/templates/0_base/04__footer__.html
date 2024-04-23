@@ -1,51 +1,36 @@
-<!-- Include for 0_base/00__base__.html -->
-<!-- Pages Footer -->
+<!-- Spodní část stránky určená pro všeobecné informace -->
+<!-- Určeno pro 0_base/00__base__.html -->
 
+
+{% include '0_base/css/css_footer.html' %}
 
 <!-- Podmínka kontrolující, zda má být Hero sekce viditelná -->
 {% if footer_data.display_footer_section %}
 
     <!-- Hlavní kontejner -->
-    <footer class="footer text-white" style="background: #0e0e0e">
+    <footer class="footer text-white footer_color">
         <div class="container">
 
             <!-- Tlačítko pro skrytí/zobrazení editačního formuláře sekce (pouze pro url edit a superuser) -->
-            {% if user.is_superuser and request.path == '/edit/' %}
-            {% include '1_home/_common/__edit_button__.html' with name='Footer' %}
-            {% endif %}
+            {% include '1_home/_home_data/_edit_button_.html' with name='Footer' %}
 
             <!-- Kontejner pro jednotlivé sloupce patičky -->
-            <div class="row">
-
-                <!-- Adresa a sociální sítě -->
-                {% include '0_base/_footer/__address_and_social__.html' %}
-
-                <!-- Vybrané odkazy -->
-                {% include '0_base/_footer/__selected_links__.html' %}
-
-                <!-- Vybrané články -->
-                {% include '0_base/_footer/__articles__.html' %}
-
-            </div>
+            {% include '0_base/_footer/__content__.html' %}
 
             <!-- Editační formulář sekce (pouze pro url edit a superuser) -->
-            {% if user.is_superuser and request.path == '/edit/' %}
             {% include '0_base/_footer/__edit_section__.html' %}
-            {% endif %}
 
         </div>
     </footer>
 
     <!-- Poslední řádek patičky (pouze pokud má nastevené zobrazení) -->
-    {% if footer_data.end_line.display_footer_end_section %}
-    {% include '0_base/_footer/__end_section__.html' %}
-    {% endif %}
+    {% include '0_base/_footer/__end_line_section__.html' %}
 
 {% else %}
 
     <!-- Tlačítko pro zobrazení sekce (pouze pro url edit a superuser) -->
-    {% if user.is_superuser and request.path == '/edit/' %}
-    {% include '1_home/_common/__section_display__.html' with section_url='edit-footer-section' name='Footer' %}
-    {% endif %}
+    {% with section_url='edit-footer-section' name='Footer' %}
+    {% include '1_home/_home_data/_section_display_.html' %}
+    {% endwith %}
 
 {% endif %}

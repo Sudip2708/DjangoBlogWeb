@@ -1,0 +1,26 @@
+<!-- Odkaz na autora -->
+<!-- Určeno pro 1_home/_home_data/__featured_articles__.html -->
+<!-- Určeno pro 3_articles/_articles/__article_setup__.html -->
+
+
+<li class="list-inline-item">
+
+    <!-- Odkaz -->
+    <a class="d-flex align-items-center flex-wrap text-reset"
+       href="!#">
+
+        <!-- Profilový obrázek -->
+        <div class="avatar flex-shrink-0">
+            <img alt="Author Profile Picture"
+                 src="{{ article.author.profile_picture_thumbnail.url }}?{% now 'U' %}"
+                 class="img-fluid"/>
+        </div>
+
+        <!-- Jméno -->
+        <small>
+            {{ article.author }}
+        </small>
+
+    </a>
+
+</li>

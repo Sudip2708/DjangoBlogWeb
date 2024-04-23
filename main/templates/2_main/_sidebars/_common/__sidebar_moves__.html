@@ -1,0 +1,9 @@
+
+
+
+{% if order != 1 %}
+    {% include '2_main/_sidebars/_common/__move_up__.html' with target=up %}
+{% endif %}
+{% if not last %}
+    {% include '2_main/_sidebars/_common/__move_down__.html' with target=dn %}
+{% endif %}

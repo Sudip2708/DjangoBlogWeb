@@ -6,7 +6,7 @@ from django import forms
 
 from articles.models.article import Article
 from articles.models.article_category import ArticleCategory
-from utilities.shared.hide_current_from_image_field import hide_current_from_image_field
+from articles.utilities.shared.hide_current_from_image_field import hide_current_from_image_field
 
 
 

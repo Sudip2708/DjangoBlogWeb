@@ -1,0 +1,23 @@
+<!-- Prvky zobrazující se mimo domácí stránku -->
+<!-- Určeno pro 0_base/_header/_dropdown_display/__dropdown_menu__.html -->
+
+
+<!-- Kontrola, zda se nejedná o domácí stránku -->
+{% if not request.path == '/' %}
+
+    <!-- Zobrazení postranního panelu (není-li zobrazen) -->
+    {% include '0_base/_header/_dropdown_display/_data/_show_sidebar_.html' %}
+
+    <!-- Zobrazení lišty pro kategorie (pouze na stránce s články a stránce pro kategorie) -->
+    {% include '0_base/_header/_dropdown_display/_data/_category_tabs_.html' %}
+
+    <!-- Zobrazení lišty pro podobné články (pouze na stránkách obsahujících v adrese tag) -->
+    {% include '0_base/_header/_dropdown_display/_data/_similar_tabs_.html' %}
+
+    <!-- Zobrazení vyklápěcí nabídky kategorií -->
+    {% include '0_base/_header/_dropdown_display/_data/_category_dropdown_.html' %}
+
+    <!-- Oddělovací linka -->
+    {% include '0_base/_header/_dropdown_display/_data/_dropdown_divider_.html' %}
+
+{% endif %}

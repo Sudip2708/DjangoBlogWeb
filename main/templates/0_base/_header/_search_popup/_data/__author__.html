@@ -1,0 +1,18 @@
+<!-- Nabídka vyhledávání podle autora -->
+<!-- Určeno pro 0_base/_header/_search_popup/__sarch_options__.html -->
+
+
+<!-- Kontejner sdružující popis pole a pole pro výběr autora -->
+<div class="col min-width-xl mobile_margin-top">
+    <div class="main-div">
+
+        <!-- Popis pole -->
+        {% with title='Need to specify the Author?' %}
+        {% include '0_base/_header/_search_popup/_data/_title_.html' %}
+        {% endwith %}
+
+        <!-- Pole pro výběr autora -->
+        {% include '0_base/_header/_search_popup/_data/_author_field_.html' %}
+
+    </div>
+</div>

@@ -1,0 +1,22 @@
+<!-- Nadpis a pole pro přidání komentáře -->
+<!-- Určeno pro 4_article/40__base__.html -->
+
+
+<div class="mb-5">
+
+    <!-- Nadpis -->
+    {% include '4_article/_comment_data/_title_and_comment_count_.html' %}
+
+    <!-- Formulář pro přidání komentáře -->
+    <form method="post" action="." class="commenting-form">
+
+        <!-- Zabezpečení přenosu dat -->
+        {% csrf_token %}
+
+        <!-- Pole pro zadání kometáře s odesílacím tlačítkem -->
+        {% include '4_article/_comment_data/_comment_creation_.html' %}
+
+    </form>
+
+</div>
+

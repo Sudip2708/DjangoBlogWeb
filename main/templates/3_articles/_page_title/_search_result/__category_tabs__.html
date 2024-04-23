@@ -1,0 +1,27 @@
+<!-- Záložky pro výsledek hledání, když je navigace přepnutá na kategorie -->
+<!-- Určeno pro 3_articles/_page_title/__for_search_results__.html -->
+
+
+<!-- Tab for categories -->
+{% for category in category_items %}
+
+    <!-- Kategorie pro výsledek vyhledávání -->
+    {% if url_name == 'article-search-results-category' %}
+    {% include '3_articles/_page_title/_search_result/_category_for_search_result_.html' %}
+
+    <!-- Kategorie pro podobné články -->
+    {% elif url_name == 'article-search-similar-category' %}
+    {% include '3_articles/_page_title/_search_result/_category_for_similar_.html' %}
+    {% endif %}
+
+{% endfor %}
+
+<!-- Záložka pro návrat na výsledky vyhledávání -->
+{% if url_name == 'article-search-results-category' %}
+{% include '3_articles/_page_title/_search_result/_category_return_search_result_.html' %}
+
+<!-- Záložka pro návrat na podobné články -->
+{% elif url_name == 'article-search-similar-category' %}
+{% include '3_articles/_page_title/_search_result/_category_return_similar_.html' %}
+{% endif %}
+

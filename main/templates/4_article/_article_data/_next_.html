@@ -1,0 +1,25 @@
+<!-- Následující článek -->
+<!-- Určeno pro 4_article/42__previous_and_next__.html -->
+
+
+<!-- Kontrola, zda existuje -->
+{% if article.next_article %}
+
+    <!-- Odkaz -->
+    <a class="next-article text-end d-flex align-items-center justify-content-end"
+       href="{{ article.next_article.get_absolute_url }}">
+
+        <!-- Článek -->
+        <div class="text">
+            <strong class="text-primary">Next article </strong>
+            <h6>{{ article.next_article.title }}</h6>
+        </div>
+
+        <!-- Ukazatel -->
+        <div class="icon next">
+            <i class="fas fa-angle-right"></i>
+        </div>
+
+    </a>
+{% endif %}
+

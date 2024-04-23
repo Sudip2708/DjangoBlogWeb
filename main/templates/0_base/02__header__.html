@@ -1,145 +1,28 @@
-<!-- Include for 0_base/00__base__.html -->
-<!-- for Page Navigation -->
+<!-- Hlavička stránky se základnímy prvky pro navigaci -->
+<!-- Určeno pro 0_base/00__base__.html -->
 
 
-<!-- Udělení přístupu do statických souborů -->
-{% load static %}
+<!-- Dočasné umístění CSS -->
+{% include '0_base/css/css_header.html' %}
 
-
-<style>
-    /* Definice třídy pro odsazení obrázku z leva */
-    .left-margin-sb-button {
-        margin-left: 8px;
-        margin-right: 0px;
-
-    }
-
-    .left-margin-hide-sb-icon {
-        margin-left: 28px;
-        margin-right: 0px;
-
-    }
-    .left-padding {
-        padding-left: 0px; /* Změňte hodnotu podle potřeby */
-        background-color: yellow;
-    }
-
-    .right-padding {
-        padding-right: 5px; /* Změňte hodnotu podle potřeby */
-    }
-
-    .hidden-element {
-        display: none !important;
-        visibility: hidden !important;
-        width: 0 !important;
-        height: 0 !important;
-        opacity: 0 !important;
-        overflow: hidden !important;
-        position: absolute !important;
-    }
-
-    .dropdown-menu li {
-          position: relative;
-    }
-    .dropdown-menu .dropdown-submenu {
-          display: none;
-          position: absolute;
-          right: 100%;
-          top: -7px;
-    }
-
-    .dropdown-menu > li:hover > .dropdown-submenu {
-          display: block;
-    }
-
-    .drop-down-title {
-        font-size: 0.8rem;
-    }
-
-    .dropdown-font {
-        font-size: 0.9rem;
-    }
-
-    .drop-down-text {
-        color: black;
-        margin-top: 0.8rem;
-        margin-left: 1rem;
-    }
-    .btn.btn-link:focus {
-        background-color: white;
-        outline: 4px solid white;
-    }
-    .pading-0 {
-        padding: 0;
-    }
-    .light-grey-color {
-        color: #f0f0f0;
-    }
-
-    .dropdown-submenu {
-        float: left;
-    }
-</style>
-
-
-
-<!-- Header -->
+<!-- Kontejner slučující prvky hlavní navigace stránky -->
 <nav class="navbar navbar-expand-lg navbar-light bg-white border-bottom py-3">
     <div class="container py-1">
 
-        <!-- Main title -->
-        <a class="navbar-brand text-sm fw-bold text-dark"href="/">
-            Bootstrap Blog
-        </a>
+        <!-- Nadpis s odkazem na domácí stránku -->
+        {% include '0_base/_header/_navigation/_data/_nav_title_.html' %}
 
-        <!-- Page navigations -->
-        <div class="collapse navbar-collapse right-padding" id="navbarSupportedContent">
-            <ul class="navbar-nav ms-auto mb-2 mb-lg-0 align-items-lg-center">
+        <!-- Navigační lišta -->
+        {% include '0_base/_header/__navigation__.html' %}
 
-                <!-- Items for all users -->
-                {% include '0_base/_header/__navigation__.html' %}
-
-                <!-- Items for special offer -->
-                {% include '0_base/_header/__special_offer__.html' %}
-
-                <!-- Search and Languages -->
-                {% include '0_base/_header/__search_and_language__.html' %}
-
-            </ul>
-        </div>
-
-        <!-- Nastavení pro zobrazení menu a bočního panelu pro XL velikost a větší -->
-        <div class="d-none d-xl-block">
-
-            <!-- Když uživatel má zapnutý postranní panel a nejsme na domácí stránce -->
-            {% if user.sidebar and not request.path == '/' %}
-
-                <!-- Zobraz ikonu pro skrytí postranního panelu -->
-                <a class="p-0 left-margin-hide-sb-icon "
-                   href="{% url 'user_sidebar_movements' hash='#sidebar' %}">
-                    <img alt="Hide Side-Panel Icon"
-                         src="{% static 'img/hide_side_panel[150].jpg' %}"
-                         width="38"/>
-                </a>
-
-            <!-- Ve všech ostatních případech -->
-            {% else %}
-
-                <!-- Zobraz uživatelovo rozklápěcí menu -->
-                {% include '0_base/_header/__dropdown_menu__.html' %}
-            {% endif %}
-
-        </div>
-
-        <!-- Nastavení pro zobrazení menu a bočního panelu pro LG velikost a menší -->
-        <div class="d-xl-none">
-            {% include '0_base/_header/__dropdown_menu__.html' %}
-        </div>
-
-
+        <!-- Zobrazení rozklápěcího menu -->
+        {% include '0_base/_header/__dropdown_display__.html' %}
 
     </div>
 </nav>
 
-<!-- Search PopUp -->
+<!-- Vyskakující okno pro vyhledávání -->
 {% include '0_base/_header/__search_popup__.html' %}
+
+<!-- Script pro zobrazení nabídky s možnostmi vyhledávání -->
+{% include '0_base/script/script_header.html' %}

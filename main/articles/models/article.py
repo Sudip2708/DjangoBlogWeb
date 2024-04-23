@@ -13,7 +13,7 @@ from django.utils import timezone
 from .article_author import ArticleAuthor
 from .article_category import ArticleCategory
 from .article_view import ArticleView
-from utilities.for_articles.create_other_sizes_of_main_picture import create_other_sizes_of_main_picture
+from articles.utilities.create_other_sizes_of_main_picture import create_other_sizes_of_main_picture
 from articles.schema_methods.index_article_content import index_article_content
 
 

@@ -1,0 +1,59 @@
+<!-- Editační část sekce -->
+<!-- Rozšířenní pro 1_home/15__latest_articles__.html -->
+
+
+<!-- Hlavní kontejner -->
+<div class="collapse" id="latestSectionCollapse">
+    <div class="card card-body">
+
+        <!-- Formulář -->
+        <form method="POST"
+              enctype="multipart/form-data"
+              action="{% url 'edit-latest-section' %}">
+
+            <!-- Zabezpečení přenosu dat -->
+            {% csrf_token %}
+
+            <!-- Nadpis sekce -->
+            {% with field=latest_edit_form.latest_title label='Latest Section Title' %}
+            {% include '1_home/_home_edit/_edit_data/_edit_html_field_.html' %}
+            {% endwith %}
+
+            <!-- Popis sekce -->
+            {% with field=latest_edit_form.latest_description label='Latest Section Description' %}
+            {% include '1_home/_home_edit/_edit_data/_edit_html_field_.html' %}
+            {% endwith %}
+
+            <!-- Dodatek k výběru článků -->
+            <p>Articles for this section are automatically generated based on the 3 most recent articles.</p>
+            <p>If you want to manually set the articles, click the following link:</p>
+
+            <!-- Kontejner pro výběr článků -->
+            <div class="row">
+
+                <!-- Článek 1 -->
+                {% with article=latest_edit_form.latest_article_1 class='col-lg-4' %}
+                {% include '1_home/_home_edit/_edit_data/_edit_article_.html' %}
+                {% endwith %}
+
+                <!-- Článek 2 -->
+                {% with article=latest_edit_form.latest_article_2 class='col-lg-4' %}
+                {% include '1_home/_home_edit/_edit_data/_edit_article_.html' %}
+                {% endwith %}
+
+                <!-- Článek 3 -->
+                {% with article=latest_edit_form.latest_article_3 class='col-lg-4' %}
+                {% include '1_home/_home_edit/_edit_data/_edit_article_.html' %}
+                {% endwith %}
+
+            </div>
+
+            <!-- Odesílací tlačítko a zaškrtávací pole pro nastavení viditelnosti sekce -->
+            {% with checkbox=latest_edit_form.display_latest_section title='Latest' %}
+            {% include '1_home/_home_edit/_edit_data/_submit_button_with_display_checkbox_.html' %}
+            {% endwith %}
+
+        </form>
+
+    </div>
+</div>

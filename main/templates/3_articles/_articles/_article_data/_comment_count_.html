@@ -1,0 +1,15 @@
+<!-- Počet komentářů -->
+<!-- Určeno pro 1_home/_home_data/__featured_articles__.html -->
+<!-- Určeno pro 3_articles/_articles/__article_setup__.html -->
+
+
+<!-- Kontrola, zda má článek již komentáře -->
+{% if article.comment_count %}
+
+    <li class="list-inline-item small">
+        <i class="far fa-comment"></i>
+        {{ article.comment_count }}
+    </li>
+
+{% endif %}
+

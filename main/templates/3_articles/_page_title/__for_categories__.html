@@ -1,0 +1,36 @@
+<!-- Nadpis pro stránky se všemi články a pro stránky s kategoriemi -->
+<!-- Určeno pro 3_articles/31__page_title__.html -->
+
+
+<!-- Zobrazení bez navigace pro kategorie  -->
+{% if not category_items %}
+
+    <!-- Pro všechny články -->
+    {% if url_name == 'article-list' %}
+    {% include '3_articles/_page_title/_category_data/_title_for_all_articles_.html' %}
+
+    <!-- Pro určitou kategorii -->
+    {% elif url_name == 'article-category-list' %}
+    {% include '3_articles/_page_title/_category_data/_title_for_category_.html' %}
+    {% endif %}
+
+<!-- Zobrazení s navigací pro kategorie  -->
+{% else %}
+
+    <!-- Nadpis -->
+    {% include '3_articles/_page_title/_category_data/_tab_header_.html' %}
+
+    <!-- Kategorie -->
+    <nav class="nav nav-tabs justify-content-end mb-5 ">
+
+        <!-- Záložka pro všechny články -->
+        {% include '3_articles/_page_title/_category_data/_tab_for_all_articles_.html' %}
+
+        <!-- Cyklus pro záložeky kategorií -->
+        {% for category in category_items %}
+        {% include '3_articles/_page_title/_category_data/_tab_for_category_.html' %}
+        {% endfor %}
+
+    </nav>
+
+{% endif %}

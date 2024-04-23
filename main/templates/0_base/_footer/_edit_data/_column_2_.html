@@ -1,0 +1,20 @@
+<!-- Nastavení položek 2. sloupce editační části patičky -->
+<!-- Rozšířenní pro 0_base/_footer/_edit_data/__columns_setting__.html -->
+
+
+<!-- Načtení šablonových tagů -->
+{% load crispy_forms_tags %}
+
+<div class="col-lg-3">
+
+    <!-- Nastavení položek pro názvy pro vybrané odkazy -->
+    {{ footer_edit_form.name_field_1|as_crispy_field }}
+    {{ footer_edit_form.name_field_2|as_crispy_field }}
+    {{ footer_edit_form.name_field_3|as_crispy_field }}
+    {{ footer_edit_form.name_field_4|as_crispy_field }}
+    {{ footer_edit_form.name_field_5|as_crispy_field }}
+    {{ footer_edit_form.name_field_6|as_crispy_field }}
+    {{ footer_edit_form.name_field_7|as_crispy_field }}
+    {{ footer_edit_form.name_field_8|as_crispy_field }}
+
+</div>

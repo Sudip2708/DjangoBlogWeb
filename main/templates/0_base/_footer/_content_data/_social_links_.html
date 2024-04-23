@@ -1,0 +1,19 @@
+<!-- Zobrazení odkazů na sociální sítě v patičce -->
+<!-- Určeno pro 0_base/_footer/_content_data/__address_and_social__.html -->
+
+
+<ul class="list-unstyled">
+
+    <!-- Procházení sociálních sítí a přidání příslušné ikony -->
+    {% for media, data in footer_data.social_media.items %}
+        {% if data.url %}
+            <li class="list-inline-item">
+                <a class="text-reset me-2"
+                   href="{{ data.url }}">
+                    <i class="{{ data.icon }}"></i>
+                </a>
+            </li>
+        {% endif %}
+    {% endfor %}
+
+</ul>

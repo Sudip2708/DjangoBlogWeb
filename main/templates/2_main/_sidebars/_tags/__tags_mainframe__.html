@@ -1,0 +1,32 @@
+<!-- Vnitřní obsah panelu pro tagy -->
+<!-- Určeno pro 2_main/_sidebars/__tags__.html -->
+
+
+<!-- Kontekner pro zobrazení a skrytí panelu -->
+<div class="collapse {% if user.sidebar_tags %} show {% endif %}"
+     id="sidebar_tags">
+
+    <!-- Hlavní kontejenr sdružující vnitřní prvky -->
+    <div class="card mb-4">
+        <div class="card-body">
+
+            <!-- Kontejner pro nadpis a tlačítko pro skrytí vnitřního obsahu -->
+            <div class="d-flex justify-content-between align-items-center mb-3">
+
+                <!-- Nadpis panelu -->
+                {% include '2_main/_sidebars/_tags/_tags_data/_tags_title_.html' %}
+
+                <!-- Tlačítko pro skrytí vnitřního obsahu -->
+                {% with ar_con='sidebar_tags_options' ar_exp=user.sidebar_tags_options title='Content' %}
+                {% include '2_main/_sidebars/_common/__button_collapse_ajax__.html' %}
+                {% endwith %}
+
+            </div>
+
+            <!-- Drop-down items -->
+            {% include '2_main/_sidebars/_tags/_tags_data/_tags_dropdown_items_.html' %}
+
+        </div>
+    </div>
+
+</div>

@@ -1,15 +1,14 @@
-<!-- Include for 1_home/10__base__.html -->
-<!-- Hero Section -->
+<!-- Hero Section - úvodní obrázek stránky -->
+<!-- Určeno pro 1_home/10__base__.html -->
 
 
 <!-- Podmínka kontrolující, zda má být sekce viditelná -->
 {% if hero_data.display_hero_section %}
 
     <!-- Obrázek v pozadí -->
-    <section class="hero"
-             style="background: url({{ hero_data.hero_image }});
-                    background-size: cover;
-                    background-position: center center">
+    {% with class='hero' image=hero_data.hero_image position='center center' %}
+    {% include '1_home/_home_data/_display_background_image_.html' %}
+    {% endwith %}
 
         <!-- Hlavní kontejner -->
         <div class="container text-white py-5">
@@ -17,16 +16,23 @@
                 <div class="col-lg-7">
 
                     <!-- Tlačítko pro skrytí/zobrazení editačního formuláře sekce (pouze pro url edit a superuser) -->
-                    {% if user.is_superuser and request.path == '/edit/' %}
-                    {% include '1_home/_common/__edit_button__.html' with name='Hero' %}
-                    {% endif %}
+                    {% with name='Hero' %}
+                    {% include '1_home/_home_data/_edit_button_.html' %}
+                    {% endwith %}
 
-                    <!-- Hlavní část: Nadpis a odkaz -->
-                    {% include '1_home/_hero/__page_texts__.html' %}
+                    <!-- Nadpis -->
+                    {% with text=hero_data.hero_title %}
+                    {% include '1_home/_home_data/_display_h1_text_.html' %}
+                    {% endwith %}
+
+                    <!-- Odkaz -->
+                    {% with link=hero_data.hero_link title=hero_data.hero_link_title %}
+                    {% include '1_home/_home_data/_display_link_.html'%}
+                    {% endwith %}
 
                     <!-- Editační formulář sekce (pouze pro url edit a superuser) -->
                     {% if user.is_superuser and request.path == '/edit/' %}
-                    {% include '1_home/_hero/__edit_section__.html' %}
+                    {% include '1_home/_home_edit/__hero__.html' %}
                     {% endif %}
 
                 </div>
@@ -39,8 +45,8 @@
 {% else %}
 
     <!-- Tlačítko pro zobrazení sekce (pouze pro url edit a superuser) -->
-    {% if user.is_superuser and request.path == '/edit/' %}
-    {% include '1_home/_common/__section_display__.html' with section_url='edit-hero-section' name='Hero' %}
-    {% endif %}
+    {% with section_url='edit-hero-section' name='Hero' %}
+    {% include '1_home/_home_data/_section_display_.html' %}
+    {% endwith %}
 
 {% endif %}

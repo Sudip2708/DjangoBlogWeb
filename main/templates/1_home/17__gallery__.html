@@ -1,5 +1,5 @@
-<!-- Include for 1_home/10__base__.html -->
-<!-- for Gallery Section -->
+<!-- Gallery Section - galerie hlavních obrázků (pro 4 články) -->
+<!-- Určeno pro 1_home/10__base__.html -->
 
 
 <!-- Podmínka kontrolující, zda má být sekce viditelná -->
@@ -8,20 +8,18 @@
     <!-- Hlavní kontejner -->
     <section class="p-0">
 
+        <!-- Tlačítko pro skrytí/zobrazení editačního formuláře sekce (pouze pro url edit a superuser) -->
+        {% with name='Gallery' %}
+        {% include '1_home/_home_data/_edit_button_.html' %}
+        {% endwith %}
 
-        <!-- Podmínka pro zobrazení pouze na URL edit a pro SuperUser -->
+        <!-- Editační formulář sekce (pouze pro url edit a superuser) -->
         {% if user.is_superuser and request.path == '/edit/' %}
-
-            <!-- Tlačítko pro skrytí/zobrazení editačního formuláře sekce  -->
-            {% include '1_home/_common/__edit_button__.html' with name='Gallery' %}
-
-            <!-- Editační formulář sekce -->
-            {% include '1_home/_gallery/__edit_section__.html' %}
-
+        {% include '1_home/_home_edit/__gallery__.html' %}
         {% endif %}
 
         <!-- Hlavní část: Zobrazení obrázků vybraných článků -->
-        {% include '1_home/_gallery/__page_articles__.html' %}
+        {% include '1_home/_home_data/_gallery_articles_.html' %}
 
     </section>
 
@@ -29,8 +27,8 @@
 {% else %}
 
     <!-- Tlačítko pro zobrazení sekce (pouze pro url edit a superuser) -->
-    {% if user.is_superuser and request.path == '/edit/' %}
-    {% include '1_home/_common/__section_display__.html' with section_url='edit-gallery-section' name='Gallery' %}
-    {% endif %}
+    {% with section_url='edit-gallery-section' name='Gallery' %}
+    {% include '1_home/_home_data/_section_display_.html' %}
+    {% endwith %}
 
 {% endif %}

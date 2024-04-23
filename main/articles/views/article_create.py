@@ -10,9 +10,9 @@ from taggit.models import Tag
 from articles.forms.article_form import ArticleForm
 from .article_common_contex_mixin import CommonContextMixin
 from articles.models.article import Article
-from utilities.for_articles.get_author import get_author
-from utilities.for_articles.clean_tagify_input import clean_tagify_input
-from utilities.for_articles.check_and_delete_unused_tags import check_and_delete_unused_tags
+from articles.utilities.get_author import get_author
+from articles.utilities.clean_tagify_input import clean_tagify_input
+from articles.utilities.check_and_delete_unused_tags import check_and_delete_unused_tags
 
 
 class ArticleCreateView(CreateView, CommonContextMixin):

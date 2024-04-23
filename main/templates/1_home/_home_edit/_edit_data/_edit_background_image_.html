@@ -1,0 +1,16 @@
+<!-- Pole pro výběr obrázku oddělovacích částí -->
+<!-- Rozšířenní pro 1_home/_home_edit/__hero__.html -->
+<!-- Rozšířenní pro 1_home/_home_edit/__divider__.html -->
+
+
+<!-- Načtení tagu pro přidání crispy vzhledu -->
+{% load crispy_forms_tags %}
+
+<!-- Pole pro výběr obrázku -->
+{{ field|as_crispy_field }}
+
+<!-- Pole pro oznam případných chyb -->
+<div class="form-group mb-4">
+    {{ field.errors }}
+</div>
+

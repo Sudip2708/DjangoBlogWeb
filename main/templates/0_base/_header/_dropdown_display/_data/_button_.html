@@ -1,0 +1,26 @@
+<!-- Tlačítko pro zobrazení a skrytí vnitřních prvků rozklápěcího menu hlavní navigace -->
+<!-- Určeno pro 0_base/_header/_dropdown_display/__dropdown_menu__.html -->
+
+
+<!-- Vyklápěcí tlačítko -->
+<button type="button"
+        class="btn btn-link dropdown-toggle p-0 left-margin-sb-button"
+        data-bs-toggle="dropdown"
+        aria-expanded="false">
+
+    <!-- Když je uživatel přihlášen zobrazí se jeho profilový obrázek -->
+    {% if user.is_authenticated %}
+        <img alt="User Profile Picture"
+             src="{{ user.profile_picture_thumbnail.url }}?{% now 'U' %}"
+             width="40"
+        />
+
+    <!-- Když uživatel není přihlášen zobrazí se prázdné místo -->
+    {% else %}
+        <span></span>
+        <span></span>
+        <span></span>
+
+    {% endif %}
+
+</button>

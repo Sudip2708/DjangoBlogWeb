@@ -1,0 +1,17 @@
+<!-- Levá strana spodní linky patičky -->
+<!-- Určeno pro 0_base/_footer/__end_line_section__.html -->
+
+
+<div class="col-md-6 text-md-start">
+
+    <!-- Podmínka pro kontrolu zda jsou data pro pravou část -->
+    {% if footer_data.end_line.right_text.value %}
+
+        <!-- Zobrazení textu -->
+        <p class="mb-0 fw-light text-sm">
+            {{ footer_data.end_line.right_text.value }}
+        </p>
+
+    {% endif %}
+
+</div>

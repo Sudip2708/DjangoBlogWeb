@@ -1,0 +1,37 @@
+<!-- Položky záložky settings pro ostatní nastavení -->
+<!-- Určeno pro 5_create_article/52__form__.html -->
+
+
+<!-- Kontejner sdružující status článku a kategorie -->
+<div class="pt-4">
+    <div class="row">
+
+        <!-- Status článku -->
+        {% include '5_create_article/_form/_data/_input_status_.html' %}
+
+        <!-- Kategorie -->
+        {% include '5_create_article/_form/_data/_input_category_.html' %}
+
+    </div>
+</div>
+
+<!-- Kontejner sdružující nastavení pro předcházející a násleedující článek -->
+<div class="">
+    <div class="row">
+
+        <!-- Předcházející článek -->
+        {% include '5_create_article/_form/_data/_input_previous_article_.html' %}
+
+        <!-- Následující článek -->
+        {% include '5_create_article/_form/_data/_input_next_article_.html' %}
+
+    </div>
+</div>
+
+<!-- Nastavení tagů -->
+{% include '5_create_article/_form/_data/_input_tags_.html' %}
+
+<!-- Odesílací tlačítka -->
+{% with current_tab='settings' %}
+{% include '5_create_article/_form/_data/__buttons_both__.html' %}
+{% endwith %}

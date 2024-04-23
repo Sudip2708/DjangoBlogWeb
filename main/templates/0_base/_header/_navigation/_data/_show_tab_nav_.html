@@ -1,0 +1,14 @@
+<!-- Položka pro zobrazení doplňující navigační lišty (pro kategorie a podobné články) -->
+<!-- Určeno pro 0_base/_header/_navigation/__special_offer__.html -->
+
+
+<li class="nav-item">
+    <a class="btn btn-link drop-down-title p-0 light-grey-color"
+       href="{% url 'user_sidebar_movements' hash=hash %}">
+        {% if is_display %}
+            Hide {{ name }}
+        {% else %}
+            Show {{ name }}
+        {% endif %}
+    </a>
+</li>

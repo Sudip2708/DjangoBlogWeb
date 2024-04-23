@@ -1,34 +1,23 @@
-<!-- Linking to the parent template -->
+<!-- Šablona pro stránky s jedním článkem -->
+
+
+<!-- Odkaz na nadřazenou šablonu -->
 {% extends '2_main/20__base__.html' %}
 
-<!-- Start of block for the parent template -->
+
+<!-- Začátek vnitřního bloku -->
 {% block inner_content %}
 
-
-    <!-- Article -->
+    <!-- Článek -->
     {% include '4_article/41__article__.html' %}
 
-    <!-- Article tags -->
-    {% include '__article/__tags__.html' with atr="article" %}
-
-
     <!-- Article Previous and Next -->
-    <div class="articles-nav d-flex justify-content-between align-items-stretch flex-column flex-md-row mb-5">
+    {% include '4_article/42__previous_and_next__.html' %}
 
-        <!-- Previous -->
-        {% include '__article/__previous__.html' %}
-
-        <!-- Next -->
-        {% include '__article/__next__.html' %}
-
-    </div>
-
-    <!-- Display Comments -->
-    {% include '4_article/42__display_comments__.html' %}
+    <!-- Kometáře -->
+    {% include '4_article/43__display_comments__.html' %}
 
     <!-- Add Comments -->
-    {% include '4_article/43__add_comment__.html' %}
+    {% include '4_article/44__add_comment__.html' %}
 
-
-<!-- End of block for the parent template -->
 {% endblock inner_content %}

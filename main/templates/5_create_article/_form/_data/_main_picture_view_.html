@@ -1,0 +1,35 @@
+<!-- Zobrazení aktuálního hlavního obrázku -->
+<!-- Určeno pro 1_home/_home_data/__featured_articles__.html -->
+<!-- Určeno pro 5_create_article/_form/__overview__.html -->
+
+
+<!-- Kontejner sdružující vnitřní prvky se specifikací třídy -->
+<div class="class">
+
+    <!-- Kontrola, zda obrázek existuje -->
+    {% if article.main_picture_for_article %}
+
+        <!-- Zobrazení na zařízeních XL a větších -->
+        <img alt="Article Main Picture"
+             src="{{ article.main_picture_for_article.url }}?{% now 'U' %}"
+             class="img-fluid d-none d-xl-block"/>
+
+        <!-- Zobrazení na zařízeních LG a menších -->
+        <img alt="Article Main Picture"
+             src="{{ article.main_picture_preview.url }}?{% now 'U' %}"
+             class="img-fluid d-block d-xl-none"/>
+
+    <!-- Pokud ne, zobrazí se defaultní obrázek -->
+    {% else %}
+
+        <!-- Načtení adresy ke složce static -->
+        {% load static %}
+
+        <!-- Defaultní obrázek -->
+        <img alt="Image Not Uploaded Yet"
+             src="{% static 'img/image_is_not_uploaded_yet.jpg' %}"
+             class="img-fluid"/>
+
+    {% endif %}
+
+</div>

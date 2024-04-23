@@ -1,0 +1,48 @@
+<!-- Editační část sekce -->
+<!-- Rozšířenní pro 1_home/13__featured_articles__.html -->
+
+
+<!-- Načtení tagu pro přidání crispy vzhledu -->
+{% load crispy_forms_tags %}
+
+<!-- Hlavní kontejner -->
+<div class="collapse mt-3" id="featuredSectionCollapse">
+    <div class="card card-body">
+
+        <!-- Formulář -->
+        <form method="POST"
+              enctype="multipart/form-data"
+              action="{% url 'edit-featured-section' %}">
+
+            <!-- Zabezpečení přenosu dat -->
+            {% csrf_token %}
+
+            <!-- Kontejner pro výběr článků -->
+            <div class="row">
+
+                <!-- Článek 1 -->
+                {% with article=featured_edit_form.featured_article_1 class='col-lg-4' %}
+                {% include '1_home/_home_edit/_edit_data/_edit_article_.html' %}
+                {% endwith %}
+
+                <!-- Článek 2 -->
+                {% with article=featured_edit_form.featured_article_2 class='col-lg-4' %}
+                {% include '1_home/_home_edit/_edit_data/_edit_article_.html' %}
+                {% endwith %}
+
+                <!-- Článek 3 -->
+                {% with article=featured_edit_form.featured_article_3 class='col-lg-4' %}
+                {% include '1_home/_home_edit/_edit_data/_edit_article_.html' %}
+                {% endwith %}
+
+            </div>
+
+            <!-- Odesílací tlačítko a zaškrtávací pole pro nastavení viditelnosti sekce -->
+            {% with checkbox=featured_edit_form.display_featured_section title='Featured' %}
+            {% include '1_home/_home_edit/_edit_data/_submit_button_with_display_checkbox_.html' %}
+            {% endwith %}
+
+        </form>
+
+    </div>
+</div>

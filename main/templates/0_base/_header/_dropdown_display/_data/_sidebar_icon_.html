@@ -1,0 +1,14 @@
+<!-- Ikona pro skrytí bočního panelu -->
+<!-- Určeno pro 0_base/_header/__dropdown_display__.html -->
+
+
+<!-- Načtení cesty ke složce s ikonou -->
+{% load static %}
+
+<!-- Zobrazit ikonu pro skrytí postranního panelu -->
+<a class="p-0 left-margin-hide-sb-icon "
+   href="{% url 'user_sidebar_movements' hash='#sidebar' %}">
+    <img alt="Hide Side-Panel Icon"
+         src="{% static 'img/hide_side_panel[150].jpg' %}"
+         width="38"/>
+</a>

@@ -3,7 +3,7 @@ print("### main/users/forms/author_profile_form.py")
 from django import forms
 
 from articles.models.article_author import ArticleAuthor
-from utilities.shared.hide_current_from_image_field import hide_current_from_image_field
+from users.utilities.shared.hide_current_from_image_field import hide_current_from_image_field
 
 
 

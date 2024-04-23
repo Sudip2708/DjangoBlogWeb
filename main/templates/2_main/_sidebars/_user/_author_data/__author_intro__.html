@@ -1,0 +1,25 @@
+<!-- Úvodní část pro vnitřní nabídku položek autora -->
+<!-- Určeno pro 2_main/_sidebars/_user/__author__.html -->
+
+
+<!-- Kontejner pro profilový obrázek, jméno a tlačítko rozklápěcí vnitřní nabídky -->
+<div class="d-flex align-items-center pt-2" >
+
+    <!-- Profilový obrázek autora -->
+    {% include '2_main/_sidebars/_user/_author_data/_author_profile_picture_.html' %}
+
+    <!-- Kontejner pro jméno a tlačítko rozklápěcí vnitřní nabídky -->
+    <div class="left-margin-sidebar-author-name">
+
+        <!-- Jméno autora -->
+        {% include '2_main/_sidebars/_user/_author_data/_author_name_.html' %}
+
+        <!-- Tlačítko rozklápěcí vnitřní nabídky -->
+        {% with ar_con='sidebar_user_author_menu' ar_exp=user.sidebar_user_author_menu title='Author Menu' %}
+        {% include '2_main/_sidebars/_common/__button_collapse_ajax__.html' %}
+        {% endwith %}
+
+    </div>
+
+</div>
+

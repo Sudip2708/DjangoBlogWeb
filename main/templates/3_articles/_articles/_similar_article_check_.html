@@ -1,0 +1,12 @@
+<!-- Kontrola, zda při volání stránky s podobnými články  existují nějaké data -->
+<!-- Určeno pro 3_articles/32__articles__.html -->
+
+
+{% if not articles_results and 'similar' in url_name %}
+
+    <!-- Pokud ne, zobrazí se tento text -->
+    <h6 class="grey-text">
+        There are no other articles with tags that have articles in the result.
+    </h6>
+
+{% endif %}

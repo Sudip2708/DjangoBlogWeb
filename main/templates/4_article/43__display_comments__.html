@@ -1,0 +1,26 @@
+<!-- Zobrazení komentářů -->
+<!-- Určeno pro 4_article/40__base__.html -->
+
+
+<div class="mb-5">
+
+    <!-- Nadpis a počet komentářů -->
+    {% include '4_article/_comment_data/_title_and_comment_count_.html' %}
+
+    <!-- Cyklus na procházení komentářů -->
+    {% for comment in article.get_comments %}
+
+        <!-- Kontejner sdružující vnitřní položky -->
+        <div class="d-flex align-items-start ">
+
+            <!-- Profilový obrázek uživatele -->
+            {% include '4_article/_comment_data/_comment_author_picture_.html' %}
+
+            <!-- Zobrazení komentáře s jménem autora a data vytvoření -->
+            {% include '4_article/_comment_data/_comment_display_.html' %}
+
+        </div>
+
+    {% endfor %}
+
+</div>

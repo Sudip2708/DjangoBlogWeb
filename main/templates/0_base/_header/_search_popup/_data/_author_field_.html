@@ -1,0 +1,26 @@
+<!-- Pole pro výběr autora -->
+<!-- Určeno pro 0_base/_header/_search_popup/_data/__author__.html -->
+
+
+<div class="sub-div form-group row m-1 mt-3">
+
+    <!-- Pole pro výběr z nabídnutých možností -->
+    <select class="form-control article-autor-height"
+            id="author_select"
+            name="author_select">
+
+        <!-- Vnitřní popis pole -->
+        <option value="">
+            Choose author...
+        </option>
+
+        <!-- Cyklus pro nabídku autorů -->
+        {% for author in all_authors %}
+            <option value="{{ author.id }}">
+                {{ author.author }}
+            </option>
+        {% endfor %}
+
+    </select>
+
+</div>

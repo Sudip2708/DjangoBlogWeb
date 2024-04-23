@@ -1,0 +1,37 @@
+<!-- Nastavení položek 4. sloupce editační části patičky -->
+<!-- Rozšířenní pro 0_base/_footer/_edit_data/__columns_setting__.html -->
+
+
+<!-- Načtení šablonových tagů -->
+{% load crispy_forms_tags %}
+{% load widget_tweaks %}
+
+<div class="col-lg-3">
+
+    <!-- Nastavení položek pro vybrané články -->
+    {{ footer_edit_form.article_1|as_crispy_field }}
+    {{ footer_edit_form.article_2|as_crispy_field }}
+    {{ footer_edit_form.article_3|as_crispy_field }}
+
+    <!-- Nastavení viditelnosti posledního řádku patičky (první div je jen pro odskočení řádku) -->
+    <div class="mt-4">.</div>
+    <div class="form-group mb-3 mt-4">
+
+        <!-- Zaškrtávací pole -->
+        {{ footer_edit_form.display_footer_end_section|add_class:"form-check-input" }}
+
+        <!-- Popis pole -->
+        <label for="{{ footer_edit_form.display_footer_end_section.id_for_label }}"
+               class="checkbox-label">
+            Display Footer End Section
+        </label>
+
+    </div>
+
+    <!-- Nastavení položek posledního řádku patičky -->
+    {{ footer_edit_form.right_text|as_crispy_field }}
+    {{ footer_edit_form.left_text|as_crispy_field }}
+    {{ footer_edit_form.left_link_text|as_crispy_field }}
+    {{ footer_edit_form.left_link_url|as_crispy_field }}
+
+</div>

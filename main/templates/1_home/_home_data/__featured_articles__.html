@@ -1,0 +1,71 @@
+<!-- Část pro články sekce -->
+<!-- Rozšířenní pro 1_home/13__featured_articles__.html -->
+
+
+<!-- Procházení článků -->
+{% for article in featured_data.articles %}
+
+    <!-- Kontrola, článek obsahuje data -->
+    {% if article %}
+
+        <!-- Hlavní kontejner -->
+        <div class="row d-flex align-items-stretch g-0">
+
+            <!-- Umístnění hlavního obrázku před článkem (pro zařízení > LG + sudá iterace) -->
+            {% if forloop.counter|divisibleby:2 %}
+                <div class="col-lg-5 d-none d-lg-block">
+                    {% include '1_home/_home_data/_main_picture_.html' %}
+                </div>
+            {% endif %}
+
+            <!-- Umístnění hlavního obrázku nad článkem (pro zařízení < LG) -->
+            <div class="col-lg-5 mt-5 mb-2 d-lg-none">
+                {% include '1_home/_home_data/_main_picture_.html' %}
+            </div>
+
+            <!-- Kontejner pro obsah článku -->
+            <div class="col-lg-7 ">
+                <div class="text-inner d-flex align-items-center h-100 bg-light">
+                    <div class="content px-4 px-lg-5">
+
+                        <!-- Kategorie -->
+                        {% include '3_articles/_articles/_article_data/_category_.html' %}
+
+                        <!-- Nadpis -->
+                        {% with class='mb-3' %}
+                        {% include '3_articles/_articles/_article_data/_title_.html' %}
+                        {% endwith %}
+
+                        <!-- Popis -->
+                        {% include '1_home/_home_data/_overview_.html' %}
+
+                        <!-- Kontejner pro patičku článku -->
+                        <ul class="list-inline list-separated text-gray-500 mb-0">
+
+                            <!-- Odkaz na autora -->
+                            {% include '3_articles/_articles/_article_data/_author_.html' %}
+
+                            <!-- Stáří článku -->
+                            {% include '3_articles/_articles/_article_data/_published_ago_.html' %}
+
+                            <!-- Počet komentářů -->
+                            {% include '3_articles/_articles/_article_data/_comment_count_.html' %}
+
+                        </ul>
+
+                    </div>
+                </div>
+            </div>
+
+            <!-- Umístnění hlavního obrázku před článkem (pro zařízení > LG + lichá iterace) -->
+            {% if not forloop.counter|divisibleby:2 %}
+                <div class="col-lg-5 d-none d-lg-block">
+                    {% include '1_home/_home_data/_main_picture_.html' %}
+                </div>
+            {% endif %}
+
+        </div>
+
+    {% endif %}
+
+{% endfor %}

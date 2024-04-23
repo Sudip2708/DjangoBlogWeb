@@ -6,7 +6,7 @@ from django.contrib.auth.decorators import login_required
 
 from articles.models.article_author import ArticleAuthor
 from users.forms.user_profile_form import UserProfileForm
-from utilities.for_users.clean_profile_picture import clean_profile_picture
+from users.utilities.clean_profile_picture import clean_profile_picture
 
 
 @login_required

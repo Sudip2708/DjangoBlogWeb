@@ -9,10 +9,10 @@ import os
 
 from .managers import CustomUserManager
 from .user_settings_mixin import UserSettingsMixin
-from utilities.for_users.create_default_username import create_default_username
-from utilities.for_users.create_default_profile_picture import create_default_profile_picture
+from users.utilities.create_default_username import create_default_username
+from users.utilities.create_default_profile_picture import create_default_profile_picture
 
-from utilities.shared.create_thumbnail import create_thumbnail
+from users.utilities.shared.create_thumbnail import create_thumbnail
 
 
 class CustomUser(AbstractUser, UserSettingsMixin):

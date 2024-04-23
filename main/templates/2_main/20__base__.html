@@ -1,48 +1,37 @@
-<!-- Linking to the parent template -->
+<!-- Základní šablona pro všechny stránky obsahující boční panel -->
+
+
+<!-- Odkaz na nadřazenou šablonu -->
 {% extends '0_base/00__base__.html' %}
 
-<!-- Start of block for the parent template -->
+
+<!-- Začátek vnitřního bloku -->
 {% block main_content %}
 
-
-    <!-- Base containers -->
+    <!-- Základní kontejner -->
     <section>
-
-        <!-- Content displayed on large devices -->
         <div class="container">
             <div class="row gy-5">
 
-                <!-- Container for main context -->
-                <!-- Nastavení pro počtu sloupců v kontejneru -->
-                <!-- Když je uživatel přihlášen a má zapnutý sidebar -->
-                {% if user.sidebar %}
-                    <main class="col-xl-8">
-                {% else %}
-                    <!-- Jiné případy pro přihlášeného uživatele -->
-                    <main class="col-xl-12">
-                {% endif %}
+                <!-- Nastavení počtu sloupců pro obsah, když uživatel má zapnutý sidebar (2/3 plochy) -->
+                <main class="{% if user.sidebar %}col-xl-8{% endif %}">
 
-
+                    <!-- Kontejner por vnitřní obsah -->
                     <div class="container">
 
-                        <!-- Context -->
+                        <!-- Část pro vložení navázaných šablon s dalším obsahem -->
                         {% block inner_content %}
                         {% endblock inner_content %}
 
                     </div>
+
                 </main>
 
-                <!-- Sidebar -->
-                {% if user.sidebar %}
-                    {% include '2_main/23__sidebar__.html' %}
-                {% endif %}
+                <!-- Postranní panel - zobrazí se je-li zapnut -->
+                {% include '2_main/21__sidebar__.html' %}
 
             </div>
-
         </div>
-
     </section>
 
-
-<!-- End of block for the parent template -->
 {% endblock main_content %}

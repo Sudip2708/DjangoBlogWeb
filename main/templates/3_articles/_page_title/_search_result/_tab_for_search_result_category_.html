@@ -1,0 +1,10 @@
+<!-- Záložka zobrazení kategorií pro zobrazení vásledku vyhledávání -->
+<!-- Určeno pro 3_articles/_page_title/__for_search_results__.html -->
+
+
+<li class="nav-item ">
+    <a href="{% url 'article-search-results-category' query=search_query category='category' category_slug=current_category_slug %}"
+       class="nav-link">
+        Show Category
+    </a>
+</li>

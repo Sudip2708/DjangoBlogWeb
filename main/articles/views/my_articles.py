@@ -21,9 +21,6 @@ class MyArticlesView(CommonContextMixin, ListView):
     # Název objektu v kontextu (seznam článků)
     context_object_name = 'articles_results'
 
-    # Počet článků na stránku
-    paginate_by = 4
-
     # Název stránky
     page_title = "My Articles"
 
@@ -85,9 +82,12 @@ class MyArticlesView(CommonContextMixin, ListView):
         context = super().get_context_data(**kwargs)
 
         # Přidání názvu stránky do kontextu
-        context['page_title'] = self.page_title
+        context['page_title'] = 'My Articles'
 
         # Přidání aktuální záložky do kontextu
         context['current_tab'] = self.kwargs.get('current_tab')
+
+        # Definování jména URL cesty
+        context['url_name'] = 'my-articles'
 
         return context

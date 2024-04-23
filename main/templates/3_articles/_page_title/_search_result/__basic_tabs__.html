@@ -1,0 +1,23 @@
+<!-- Záložky pro výsledek hledání, když není navigace přepnutá na kategorie -->
+<!-- Určeno pro 3_articles/_page_title/__for_search_results__.html -->
+
+
+<!-- Záložka pro zobrazení vásledku vyhledávání -->
+{% include '3_articles/_page_title/_search_result/_tab_for_search_result_.html' %}
+
+<!-- Záložka pro zobrazení podobných článků -->
+{% include '3_articles/_page_title/_search_result/_tab_for_similar_.html' %}
+
+<!-- Podmínka kontrolující jestli je nějaký obsah pro výsledek hledání -->
+{% if articles_results %}
+
+    <!-- Záložka pro zobrazení kategorií vásledku vyhledávání -->
+    {% if url_name == 'article-search-results' %}
+    {% include '3_articles/_page_title/_search_result/_tab_for_search_result_category_.html' %}
+
+    <!-- Záložka pro zobrazení kategorií podobných článků -->
+    {% elif url_name == 'article-search-similar' %}
+    {% include '3_articles/_page_title/_search_result/_tab_for_similar_category_.html' %}
+    {% endif %}
+
+{% endif %}

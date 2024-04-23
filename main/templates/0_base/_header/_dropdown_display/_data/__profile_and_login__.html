@@ -1,0 +1,26 @@
+<!-- Odkazy pro úpravu profilu, odhlášení anebo přihlášení pro nepřihlášeného uživatele -->
+<!-- Určeno pro 0_base/_header/_dropdown_display/__dropdown_menu__.html -->
+
+
+<!-- Podmínka kontrolující zda je uživatel přihlášen -->
+{% if user.is_authenticated %}
+
+    <!-- Odkaz na správu profilu -->
+    {% with name='Manage Profile' url_name='profile_update_user' %}
+    {% include '0_base/_header/_dropdown_display/_data/_nav_item_.html' %}
+    {% endwith %}
+
+    <!-- Odkaz na odhlášení -->
+    {% with name='Logout' url_name='account_logout' %}
+    {% include '0_base/_header/_dropdown_display/_data/_nav_item_.html' %}
+    {% endwith %}
+
+<!-- Podmínka pro případ, že uživatel není přihlášen -->
+{% else %}
+
+    <!-- Odkaz na přihlášení -->
+    {% with name='Login' url_name='account_login' %}
+    {% include '0_base/_header/_dropdown_display/_data/_nav_item_.html' %}
+    {% endwith %}
+
+{% endif %}

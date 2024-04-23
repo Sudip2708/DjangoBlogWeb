@@ -1,0 +1,21 @@
+<!-- Odkazy pro domácí stránku, stránku s články a hledání -->
+<!-- Určeno pro 0_base/_header/_dropdown_display/__dropdown_menu__.html -->
+
+
+<!-- Odkaz na domácí stránku -->
+{% with name='Homepage' url_name='home' class='d-lg-none' %}
+{% include '0_base/_header/_dropdown_display/_data/_nav_item_.html' %}
+{% endwith %}
+
+<!-- Odkaz na stránku s články -->
+{% with name='Articles' url_name='article-list' class='d-lg-none' %}
+{% include '0_base/_header/_dropdown_display/_data/_nav_item_.html' %}
+{% endwith %}
+
+<!-- Odkaz na vyhledávání -->
+{% include '0_base/_header/_dropdown_display/_data/_search_in_articles_.html' %}
+
+<!-- Oddělovací linka -->
+{% with class='d-lg-none' %}
+{% include '0_base/_header/_dropdown_display/_data/_dropdown_divider_.html' %}
+{% endwith %}

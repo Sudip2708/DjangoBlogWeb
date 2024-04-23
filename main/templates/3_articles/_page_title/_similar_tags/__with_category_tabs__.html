@@ -1,0 +1,26 @@
+<!-- Zobrazení záložek pro kategorie pro daný tag a podobné články -->
+<!-- Určeno pro 3_articles/_page_title/__for_tags__.html -->
+
+
+<!-- Cyklus na procházení kategorií -->
+{% for category in category_items %}
+
+    <!-- Zobrazení kategorií pro vybraný tag -->
+    {% if url_name == 'article-tag-list-category' %}
+    {% include '3_articles/_page_title/_similar_tags/_category_for_tag_.html' %}
+
+    <!-- Zobrazení kategorií pro podobné články -->
+    {% elif url_name == 'article-tag-list-similar-category' %}
+    {% include '3_articles/_page_title/_similar_tags/_category_for_similar_.html' %}
+    {% endif %}
+
+{% endfor %}
+
+    <!-- Záložka pro návrat na aktuálně vybraný tag -->
+    {% if url_name == 'article-tag-list-category' %}
+    {% include '3_articles/_page_title/_similar_tags/_category_return_tag_.html' %}
+
+    <!-- Záložka pro návrat na podobné články -->
+    {% elif url_name == 'article-tag-list-similar-category' %}
+    {% include '3_articles/_page_title/_similar_tags/_category_return_similar_.html' %}
+    {% endif %}

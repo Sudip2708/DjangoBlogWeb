@@ -1,0 +1,35 @@
+<!-- Zaškrtávací pole pro výběr částí v kterých se má vyhledávat -->
+<!-- Určeno pro 0_base/_header/_search_popup/__sarch_options__.html -->
+
+
+<!-- Kontejner združující popis a jednotlivé nabídky-->
+<div class="col min-width-xl">
+    <div class="main-div">
+
+        <!-- Popis této části -->
+        {% with title='Where do you want to search?' %}
+        {% include '0_base/_header/_search_popup/_data/_title_.html' %}
+        {% endwith %}
+
+        <!-- Kontejner združující jednotlivé nabídky -->
+        <div class="sub-div custom-row mt-3">
+
+            <!-- Zaškrtávací pole pro hledání v názvech článků -->
+            {% with label='Titles' id='title_checkbox' %}
+            {% include '0_base/_header/_search_popup/_data/_checkbox_.html' %}
+            {% endwith %}
+
+            <!-- Zaškrtávací pole pro hledání v popisech článků -->
+            {% with label='Overview' id='overview_checkbox' %}
+            {% include '0_base/_header/_search_popup/_data/_checkbox_.html' %}
+            {% endwith %}
+
+            <!-- Zaškrtávací pole pro hledání v obsahu článků -->
+            {% with label='Content' id='content_checkbox' %}
+            {% include '0_base/_header/_search_popup/_data/_checkbox_.html' %}
+            {% endwith %}
+
+        </div>
+
+    </div>
+</div>

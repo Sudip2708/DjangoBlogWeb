@@ -1,0 +1,49 @@
+<!-- Postranní panel -->
+<!-- Určeno pro 2_main/20__base__.html -->
+
+
+{% include '2_main/css/css_sidebar.html' %}
+
+
+<!-- Kontrola, zda má uživatel zapnutý postranní panel -->
+{% if user.sidebar %}
+
+    <!-- Základní kontejner postranního panelu -->
+    <aside class="col-lg-4 ">
+
+        <!-- Zobrazení postranního panelu, na stránce pro správu účtu -->
+        {% if user_form or author_form %}
+            {% include '2_main/_sidebars/__user__.html' %}
+
+        <!-- Zobrazení postranního panelu na stránkách pro články -->
+        {% else %}
+
+            <!-- Cyklus pro procházení v seznamu panelů (setříděných dle jejich pořadí) -->
+            <!-- Pro poslední panel v pořadí bude hodnota is_last True, jinak False -->
+            {% for panel in sorted_panels %}
+
+                <!-- Panel pro vyhledávání -->
+                {% if panel.name == 'search' %}
+                {% include '2_main/_sidebars/__search__.html' with is_last=forloop.last %}
+
+                <!-- Panel pro správu uživatele -->
+                {% elif panel.name == 'user' %}
+                {% include '2_main/_sidebars/__user__.html' with is_last=forloop.last %}
+
+                <!-- Panel pro kategorie -->
+                {% elif panel.name == 'category' %}
+                {% include '2_main/_sidebars/__category__.html' with is_last=forloop.last %}
+
+                <!-- Panel pro tagy -->
+                {% elif panel.name == 'tags' %}
+                {% include '2_main/_sidebars/__tags__.html' with is_last=forloop.last %}
+
+                {% endif %}
+
+            {% endfor %}
+
+        {% endif %}
+
+    </aside>
+
+{% endif %}

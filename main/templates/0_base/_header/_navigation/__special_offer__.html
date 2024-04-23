@@ -1,0 +1,24 @@
+<!-- Položka pro navigaci stránky v hlavičce webu -->
+<!-- Určeno pro 0_base/_header/__navigation__.html -->
+
+
+<!-- Nabídka pro zobrazení a skrytí navigace podle kategorií -->
+{% if url_name == 'article-list' or url_name == 'article-category-list' %}
+    {% with name='Category' hash='#sidebar_category_navigation' %}
+    {% with is_display=user.sidebar_category_navigation %}
+    {% include '0_base/_header/_navigation/_data/_show_tab_nav_.html' %}
+    {% endwith %}{% endwith %}
+
+<!-- Nabídka pro zobrazení a skrytí navigace podle tagů -->
+{% elif search_query or tag_slug %}
+    {% with name='Similar' hash='#show_tab_for_similar' %}
+    {% with is_display=user.show_tab_for_similar %}
+    {% include '0_base/_header/_navigation/_data/_show_tab_nav_.html' %}
+    {% endwith %}{% endwith %}
+
+{% endif %}
+
+<!-- Nabídka pro zobrazení a skrytí tlačítek pro úpravu hlavní stránky -->
+{% include '0_base/_header/_navigation/_data/_home_page_edit_.html' %}
+
+

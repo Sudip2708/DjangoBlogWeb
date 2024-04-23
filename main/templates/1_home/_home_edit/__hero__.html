@@ -1,0 +1,40 @@
+<!-- Editační část sekce -->
+<!-- Rozšířenní pro 1_home/11__hero__.html -->
+
+
+<!-- Hlavní kontejner -->
+<div class="collapse mt-3" id="heroSectionCollapse">
+    <div class="card card-body">
+
+        <!-- Formulář -->
+        <form method="POST"
+              enctype="multipart/form-data"
+              action="{% url 'edit-hero-section' %}">
+
+            <!-- Zabezpečení přenosu dat -->
+            {% csrf_token %}
+
+            <!-- Obrázek sekce -->
+            {% with field=divider_edit_form.divider_image %}
+            {% include '1_home/_home_edit/_edit_data/_edit_background_image_.html' %}
+            {% endwith %}
+
+            <!-- Nadpis sekce -->
+            {% with field=hero_edit_form.hero_title label='Hero Title' %}
+            {% include '1_home/_home_edit/_edit_data/_edit_html_field_.html' %}
+            {% endwith %}
+
+            <!-- Odkaz s popisem -->
+            {% with field=hero_edit_form.hero_link label=hero_edit_form.hero_link_title %}
+            {% include '1_home/_home_edit/_edit_data/_edit_link_.html' %}
+            {% endwith %}
+
+            <!-- Odesílací tlačítko a zaškrtávací pole pro nastavení viditelnosti sekce -->
+            {% with checkbox=hero_edit_form.display_hero_section title='Hero' %}
+            {% include '1_home/_home_edit/_edit_data/_submit_button_with_display_checkbox_.html' %}
+            {% endwith %}
+
+        </form>
+
+    </div>
+</div>

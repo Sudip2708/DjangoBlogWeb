@@ -1,76 +1,30 @@
-<!-- Search Bar Widget -->
+<!-- Panel pro vyhledávání -->
+<!-- Určeno pro 2_main/21__sidebar__.html -->
 
 
-<!-- Drop-down menu -->
+<!-- Hlavní kontejner sdružující prvky panelu -->
 <div class="px-1 mt-2">
 
+    <!-- Kontejner pro prvky pro vyditelnost a pohyb panelu -->
     <div class="d-flex justify-content-between">
-        <!-- První dva prvky (zleva) -->
+
+        <!-- Vyditelnost panelu -->
         <div class="d-inline-block">
             {% with ar_exp=user.sidebar_search ar_con='sidebar_search' title='Search' %}
                 {% include '2_main/_sidebars/_common/__button_collapse__.html' %}
             {% endwith %}
         </div>
+
+        <!-- Pohyb panelu -->
         <div class="d-inline-block">
-            {% if user.sidebar_search_order != 1 %}
-                {% include '2_main/_sidebars/_common/__move_up__.html' with target='#MoveUp_search' %}
-            {% endif %}
-            {% if atr != "last" %}
-                {% include '2_main/_sidebars/_common/__move_down__.html' with target='#MoveDn_search' %}
-            {% endif %}
-        </div>
-    </div>
-
-
-    <!-- Drop-down items -->
-    <div class="collapse {% if user.sidebar_search %} show {% endif %}" id="sidebar_search">
-
-
-        <div class="card mb-4">
-            <div class="card-body">
-
-                <!-- Section overview -->
-                <div class="d-flex justify-content-between align-items-center">
-
-                    <!-- Section name -->
-                    <h3 class="h6">Search the blog</h3>
-
-                    <!-- Button -->
-                    {% with ar_con='sidebar_search_options' ar_exp=user.sidebar_search_options %}
-                        {% with title='Search Options' %}
-                            {% include '2_main/_sidebars/_common/__button_collapse_ajax__.html' %}
-                        {% endwith %}
-                    {% endwith %}
-
-                </div>
-
-                <!-- Search form -->
-                <form action="{% url 'article-search' %}" method="get">
-                    {% csrf_token %}
-                    <div class="input-group border-bottom">
-
-                        <!-- Search label -->
-                        <input class="form-control border-0 shadow-0 ps-0"
-                               type="text"
-                               id="search_query"
-                               name="q"
-                               placeholder="What are you looking for?">
-
-                        <!-- Search button -->
-                        <button class="btn btn-link btn-sm shadow-0 px-0 btn-lg " type="submit">
-                            <i class="fas fa-search m-3"></i>
-                        </button>
-
-                    </div>
-
-                    <!-- Drop-down menu -->
-                    {% include '2_main/_sidebars/_search/__search_dropdown_menu__.html' %}
-
-
-                </form>
-
-            </div>
+            {% with order=user.sidebar_search_order last=is_last up='#MoveUp_search' dn='#MoveDn_search' %}
+            {% include '2_main/_sidebars/_common/__sidebar_moves__.html' %}
+            {% endwith %}
         </div>
 
     </div>
+
+    <!-- Vnitřní položky panelu -->
+    {% include '2_main/_sidebars/_search/__search_mainframe__.html' %}
+
 </div>

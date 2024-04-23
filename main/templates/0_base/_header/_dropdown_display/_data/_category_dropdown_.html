@@ -1,0 +1,25 @@
+<!-- Vyklápěcí nabídka kategorií -->
+<!-- Určeno pro 0_base/_header/_dropdown_display/_data/__non_homepage_items__.html -->
+
+
+<!-- Kontejner sdružující nadpis a vyklápěcí nabídky a její položky -->
+<li class="nav-item">
+
+    <!-- Nadpis a vyklápěcí nabídky -->
+    <p class="dropdown-item dropdown-font t-0 m-0" >
+        Category
+    </p>
+
+    <!-- Vyklápěcí seznam s odkazy na zobrazení článků pro jednotlivé kategorie -->
+    <ul class="dropdown-menu dropdown-submenu dropdown-font">
+        {% for category in published_category %}
+            <li>
+                <a class="dropdown-item"
+                   href="{% url 'article-category-list' category_slug=category.slug %}">
+                    {{ category.title }}
+                </a>
+            </li>
+        {% endfor %}
+    </ul>
+</li>
+

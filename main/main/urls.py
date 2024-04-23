@@ -6,9 +6,13 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
+from articles.views.my_articles import MyArticlesView
 
 
 urlpatterns = [
+
+    # URL pro seznam článků od přihlášeného uživatele (autora)
+    path('my-articles/<str:current_tab>/', MyArticlesView.as_view(), name='my-articles'),
 
     # URL pro administrátorské rozhraní Django
     path('admin/', admin.site.urls),

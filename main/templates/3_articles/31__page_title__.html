@@ -1,27 +1,22 @@
-<!-- Rozšíření pro 3_articles/30__base__.html -->
-<!-- Nadpisy pro jednotlivé stránky -->
+<!-- Výběr nadpisu a případné navigace pro jednotlivé stránky -->
+<!-- Určeno pro 3_articles/30__base__.html -->
 
 
-
-<!-- Zobrazení všech článků a článků tříděných dle kategorií -->
+<!-- Nadpis a navigace pro články tříděných dle kategorií -->
 {% if url_name == 'article-list' or url_name == 'article-category-list' %}
-    {% include '3_articles/_page_title/__category_result_page__.html' %}
+    {% include '3_articles/_page_title/__for_categories__.html' %}
 
-
-<!-- Zobrazení pro stránku s vlastními články -->
+<!-- Nadpis a navigace pro stránku s vlastními články -->
 {% elif url_name == 'my-articles' %}
-    {% include '3_articles/_page_title/__my_articles__.html' %}
+    {% include '3_articles/_page_title/__for_my_articles__.html' %}
 
-
-<!-- Zobrazení článků pro výsledek hledání -->
+<!-- Nadpis a navigace pro výsledek hledání -->
 {% elif search_query %}
-    {% include '3_articles/_page_title/__search_result_page__.html' %}
+    {% include '3_articles/_page_title/__for_search_results__.html' %}
 
-
-<!-- Zobrazení článků tříděných dle tagů -->
+<!-- Nadpis a navigace pro články tříděných dle tagů -->
 {% elif tag_slug %}
-    {% include '3_articles/_page_title/__tag_result_page__.html' %}
-
+    {% include '3_articles/_page_title/__for_tags__.html' %}
 
 {% endif %}
 
