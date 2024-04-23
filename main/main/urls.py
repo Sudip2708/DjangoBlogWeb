@@ -6,46 +6,51 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
-from articles.views.my_articles import MyArticlesView
 
 
 urlpatterns = [
 
-    # URL pro seznam článků od přihlášeného uživatele (autora)
-    path('my-articles/<str:current_tab>/', MyArticlesView.as_view(), name='my-articles'),
-
+    # Adresy začínající s 'admin/'
     # URL pro administrátorské rozhraní Django
     path('admin/', admin.site.urls),
 
+    # Adresy začínající s 'tinymce/'
     # URL pro TinyMCE editor
     path('tinymce/', include('tinymce.urls')),
 
 
+    ### Adresy pro domácí stránku
+    # URL's pro domácí stránku
+    path('', include('homepage.urls_homepage')),
 
-    # URL's pro domácí stránku > přesměrování na urls aplikace homepage
-    path('', include('homepage.urls')),
-
-
-
-    # URL's pro správu přihlášení > přesměrování na urls aplikace users
-    path('accounts/', include('users.urls')),
-
-    # URL's pro správu účtů > přesměrování na urls aplikace users
-    path('profile/', include('users.urls')),
-
-    # URL's pro správu postranního panelu > přesměrování na urls aplikace users
-    path('user_sidebar/', include('users.urls')),
+    # URL pro editaci domácí stránky
+    path('edit/', include('homepage.urls_homepage_edit')),
 
 
+    ### Adresy pro stránky s články
+    # Adresy začínající s 'articles/'
+    path('articles/', include('articles.urls_articles')),
 
-    # URL's pro správu stránek s více články > přesměrování na urls aplikace articles
-    path('articles/', include('articles.urls')),
+    # Adresy začínající s 'article/'
+    path('article/', include('articles.urls_article')),
 
-    # URL's pro správu určitého článku > přesměrování na urls aplikace articles
-    path('article/', include('articles.urls')),
+    # Adresy začínající s 'search/'
+    path('search/', include('articles.urls_search')),
 
-    # URL's pro hledání v článcích > přesměrování na urls aplikace articles
-    path('search/', include('articles.urls')),
+    # Adresy začínající s 'my-articles/'
+    path('my-articles/', include('articles.urls_my_articles')),
+
+
+    ### Adresy pro správu uživatelů
+    # Adresy začínající s 'accounts/'
+    path('accounts/', include('users.urls_accounts')),
+
+    # Adresy začínající s 'profile/'
+    path('profile/', include('users.urls_profile')),
+
+    # Adresy začínající s 'user_sidebar/'
+    path('sidebar/', include('users.urls_sidebar')),
+
 
 ]
 
@@ -53,15 +58,3 @@ urlpatterns = [
 if settings.DEBUG:
     urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
-
-
-
-
-
-
-
-
-
-
-
-
