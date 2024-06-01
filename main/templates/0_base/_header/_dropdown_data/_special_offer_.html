@@ -1,0 +1,39 @@
+<!-- Displaying the category list (only on the article page and category page) -->
+<!-- Intended for 0_base/_header/_dropdown_data/__dropdown_menu__.html -->
+
+<!-- Display on devices smaller than LG -->
+<div class="d-none d-md-block d-lg-none">
+
+    <!-- Check if we are on the article list page or the category page -->
+    {% if url_name == 'article-list' or url_name == 'article-category-list' %}
+
+        <!-- Button -->
+        <li class="nav-item d-lg-none">
+            <a class="dropdown-item my-font-size-0-9rem "
+               href="{% url 'user_navigation_settings' hash='#bool_show_category_navigation' %}">
+                {% if user.settings.show_category_navigation %}Hide Category Tab{% else %}Show Category Tab{% endif %}
+            </a>
+        </li>
+
+        <!-- Divider line -->
+        <li class="nav-item"><hr class="dropdown-divider"></li>
+
+    {% endif %}
+
+    <!-- Displaying the list for similar articles (only on pages containing a tag in the address) -->
+    {% if search_query or tag_slug %}
+
+        <!-- Button -->
+        <li class="nav-item">
+            <a class="dropdown-item my-font-size-0-9rem "
+               href="{% url 'user_navigation_settings' hash='#bool_show_tab_for_similar' %}">
+                {% if user.settings.show_tab_for_similar %}Hide Similar Tab{% else %}Show Similar Tab{% endif %}
+            </a>
+        </li>
+
+        <!-- Divider line -->
+        <li class="nav-item"><hr class="dropdown-divider"></li>
+
+    {% endif %}
+
+</div>

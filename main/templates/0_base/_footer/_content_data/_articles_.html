@@ -1,0 +1,44 @@
+<!-- Section for selected footer articles -->
+<!-- Extension for 0_base/_footer/__content__.html -->
+
+<div class="col-md-4">
+
+    <!-- Iterating over articles -->
+    {% for article_key, article in footer.articles.items %}
+
+        <!-- Checking if the article contains data -->
+        {% if article %}
+
+            <!-- Wrapping articles in anchor and container -->
+            <a class="d-block mb-2" href="{{ article.article_url }}">
+                <div class="d-flex align-items-center">
+
+                    <!-- Article image -->
+                    <img class="img-fluid p-1 border border-gray-600 flex-shrink-0"
+                         src="{{ article.picture_path }}?{% now 'U' %}"
+                         alt="Selected article for footer"
+                         width="50">
+
+                    <!-- Title and publication date of the article -->
+                    <div class="ms-2 text-muted">
+
+                        <!-- Article title -->
+                        <p class="fw-bold mb-0">
+                            {{ article.title }}
+                        </p>
+
+                        <!-- Article date -->
+                        <span>
+                            {{ article.date }}
+                        </span>
+
+                    </div>
+
+                </div>
+            </a>
+
+        {% endif %}
+
+    {% endfor %}
+
+</div>

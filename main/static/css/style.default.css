@@ -12062,3 +12062,7 @@ STYLE SWITCHER FOR DEMO
 #style-switch h4, #style-switch .h4 {
   color: #495057;
 }
+
+.test_yellow {
+    background-color: yellow;
+}

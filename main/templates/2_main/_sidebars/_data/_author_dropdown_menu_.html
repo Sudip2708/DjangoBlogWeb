@@ -1,0 +1,71 @@
+<!-- Inner menu items for the author -->
+<!-- Intended for 2_main/_sidebars/_user/__author__.html -->
+
+<!-- Separator line and container for inner elements -->
+<div class="pt-3"><hr class="border-top my-color-grey"></div>
+<div class="d-flex align-items-center">
+
+    <!-- Section title for the author -->
+    <div class="w-10 author-section align-self-start my-font-size-0-8rem my-color-a0a0a0">
+        Author
+    </div>
+
+    <!-- Author items -->
+    <div class="w-90">
+
+        <!-- Author profile picture, name, and button to toggle inner content -->
+        <div class="d-flex align-items-center pt-2" >
+
+            <!-- Author profile picture -->
+            <div class="avatar flex-shrink-0 my-margin-left-5px">
+                <img alt="Author Profile Picture"
+                     src="{{ user.linked_author.profile_picture_thumbnail.url }}?{% now 'U' %}"
+                     class="img-fluid"/>
+            </div>
+
+            <!-- Author name and button to toggle inner content -->
+            <div class="my-margin-left-6px">
+
+                <!-- Author name -->
+                <p class="d-block mb-0 my-font-size-1-0rem my-font-weight-bold">
+                    <span>{{ user.linked_author.name }}</span>
+                </p>
+
+                <!-- Button to toggle inner content -->
+                <button class="btn btn-link my-font-size-0-8rem p-0 my-color-f0f0f0"
+                        data-bs-toggle="collapse"
+                        data-bs-target="#show_author_options"
+                        aria-expanded="{{ sidebar.show_author_options }}"
+                        aria-controls="show_author_options">
+                    {% if sidebar.show_author_options %}Hide Author Menu{% else %}Show Author Menu{% endif %}
+                </button>
+
+            </div>
+
+        </div>
+
+        <!-- Container for collapsible inner content -->
+        <div class="collapse {% if sidebar.show_author_options %}show{% endif %} my-margin-left-45px"
+             id="show_author_options">
+
+            <!-- Link to create a new article -->
+            <a class="d-block my-dropdown-text"
+               href="{% url 'article-create' current_tab='overview' %}">
+                <button class="btn btn-light">
+                    Create an Article
+                </button>
+            </a>
+
+            <!-- Link to the author's articles -->
+            <a class="d-block my-dropdown-text"
+               href="{% url 'my-articles' current_tab='all' %}">
+                <button class="btn btn-light">
+                    My Articles
+                </button>
+            </a>
+
+        </div>
+
+    </div>
+
+</div>

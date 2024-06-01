@@ -1,0 +1,75 @@
+<!-- Inner menu items refining search criteria -->
+<!-- Intended for 2_main/_sidebars/__search__.html -->
+
+{% load widget_tweaks %}
+
+<!-- Checkbox for specifying the search location -->
+<p class="my-font-size-0-9rem my-color-a0a0a0 mt-4">Where do you want to search?</p>
+
+<!-- Container grouping checkbox elements -->
+<div class="mt-1">
+    <div class="row">
+
+        <!-- Checkbox for searching in article titles -->
+        <div class="col-4">
+            <div class="form-check">
+                {{ sidebar_search_form.search_in_title|add_class:"form-check-input" }}
+                <label class="form-check-label my-font-size-0-9rem"
+                       for="sidebar_search_form.search_in_title.id_for_label">
+                    {{ sidebar_search_form.search_in_title.label }}
+                </label>
+            </div>
+        </div>
+
+        <!-- Checkbox for searching in article descriptions -->
+        <div class="col-4">
+            <div class="form-check">
+                {{ sidebar_search_form.search_in_description|add_class:"form-check-input" }}
+                <label class="form-check-label my-font-size-0-9rem"
+                       for="sidebar_search_form.search_in_description.id_for_label">
+                    {{ sidebar_search_form.search_in_description.label }}
+                </label>
+            </div>
+        </div>
+
+        <!-- Checkbox for searching in article content -->
+        <div class="col-4">
+            <div class="form-check">
+                {{ sidebar_search_form.search_in_content|add_class:"form-check-input" }}
+                <label class="form-check-label my-font-size-0-9rem"
+                       for="sidebar_search_form.search_in_content.id_for_label">
+                    {{ sidebar_search_form.search_in_content.label }}
+                </label>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<!-- Search by date -->
+<p class="my-font-size-0-9rem my-color-a0a0a0 mt-4 pt-2">Need to specify the Date?</p>
+
+<!-- Fields for specifying the date -->
+<div class="row">
+
+    <!-- Label and field for entering the date from which to search -->
+    <div class="col-6">
+        <small class="my-date-label">{{ sidebar_search_form.date_from.label }}</small>
+        {{ sidebar_search_form.date_from|add_class:"form-control" }}
+    </div>
+
+    <!-- Label and field for entering the date until which to search -->
+    <div class="col-6">
+        <small class="my-date-label">{{ sidebar_search_form.date_to.label }}</small>
+        {{ sidebar_search_form.date_to|add_class:"form-control" }}
+    </div>
+
+</div>
+
+<!-- Search by author -->
+<p class="my-font-size-0-9rem my-color-a0a0a0 mt-4 pt-2">Need to specify the Author?</p>
+
+<!-- Field for selecting the author -->
+<div class="form-group">
+    {{ sidebar_search_form.author|add_class:"form-control" }}
+</div>

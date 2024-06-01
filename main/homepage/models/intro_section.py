@@ -2,20 +2,23 @@ from django.utils.translation import gettext_lazy as _
 from django.db import models
 from tinymce.models import HTMLField
 
-from .singleton_model import SingletonModel
+from .data.singleton_model import SingletonModel
 
 
 class HomePageIntroSection(SingletonModel):
     '''
-    Databázový model pro Home Page Intro Section
+    Databázový model pro Home Page Intro Section.
 
-    Obsahuje pole pro nastavení zobrazení této sekce, nadpisu a textu.
-    Metoda __str__ definuje textovou reprezentaci instance tohoto modelu.
-    Metoda get_intro_settings slouží k získání všech hodnot tohoto modelu.
+    Model dědí ze SingletonModel, což je abstraktní třída definovaná pro vytvoření jediné instance.
 
-    display_intro_section - je Boolean pole pro hodnotu reprezentující zobrazení nebo skrytí sekce
-    intro_title - je HTML pole pro vložení nadpisu, který bude zobrazen v této sekci
-    intro_description - je HTML pole pro vložení textu, který bude zobrazen v této sekci
+    Model vytváří následující pole:
+    - display_intro_section: Boolean pole pro hodnotu reprezentující zobrazení nebo skrytí sekce.
+    - intro_title: HTML pole pro vložení nadpisu, který bude zobrazen v této sekci.
+    - intro_description: HTML pole pro vložení textu, který bude zobrazen v této sekci.
+
+    Metody modelu:
+    - __str__: Pro získání textové reprezentace modelu (dle hodnoty pole pro název článku).
+    - get_data: Slouží k získání všech hodnot tohoto modelu pro vykreslení na domácí stránce.
     '''
 
     display_intro_section = models.BooleanField(
@@ -23,7 +26,6 @@ class HomePageIntroSection(SingletonModel):
         default=True,
     )
 
-    # Intro Section
     intro_title = HTMLField(
         _('Intro Section Title'),
         default="<div><span style='font-size: 28px;'><strong>Some great intro here</strong></span></div>",
@@ -39,10 +41,9 @@ class HomePageIntroSection(SingletonModel):
     def __str__(self):
         return "Homepage Intro Section Configuration"
 
-    @property
-    def get_intro_settings(self):
+    def get_data(self):
         '''
-        Vlastnost, která slouží k získání hodnot všech polí tohoto modelu.
+        Metoda, která slouží k získání hodnot všech polí tohoto modelu pro vykreslení na domácí stránce.
 
         Vrací slovník obsahující následující informace:
         zobrazení sekce, nadpisu a popisu sekce.

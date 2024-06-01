@@ -1,26 +1,39 @@
-<!-- Editační část sekce -->
-<!-- Rozšířenní pro 0_base/04__footer__.html -->
+<!-- Editing section -->
+<!-- Extension for 0_base/04__footer__.html -->
 
-
-<!-- Kontrola zda je přihlášen super uživatel a zda je na stránce pro úpravu domácí stránky  -->
+<!-- Checking if the user is a superuser and if they are on the page for editing the homepage -->
 {% if user.is_superuser and request.path == '/edit/' %}
 
-    <!-- Hlavní kontejner -->
+    <!-- Main container -->
     <div class="collapse mt-3" id="footerSectionCollapse">
         <div class="card card-body">
 
-            <!-- Formulář -->
+            <!-- Form -->
             <form method="POST"
                   enctype="multipart/form-data"
                   action="{% url 'edit-footer-section' %}">
 
-                <!-- Zabezpečení přenosu dat -->
+                <!-- Data transfer security -->
                 {% csrf_token %}
 
-                <!-- Nastavení sloupců pro nastavení patičky -->
-                {% include '0_base/_footer/_edit_data/__columns_setting__.html' %}
+                <!-- Setting columns for footer settings -->
+                <div class="row">
 
-                <!-- Odesílací tlačítko a zaškrtávací pole pro nastavení viditelnosti sekce -->
+                    <!-- Column 1 -->
+                    {% include '0_base/_footer/_edit_data/_column_1_.html' %}
+
+                    <!-- Column 2 -->
+                    {% include '0_base/_footer/_edit_data/_column_2_.html' %}
+
+                    <!-- Column 3 -->
+                    {% include '0_base/_footer/_edit_data/_column_3_.html' %}
+
+                    <!-- Column 4 -->
+                    {% include '0_base/_footer/_edit_data/_column_4_.html' %}
+
+                </div>
+
+                <!-- Submit button and checkbox for section visibility setting -->
                 {% with checkbox=footer_edit_form.display_footer_section title='Footer' %}
                 {% include '1_home/_home_edit/_edit_data/_submit_button_with_display_checkbox_.html' %}
                 {% endwith %}

@@ -3,22 +3,24 @@ from django.db import models
 from tinymce.models import HTMLField
 
 from .newsletter_subscriber import NewsletterSubscriber
-from .singleton_model import SingletonModel
+from .data.singleton_model import SingletonModel
 
 
 class HomePageNewsletterSection(SingletonModel):
     '''
-    Databázový model pro Home Page Newsletter Section
+    Databázový model pro Home Page Newsletter Section.
 
-    Obsahuje pole pro nastavení zobrazení této sekce, nadpisu, popisu a pole pro zadávání emailů.
-    Pole pro zadávání emailu je provázané s modelem NewsletterSubscriber.
-    Metoda __str__ definuje textovou reprezentaci instance tohoto modelu.
-    Metoda get_newsletter_settings slouží k získání všech editovatelných hodnot tohoto modelu.
+    Model dědí ze SingletonModel, což je abstraktní třída definovaná pro vytvoření jediné instance.
 
-    display_newsletter_section - je Boolean pole pro hodnotu reprezentující zobrazení nebo skrytí této sekce
-    newsletter_title - je HTML pole pro vložení nadpisu, který bude zobrazen v této sekci
-    newsletter_description - je HTML pole pro vložení popisu, který bude zobrazen v této sekci
-    newsletter_subscribers - je ForeignKey pole pro propojení s modelem NewsletterSubscriber a ukládání odběratelů newsletteru
+    Model vytváří následující pole:
+    - display_newsletter_section: Boolean pole pro hodnotu reprezentující zobrazení nebo skrytí sekce.
+    - newsletter_title: HTML pole pro vložení nadpisu, který bude zobrazen v této sekci
+    - newsletter_description: HTML pole pro vložení popisu, který bude zobrazen v této sekci
+    - newsletter_subscribers: ForeignKey pole pro propojení s modelem NewsletterSubscriber a ukládání odběratelů newsletteru.
+
+    Metody modelu:
+    - __str__: Pro získání textové reprezentace modelu (dle hodnoty pole pro název článku).
+    - get_data: Slouží k získání všech hodnot tohoto modelu pro vykreslení na domácí stránce.
     '''
 
     display_newsletter_section = models.BooleanField(
@@ -26,7 +28,6 @@ class HomePageNewsletterSection(SingletonModel):
         default=True,
     )
 
-    # Newsletter Section
     newsletter_title = HTMLField(
         _('Newsletter Section Title'),
         null=True, blank=True
@@ -48,10 +49,9 @@ class HomePageNewsletterSection(SingletonModel):
     def __str__(self):
         return "Homepage Newsletter Section Configuration"
 
-    @property
-    def get_newsletter_settings(self):
+    def get_data(self):
         '''
-        Vlastnost, která slouží k získání hodnot všech editovatelných polí tohoto modelu.
+        Metoda, která slouží k získání hodnot všech editovatelných polí tohoto modelu pro vykreslení na domácí stránce.
 
         Vrací slovník obsahující následující informace:
         zobrazení sekce, nadpis a popis sekce.

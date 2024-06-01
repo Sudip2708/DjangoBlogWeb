@@ -1,0 +1,18 @@
+<!-- Display tabs for the current tag and similar articles -->
+<!-- Intended for 3_articles/_page_navigation_data/_tags_.html -->
+
+<!-- Tab for the currently selected tag -->
+<li class="nav-item ">
+    <a href="{% url 'article-tag-list' tag_slug=current_tag.slug %}"
+       class="nav-link {% if url_name == 'article-tag-list' %}active{% endif %}">
+        {{ current_tag }}
+    </a>
+</li>
+
+<!-- Tab for similar articles based on tags -->
+<li class="nav-item ">
+    <a href="{% url 'article-tag-list-similar' tag_slug=current_tag.slug %}"
+       class="nav-link {% if url_name == 'article-tag-list-similar' %}active{% endif %}">
+        Similar Articles
+    </a>
+</li>

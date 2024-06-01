@@ -1,0 +1,30 @@
+<!-- Navigation bar for the page with all articles and the page with categories -->
+<!-- Intended for 3_articles/32__page_navigation__.html -->
+
+<!-- Display navigation for categories -->
+{% if user.settings.show_category_navigation %}
+
+    <!-- Categories -->
+    <nav class="nav nav-tabs justify-content-end mb-5 ">
+
+        <!-- Tab for all articles -->
+        <li class="nav-item">
+            <a href="{% url 'article-list' %}"
+                class="nav-link {% if current_category.slug == 'all' %}active{% endif %}">
+                All
+            </a>
+        </li>
+
+        <!-- Loop for category tabs -->
+        {% for category in category_tabs %}
+            <li class="nav-item ">
+                <a href="{% url 'article-category-list' category_slug=category.slug %}"
+                class="nav-link {% if current_category.slug == category.slug %}active{% endif %}">
+                    {{ category.name }}
+                </a>
+            </li>
+        {% endfor %}
+
+    </nav>
+
+{% endif %}

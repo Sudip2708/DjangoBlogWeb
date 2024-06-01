@@ -1,30 +1,57 @@
-<!-- Panel pro správu uživatele -->
-<!-- Určeno pro 2_main/21__sidebar__.html -->
+<!-- Inner content of the user panel -->
+<!-- Intended for 2_main/21__sidebar__.html -->
 
+<div class="card mb-4">
+    <div class="card-body">
 
-<!-- Hlavní kontejner sdružující prvky panelu -->
-<div class="px-1 mt-2">
+        <!-- User items -->
+        <div class="d-flex align-items-center">
 
-    <!-- Kontejner pro prvky pro vyditelnost a pohyb panelu -->
-    <div class="d-flex justify-content-between">
+            <!-- User profile picture -->
+            <div class="w-25 align-self-start">
+                <img alt="User Profile Picture"
+                     src="{{ user_thumbnail }}?{% now 'U' %}"
+                     class="img-fluid w-100"/>
+            </div>
 
-        <!-- Vyditelnost panelu -->
-        <div class="d-inline-block">
-            {% with ar_exp=user.sidebar_user ar_con='sidebar_user' title='User Menu' %}
-                {% include '2_main/_sidebars/_common/__button_collapse__.html' %}
-            {% endwith %}
+            <!-- Username, button, and inner content of the user -->
+            <div class="w-75 ">
+
+                <!-- User name -->
+                <div class="px-3">
+                    <h3 class="account-heading">{{ user.username }}</h3>
+                </div>
+
+                <!-- Button and inner content of the user -->
+                <div class="px-1">
+
+                    <!-- Button to toggle inner content -->
+                    <div class="my-margin-left-15px">
+                        <button class="btn btn-link my-font-size-0-8rem p-0 my-color-f0f0f0"
+                                data-bs-toggle="collapse"
+                                data-bs-target="#show_user_options"
+                                aria-expanded="{{ sidebar.show_user_options }}"
+                                aria-controls="show_user_options">
+                            {% if sidebar.show_user_options %}Hide User Menu{% else %}Show User Menu{% endif %}
+                        </button>
+                    </div>
+
+                    <!-- Container for collapsible inner content -->
+                    <div class="collapse {% if sidebar.show_user_options %}show{% endif %}"
+                         id="show_user_options">
+                        {% include '2_main/_sidebars/_data/_user_dropdown_items_.html' %}
+                    </div>
+
+                </div>
+
+            </div>
+
         </div>
 
-        <!-- Pohyb panelu -->
-        <div class="d-inline-block">
-            {% with order=user.sidebar_user_order last=is_last up='#MoveUp_user' dn='#MoveDn_user' %}
-            {% include '2_main/_sidebars/_common/__sidebar_moves__.html' %}
-            {% endwith %}
-        </div>
+        <!-- Author items -->
+        {% if user.linked_author %}
+            {% include '2_main/_sidebars/_data/_author_dropdown_menu_.html' %}
+        {% endif %}
 
     </div>
-
-    <!-- Vnitřní položky panelu -->
-    {% include '2_main/_sidebars/_user/__user_mainframe__.html' %}
-
 </div>

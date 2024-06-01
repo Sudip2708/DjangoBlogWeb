@@ -1,0 +1,72 @@
+<!-- Položka pro navigaci stránky v hlavičce webu -->
+<!-- Určeno pro 0_base/_header/__navigation__.html -->
+
+<!-- Nabídka pro zobrazení a skrytí navigace podle kategorií -->
+{% if url_name == 'article-list' or url_name == 'article-category-list' %}
+    <li class="nav-item">
+        <a class="btn btn-link my-font-size-0-8rem p-0 my-color-f0f0f0"
+           href="{% url 'user_navigation_settings' hash='#bool_show_category_navigation' %}">
+            {% if user.settings.show_category_navigation %}Hide Category{% else %}Show Category{% endif %}
+        </a>
+    </li>
+
+<!-- Nabídka pro zobrazení a skrytí navigace podle tagů -->
+{% elif 'search' in url_name or 'article-tag' in url_name %}
+    <li class="nav-item">
+        <a class="btn btn-link my-font-size-0-8rem p-0 my-color-f0f0f0"
+           href="{% url 'user_navigation_settings' hash='#bool_show_tab_for_similar'  %}">
+            {% if user.settings.show_tab_for_similar %}Hide Similar{% else %}Show Similar{% endif %}
+        </a>
+    </li>
+
+<!-- Nabídka pro editování článku -->
+{% elif url_name == 'article-detail' %}
+    <li class="nav-item">
+        <a class="btn btn-link my-font-size-0-8rem p-0 my-color-f0f0f0"
+        href="{% url 'article-update' slug=article.slug current_tab='overview' %}">
+            Edit Article
+        </a>
+    </li>
+
+{% elif url_name == 'article-update' %}
+    <li class="nav-item">
+        <a class="btn btn-link my-font-size-0-8rem p-0 my-color-f0f0f0"
+           href="{% url 'article-delete' object.slug %}">
+            Delete Article
+        </a>
+    </li>
+
+{% elif url_name == 'article-delete' %}
+    <li class="nav-item">
+        <a class="btn btn-link my-font-size-0-8rem p-0 my-color-f0f0f0"
+           href="{% url 'article-update' slug=article.slug current_tab='overview' %}">
+            Return to Article
+        </a>
+    </li>
+
+{% endif %}
+
+<!-- Nabídka pro zobrazení tlačítka pro úpravu hlavní stránky -->
+{% if user.is_superuser and url_name == 'home-page' %}
+    <li class="nav-item">
+        <a class="btn btn-link my-font-size-0-8rem p-0 my-color-f0f0f0"
+           href="{% url 'home-page-edit' %}">
+            Show Edit Buttons
+        </a>
+    </li>
+
+<!-- Nabídka pro skrytí tlačítka pro úpravu hlavní stránky -->
+{% elif user.is_superuser and url_name == 'home-page-edit' %}
+    <li class="nav-item">
+        <a class="btn btn-link my-font-size-0-8rem p-0 my-color-f0f0f0"
+           href="{% url 'home-page' %}">
+            Hide Edit Buttons
+        </a>
+    </li>
+
+{% endif %}
+
+
+
+
+

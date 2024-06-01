@@ -6,30 +6,35 @@ from homepage.models.newsletter_section import HomePageNewsletterSection
 
 class NewsletterSectionForm(forms.ModelForm):
     '''
-    Formulář pro editaci nastavení Newsletter sekce domácí stránky.
+    Formulář pro nastavení sekce Novinek na domovské stránce.
 
-    Tato třída formuláře slouží k vytvoření formuláře pro úpravu nastavení této sekce.
-    Obsahuje pole pro zobrazení a editaci jednotlivých nastavení,
-    jako je například zobrazení sekce a výběr významných článků.
+    Formulář je navázán na pohled EditNewsletterSection.
+
+    Formulář definuje tato pole:
+    - display_newsletter_section: Viditelnost sekce.
+    - newsletter_title: Nadpis sekce.
+    - newsletter_description: Popisný text sekce.
     '''
 
     class Meta:
         '''
-        Meta třída pro specifikaci modelu a polí, která budou zahrnuta ve formuláři.
+        Třída Meta je speciální vnitřní třída pro konfiguraci formuláře.
 
-        Tato meta třída definuje strukturu a vzhled formuláře pro editaci nastavení této sekce.
-        Obsahuje informace o tom, který model je použit pro tento formulář,
-        jaká pole jsou zahrnuta a jaké widgety jsou použity pro jejich zobrazení.
+        Třída Meta poskytuje metadata a konfiguraci pro hlavní třídu,
+        a zde definuje následující atributy:
+        - model: Určuje model, na kterém je formulář založen.
+        - fields: Definuje pole, která budou zahrnuta ve formuláři.
+        - widgets: Umožňuje specifikovat vlastní widgety pro jednotlivá pole formuláře.
+
+        Widgety použité v tomto kódu:
+        - forms.CheckboxInput: Pole pro zaškrtávací boolean hodnotu.
+        - TinyMCE: Pole pro zadání textu pomocí modulu TinyMCE.
         '''
 
-        # Nastavení modelu a prázdného seznamu pro pole sekce
         model = HomePageNewsletterSection
-        fields = ['display_newsletter_section', 'newsletter_title', 'newsletter_description', 'newsletter_subscribers']
-
-        # Nastavení vzhledu widgetů pro pole formuláře
+        fields = ['display_newsletter_section', 'newsletter_title', 'newsletter_description']
         widgets = {
-            'display_newsletter_section': forms.CheckboxInput(attrs={'class': 'form-check-input'}),
+            'display_newsletter_section': forms.CheckboxInput(),
             'newsletter_title': TinyMCE(),
             'newsletter_description': TinyMCE(),
-            'newsletter_subscribers': forms.Select(attrs={'class': 'form-control'}),
         }

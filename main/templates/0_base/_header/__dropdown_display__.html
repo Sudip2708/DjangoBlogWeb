@@ -1,26 +1,32 @@
-<!-- Nastavení zobrazení rozklápěcího tlačítka navigační lišty pro různé velikosti zařízení -->
-<!-- Určeno pro 0_base/02__header__.html -->
+<!-- Settings for displaying the navigation list toggle button for different device sizes -->
+<!-- Intended for 0_base/02__header__.html -->
 
-
-<!-- Nastavení pro zobrazení menu pro XL velikost a větší -->
+<!-- Settings for displaying the menu for XL size and larger -->
 <div class="d-none d-xl-block">
 
-    <!-- Podmínka - Když uživatel má zapnutý postranní panel a nejsme na domácí stránce -->
-    <!-- Zobrazit ikonu pro skrytí postranního panelu -->
-    {% if user.sidebar and not request.path == '/' %}
-    {% include '0_base/_header/_dropdown_display/_data/_sidebar_icon_.html' %}
+    <!-- Condition - When the user has the sidebar enabled and we are not on the home page -->
+    {% if user.sidebar.show_sidebars and not request.path == '/' %}
 
-    <!-- Ve všech ostatních případech zobrazit rozklápěcí menu -->
+        <!-- Display the icon to hide the sidebar -->
+        <a class="p-0 my-margin-left-28px my-margin-right-0px"
+           href="{% url 'user_navigation_settings' hash='#bool_show_sidebars' %}">
+            {% load static %}
+            <img alt="Hide Side-Panel Icon"
+                 src="{% static 'img/hide_side_panel[150].jpg' %}"
+                 width="38"/>
+        </a>
+
+    <!-- In all other cases, display the dropdown menu -->
     {% else %}
-    {% include '0_base/_header/_dropdown_display/__dropdown_menu__.html' %}
+        {% include '0_base/_header/_dropdown_data/__dropdown_menu__.html' %}
     {% endif %}
 
 </div>
 
-<!-- Nastavení pro zobrazení menu pro LG velikost a menší -->
+<!-- Settings for displaying the menu for LG size and smaller -->
 <div class="d-xl-none">
 
-    <!-- Zobrazit rozklápěcí menu -->
-    {% include '0_base/_header/_dropdown_display/__dropdown_menu__.html' %}
+    <!-- Display the dropdown menu -->
+    {% include '0_base/_header/_dropdown_data/__dropdown_menu__.html' %}
 
 </div>

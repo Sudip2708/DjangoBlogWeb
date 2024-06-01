@@ -1,0 +1,81 @@
+<!-- Extension for 5_create_article/50__base__.html -->
+
+{% load widget_tweaks %}
+
+<div class="row">
+
+    <!-- Display current image -->
+    {% with class='col-md-5 mb-4 mt-4 order-md-2' %}
+    {% include '5_create_article/_data/_main_picture_view_.html' %}
+    {% endwith %}
+
+    <!-- Container grouping fields for image and title -->
+    <div class="col-md-7 order-md-1 my-margin-bottom-auto my-margin-top-auto">
+
+        <!-- Input field for image -->
+        <div id="div_id_main_picture_max_size" >
+
+            <!-- Field description -->
+            <label for="{{ form.main_picture_max_size.id_for_label }}"
+                   class="form-label">
+                Article main image (hi-res)
+            </label>
+
+            <!-- Input field -->
+            {{ form.main_picture_max_size|add_class:"form-control"  }}
+
+        </div>
+
+        <!-- Submit button to save the image with return to the page -->
+        <div class="form-group pt-4 my-margin-left-4px mb-5" >
+            <button class="btn btn-outline-info btn-lg"
+                    type="submit"
+                    name="submit_change"
+                    value="continue_editing" >
+                Save Changes & Continue Editing
+            </button>
+        </div>
+
+        <!-- Input field for title -->
+        <div class="mb-2">
+            <div id="div_id_title" class="mb-4">
+
+                <!-- Field description -->
+                <label for="{{ form.title.id_for_label }}"
+                       class="form-label requiredField">
+                    {{ form.title.label }}
+                    <span class="asteriskField">
+                        * (This field is required to save the article.)
+                    </span>
+                </label>
+
+                <!-- Input field -->
+                {% load widget_tweaks %}
+                {{ form.title|add_class:"form-control" }}
+
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+<!-- Input field for article overview -->
+<div id="div_id_overview" class="mb-4">
+
+    <!-- Field description -->
+    <label for="{{ form.overview.id_for_label }}"
+           class="form-label requiredField">
+        {{ form.overview.label }}
+    </label>
+
+    <!-- Input field -->
+    {% load widget_tweaks %}
+    {{ form.overview|add_class:"form-control" }}
+
+</div>
+
+<!-- Submit buttons -->
+{% with current_tab='overview' %}
+{% include '5_create_article/_data/_buttons_both_.html' %}
+{% endwith %}

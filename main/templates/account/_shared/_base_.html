@@ -1,0 +1,46 @@
+<!-- Linking to the parent template -->
+{% extends '0_base/00__base__.html' %}
+
+<!-- Import Allauth account -->
+{% load account %}
+{% load allauth account socialaccount %}
+
+{% block main_content %}
+
+    <style>
+        .divider:after, .divider:before {
+            content: "";
+            flex: 1;
+            height: 1px;
+            background: #eee;
+        }
+
+        .btn-myhover {
+            background-color: #156cf1;
+            color: white;
+            transition: background-color 0.3s ease; /* Přidává plynulý efekt při změně barvy */
+        }
+
+        .btn-myhover:hover {
+            background-color: #3f3d55; /* Změna barvy při najetí myší */
+            color: white;
+        }
+    </style>
+
+    <section>
+        <div class="container">
+            <div class="row gy-5">
+                <div class="row d-flex align-items-center justify-content-center h-100">
+
+                    <!-- Inner content -->
+                    {% block inner_content %}
+                    {% endblock inner_content %}
+
+                </div>
+            </div>
+        </div>
+    </section>
+
+{% endblock main_content %}
+
+

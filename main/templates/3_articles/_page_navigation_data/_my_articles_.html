@@ -1,0 +1,39 @@
+<!-- Navigation for pages with user's own articles -->
+<!-- Intended for 3_articles/32__page_navigation__.html -->
+
+<!-- Navigation for the page with user's own articles -->
+<nav class="nav nav-tabs justify-content-end mb-5 ">
+
+    <!-- Tab for all articles -->
+    <li class="nav-item ">
+        <a href="{% url 'my-articles' current_tab='all' %}"
+           class="nav-link {% if current_tab == 'all' %}active{% endif %}">
+            All
+        </a>
+    </li>
+
+    <!-- Tab for drafted articles -->
+    <li class="nav-item ">
+        <a href="{% url 'my-articles' current_tab='drafted' %}"
+           class="nav-link {% if current_tab == 'drafted' %}active{% endif %}">
+            Drafted
+        </a>
+    </li>
+
+    <!-- Tab for published articles -->
+    <li class="nav-item ">
+        <a href="{% url 'my-articles' current_tab='publish' %}"
+           class="nav-link {% if current_tab == 'publish' %}active{% endif %}">
+            Publish
+        </a>
+    </li>
+
+    <!-- Tab for archived articles -->
+    <li class="nav-item ">
+        <a href="{% url 'my-articles' current_tab='archive' %}"
+           class="nav-link {% if current_tab == 'archive' %}active{% endif %}">
+            Archive
+        </a>
+    </li>
+
+</nav>

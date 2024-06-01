@@ -1,0 +1,14 @@
+<!-- Main picture with link to the article -->
+<!-- Intended for 1_home/_home_data/__latest_articles__.html -->
+<!-- Intended for 3_articles/_articles/__article_setup__.html -->
+
+<!-- Link to the article -->
+<a class="mb-3"
+   href="{{ article.get_absolute_url }}">
+
+    <!-- Article picture -->
+    <img alt="Article Main Picture Preview"
+         src="{{ article.main_picture_preview.url }}?{% now 'U' %}"
+         class="my-width-100 my-height-auto"/>
+
+</a>

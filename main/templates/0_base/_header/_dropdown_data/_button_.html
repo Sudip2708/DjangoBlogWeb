@@ -1,0 +1,24 @@
+<!-- Button to show and hide internal elements of the dropdown menu of the main navigation -->
+<!-- Intended for 0_base/_header/_dropdown_data/__dropdown_menu__.html -->
+
+<button type="button"
+        class="btn btn-link dropdown-toggle p-0 my-margin-left-8px my-margin-right-0px"
+        data-bs-toggle="dropdown"
+        aria-expanded="false">
+
+    <!-- If the user is logged in, their profile picture is displayed -->
+    {% if user.is_authenticated %}
+        <img alt="User Profile Picture"
+             src="{{ user.profile_picture_thumbnail.url }}?{% now 'U' %}"
+             width="40"
+        />
+
+    <!-- If the user is not logged in, empty space is displayed -->
+    {% else %}
+        <span></span>
+        <span></span>
+        <span></span>
+
+    {% endif %}
+
+</button>

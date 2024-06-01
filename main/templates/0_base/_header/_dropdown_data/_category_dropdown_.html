@@ -1,0 +1,26 @@
+<!-- Dropdown menu for categories -->
+<!-- Intended for 0_base/_header/_dropdown_data/__dropdown_menu__.html -->
+
+<li class="nav-item">
+
+    <!-- Heading and dropdown -->
+    <p class="dropdown-item my-font-size-0-9rem t-0 m-0" >
+        Kategorie
+    </p>
+
+    <!-- Dropdown list with links to display articles for each category -->
+    <ul class="dropdown-menu dropdown-submenu my-font-size-0-9rem">
+        {% for category in published_categories %}
+            <li>
+                <a class="dropdown-item"
+                   href="{% url 'article-category-list' category_slug=category.slug %}">
+                    {{ category.name }}
+                </a>
+            </li>
+        {% endfor %}
+    </ul>
+
+</li>
+
+<!-- Divider -->
+<li class="nav-item"><hr class="dropdown-divider"></li>

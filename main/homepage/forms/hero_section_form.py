@@ -1,36 +1,47 @@
 from django import forms
 from tinymce.widgets import TinyMCE
 
-from homepage.models.hero_section import HomePageHeroSection
+from ..models.hero_section import HomePageHeroSection
 
 
 class HeroSectionForm(forms.ModelForm):
     '''
-    Formulář pro editaci nastavení Hero sekce domácí stránky.
+    Formulář pro nastavení Hero sekce domácí stránky.
 
-    Tato třída formuláře slouží k vytvoření formuláře pro úpravu nastavení této sekce.
-    Obsahuje pole pro zobrazení a editaci jednotlivých nastavení,
-    jako je například zobrazení sekce a výběr významných článků.
+    Formulář je navázán na pohled EditHeroSection.
+
+    Formulář definuje tato pole:
+    - display_hero_section: Viditelnost sekce.
+    - hero_image: Obrázek pozadí sekce.
+    - hero_title: Nadpis sekce.
+    - hero_link_title: Popis odkazu.
+    - hero_link: URL odkazu.
     '''
 
     class Meta:
         '''
-        Meta třída pro specifikaci modelu a polí, která budou zahrnuta ve formuláři.
+        Třída Meta je speciální vnitřní třída pro konfiguraci formuláře.
 
-        Tato meta třída definuje strukturu a vzhled formuláře pro editaci nastavení této sekce.
-        Obsahuje informace o tom, který model je použit pro tento formulář,
-        jaká pole jsou zahrnuta a jaké widgety jsou použity pro jejich zobrazení.
+        Třída Meta poskytuje metadata a konfiguraci pro hlavní třídu,
+        a zde definuje následující atributy:
+        - model: Určuje model, na kterém je formulář založen.
+        - fields: Definuje pole, která budou zahrnuta ve formuláři.
+        - widgets: Umožňuje specifikovat vlastní widgety pro jednotlivá pole formuláře.
+
+        Widgety použité v tomto kódu:
+        - forms.CheckboxInput: Pole pro zaškrtávací boolean hodnotu.
+        - forms.FileInput: Pole pro nahrání souborů (zde omezeno na obrázek).
+        - TinyMCE: Pole pro zadání textu pomocí modulu TinyMCE.
+        - forms.TextInput: Pole pro zadání krátkého textu.
+        - forms.URLInput: Pole pro zadání URL.
         '''
 
-        # Nastavení modelu a prázdného seznamu pro pole sekce
         model = HomePageHeroSection
         fields = ['display_hero_section', 'hero_image', 'hero_title', 'hero_link_title', 'hero_link']
-
-        # Nastavení vzhledu widgetů pro pole formuláře
         widgets = {
-            'display_hero_section': forms.CheckboxInput(attrs={'class': 'form-check-input'}),
-            'hero_image': forms.FileInput(attrs={'class': 'form-control-file'}),
+            'display_hero_section': forms.CheckboxInput(),
+            'hero_image': forms.FileInput(),
             'hero_title': TinyMCE(),
-            'hero_link_title': forms.TextInput(attrs={'class': 'form-control'}),
-            'hero_link': forms.URLInput(attrs={'class': 'form-control'}),
+            'hero_link_title': forms.TextInput(),
+            'hero_link': forms.URLInput(),
         }

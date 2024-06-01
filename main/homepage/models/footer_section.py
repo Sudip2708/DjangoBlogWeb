@@ -2,27 +2,31 @@ from django.utils.translation import gettext_lazy as _
 from django.db import models
 from django.db.models import JSONField
 
-from .singleton_model import SingletonModel
-from .footer_section_default import DEFAULT_ADDRESS_VALUES
-from .footer_section_default import DEFAULT_SOCIAL_MEDIA
-from .footer_section_default import DEFAULT_SITE_LINKS
-from .footer_section_default import DEFAULT_ARTICLES
-from .footer_section_default import DEFAULT_END_LINE
+from .data.singleton_model import SingletonModel
+from .data.footer_section_default import DEFAULT_ADDRESS_VALUES
+from .data.footer_section_default import DEFAULT_SOCIAL_MEDIA
+from .data.footer_section_default import DEFAULT_SITE_LINKS
+from .data.footer_section_default import DEFAULT_ARTICLES
+from .data.footer_section_default import DEFAULT_END_LINE
 
 class FooterSettings(SingletonModel):
     '''
-    Databázový model pro nastavení patičky
+    Databázový model pro nastavení patičky.
 
-    Obsahuje pole pro konfiguraci zobrazení a obsahu patičky stránky.
-    Třída Meta určuje lidsky čitelné jméno modelu v jednotném a množném čísle.
-    Metoda get_footer_settings slouží k získání všech hodnot tohoto modelu.
+    Model dědí ze SingletonModel, což je abstraktní třída definovaná pro vytvoření jediné instance.
 
-    display_footer_section - je Boolean pole určující, zda se má patička zobrazit nebo skrýt
-    address_values - je pole typu JSONField pro uložení hodnot týkajících se adresy
-    social_media - je pole typu JSONField pro uložení hodnot sociálních médií
-    site_links - je pole typu JSONField pro uložení odkazů na stránky
-    articles - je pole typu JSONField pro uložení seznamu článků
-    end_line - je pole typu JSONField pro uložení obsahu posledního řádku patičky
+    Model vytváří následující pole:
+    - display_footer_section: Boolean pole pro hodnotu reprezentující zobrazení nebo skrytí sekce.
+    - address_values: Pole typu JSONField pro uložení hodnot týkajících se adresy.
+    - social_media: Pole typu JSONField pro uložení hodnot sociálních médií.
+    - site_links: Pole typu JSONField pro uložení odkazů na stránky.
+    - articles: Pole typu JSONField pro uložení seznamu článků.
+    - end_line: Pole typu JSONField pro uložení obsahu posledního řádku patičky.
+
+    Metody modelu:
+    - __str__: Pro získání textové reprezentace modelu (dle hodnoty pole pro název článku).
+    - __init__: Slouží pro inicializaci defaultních hodnot.
+    - get_data: Slouží k získání všech hodnot tohoto modelu pro vykreslení na domácí stránce.
     '''
 
     display_footer_section = models.BooleanField(
@@ -36,19 +40,14 @@ class FooterSettings(SingletonModel):
     articles = JSONField(default=dict)
     end_line = JSONField(default=dict)
 
-
-    class Meta:
-        verbose_name = 'Footer Settings'
-        verbose_name_plural = 'Footer Settings'
+    def __str__(self):
+        return "Footer Configuration"
 
     def __init__(self, *args, **kwargs):
         '''
         Inicializační metoda modelu.
 
-        Tato metoda načítá defaultní hodnoty, pokud jsou pole prázdná.
-
-        :param args: Pozicinální argumenty.
-        :param kwargs: Klíčové argumenty.
+        Tato metoda načítá defaultní hodnoty pro prázdná pole.
         '''
 
         super().__init__(*args, **kwargs)
@@ -64,14 +63,14 @@ class FooterSettings(SingletonModel):
         if not self.end_line:
             self.end_line = DEFAULT_END_LINE
 
-    @property
-    def get_footer_settings(self):
+
+    def get_data(self):
         '''
-        Vlastnost, která slouží k získání hodnot všech polí tohoto modelu.
+        Metoda, která slouží k získání hodnot všech polí tohoto modelu pro vykreslení na domácí stránce.
 
         Vrací slovník obsahující následující informace:
         zobrazení sekce, slovníku hodnot pro adresu, sociální média, odkazy na vybrané stránky,
-        vybrané šlánky a obsah posledního řádku.
+        vybrané články a obsah posledního řádku.
         '''
 
         return {

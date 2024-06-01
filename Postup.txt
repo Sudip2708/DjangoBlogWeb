@@ -817,3 +817,5 @@ Dodatečné úpravy pro Home Page
 ###
 Pročištění projektu od nepoužívaného JS a přepis vlastních JS z šablon do samostatných souborů
 ###
+Závěrečná restrukturizace projektu + doplnění vysvětlivek a popisů.
+###

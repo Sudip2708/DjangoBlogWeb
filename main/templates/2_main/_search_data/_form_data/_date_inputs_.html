@@ -1,0 +1,30 @@
+<!-- Date selection field -->
+<!-- Intended for 2_main/_search_data/_search_form_.html -->
+
+{% load widget_tweaks %}
+
+<!-- Container for inner elements -->
+<div class="col-md-8">
+    <div class="row">
+
+        <!-- Introductory text for date specification -->
+        <p class="my-font-size-0-9rem my-color-a0a0a0">Need to specify the Date?</p>
+
+        <!-- Field for specifying the date from which to search -->
+        <div class="col">
+            <small class="my-date-label">
+                {{ search_form.date_from.label }}
+            </small>
+            {{ search_form.date_from|add_class:"form-control" }}
+        </div>
+
+        <!-- Field for specifying the date until which to search -->
+        <div class="col">
+            <small class="my-date-label">
+                {{ search_form.date_to.label }}
+            </small>
+            {{ search_form.date_to|add_class:"form-control" }}
+        </div>
+
+    </div>
+</div>

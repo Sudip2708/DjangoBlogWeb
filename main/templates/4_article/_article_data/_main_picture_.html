@@ -1,26 +1,24 @@
-<!-- Hlavní obrázek článku - responzivní nastavení -->
-<!-- Určeno pro 4_article/41__article__.html -->
+<!-- Main article image - responsive settings -->
+<!-- Intended for 4_article/41__article__.html -->
 
+<div class="w-100 mb-4 text-center">
+    <div class="d-flex justify-content-center">
 
-<!-- Kontejner obrázek článku -->
-<div class="w-100 mb-4 text-center"> <!-- Přidáno text-center pro vycentrování obsahu -->
-    <div class="d-flex justify-content-center"> <!-- Přidáno d-flex a justify-content-center pro vycentrování obrázku -->
-
-        <!-- Kotva pro zobrazení maximální velikosti obrázku, zobrazující obrázek náhledu -->
+        <!-- Anchor for displaying the maximum size of the image, showing the thumbnail image -->
         <a class="d-block position-relative"
              href="{{ article.main_picture_max_size.url }}">
 
-            <!-- Hlavní obrázek (pro zařízení MD a větší - 768px<) -->
+            <!-- Main image (for MD devices and larger - 768px<) -->
             <img alt="Article Main Picture"
                  src="{{ article.main_picture_for_article.url }}?{% now 'U' %}"
                  class="img-fluid d-none d-md-block"/>
 
-            <!-- Hlavní obrázek (pro zařízení menší než MD - <768px) -->
+            <!-- Main image (for devices smaller than MD - <768px) -->
             <img alt="Article Main Picture"
                  src="{{ article.main_picture_preview.url }}?{% now 'U' %}"
                  class="img-fluid d-md-none"/>
 
-            <!-- Icona lupy + nadpis článku -->
+            <!-- Magnifying glass icon + article title -->
             <div class="fsc-hover-overlay">
                 <i class="fas fa-search fsc-hover-overlay-icon"></i>
             </div>

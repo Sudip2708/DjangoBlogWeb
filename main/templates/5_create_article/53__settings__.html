@@ -1,0 +1,35 @@
+<!-- Extension for 5_create_article/50__base__.html -->
+
+<!-- Container grouping article status and category -->
+<div class="pt-4">
+    <div class="row">
+
+        <!-- Article status -->
+        {% include '5_create_article/_data/_input_status_.html' %}
+
+        <!-- Category -->
+        {% include '5_create_article/_data/_input_category_.html' %}
+
+    </div>
+</div>
+
+<!-- Container grouping settings for previous and next article -->
+<div class="">
+    <div class="row">
+
+        <!-- Previous article -->
+        {% include '5_create_article/_data/_input_previous_article_.html' %}
+
+        <!-- Next article -->
+        {% include '5_create_article/_data/_input_next_article_.html' %}
+
+    </div>
+</div>
+
+<!-- Tags settings -->
+{% include '5_create_article/_data/_input_tags_.html' %}
+
+<!-- Submit buttons -->
+{% with current_tab='settings' %}
+{% include '5_create_article/_data/_buttons_both_.html' %}
+{% endwith %}

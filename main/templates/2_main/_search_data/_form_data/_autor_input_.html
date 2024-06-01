@@ -1,0 +1,21 @@
+<!-- Date selection field -->
+<!-- Intended for 2_main/_search_data/_search_form_.html -->
+
+{% load widget_tweaks %}
+
+<!-- Container for inner elements -->
+<div class="col-md-4 align-self-end">
+    <div class="row">
+
+            <!-- Introductory text for author selection -->
+        <p class="my-font-size-0-9rem my-color-a0a0a0 mt-4">
+            Need to specify the Author?
+        </p>
+
+        <!-- Author selection field -->
+        <div class="col">
+            {{ search_form.author|add_class:"form-control" }}
+        </div>
+
+    </div>
+</div>

@@ -1,20 +1,14 @@
-<!-- Šablona pro stránky s jedním článkem -->
-
-
-<!-- Odkaz na nadřazenou šablonu -->
 {% extends '2_main/20__base__.html' %}
 
-
-<!-- Začátek vnitřního bloku -->
 {% block inner_content %}
 
-    <!-- Článek -->
+    <!-- Article -->
     {% include '4_article/41__article__.html' %}
 
     <!-- Article Previous and Next -->
     {% include '4_article/42__previous_and_next__.html' %}
 
-    <!-- Kometáře -->
+    <!-- Comments -->
     {% include '4_article/43__display_comments__.html' %}
 
     <!-- Add Comments -->

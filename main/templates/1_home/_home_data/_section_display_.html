@@ -1,20 +1,20 @@
-<!-- Tlačítko pro zobrazení skryté sekce  -->
+<!-- Button to display hidden section -->
 <!-- 0_base/04__footer__.html -->
-<!-- Rozšířenní pro 1_home/11__hero__.html -->
-<!-- Rozšířenní pro 1_home/12__intro__.html -->
-<!-- Rozšířenní pro 1_home/13__featured_articles__.html -->
-<!-- Rozšířenní pro 1_home/14__divider__.html -->
-<!-- Rozšířenní pro 1_home/15__latest_articles__.html -->
-<!-- Rozšířenní pro 1_home/16__newsletter__.html -->
-<!-- Rozšířenní pro 1_home/17__gallery__.html -->
+<!-- Extension for 1_home/11__hero__.html -->
+<!-- Extension for 1_home/12__intro__.html -->
+<!-- Extension for 1_home/13__featured_articles__.html -->
+<!-- Extension for 1_home/14__divider__.html -->
+<!-- Extension for 1_home/15__latest_articles__.html -->
+<!-- Extension for 1_home/16__newsletter__.html -->
+<!-- Extension for 1_home/17__gallery__.html -->
 
-<!-- Kontrola zda je přihlášen super uživatel a zda je na stránce pro úpravu domácí stránky  -->
+<!-- Check if the user is a superuser and if the page is for editing the home page -->
 {% if user.is_superuser and request.path == '/edit/' %}
 
-    <!-- Odkaz na zobrazení skryté sekce -->
+    <!-- Link to display the hidden section -->
     <div class="container">
         <a href="{% url section_url %}?show_{{ name|lower }}_section=true"
-           class="edit-homepage-button">
+           class="my-edit-homepage-button">
             Show {{ name }} Section
         </a>
     </div>

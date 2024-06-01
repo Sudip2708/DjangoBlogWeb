@@ -1,0 +1,19 @@
+<!-- Submit button and dropdown button (only for sizes smaller than md) -->
+<!-- Intended for 2_main/_search_data/_search_form_.html -->
+
+<!-- Container for display on sizes smaller than MD -->
+<div class="d-md-none">
+
+    <!-- Submit button (hidden for MD size and larger) -->
+    <div class="p-1">
+        <div class="d-grid gap-2 mt-2">
+            <button class="btn btn-secondary btn-lg" type="submit">
+                Send
+            </button>
+        </div>
+    </div>
+
+    <!-- Dropdown button -->
+    {% include '2_main/_search_data/_form_data/_collapse_button_.html' %}
+
+</div>

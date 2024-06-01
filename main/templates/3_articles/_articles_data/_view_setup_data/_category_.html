@@ -1,0 +1,18 @@
+<!-- Article category -->
+<!-- Intended for 1_home/_home_data/__featured_articles__.html -->
+<!-- Intended for 1_home/_home_data/__latest_articles__.html -->
+<!-- Intended for 3_articles/_articles/__article_setup__.html -->
+<!-- Intended for 4_article/41__article__.html -->
+
+<!-- Check if the article has a category -->
+{% if article.category.slug %}
+
+    <!-- Display category -->
+    <div class="mb-1">
+        <a class="text-uppercase text-dark small fw-bold"
+           href="{% url 'article-category-list' category_slug=article.category.slug %}">
+            {{ article.category.name }}
+        </a>
+    </div>
+
+{% endif %}

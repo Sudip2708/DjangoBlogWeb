@@ -1,16 +1,117 @@
-<!-- Část pro soubory ovlivňující funkčnost a chování stránky -->
-<!-- Určeno pro 0_base/00__base__.html -->
-
+<!-- Section for files influencing functionality and behavior of the page -->
+<!-- For 0_base/00__base__.html -->
 
 <!-- Import static files -->
 {% load static %}
 
-<!-- Scripty potřebné pro na obsluhu tlačítek rozklápěcí nabídky pro postranní panely a pro nastavení domácí stránky -->
-    <!-- Načtení jQuery library pro AJAX -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<!-- Scripts required for handling collapsible menu buttons for sidebar panels and for setting the homepage. -->
+<!-- Load jQuery library for AJAX. -->
+<script src="{% static 'js/jquery-3.7.1.min.js' %}"></script>
 
-    <!-- Vytvoření proměné pro CSRF token  -->
-    <script>var csrftoken = "{{ csrf_token }}";</script>
+<!-- Bootstrap JS -->
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/5.1.3/js/bootstrap.bundle.min.js"></script>
 
-    <!-- Scripty obsluhu tlačítek pro rozklápěcí nabídky (používá csrftoken a jQuery library) -->
-    <script type="module" src="{% static 'js/_sidebar_settings_[el].js' %}"></script>
+<!-- Creating a variable for CSRF token. -->
+<script>var csrftoken = "{{ csrf_token }}";</script>
+
+<!-- Scripts handling collapsible menu buttons (using csrftoken and jQuery library). -->
+<script>
+
+    // List of IDs for editing homepage sections.
+    const homePageEditButton = [
+        '#footerSectionCollapse',
+        '#gallerySectionCollapse',
+        '#heroSectionCollapse',
+        '#introSectionCollapse',
+        '#latestSectionCollapse',
+        '#featuredSectionCollapse',
+        '#dividerSectionCollapse',
+        '#newsletterSectionCollapse'
+    ];
+
+    // List of IDs for visibility of individual sidebar panels.
+    const sidebarButtonCollapse = [
+        '#show_category_sidebar',
+        '#show_search_sidebar',
+        '#show_tags_sidebar',
+        '#show_user_sidebar'
+    ];
+
+    // List of IDs for visibility of internal menu options of sidebar panels.
+    const sidebarButtonCollapseAjax = [
+        '#show_category_options',
+        '#show_search_options',
+        '#show_tags_options',
+        '#show_author_options',
+        '#show_user_options'
+    ];
+
+    // List of IDs for changing button text (changing 'Show' to 'Hide' and vice versa).
+    const changeButtonTextButtons = homePageEditButton.concat(sidebarButtonCollapseAjax);
+
+    // List of IDs for changing database values (sending request to change value in the database).
+    const changeDatabaseValueButtons = sidebarButtonCollapse.concat(sidebarButtonCollapseAjax);
+
+    // Get all collapsible buttons (based on 'data-bs-toggle' value set to 'collapse').
+    const buttons = document.querySelectorAll('[data-bs-toggle="collapse"]');
+
+    // Add event listener and subsequent actions for button clicks.
+    buttons.forEach(function(button) {
+
+        // Set up event listener.
+        button.addEventListener('click', function() {
+
+            // Get menu id from data-bs-target attribute.
+            const menuId = button.getAttribute('data-bs-target');
+
+            // Execute changeButtonText function (changing 'Show' to 'Hide' and vice versa).
+            if (changeButtonTextButtons.includes(menuId)) {
+                changeButtonText(button);
+            }
+
+            // Execute toggleMenu function (sending request to change value in the database).
+            if (changeDatabaseValueButtons.includes(menuId)) {
+                changeDatabaseValue(menuId);
+            }
+        });
+    });
+
+    // Function for sending AJAX request to change value for sidebar appearance in the database.
+    function changeDatabaseValue(menuId) {
+
+        // Send AJAX request to the server.
+        $.ajax({
+
+            // URL and request type.
+            url: '/settings/sidebar_appearance/',
+            type: 'POST',
+
+            // Data: Menu identifier + CSRF token (passed from the template).
+            data: {
+                'menu_id': menuId,
+                csrfmiddlewaretoken: csrftoken
+            },
+
+        });
+
+    }
+
+    // Function for changing button text based on menu id.
+    function changeButtonText(button) {
+
+        // Get current value of aria-expanded attribute.
+        var ariaExpanded = button.getAttribute('aria-expanded');
+
+        // Split text into part with 'Hide/Show' and remaining text.
+        var splitText = button.textContent.trim().split(' ');
+        var actionText = splitText[0];
+        var remainingText = splitText.slice(1).join(' ');
+
+        // Update button text based on aria-expanded value.
+        if (ariaExpanded === 'true') {
+            button.textContent = 'Hide ' + remainingText;
+        } else {
+            button.textContent = 'Show ' + remainingText;
+        }
+    }
+</script>

@@ -1,25 +1,27 @@
 from django.utils.translation import gettext_lazy as _
 from django.db import models
-from django.db.models import JSONField
 
 from articles.models.article import Article
-from .singleton_model import SingletonModel
-from .gallery_section_default import DEFAULT_ARTICLE
+from .data.singleton_model import SingletonModel
 
 
 class HomePageGallerySection(SingletonModel):
     '''
-    Databázový model pro gallery sekce na domovské stránce
+    Databázový model pro gallery sekce na domovské stránce.
 
-    Obsahuje pole pro nastavení zobrazení a článků této sekce.
-    Metoda __str__ definuje textovou reprezentaci instance tohoto modelu.
-    Metoda get_gallery_settings slouží k získání všech hodnot tohoto modelu.
+    Model dědí ze SingletonModel, což je abstraktní třída definovaná pro vytvoření jediné instance.
 
-    display_gallery_section - je Boolean pole pro hodnotu reprezentující zobrazení nebo skrytí sekce
-    gallery_article_1 - je pole typu JSONField pro uložení dat prvního článku v galerii
-    gallery_article_2 - je pole typu JSONField pro uložení dat druhého článku v galerii
-    gallery_article_3 - je pole typu JSONField pro uložení dat třetího článku v galerii
-    gallery_article_4 - je pole typu JSONField pro uložení dat čtvrtého článku v galerii
+    Model vytváří následující pole:
+    - display_gallery_section: Boolean pole pro hodnotu reprezentující zobrazení nebo skrytí sekce.
+    - gallery_article_1: Pole typu JSONField pro uložení dat prvního článku v galerii.
+    - gallery_article_2: Pole typu JSONField pro uložení dat druhého článku v galerii.
+    - gallery_article_3: Pole typu JSONField pro uložení dat třetího článku v galerii.
+    - gallery_article_4: Pole typu JSONField pro uložení dat čtvrtého článku v galerii.
+
+    Metody modelu:
+    - __str__: Pro získání textové reprezentace modelu (dle hodnoty pole pro název článku).
+    - __init__: Slouží pro inicializaci defaultních hodnot.
+    - get_data: Slouží k získání všech hodnot tohoto modelu pro vykreslení na domácí stránce.
     '''
 
     display_gallery_section = models.BooleanField(
@@ -27,39 +29,48 @@ class HomePageGallerySection(SingletonModel):
         default=True,
     )
 
-    gallery_article_1 = JSONField(default=dict)
-    gallery_article_2 = JSONField(default=dict)
-    gallery_article_3 = JSONField(default=dict)
-    gallery_article_4 = JSONField(default=dict)
+    gallery_article_1 = models.ForeignKey(
+        Article,
+        related_name='gallery_article_1',
+        on_delete=models.SET_NULL,
+        null=True, blank=True,
+        verbose_name=_('Gallery Article 1')
+    )
+
+    gallery_article_2 = models.ForeignKey(
+        Article,
+        related_name='gallery_article_2',
+        on_delete=models.SET_NULL,
+        null=True, blank=True,
+        verbose_name=_('Gallery Article 2')
+    )
+
+    gallery_article_3 = models.ForeignKey(
+        Article,
+        related_name='gallery_article_3',
+        on_delete=models.SET_NULL,
+        null=True, blank=True,
+        verbose_name=_('Gallery Article 3')
+    )
+
+    gallery_article_4 = models.ForeignKey(
+        Article,
+        related_name='gallery_article_4',
+        on_delete=models.SET_NULL,
+        null=True, blank=True,
+        verbose_name=_('Gallery Article 4')
+    )
 
     def __str__(self):
         return "Homepage Gallery Section Configuration"
 
-    def __init__(self, *args, **kwargs):
+
+    def get_data(self):
         '''
-        Inicializační metoda modelu.
-
-        Tato metoda načítá defaultní hodnoty, pokud jsou pole prázdná.
-
-        :param args: Pozicinální argumenty.
-        :param kwargs: Klíčové argumenty.
-        '''
-
-        super().__init__(*args, **kwargs)
-
-        for i in range(1, 5):
-            gallery_article_attr = getattr(self, f'gallery_article_{i}')
-            if not gallery_article_attr:
-                setattr(self, f'gallery_article_{i}', DEFAULT_ARTICLE[f'article_{i}'])
-
-
-    @property
-    def get_gallery_settings(self):
-        '''
-        Vlastnost, která slouží k získání hodnot všech polí tohoto modelu.
+        Metoda, která slouží k získání hodnot všech polí tohoto modelu pro vykreslení na domácí stránce.
 
         Vrací slovník obsahující následující informace:
-        zobrazení sekce a seznam s daty článků.
+        zobrazení sekce a seznam s daty článků galerie.
         '''
 
         return {

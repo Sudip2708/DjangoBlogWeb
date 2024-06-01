@@ -1,5 +1,3 @@
-print("### main/main/asgi.py")
-
 """
 ASGI config for main project.
 

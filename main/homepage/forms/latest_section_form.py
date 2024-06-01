@@ -2,63 +2,70 @@ from django import forms
 from tinymce.widgets import TinyMCE
 from django.utils import timezone
 
-from homepage.models.latest_section import HomePageLatestArticles
 from articles.models.article import Article
+
+from ..models.latest_section import HomePageLatestArticles
 
 
 class LatestArticlesForm(forms.ModelForm):
     '''
-    Formulář pro editaci nastavení Latest Articles sekce domácí stránky.
+    Formulář pro nastavení sekce Nejnovější články na domovské stránce.
 
-    Tato třída formuláře slouží k vytvoření formuláře pro úpravu nastavení této sekce.
-    Obsahuje pole pro zobrazení a editaci jednotlivých nastavení,
-    jako je například zobrazení sekce a výběr významných článků.
-    Také obsahuje inicializační metodu pro úpravu widgetů
-    a naplnění polí výběrovými možnostmi.
+    Formulář je navázán na pohled EditLatestArticlesSection.
+
+    Formulář definuje tato pole:
+    - display_latest_section: Viditelnost sekce.
+    - latest_title: Nadpis sekce.
+    - latest_description: Popisný text sekce.
+    - latest_article_1: První vybraný článek.
+    - latest_article_2: Druhý vybraný článek.
+    - latest_article_3: Třetí vybraný článek.
     '''
 
     class Meta:
         '''
-        Meta třída pro specifikaci modelu a polí, která budou zahrnuta ve formuláři.
+        Třída Meta je speciální vnitřní třída pro konfiguraci formuláře.
 
-        Tato meta třída definuje strukturu a vzhled formuláře pro editaci nastavení této sekce.
-        Obsahuje informace o tom, který model je použit pro tento formulář,
-        jaká pole jsou zahrnuta a jaké widgety jsou použity pro jejich zobrazení.
+        Třída Meta poskytuje metadata a konfiguraci pro hlavní třídu,
+        a zde definuje následující atributy:
+        - model: Určuje model, na kterém je formulář založen.
+        - fields: Definuje pole, která budou zahrnuta ve formuláři.
+        - widgets: Umožňuje specifikovat vlastní widgety pro jednotlivá pole formuláře.
+
+        Widgety použité v tomto kódu:
+        - forms.CheckboxInput: Pole pro zaškrtávací boolean hodnotu.
+        - TinyMCE: Pole pro zadání textu pomocí modulu TinyMCE.
+        - forms.Select: Pole pro výběr z přednastavených hodnot.
         '''
 
-        # Nastavení modelu a prázdného seznamu pro pole sekce
         model = HomePageLatestArticles
-        fields = ['display_latest_section', 'latest_title', 'latest_description', 'latest_article_1', 'latest_article_2', 'latest_article_3']
-
-        # Nastavení vzhledu widgetů pro pole formuláře
+        fields = ['display_latest_section', 'latest_title', 'latest_description',
+                  'latest_article_1', 'latest_article_2', 'latest_article_3']
         widgets = {
-            'display_latest_section': forms.CheckboxInput(attrs={'class': 'form-check-input'}),
+            'display_latest_section': forms.CheckboxInput(),
             'latest_title': TinyMCE(),
             'latest_description': TinyMCE(),
-            'latest_article_1': forms.Select(attrs={'class': 'form-control'}),
-            'latest_article_2': forms.Select(attrs={'class': 'form-control'}),
-            'latest_article_3': forms.Select(attrs={'class': 'form-control'}),
+            'latest_article_1': forms.Select(),
+            'latest_article_2': forms.Select(),
+            'latest_article_3': forms.Select(),
         }
 
     def __init__(self, *args, **kwargs):
         '''
         Inicializační metoda formuláře.
 
-        Tato metoda slouží k inicializaci instance formuláře.
-        Přijímá libovolný počet pozicinálních argumentů a klíčových argumentů,
-        které jsou dále předány nadřazené třídě.
-        Zde přepisuje seznam nabízených článků pro pole Select tak,
-        aby se nabídli jen články se statusem publish a srovnané sestupně dle data publish
+        Metoda nejprve volá inicializaci nadřazené třídy a poté vytváří obsah
+        pro nabídku pro výběr předchozího a následujícího článku.
 
-        :param args: Pozicinální argumenty pro inicializaci.
-        :param kwargs: Klíčové argumenty pro inicializaci.
+        Metoda filtruje všechny publikované články a řadí je od nejnovějšího po nejstarší,
+        a tento seznam přidává jako queryset pro vytvoření nabídky hodnot
+        pro pole 'featured_article' 1 - 3.
         '''
 
         # Volání initu nadřazené třídy
         super().__init__(*args, **kwargs)
 
-        # Naplnění polí pro výběr článků seznamem publikovaných článků
-        published_articles = Article.objects.filter(status='publish', published__lte=timezone.now())
+        published_articles = Article.objects.filter(status='publish').order_by('-published')
         self.fields['latest_article_1'].queryset = published_articles
         self.fields['latest_article_2'].queryset = published_articles
         self.fields['latest_article_3'].queryset = published_articles

@@ -1,0 +1,34 @@
+<!-- Links for creating an article, author's articles, and favorite authors -->
+<!-- Intended for 0_base/_header/_dropdown_data/__dropdown_menu__.html -->
+
+<!-- Check if the user is authenticated -->
+{% if user.is_authenticated %}
+
+    <!-- Link to create an article -->
+    <li class="nav-item">
+        <a class="dropdown-item my-font-size-0-9rem"
+           href="{% url 'article-create' current_tab='overview' %}">
+            Create an Article
+        </a>
+    </li>
+
+    <!-- Link to the author's articles -->
+    <li class="nav-item">
+        <a class="dropdown-item my-font-size-0-9rem"
+           href="{% url 'my-articles' current_tab='all' %}">
+            My Articles
+        </a>
+    </li>
+
+    <!-- Link to articles from favorite authors -->
+    <li class="nav-item">
+        <a class="dropdown-item my-font-size-0-9rem"
+           href="#">
+            Favorite Authors
+        </a>
+    </li>
+
+    <!-- Divider -->
+    <li class="nav-item"><hr class="dropdown-divider"></li>
+
+{% endif %}

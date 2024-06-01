@@ -1,0 +1,44 @@
+{% extends '2_main/20__base__.html' %}
+
+{% block inner_content %}
+
+    <div class="row gy-4 mb-5">
+
+        <!-- Title -->
+        <header><h2>{{ page_title }}</h2></header>
+
+        <!-- Container for inner elements with a maximum width set to 800px -->
+        <div class="my-max-width-800px my-margin-0-auto">
+
+            <!-- Content displayed only for extra-large screens -->
+            <div class="d-none d-xl-block">
+
+                <!-- When the request comes from the error search page and the user has the sidebar enabled -->
+                {% if url_name == 'article-search-error' and user.sidebar.show_sidebars %}
+
+                    <!-- Error announcement -->
+                    {% include '2_main/_search_data/_form_data/_error_messages_.html' %}
+
+                <!-- In all other cases -->
+                {% else %}
+
+                    <!-- Form data -->
+                    {% include '2_main/_search_data/_form_.html' %}
+
+                {% endif %}
+
+            </div>
+
+            <!-- Content displayed for screens smaller than extra-large -->
+            <div class="d-xl-none">
+
+                <!-- Form data -->
+                {% include '2_main/_search_data/_form_.html' %}
+
+            </div>
+
+        </div>
+
+    </div>
+
+{% endblock inner_content %}

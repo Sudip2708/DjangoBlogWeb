@@ -1,31 +1,20 @@
-<!-- Odkazy pro načtení externích zdrojů ovlivňujících chování stránky -->
-<!-- Určeno pro 0_base/01__head__.html -->
+<!-- Links to load external resources affecting the behavior of the page -->
+<!-- Intended for 0_base/01__head__.html -->
 
-
-<!-- Načtení cesty ke složce kde jsou uložené některé z těchto souborů -->
 {% load static %}
 
-
-<!-- Načtení nastavení pro prvky od Boodstrap -->
+<!-- Loading settings for Bootstrap elements -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
         crossorigin="anonymous">
 </script>
 
-
-<!-- Načtení nastavení pro prvky od Tagify (pro našeptávač tagů) -->
-<script src="https://cdn.jsdelivr.net/npm/@yaireo/tagify"></script>
-<script src="https://cdn.jsdelivr.net/npm/@yaireo/tagify/dist/tagify.polyfills.min.js"></script>
-
-
-<!-- Načtení nastavení pro prvky od TinyMCE (pro html editor textů) -->
-<script
-        type="text/javascript"
+<!-- Loading settings for TinyMCE elements (for HTML text editor) -->
+<script type="text/javascript"
         src="https://cdn.tiny.cloud/1/53fmtiuk9mhttvevp087nqfy6cmqgzl08wvnya7iy2sbyk4d/tinymce/6/tinymce.min.js"
         referrerpolicy="origin">
 </script>
 
-
-<!-- Načtení dodatečného nastavení vzhledu editoru od TinyMCE -->
+<!-- Loading additional style settings for the TinyMCE editor -->
 <script src="{% static 'js/_tinymce_article_settings.js' %}"></script>
 <script src="{% static 'js/_tinymce_mini_settings.js' %}"></script>

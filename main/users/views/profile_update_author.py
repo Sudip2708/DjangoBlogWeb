@@ -1,60 +1,102 @@
-print("### main/users/views/profile_update_author.py")
-
-from django.shortcuts import render, redirect
+from django.views.generic.edit import FormView
+from django.urls import reverse_lazy
 from django.contrib import messages
-from django.contrib.auth.decorators import login_required
+from django.shortcuts import redirect
 
 from articles.models.article_author import ArticleAuthor
-from users.forms.author_profile_form import AuthorProfileForm
-from users.utilities.clean_profile_picture import clean_profile_picture
+from common_data.base_view import BaseView
+from ..forms.author_profile_form import AuthorProfileForm
 
 
-@login_required
-def profile_update_author(request):
+class AuthorProfileView(BaseView, FormView):
     '''
-    Definice pohledu pro stránku pro správu účtu autora.
+    Pohled pro úpravu a nastavení dat autora.
 
-    :param request: Formulářový požadavek.
-    :return: Stránka pro správu uživatelského účtu.
+    Pohled zpracovává následující URL:
+    - profile-update-author: Stránka pro úpravu autorského účtu.
+
+    Pohled dědí ze základní třídy FormView a vlastní třídy BaseView.
+
+    Atributy přetížené z CreateView:
+    - self.model: Určuje model, se kterým tento pohled pracuje.
+    - self.template_name: Určuje cestu k šabloně, která bude použita pro zobrazení výsledků.
+    - self.form_class: Určuje formulář napojený na tento pohled.
+    - self.success_url: Určuje návratovou adresu po úspěšném uložení dat (stejná stránka).
+
+    Atributy poděděné z BaseView:
+    - self.user: Instance uživatele (buď CustomUser, nebo AnonymousUserWithSettings).
+    - self.url_name: URL adresa, ze které požadavek přišel.
+
+    Metody definované v tomto pohledu:
+    - get_form_kwargs: Metoda pro získání argumentů pro vytvoření instance formuláře (zde pro přidání instance autora).
+    - form_valid: Metoda, která se volá po úspěšném ověření formuláře (zde pro zobrazení oznamu o úspěšném uložení dat).
+    - get_context_data: Metoda, která vrací obsah pro vykreslení šablony.
     '''
 
-    # Načtení autora
-    user = request.user
-    author = ArticleAuthor.objects.get(user=user)
+    model = ArticleAuthor
+    template_name = '2_main/23__profile_update__.html'
+    form_class = AuthorProfileForm
+    success_url = reverse_lazy('profile-update-author')
 
+    def get_form_kwargs(self):
+        '''
+        Metoda pro získání argumentů pro vytvoření instance formuláře.
 
-    # Nastavení pro POST
-    if request.method == 'POST':
+        Metoda nejprve načte argumenty z nadřazené třídy,
+        následně vytvoří a přidá argument pro instanci přihlášeného uživatele
+        a data předává dál do formuláře.
+        '''
+        kwargs = super().get_form_kwargs()
+        self.author = self.request.user.linked_author
+        kwargs['instance'] = self.author
+        return kwargs
 
-        # Načtení formuláře pro data uživatele
-        author_form = AuthorProfileForm(request.POST, request.FILES, instance=author)
+    def form_valid(self, form):
+        '''
+        Metoda, která se volá po úspěšném ověření formuláře.
 
-        # Kontrola, zda formulář obsahuje validní data
-        if author_form.is_valid():
+        Metoda nejprve uloží data formuláře,
+        po té vytvoří oznam o úspěšné aktualizaci dat
+        a přesměruje na stránku pro editaci dat autora.
+        '''
+        form.save()
+        messages.success(self.request, 'Your profile has been updated successfully.')
+        return redirect(self.success_url)
 
-            # Validace a změna formátu obrázku
-            if author.profile_picture_tracker.has_changed('profile_picture'):
-                author_form = clean_profile_picture(author_form)
+    def get_context_data(self, **kwargs):
+        '''
+        Metoda pro získání dat pro kontext šablony.
 
-            # Uložení formuláře užvatele
-            author_form.save()
+        Metoda nejprve získá kontext z nadřazené třídy
+        a po té vytváří a přidává vlastní kontext pro vykreslení šablony.
+        Metoda vrací kontext pro vykreslení šablony.
 
-            # Zpráva o úspěšném uložení a přesměrování zpátky na stránku
-            messages.success(request, 'Your author profile has been updated successfully.')
-            return redirect('profile_update_author')
+        Kontext poděděný z BaseView:
+        - context['user']: Instance uživatele.
+        - context['url_name']: URL jménu adresy z které požadavek přišel.
+        - context['sidebar_search_form']: Formulář pro hledání (pro postranní panel).
+        - context['published_categories']: Publikované kategorie (pro dropdown menu a postranní panel).
+        - context['footer']: Data pro vykreslení patičky (na domácí stránce je již zahrnuto)
+        - context['user_thumbnail']: Miniatura profilového obrázku (pro přihlášeného a nepřihlášeného uživatele).
 
-    # Nastavení pro GET
-    else:
+        Kontext přidaný v tomto kódu:
+        - context['page_title']: Nadpis stránky.
+        - context['profile_form']: Formulář stránky.
+        - context['profile_picture_url']: URL adresa profilového obrázku.
+        - context['profile_picture_alt']: Zástupný text pro profilový obrázek.
+        - context['submit_button_text']: Popisek odesílacího tlačítka.
+        - context['tab_names']: Popisek pro záložky stránky.
+        - context['tab_url']: URL pro záložky stránky.
+        '''
+        context = super().get_context_data(**kwargs)
 
-        # Načtení formuláře Uživatele
-        author_form = AuthorProfileForm(instance=author)
+        context['page_title'] = 'Edit User Profile'
+        context['profile_form'] = AuthorProfileForm(instance=self.author)
+        context['profile_picture_url'] = self.author.profile_picture.url
+        context['profile_picture_alt'] = "Author Profile Picture"
+        context['submit_button_name'] = "submit_author"
+        context['submit_button_text'] = "Save Author Data"
+        context['tab_names'] = {'user': "User", 'author': "Author"}
+        context['tab_url'] = {'user': 'profile-update-user', 'author': 'profile-update-author'}
 
-    # Příprava obsahu pro šablonu
-    content = {
-        'user_form': None,
-        'author_form': author_form,
-        'author': author,
-    }
-
-    # Vytvoření stránky
-    return render(request, '6_profile_update/60__base__.html', content)
+        return context

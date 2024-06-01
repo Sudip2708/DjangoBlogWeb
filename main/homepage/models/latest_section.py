@@ -1,25 +1,29 @@
 from django.utils.translation import gettext_lazy as _
 from django.db import models
 from articles.models.article import Article
-from .singleton_model import SingletonModel
+from .data.singleton_model import SingletonModel
 from tinymce.models import HTMLField
 
 
 class HomePageLatestArticles(SingletonModel):
     '''
-    Databázový model pro Home Page Latest Articles Section
+    Databázový model pro Home Page Latest Articles Section.
 
-    Obsahuje pole pro nastavení zobrazení této sekce, nadpisu, popisu a článků této sekce.
-    Metoda __str__ definuje textovou reprezentaci instance tohoto modelu.
-    Metoda get_latest_settings slouží k získání všech hodnot tohoto modelu.
+    Model dědí ze SingletonModel, což je abstraktní třída definovaná pro vytvoření jediné instance.
 
-    display_latest_section - je Boolean pole pro hodnotu reprezentující zobrazení nebo skrytí této sekce
-    latest_title - je HTML pole pro vložení nadpisu, který bude zobrazen v této sekci
-    latest_description - je HTML pole pro vložení popisu, který bude zobrazen v této sekci
-    latest_article_1 - je ForeignKey pole pro výběr prvního nejnovějšího článku
-    latest_article_2 - je ForeignKey pole pro výběr druhého nejnovějšího článku
-    latest_article_3 - je ForeignKey pole pro výběr třetího nejnovějšího článku
+    Model vytváří následující pole:
+    - display_latest_section: Boolean pole pro hodnotu reprezentující zobrazení nebo skrytí sekce.
+    - latest_title: HTML pole pro vložení nadpisu, který bude zobrazen v této sekci.
+    - latest_description: HTML pole pro vložení popisu, který bude zobrazen v této sekci.
+    - latest_article_1: ForeignKey pole pro výběr prvního nejnovějšího článku.
+    - latest_article_2: ForeignKey pole pro výběr druhého nejnovějšího článku.
+    - latest_article_3: ForeignKey pole pro výběr třetího nejnovějšího článku.
+
+    Metody modelu:
+    - __str__: Pro získání textové reprezentace modelu (dle hodnoty pole pro název článku).
+    - get_data: Slouží k získání všech hodnot tohoto modelu pro vykreslení na domácí stránce.
     '''
+
 
     display_latest_section = models.BooleanField(
         _('Display Latest Section'),
@@ -66,12 +70,10 @@ class HomePageLatestArticles(SingletonModel):
     @property
     def latest_articles(self):
         """
-        Vlastnost, která slouží k získání hodnot tří nejnovějších článků pro tento model.
+        Metoda, která slouží k získání hodnot tří nejnovějších článků pro tento model.
 
         Vrátí seznam tří nejnovějších článků přiřazených k modelu
         nebo doplní seznam novými články, pokud některé položky nejsou definovány.
-
-        :return: Seznam tří nejnovějších přiřazených článků nebo seznam nových článků.
         """
 
         # Načtení uložených článků v tomto modelu
@@ -99,10 +101,10 @@ class HomePageLatestArticles(SingletonModel):
 
         return assigned_articles
 
-    @property
-    def get_latest_settings(self):
+
+    def get_data(self):
         '''
-        Vlastnost, která slouží k získání hodnot všech polí tohoto modelu.
+        Metoda, která slouží k získání hodnot všech polí tohoto modelu pro vykreslení na domácí stránce.
 
         Vrací slovník obsahující následující informace:
         zobrazení sekce, nadpis, popis a články sekce.

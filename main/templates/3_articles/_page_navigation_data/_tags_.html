@@ -1,0 +1,32 @@
+<!-- Navigation bar for the page for a specific tag -->
+<!-- Intended for 3_articles/32__page_navigation__.html -->
+
+<!-- Display navigation for similar articles -->
+{% if user.settings.show_tab_for_similar %}
+
+    <!-- Navigation -->
+    <nav class="nav nav-tabs justify-content-end mb-5">
+
+        <!-- Display tabs for the current tag and similar articles -->
+        {% if url_name == 'article-tag-list' or url_name == 'article-tag-list-similar' %}
+
+            <!-- Display tabs for the current tag and similar articles -->
+            {% include '3_articles/_page_navigation_data/_tags_data/_tab_for_tag_and_similar_.html' %}
+
+            <!-- Display tab for switching to categories for the current tag and similar articles -->
+            {% include '3_articles/_page_navigation_data/_tags_data/_tab_to_show_categories_.html' %}
+
+        <!-- Display category tabs for the current tag or similar articles -->
+        {% else %}
+
+            <!-- Display category tabs for the current tag or similar articles -->
+            {% include '3_articles/_page_navigation_data/_tags_data/_tab_for_categories_.html' %}
+
+            <!-- Display tabs for returning to navigation for the current tag or similar articles -->
+            {% include '3_articles/_page_navigation_data/_tags_data/_tab_to_show_tag_and_similar_.html' %}
+
+        {% endif %}
+
+    </nav>
+
+{% endif %}

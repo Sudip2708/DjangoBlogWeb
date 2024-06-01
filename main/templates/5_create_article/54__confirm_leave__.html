@@ -1,0 +1,63 @@
+<!-- Extension for 5_create_article/50__base__.html -->
+
+<!-- Bootstrap Modal for confirming before leaving the page -->
+<div class="modal fade" id="confirmModal" tabindex="-1" aria-labelledby="confirmModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <!-- Title and close button -->
+            <div class="modal-header">
+                <h5 class="modal-title" id="confirmModalLabel">Confirmation</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+
+            <!-- Info text -->
+            <div class="modal-body">
+                Your changes are not saved. Do you really want to leave the page?
+            </div>
+
+            <!-- Button to stay on the page and link to confirm leaving -->
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Stay on Page</button>
+                <a href="#" id="confirmLeave" class="btn btn-primary">Leave Page</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Script for capturing page exit and displaying the confirmation modal (if the page has been modified) -->
+<script>
+    // Adding event before leaving the page
+    window.addEventListener('beforeunload', function (e) {
+        var formChanged = false;
+        document.querySelectorAll('form').forEach(function (form) {
+            if (form.classList.contains('js-dirty')) {
+                formChanged = true;
+            }
+        });
+
+        // Checking if the form has been changed
+        if (formChanged) {
+            // Checking if the action triggered a submit button
+            if (!e.target.activeElement || e.target.activeElement.tagName.toLowerCase() !== 'button' || e.target.activeElement.type !== 'submit') {
+                e.preventDefault();
+                e.returnValue = '';
+            }
+        }
+    });
+
+    // Displaying the modal when attempting to leave the page
+    document.querySelectorAll('form').forEach(function (form) {
+        form.addEventListener('change', function () {
+            form.classList.add('js-dirty');
+        });
+        form.addEventListener('submit', function () {
+            form.classList.remove('js-dirty');
+        });
+    });
+
+    document.getElementById('confirmLeave').addEventListener('click', function () {
+        // If the user clicks on the link to leave the page in the modal window, they will be redirected to the specified address.
+        window.location.href = this.href;
+    });
+</script>

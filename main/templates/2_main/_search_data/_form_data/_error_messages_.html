@@ -1,0 +1,15 @@
+<!-- Error announcement -->
+<!-- Intended for 2_main/_search_data/_search_form_.html -->
+<!-- Intended for 2_main/_search_data/_search_form_errors_.html -->
+
+{% if search_form.errors %}
+    {% for field, errors in search_form.errors.items %}
+        {% for error in errors %}
+
+            <div class="alert alert-danger mt-4">
+                {{ error }}
+            </div>
+
+        {% endfor %}
+    {% endfor %}
+{% endif %}

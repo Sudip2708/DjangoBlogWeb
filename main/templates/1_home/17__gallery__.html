@@ -1,32 +1,32 @@
-<!-- Gallery Section - galerie hlavních obrázků (pro 4 články) -->
-<!-- Určeno pro 1_home/10__base__.html -->
+<!-- Gallery Section - gallery of main images (for 4 articles) -->
+<!-- For 1_home/10__base__.html -->
 
 
-<!-- Podmínka kontrolující, zda má být sekce viditelná -->
+<!-- Condition checking whether the section should be visible -->
 {% if gallery_data.display_gallery_section %}
 
-    <!-- Hlavní kontejner -->
-    <section class="p-0">
+    <!-- Main container -->
+    <section class="p-0 d-none d-md-block">
 
-        <!-- Tlačítko pro skrytí/zobrazení editačního formuláře sekce (pouze pro url edit a superuser) -->
+        <!-- Button to show/hide the section editing form (only for url edit and superuser) -->
         {% with name='Gallery' %}
         {% include '1_home/_home_data/_edit_button_.html' %}
         {% endwith %}
 
-        <!-- Editační formulář sekce (pouze pro url edit a superuser) -->
+        <!-- Section editing form (only for url edit and superuser) -->
         {% if user.is_superuser and request.path == '/edit/' %}
         {% include '1_home/_home_edit/__gallery__.html' %}
         {% endif %}
 
-        <!-- Hlavní část: Zobrazení obrázků vybraných článků -->
+        <!-- Main content: Displaying images of selected articles -->
         {% include '1_home/_home_data/_gallery_articles_.html' %}
 
     </section>
 
-<!-- Pokud je sekce skrytá -->
+<!-- If the section is hidden -->
 {% else %}
 
-    <!-- Tlačítko pro zobrazení sekce (pouze pro url edit a superuser) -->
+    <!-- Button to display the section (only for url edit and superuser) -->
     {% with section_url='edit-gallery-section' name='Gallery' %}
     {% include '1_home/_home_data/_section_display_.html' %}
     {% endwith %}

@@ -1,0 +1,26 @@
+<!-- Display category tabs for the current tag or similar articles -->
+<!-- Intended for 3_articles/_page_navigation_data/_tags_.html -->
+
+<!-- Loop to iterate through categories -->
+{% for category in category_tabs %}
+
+    <!-- Categories for search result -->
+    {% if url_name == 'article-search-results-category' %}
+        <li class="nav-item ">
+            <a href="{% url 'article-search-results-category' query=query category_slug=category.slug %}"
+            class="nav-link {% if current_category == category %}active{% endif %}">
+                {{ category.name }}
+            </a>
+        </li>
+
+    <!-- Categories for similar articles -->
+    {% elif url_name == 'article-search-similar-category' %}
+        <li class="nav-item ">
+            <a href="{% url 'article-search-similar-category' query=query category_slug=category.slug %}"
+            class="nav-link {% if current_category == category %}active{% endif %}">
+                {{ category.name }}
+            </a>
+        </li>
+    {% endif %}
+
+{% endfor %}

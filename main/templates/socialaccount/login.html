@@ -8,12 +8,10 @@
 <!-- Start of block for the parent template -->
 {% block social_account %}
 
-
     <!-- Form for confirm redirection -->
     {% element form method="post" no_visible_fields=True %}
         {% slot actions %}
 
-            <!-- Zabezpečení přenosu dat -->
             {% csrf_token %}
 
             <!-- Hidden button to confirm redirection -->

@@ -1,45 +1,42 @@
-<!-- Editační část sekce -->
-<!-- Rozšířenní pro 1_home/17__gallery__.html -->
+<!-- Extension for 1_home/17__gallery__.html -->
 
-
-<!-- Hlavní kontejner -->
 <div class="collapse" id="gallerySectionCollapse">
     <div class="card card-body">
 
-        <!-- Formulář -->
+        <!-- Form -->
         <form method="POST"
               action="{% url 'edit-gallery-section' %}">
 
-            <!-- Zabezpečení přenosu dat -->
+            <!-- CSRF token -->
             {% csrf_token %}
 
-            <!-- Kontejner pro výběr článků -->
+            <!-- Container for selecting articles -->
             <div class="row">
 
-                <!-- Článek 1 -->
-                {% with article=gallery_edit_form.gallery_article_1 class='col-lg-3' %}
+                <!-- Article 1 -->
+                {% with field=gallery_edit_form.gallery_article_1 class='col-lg-3' %}
                 {% include '1_home/_home_edit/_edit_data/_edit_article_.html' %}
                 {% endwith %}
 
-                <!-- Článek 2 -->
-                {% with article=gallery_edit_form.gallery_article_2 class='col-lg-3' %}
+                <!-- Article 2 -->
+                {% with field=gallery_edit_form.gallery_article_2 class='col-lg-3' %}
                 {% include '1_home/_home_edit/_edit_data/_edit_article_.html' %}
                 {% endwith %}
 
-                <!-- Článek 3 -->
-                {% with article=gallery_edit_form.gallery_article_3 class='col-lg-3' %}
+                <!-- Article 3 -->
+                {% with field=gallery_edit_form.gallery_article_3 class='col-lg-3' %}
                 {% include '1_home/_home_edit/_edit_data/_edit_article_.html' %}
                 {% endwith %}
 
-                <!-- Článek 4 -->
-                {% with article=gallery_edit_form.gallery_article_4 class='col-lg-3' %}
+                <!-- Article 4 -->
+                {% with field=gallery_edit_form.gallery_article_4 class='col-lg-3' %}
                 {% include '1_home/_home_edit/_edit_data/_edit_article_.html' %}
                 {% endwith %}
 
             </div>
 
-            <!-- Kontejner pro odesílací tlačítko a zaškrtávací tlačítko pro nastavení viditelnosti sekce -->
-            {% with checkbox=gallery_edit_form.display_gallery_section title='Gallery' %}
+            <!-- Container for submit button and checkbox for setting section visibility -->
+            {% with field=gallery_edit_form.display_gallery_section %}
             {% include '1_home/_home_edit/_edit_data/_submit_button_with_display_checkbox_.html' %}
             {% endwith %}
 

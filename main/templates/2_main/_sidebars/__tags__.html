@@ -1,30 +1,43 @@
-<!-- Panel pro tagy -->
-<!-- Určeno pro 2_main/21__sidebar__.html -->
+<!-- Inner content of the tag panel -->
+<!-- Intended for 2_main/21__sidebar__.html -->
 
+<div class="card mb-4">
+    <div class="card-body">
 
-<!-- Hlavní kontejner sdružující prvky panelu -->
-<div class="px-1 mt-2">
+        <!-- Title and button to toggle inner content -->
+        <div class="d-flex justify-content-between align-items-center mb-3">
 
-    <!-- Kontejner pro prvky pro vyditelnost a pohyb panelu -->
-    <div class="d-flex justify-content-between">
+            <!-- Panel title -->
+            <h3 class="h6">Tags</h3>
 
-        <!-- Vyditelnost panelu -->
-        <div class="d-inline-block">
-            {% with ar_exp=user.sidebar_tags ar_con='sidebar_tags' title='Tags' %}
-                {% include '2_main/_sidebars/_common/__button_collapse__.html' %}
-            {% endwith %}
+            <!-- Button to toggle inner content -->
+            <button class="btn btn-link my-font-size-0-8rem p-0 my-color-f0f0f0"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#show_tags_options"
+                    aria-expanded="{{ sidebar.show_options }}"
+                    aria-controls="show_tags_options">
+                {% if sidebar.show_options %}Hide Content{% else %}Show Content{% endif %}
+            </button>
+
         </div>
 
-        <!-- Pohyb panelu -->
-        <div class="d-inline-block">
-            {% with order=user.sidebar_tags_order last=is_last up='#MoveUp_tags' dn='#MoveDn_tags' %}
-            {% include '2_main/_sidebars/_common/__sidebar_moves__.html' %}
-            {% endwith %}
+        <!-- Container for collapsible inner content -->
+        <div class="collapse {% if sidebar.show_options %}show{% endif %}"
+             id="show_tags_options">
+
+            <!-- Loop to display tags -->
+            <ul class="list-inline mb-0">
+                {% for tag in sidebar.tags %}
+                    <li class="list-inline-item">
+                        <a class="tag"
+                           href="{% url 'article-tag-list' tag_slug=tag.slug %}">
+                            {{ tag }}
+                        </a>
+                    </li>
+                {% endfor %}
+            </ul>
+
         </div>
 
     </div>
-
-    <!-- Vnitřní položky panelu -->
-    {% include '2_main/_sidebars/_tags/__tags_mainframe__.html' %}
-
 </div>

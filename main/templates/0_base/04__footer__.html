@@ -1,34 +1,32 @@
-<!-- Spodní část stránky určená pro všeobecné informace -->
-<!-- Určeno pro 0_base/00__base__.html -->
+<!-- Bottom section of the page for general information -->
+<!-- For 0_base/00__base__.html -->
 
 
-{% include '0_base/css/css_footer.html' %}
+<!-- Condition to check if the Hero section should be visible -->
+{% if footer %}
 
-<!-- Podmínka kontrolující, zda má být Hero sekce viditelná -->
-{% if footer_data.display_footer_section %}
-
-    <!-- Hlavní kontejner -->
-    <footer class="footer text-white footer_color">
+    <!-- Main container -->
+    <footer class="footer text-white my-background-0e0e0e">
         <div class="container">
 
-            <!-- Tlačítko pro skrytí/zobrazení editačního formuláře sekce (pouze pro url edit a superuser) -->
+            <!-- Button to show/hide the editing form for the section (only for edit url and superuser) -->
             {% include '1_home/_home_data/_edit_button_.html' with name='Footer' %}
 
-            <!-- Kontejner pro jednotlivé sloupce patičky -->
+            <!-- Container for individual footer columns -->
             {% include '0_base/_footer/__content__.html' %}
 
-            <!-- Editační formulář sekce (pouze pro url edit a superuser) -->
+            <!-- Editing form for the section (only for edit url and superuser) -->
             {% include '0_base/_footer/__edit_section__.html' %}
 
         </div>
     </footer>
 
-    <!-- Poslední řádek patičky (pouze pokud má nastevené zobrazení) -->
+    <!-- Last row of the footer (only if display is set) -->
     {% include '0_base/_footer/__end_line_section__.html' %}
 
 {% else %}
 
-    <!-- Tlačítko pro zobrazení sekce (pouze pro url edit a superuser) -->
+    <!-- Button to display the section (only for edit url and superuser) -->
     {% with section_url='edit-footer-section' name='Footer' %}
     {% include '1_home/_home_data/_section_display_.html' %}
     {% endwith %}

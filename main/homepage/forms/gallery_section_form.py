@@ -1,71 +1,66 @@
 from django import forms
 
-from homepage.models.gallery_section import HomePageGallerySection
 from articles.models.article import Article
+
+from ..models.gallery_section import HomePageGallerySection
 
 
 class GallerySectionForm(forms.ModelForm):
     '''
     Formulář pro editaci nastavení Gallery sekce domácí stránky.
 
-    Tato třída formuláře slouží k vytvoření formuláře pro úpravu nastavení této sekce.
-    Obsahuje pole pro zobrazení a editaci jednotlivých nastavení,
-    jako je například zobrazení sekce a výběr významných článků.
+    Formulář je navázán na pohled EditGalleryArticlesSection.
+
+    Formulář definuje tato pole:
+    - display_gallery_section: Viditelnost sekce.
+    - gallery_article_1: První vybraný článek.
+    - gallery_article_2: Druhý vybraný článek.
+    - gallery_article_3: Třetí vybraný článek.
+    - gallery_article_4: Čtvrtý vybraný článek.
     '''
 
     class Meta:
         '''
-        Meta třída pro specifikaci modelu a polí, která budou zahrnuta ve formuláři.
+        Třída Meta je speciální vnitřní třída pro konfiguraci formuláře.
 
-        Tato meta třída definuje strukturu a vzhled formuláře pro editaci nastavení této sekce.
-        Obsahuje informace o tom, který model je použit pro tento formulář,
-        jaká pole jsou zahrnuta a jaké widgety jsou použity pro jejich zobrazení.
+        Třída Meta poskytuje metadata a konfiguraci pro hlavní třídu,
+        a zde definuje následující atributy:
+        - model: Určuje model, na kterém je formulář založen.
+        - fields: Definuje pole, která budou zahrnuta ve formuláři.
+        - widgets: Umožňuje specifikovat vlastní widgety pro jednotlivá pole formuláře.
+
+        Widgety použité v tomto kódu:
+        - forms.CheckboxInput: Pole pro zaškrtávací boolean hodnotu.
+        - forms.Select: Pole pro výběr z přednastavených hodnot.
         '''
 
         # Nastavení modelu a prázdného seznamu pro pole sekce
         model = HomePageGallerySection
-        fields = []
+        fields = ['display_gallery_section', 'gallery_article_1', 'gallery_article_2', 'gallery_article_3', 'gallery_article_4']
+        widgets = {
+            'display_gallery_section': forms.CheckboxInput(),
+            'gallery_article_1': forms.Select(),
+            'gallery_article_2': forms.Select(),
+            'gallery_article_3': forms.Select(),
+            'gallery_article_4': forms.Select(),
+        }
 
     def __init__(self, *args, **kwargs):
         '''
         Inicializační metoda formuláře.
 
-        Tato metoda inicializuje instanci formuláře pro úpravu sekce galerie na domovské stránce.
-        Vytváří pole pro jednotlivé části formuláře pomocí metody self.fields, která přidává pole do formuláře.
-        Každé pole má svůj vlastní widget, který určuje, jak bude pole zobrazeno ve webovém rozhraní.
+        Metoda nejprve volá inicializaci nadřazené třídy a poté vytváří obsah
+        pro nabídku pro výběr předchozího a následujícího článku.
 
-        :param args: Pozicinální argumenty pro inicializaci.
-        :param kwargs: Klíčové argumenty pro inicializaci.
+        Metoda filtruje všechny publikované články a řadí je od nejnovějšího po nejstarší,
+        a tento seznam přidává jako queryset pro vytvoření nabídky hodnot
+        pro pole 'featured_article_1' - 'featured_article_3'.
         '''
 
-        # Volání initu nadřazené třídy
         super().__init__(*args, **kwargs)
 
-        # Načtení instance pro Gallery section
-        instance = HomePageGallerySection.singleton()
-
-        # Pole pro zobrazení footeru
-        self.fields['display_gallery_section'] = forms.BooleanField(
-            label='Display Gallery Section',
-            initial=instance.display_gallery_section,
-            required=False
-        )
-
-        # Získání seznamu s tuples obsahujících ID a názvy všech článků
-        articles = Article.objects.all().order_by('title').values_list('id', 'title')
-        articles_choices = list(articles)
-
-        # Cyklus pro vytvoření polí pro výběr článků
-        for n in range(1, 5):
-
-            # Vytvoření názvu pole
-            field_name = f"gallery_article_{n}"
-
-            # Načtení aktuální hodnoty a následné přidání na začátek seznamu
-            initial_choice = (instance.__dict__[field_name]["article_id"], instance.__dict__[field_name]["title"])
-            self.fields[field_name] = forms.ChoiceField(
-                label=f"{n}. Article",
-                choices= [initial_choice] + articles_choices,
-                widget=forms.Select(attrs={'class': 'form-control'})
-            )
-
+        all_articles = Article.objects.all().order_by('title')
+        self.fields['gallery_article_1'].queryset = all_articles
+        self.fields['gallery_article_2'].queryset = all_articles
+        self.fields['gallery_article_3'].queryset = all_articles
+        self.fields['gallery_article_4'].queryset = all_articles

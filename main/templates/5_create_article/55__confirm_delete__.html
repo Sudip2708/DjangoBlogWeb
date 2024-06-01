@@ -1,0 +1,85 @@
+{% extends '2_main/20__base__.html' %}
+
+{% block inner_content %}
+
+    <!-- Page Title -->
+    <header><h1>Confirm Delete Article</h1></header>
+
+    <!-- Info text -->
+    <p class="text-danger">You are about to delete this article:</p>
+
+    <!-- Main container -->
+    <div class="container bg-light pb-4 pt-4">
+        <div class="row d-flex align-items-stretch g-0">
+
+            <!-- Placement of the main picture above the article (for devices < LG) -->
+            <div class="col-lg-4">
+                {%  with article=article %}
+                {% include '1_home/_home_data/_main_picture_.html' %}
+                {% endwith %}
+            </div>
+
+            <!-- Container for the article content -->
+            <div class="col-lg-8 ">
+                <div class="text-inner d-flex align-items-center h-100">
+                    <div class="content px-4 px-lg-5">
+
+                        <!-- Category -->
+                        {%  with article=article %}
+                        {% include '3_articles/_articles_data/_view_setup_data/_category_.html' %}
+                        {% endwith %}
+
+                        <!-- Title -->
+                        {% with class='mb-3' %}
+                        {% include '3_articles/_articles_data/_view_setup_data/_title_.html' %}
+                        {% endwith %}
+
+                        <!-- Overview -->
+                        {%  with article=article %}
+                        {% include '1_home/_home_data/_overview_.html' %}
+                        {% endwith %}
+
+                        <!-- Container for the article footer -->
+                        <ul class="list-inline list-separated text-gray-500 mb-0">
+
+                            <!-- Article Age -->
+                            {%  with article=article %}
+                            {% include '3_articles/_articles_data/_view_setup_data/_published_ago_.html' %}
+                            {% endwith %}
+
+                            <!-- Number of Comments -->
+                            {%  with article=article %}
+                            {% include '3_articles/_articles_data/_view_setup_data/_comment_count_.html' %}
+                            {% endwith %}
+
+                        </ul>
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Warning -->
+    <p class="text-danger mt-3">
+        Are you sure you want to delete this article?
+    </p>
+
+    <!-- Form -->
+    <form method="post">
+        {% csrf_token %}
+
+        <!-- Button to delete -->
+        <button type="submit" class="btn btn-danger">
+            Delete
+        </button>
+
+        <!-- Link to return to article editing -->
+        <a href="{% url 'article-update' slug=article.slug current_tab='overview' %}" class="btn btn-success">
+            Do not delete and return to article
+        </a>
+
+    </form>
+
+{% endblock inner_content %}

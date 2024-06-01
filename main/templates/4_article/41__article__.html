@@ -1,38 +1,36 @@
-<!-- Zobrazení článku -->
-<!-- Určeno pro 4_article/40__base__.html -->
+<!-- Extension for 4_article/40__base__.html -->
 
-
-<!-- Hlavní obrázek -->
+<!-- Main Picture -->
 {% include '4_article/_article_data/_main_picture_.html' %}
 
-<!-- Kategorie -->
-{% include '3_articles/_articles/_article_data/_category_.html' %}
+<!-- Category -->
+{% include '3_articles/_articles_data/_view_setup_data/_category_.html' %}
 
-<!-- Nadpis -->
+<!-- Title -->
 {% include '4_article/_article_data/_title_.html' %}
 
 <!-- Info -->
 <ul class="list-inline list-separated text-gray-500 mb-4">
 
-    <!-- Odkaz na autora -->
-    {% include '3_articles/_articles/_article_data/_author_.html' %}
+    <!-- Author Link -->
+    {% include '3_articles/_articles_data/_view_setup_data/_author_.html' %}
 
-    <!-- Stáří článku -->
-    {% include '3_articles/_articles/_article_data/_published_ago_.html' %}
+    <!-- Article Age -->
+    {% include '3_articles/_articles_data/_view_setup_data/_published_ago_.html' %}
 
-    <!-- Počet komentářů -->
-    {% include '3_articles/_articles/_article_data/_comment_count_.html' %}
+    <!-- Comment Count -->
+    {% include '3_articles/_articles_data/_view_setup_data/_comment_count_.html' %}
 
-    <!-- Odkaz na úpravu článku -->
+    <!-- Edit Article Link -->
     {% include '4_article/_article_data/_update_article_.html' %}
 
 </ul>
 
-<!-- Úvod k článku -->
+<!-- Article Overview -->
 {% include '4_article/_article_data/_overview_.html' %}
 
-<!-- Obsah článku -->
+<!-- Article Content -->
 {% include '4_article/_article_data/_content_.html' %}
 
-<!-- Tagy -->
+<!-- Tags -->
 {% include '4_article/_article_data/_tags_.html' %}

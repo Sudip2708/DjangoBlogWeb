@@ -1,0 +1,39 @@
+<!-- Setup for displaying an article -->
+<!-- Intended for 3_articles/32__articles__.html -->
+
+<!-- Main picture -->
+{% include '3_articles/_articles_data/_view_setup_data/_main_picture_.html' %}
+
+<!-- Container grouping date and category -->
+<div class="d-flex align-items-center justify-content-between">
+
+    <!-- Date -->
+    {% include '3_articles/_articles_data/_view_setup_data/_published_date_.html' %}
+
+    <!-- Category -->
+    {% include '3_articles/_articles_data/_view_setup_data/_category_.html' %}
+
+</div>
+
+<!-- Tags -->
+{% include '3_articles/_articles_data/_view_setup_data/_tags_.html' %}
+
+<!-- Title -->
+{% include '3_articles/_articles_data/_view_setup_data/_title_.html' %}
+
+<!-- Overview -->
+{% include '3_articles/_articles_data/_view_setup_data/_overview_.html' %}
+
+<!-- Additional information about the article -->
+<ul class="list-inline list-separated text-gray-500 mb-0">
+
+    <!-- Link to the author -->
+    {% include '3_articles/_articles_data/_view_setup_data/_author_.html' %}
+
+    <!-- Age of the article -->
+    {% include '3_articles/_articles_data/_view_setup_data/_published_ago_.html' %}
+
+    <!-- Number of comments -->
+    {% include '3_articles/_articles_data/_view_setup_data/_comment_count_.html' %}
+
+</ul>

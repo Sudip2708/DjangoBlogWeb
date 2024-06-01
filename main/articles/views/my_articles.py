@@ -1,93 +1,77 @@
-print("### main/articles/views/my_articles.py")
-
-### Definice třídy pohledu pro výpis článků
-
 from django.views.generic import ListView
-from django.shortcuts import get_object_or_404
-from taggit.models import Tag
+from django.contrib.auth.decorators import login_required
+from django.utils.decorators import method_decorator
 
-from articles.models.article import Article, ArticleCategory
-from .article_common_contex_mixin import CommonContextMixin
-from articles.models.article_author import ArticleAuthor
+from common_data.base_view import BaseView
+
+from .common_data.get_paginate_by import get_paginate_by
+from .my_articles_data.get_queryset import get_queryset
+from .my_articles_data.get_context_data import get_context_data
 
 
-class MyArticlesView(CommonContextMixin, ListView):
-    # Použitý model pro seznam článků
-    model = Article
+@method_decorator(login_required, name='dispatch')
+class MyArticlesView(BaseView, ListView):
+    '''
+    Pohled pro stránku s vlastními články uživatele (jen pro přihlášené uživatele).
 
-    # Cesta k šabloně pro zobrazení seznamu článků
+    Pohled zpracovává následující URL:
+    - my-articles: Stránka pro články od autora navázaného na uživatele.
+
+    Stránka má následující záložky:
+    - all: Všechny články řazené dle data vytvoření sestupně.
+    - drafted: Rozepsané články.
+    - publish: Publikované články (články pro veřejnost).
+    - archive: Archivované články.
+
+    Pohled dědí ze základní třídy ListView a vlastní třídy BaseView.
+
+    Atributy přetížené z ListView:
+    - self.template_name: Určuje cestu k šabloně, která bude použita pro zobrazení výsledků.
+    - self.context_object_name: Název proměnné v kontextu šablony, která bude obsahovat výsledný seznam objektů.
+
+    Atributy poděděné z BaseView:
+    - self.user: Instance uživatele (buď CustomUser, nebo AnonymousUserWithSettings).
+    - self.url_name: URL jménu adresy z které požadavek přišel.
+
+    Atributy definované tímto pohledem:
+    - self.page_title: Název stránky.
+    - self.page_title_mobile: Atribut pro nadpis stránky pro mobilní zařízení.
+    - self.current_tab: Atribut pro název aktuálně zobrazené záložky.
+
+    Metody definované v tomto pohledu:
+    - get_queryset: Metoda slouží k získání instancí článků a dat potřebných pro vykreslení stránky.
+    - get_paginate_by: Metoda pro určení počtu článků na stránce při stránkování výsledků vyhledávání.
+    - get_context_data: Metoda pro předání kontextu potřebného pro vykreslení stránky.
+    '''
+
     template_name = '3_articles/30__base__.html'
-
-    # Název objektu v kontextu (seznam článků)
     context_object_name = 'articles_results'
 
-    # Název stránky
-    page_title = "My Articles"
-
     def get_queryset(self):
+        '''
+        Metoda slouží k získání instancí článků a dat potřebných pro vykreslení stránky.
 
-        # Získání hodnot slugů z URL pro filtrování článků
-        tag_slug = self.kwargs.get('tag_slug')
-        category_slug = self.kwargs.get('category_slug')
-        current_tab = self.kwargs.get('current_tab')
-
-        # Pokud je k dispozici tag_slug, vyfiltrovat články podle tagu
-        if tag_slug:
-            tag = get_object_or_404(Tag, slug=tag_slug)
-            queryset = Article.objects.filter(tags=tag).order_by('-created')
-
-        # Pokud je k dispozici category_slug, vyfiltrovat články podle kategorie
-        elif category_slug:
-            category = get_object_or_404(ArticleCategory, slug=category_slug)
-            queryset = Article.objects.filter(category=category).order_by('-created')
-
-        # Pokud je k dispozici current_tab, filtrovat články podle vybrané záložky
-        else:
-            user = self.request.user
-            author = ArticleAuthor.objects.get(id=user.linked_author_id)
-            if current_tab == 'drafted':
-                queryset = Article.objects.filter(author=author, status='drafted').order_by('-created')
-            elif current_tab == 'publish':
-                queryset = Article.objects.filter(author=author, status='publish').order_by('-created')
-            elif current_tab == 'archive':
-                queryset = Article.objects.filter(author=author, status='archive').order_by('-created')
-            else:
-                queryset = Article.objects.filter(author=author).order_by('-created')
-
-        return queryset
-
-
+        Metoda volá stejnojmenou metodu uloženou v samostatném souboru
+        a vrací její výsledek.
+        '''
+        return get_queryset(self)
 
     def get_paginate_by(self, queryset):
         '''
         Metoda pro určení počtu článků na stránce při stránkování výsledků vyhledávání.
 
-        Tato metoda získává přihlášeného uživatele a na základě toho, zda má postranní panel,
-        určuje počet článků na stránce. Pokud je uživatel přihlášený a nemá zobrazen postranní panel,
-        vrátí hodnotu 6, jinak vrátí hodnotu 4.
-
-        :param queryset: Queryset obsahující výsledky vyhledávání.
-        :return: Počet článků na stránce pro stránkování.
+        Metoda volá stejnojmenou metodu uloženou v samostatném souboru
+        a vrací její výsledek.
         '''
-
-        user = self.request.user
-        # Pokud je uživatel přihlášený a nemá zobrazen postranní panel, stránkuj po 6, jinak po 4
-        if user.is_authenticated and not user.sidebar:
-            return 6
-        return 4
+        return get_paginate_by(self, queryset)
 
     def get_context_data(self, **kwargs):
+        '''
+        Metoda pro předání kontextu potřebného pro vykreslení stránky.
 
-        # Získání kontextu od rodičovské třídy
+        Metoda nejprve načte kontext nadřazené třídy,
+        a po té volá stejnojmenou metodu uloženou v samostatném souboru,
+        které kontext předá a následně vrací její výsledek.
+        '''
         context = super().get_context_data(**kwargs)
-
-        # Přidání názvu stránky do kontextu
-        context['page_title'] = 'My Articles'
-
-        # Přidání aktuální záložky do kontextu
-        context['current_tab'] = self.kwargs.get('current_tab')
-
-        # Definování jména URL cesty
-        context['url_name'] = 'my-articles'
-
-        return context
+        return get_context_data(self, context, **kwargs)

@@ -1,0 +1,36 @@
+<!-- Section for selected links -->
+<!-- Extension for 0_base/_footer/__content__.html -->
+
+<div class="col-md-4">
+    <div class="d-flex">
+
+        <!-- Links placed on the right (first 4) -->
+        <ul class="list-unstyled text-sm me-4">
+            {% for link, data in footer.pages_links.items %}
+                {% if forloop.counter <= 4 %}
+                    <li class="mb-2">
+                        <a class="text-reset fw-light"
+                           href="{{ data.url }}">
+                            {{ data.name }}
+                        </a>
+                    </li>
+                {% endif %}
+            {% endfor %}
+        </ul>
+
+        <!-- Links placed on the left (next 4) -->
+        <ul class="list-unstyled text-sm me-4">
+            {% for link, data in footer.pages_links.items %}
+                {% if forloop.counter > 4 %}
+                    <li class="mb-2">
+                        <a class="text-reset fw-light"
+                           href="{{ data.url }}">
+                            {{ data.name }}
+                        </a>
+                    </li>
+                {% endif %}
+            {% endfor %}
+        </ul>
+
+    </div>
+</div>

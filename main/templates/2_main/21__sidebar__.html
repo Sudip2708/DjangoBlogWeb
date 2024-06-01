@@ -1,48 +1,40 @@
-<!-- Postranní panel -->
-<!-- Určeno pro 2_main/20__base__.html -->
+<!-- Extension for 2_main/20__base__.html -->
 
+<!-- Checking if the user has the sidebar enabled -->
+{% if user.sidebar.show_sidebars %}
 
-{% include '2_main/css/css_sidebar.html' %}
+    <!-- Sidebar visibility (only for XL devices and larger) -->
+    <aside class="d-none d-xl-block col-xl-4 ">
 
+        <!-- Loop through the sorted list of sidebar panels -->
+        {% for sidebar in user.get_sorted_sidebar_panels %}
+            <div class="px-1 mt-2">
+                <div class="d-flex justify-content-between">
 
-<!-- Kontrola, zda má uživatel zapnutý postranní panel -->
-{% if user.sidebar %}
+                    <!-- Button to hide and show the panel -->
+                    <div class="d-inline-block">
+                        <button class="btn btn-link my-font-size-0-8rem p-0 my-color-f0f0f0"
+                                data-bs-toggle="collapse"
+                                data-bs-target="#show_{{sidebar.slug}}_sidebar"
+                                aria-expanded="{{ sidebar.visible }}"
+                                aria-controls="show_{{sidebar.slug}}_sidebar">
+                            {{ sidebar.name }}
+                        </button>
+                    </div>
 
-    <!-- Základní kontejner postranního panelu -->
-    <aside class="col-lg-4 ">
+                    <!-- Buttons for panel movement -->
+                    {% include '2_main/_sidebars/_data/_sidebar_movement_buttons_.html' %}
 
-        <!-- Zobrazení postranního panelu, na stránce pro správu účtu -->
-        {% if user_form or author_form %}
-            {% include '2_main/_sidebars/__user__.html' %}
+                </div>
 
-        <!-- Zobrazení postranního panelu na stránkách pro články -->
-        {% else %}
+                <!-- Inner panel items -->
+                <div class="collapse {% if sidebar.visible %}show{% endif %}"
+                     id="show_{{sidebar.slug}}_sidebar">
+                    {% include sidebar.template %}
+                </div>
 
-            <!-- Cyklus pro procházení v seznamu panelů (setříděných dle jejich pořadí) -->
-            <!-- Pro poslední panel v pořadí bude hodnota is_last True, jinak False -->
-            {% for panel in sorted_panels %}
-
-                <!-- Panel pro vyhledávání -->
-                {% if panel.name == 'search' %}
-                {% include '2_main/_sidebars/__search__.html' with is_last=forloop.last %}
-
-                <!-- Panel pro správu uživatele -->
-                {% elif panel.name == 'user' %}
-                {% include '2_main/_sidebars/__user__.html' with is_last=forloop.last %}
-
-                <!-- Panel pro kategorie -->
-                {% elif panel.name == 'category' %}
-                {% include '2_main/_sidebars/__category__.html' with is_last=forloop.last %}
-
-                <!-- Panel pro tagy -->
-                {% elif panel.name == 'tags' %}
-                {% include '2_main/_sidebars/__tags__.html' with is_last=forloop.last %}
-
-                {% endif %}
-
-            {% endfor %}
-
-        {% endif %}
+            </div>
+        {% endfor %}
 
     </aside>
 

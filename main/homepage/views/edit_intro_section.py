@@ -1,13 +1,14 @@
 from django.shortcuts import redirect
 from django.views.generic import View
-from homepage.forms.intro_section_form import IntroSectionForm
-from homepage.models.intro_section import HomePageIntroSection
 from django.contrib import messages
+
+from ..forms.intro_section_form import IntroSectionForm
+from ..models.intro_section import HomePageIntroSection
 
 
 class EditIntroSection(View):
     '''
-    Třída pro zpracování dat formuláře pro úvodní sekci na Home Page
+    Pohled pro zpracování dat formuláře pro úvodní sekci na Home Page
 
     Tato třída postupuje následovně:
     Po obdržení POST požadavku na zpracování dat z formuláře vytvoří instanci formuláře IntroSectionForm.
@@ -27,11 +28,6 @@ class EditIntroSection(View):
         a přesměruje uživatele na stránku pro úpravu domovské stránky.
         Pokud formulář není validní, zobrazí chybovou zprávu
         a přesměruje uživatele zpět na stránku pro úpravu s neuloženými změnami.
-
-        :param request: Objekt HttpRequest obsahující data zaslaná klientem.
-        :param args: Další pozicinální argumenty.
-        :param kwargs: Další klíčové argumenty.
-        :return: HttpResponse objekt reprezentující odpověď serveru na požadavek.
         '''
 
         # Načtení formuláře
@@ -41,7 +37,7 @@ class EditIntroSection(View):
         if form.is_valid():
 
             # Získání nebo vytvoření instance modelu HomePageIntroSection
-            intro_section = HomePageIntroSection.singleton()
+            intro_section, _ = HomePageIntroSection.objects.get_or_create(pk=1)
 
             # Nastavení hodnot z formuláře do instance modelu
             intro_section.intro_title = form.cleaned_data['intro_title']
@@ -54,7 +50,7 @@ class EditIntroSection(View):
 
         # Pokud formulář validní není
         else:
-            # Navrácení na stránku úprav a zobrazení zprávu o neúspěchu
+            # Navrácení na stránku úprav a zobrazení zprávy o neúspěchu
             messages.error(request, "Provedené úpravy nebyly uloženy.")
             return redirect('home-page-edit')
 
@@ -65,18 +61,13 @@ class EditIntroSection(View):
         Tato metoda kontroluje, zda požadavek GET obsahuje parametr 'show_intro_section'.
         Pokud ano, nastaví hodnotu pro zobrazení sekce patičky na True a provede přesměrování
         na stránku pro úpravu domovské stránky. Jinak pokračuje v běžném chování.
-
-        :param request: Objekt HttpRequest obsahující data zaslaná klientem.
-        :param args: Další pozicinální argumenty.
-        :param kwargs: Další klíčové argumenty.
-        :return: HttpResponse objekt reprezentující odpověď serveru na požadavek.
         '''
 
-        # Kontrola zda požadavek get v sobě obsahuje pořadavek na zviditelnění sekce
+        # Kontrola zda požadavek get v sobě obsahuje požadavek na zviditelnění sekce
         if 'show_intro_section' in request.GET:
 
             # Pokud ano - změna hodnoty a návrat na stránku pro úpravu HomePage
-            intro_section = HomePageIntroSection.singleton()
+            intro_section, _ = HomePageIntroSection.objects.get_or_create(pk=1)
             intro_section.display_intro_section = True
             intro_section.save()
             return redirect('home-page-edit')

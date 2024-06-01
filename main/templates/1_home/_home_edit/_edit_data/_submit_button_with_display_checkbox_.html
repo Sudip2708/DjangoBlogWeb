@@ -1,40 +1,34 @@
-<!-- Tlačítko pro odeslání formuláře pro změnu nastavení sekce -->
-<!-- Součástí je pole pro nastavení viditelnosti sekce -->
+<!-- Button for submitting the form to change section settings -->
+<!-- Includes a field for setting section visibility -->
 
-<!-- Rozšířenní pro 1_home/_home_edit/__hero__.html -->
-<!-- Rozšířenní pro 1_home/_home_edit/__intro__.html -->
-<!-- Rozšířenní pro 1_home/_home_edit/__featured__.html -->
-<!-- Rozšířenní pro 1_home/_home_edit/__divider__.html -->
-<!-- Rozšířenní pro 1_home/_home_edit/__latest__.html -->
-<!-- Rozšířenní pro 1_home/_home_edit/__newsletter__.html -->
-<!-- Rozšířenní pro 1_home/_home_edit/__gallery__.html -->
-<!-- Rozšířenní pro 0_base/04__footer__.html -->
+<!-- Extension for 1_home/_home_edit/__hero__.html -->
+<!-- Extension for 1_home/_home_edit/__intro__.html -->
+<!-- Extension for 1_home/_home_edit/__featured__.html -->
+<!-- Extension for 1_home/_home_edit/__divider__.html -->
+<!-- Extension for 1_home/_home_edit/__latest__.html -->
+<!-- Extension for 1_home/_home_edit/__newsletter__.html -->
+<!-- Extension for 1_home/_home_edit/__gallery__.html -->
+<!-- Extension for 0_base/04__footer__.html -->
 
-
-<!-- CSS pro tuto část  -->
-{% include '1_home/css/css_checkbox_label.html' %}
-
-<!-- Načtení tagu pro definici pole pomocí třídy -->
 {% load widget_tweaks %}
 
-<!-- Kontejner pro odesílací tlačítko a zaškrtávací tlačítko pro zobrazení/skrytí sekce -->
 <div class="d-flex flex-wrap align-items-center justify-content-between">
 
-    <!-- Odesílací tlačítko -->
+    <!-- Submit button -->
     <button type="submit" class="btn btn-primary">
         Save Changes
     </button>
 
-    <!-- Kontejner pro zaškrtávací tlačítko pro nastavení viditelnosti sekce -->
+    <!-- Container for checkbox for setting section visibility -->
     <div class="form-group mb-4 text-end">
 
-        <!-- Zaškrtávací tlačítko -->
-        {{ checkbox|add_class:"form-check-input" }}
+        <!-- Checkbox -->
+        {{ field|add_class:"form-check-input" }}
 
-        <!-- Popisek pole -->
-        <label for="{{ checkbox.id_for_label }}"
-               class="checkbox-label">
-            Display {{ title }} Section
+        <!-- Field label -->
+        <label for="{{ field.id_for_label }}"
+               class="my-font-size-0-8rem my-color-grey">
+            {{ field.label }}
         </label>
 
     </div>

@@ -1,32 +1,27 @@
-<!-- Část pro články sekce -->
-<!-- Rozšířenní pro 1_home/17__gallery__.html -->
+<!-- Section for articles -->
+<!-- Extension for 1_home/17__gallery__.html -->
 
-<!-- CSS pro tuto část  -->
-{% include '1_home/css/css_gallery.html' %}
-
-
-<!-- Hlavní kontejner -->
 <div class="row g-0">
 
-    <!-- Procházení článků -->
+    <!-- Loop through articles -->
     {% for article in gallery_data.articles %}
 
-        <!-- Kontrola, zda článek obsahuje data -->
+        <!-- Check if the article contains data -->
         {% if article %}
 
-            <!-- Kontejner obrázek článku -->
+            <!-- Article image container -->
             <div class="col-lg-3 col-md-3 col-sm-6">
 
-                <!-- Kotva pro zobrazení maximální velikosti obrázku, zobrazující obrázek náhledu -->
+                <!-- Anchor tag to display the maximum size of the image, showing the preview image -->
                 <a class="d-block position-relative"
-                     href="{{ article.picture_max_size_path }}">
+                     href="{{ article.main_picture_max_size.url }}">
 
-                    <!-- Hlavní obrázek  -->
-                    <img class="img-fluid article-image"
+                    <!-- Main image of the article -->
+                    <img class="img-fluid my-article-image"
                          alt="Article Main Picture Preview"
-                         src="{{ article.picture_preview_path }}"/>
+                         src="{{ article.main_picture_preview.url }}"/>
 
-                    <!-- Icona lupy + nadpis článku -->
+                    <!-- Magnifying glass icon + article title -->
                     <div class="fsc-hover-overlay">
                         <i class="fas fa-search fsc-hover-overlay-icon"></i>
                     </div>
@@ -39,4 +34,3 @@
     {% endfor %}
 
 </div>
-

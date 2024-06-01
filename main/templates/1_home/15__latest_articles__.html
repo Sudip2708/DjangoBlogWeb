@@ -1,49 +1,49 @@
-<!-- Latest articles - 3 nejnovější články -->
-<!-- Určeno pro 1_home/10__base__.html -->
+<!-- Latest articles - displaying the 3 most recent articles -->
+<!-- For 1_home/10__base__.html -->
 
 
-<!-- Podmínka kontrolující, zda má být sekce viditelná -->
+<!-- Condition checking whether the section should be visible -->
 {% if latest_data.display_latest_section %}
 
-    <!-- Hlavní kontejner -->
+    <!-- Main container -->
     <section>
         <div class="container">
 
-            <!-- Hlavička sekce -->
+            <!-- Section header -->
             <header class="mb-5">
 
-                <!-- Tlačítko pro skrytí/zobrazení editačního formuláře sekce (pouze pro url edit a superuser) -->
+                <!-- Button to show/hide the section editing form (only for url edit and superuser) -->
                 {% with name='Latest' %}
                 {% include '1_home/_home_data/_edit_button_.html' %}
                 {% endwith %}
 
-                <!-- Nadpis sekce -->
+                <!-- Section title -->
                 {% with text=latest_data.latest_title %}
                 {% include '1_home/_home_data/_display_h2_text_.html' %}
                 {% endwith %}
 
-                <!-- Podnadpis sekce -->
+                <!-- Section subtitle -->
                 {% with text=latest_data.latest_description %}
                 {% include '1_home/_home_data/_display_div_text_.html'%}
                 {% endwith %}
 
             </header>
 
-            <!-- Editační formulář sekce (pouze pro url edit a superuser) -->
+            <!-- Section editing form (only for url edit and superuser) -->
             {% if user.is_superuser and request.path == '/edit/' %}
             {% include '1_home/_home_edit/__latest__.html' %}
             {% endif %}
 
-            <!-- Hlavní část: Zobrazení článků -->
+            <!-- Main content: Displaying articles -->
             {% include '1_home/_home_data/__latest_articles__.html' %}
 
         </div>
     </section>
 
-<!-- Pokud je sekce skrytá -->
+<!-- If the section is hidden -->
 {% else %}
 
-    <!-- Tlačítko pro zobrazení sekce (pouze pro url edit a superuser) -->
+    <!-- Button to display the section (only for url edit and superuser) -->
     {% with section_url='edit-latest-section' name='Latest' %}
     {% include '1_home/_home_data/_section_display_.html' %}
     {% endwith %}

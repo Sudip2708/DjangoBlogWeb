@@ -1,12 +1,12 @@
 <!-- Linking to the parent template -->
-{% extends 'account/__shared/__base__.html' %}
+{% extends 'account/_shared/_base_.html' %}
 
 <!-- Start of block for the parent template -->
 {% block inner_content %}
 
 
     <!-- Picture -->
-    {% include 'account/__shared/__picture__.html' with atr="signup" %}
+    {% include 'account/_shared/_picture_.html' with atr="signup" %}
 
     <!-- Signup form -->
     <div class="col-md-7 col-lg-5 col-xl-5 offset-xl-1">
@@ -14,30 +14,30 @@
             {% csrf_token %}
 
             <!-- Hidden field for Redirect value -->
-            {% include 'account/__shared/__redirect_value__.html' %}
+            {% include 'account/_shared/_redirect_value_.html' %}
 
             <!-- Error messages for non input field -->
-            {% include 'account/__shared/__error_messages__.html' %}
+            {% include 'account/_shared/_error_messages_.html' %}
 
             <!-- Email -->
-            {% include 'account/__signup/__email_input__.html' %}
+            {% include 'account/_signup/_email_input_.html' %}
 
             <!-- Password -->
-            {% include 'account/__signup/__password_input1__.html' %}
+            {% include 'account/_signup/_password_input1_.html' %}
 
             <!-- Confirm Password -->
-            {% include 'account/__signup/__password_input2__.html' %}
+            {% include 'account/_signup/_password_input2_.html' %}
 
             <!-- Submit -->
-            {% include 'account/__signup/__submit_button__.html' %}
+            {% include 'account/_signup/_submit_button_.html' %}
 
             <!-- Help links -->
-            {% include 'account/__signup/__help_links__.html' %}
+            {% include 'account/_signup/_help_links_.html' %}
 
         </form>
 
     </div>
 
-    {% include 'account/__signup/__script_for_showing_password__.html' %}
+    {% include 'account/_shared/_script_for_showing_password_.html' %}
 
 {% endblock inner_content %}

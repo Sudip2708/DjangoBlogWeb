@@ -2,22 +2,25 @@ from django.utils.translation import gettext_lazy as _
 from django.db import models
 from tinymce.models import HTMLField
 
-from .singleton_model import SingletonModel
+from .data.singleton_model import SingletonModel
 
 
 class HomePageDividerSection(SingletonModel):
     '''
-    Databázový model pro Home Page Divider Section
+    Databázový model pro Home Page Divider Section.
 
-    Obsahuje pole pro nastavení zobrazení této sekce, obrázku, textu a odkazu.
-    Metoda __str__ definuje textovou reprezentaci instance tohoto modelu.
-    Metoda get_divider_settings slouží k získání všech hodnot tohoto modelu.
+    Model dědí ze SingletonModel, což je abstraktní třída definovaná pro vytvoření jediné instance.
 
-    display_divider_section - je Boolean pole pro hodnotu reprezentující zobrazení nebo skrytí sekce
-    divider_image - je pole pro upload obrázku, který bude zobrazen v této sekci
-    divider_text - je HTML pole pro vložení textu, který bude zobrazen v této sekci
-    divider_link_title - je pole typu CharField pro titulek odkazu, který bude zobrazen v této sekci
-    divider_link - je pole typu URLField pro vložení URL odkazu, který bude zobrazen v této sekci
+    Model vytváří následující pole:
+    - display_divider_section: Boolean pole pro hodnotu reprezentující zobrazení nebo skrytí sekce.
+    - divider_image: Pole pro upload obrázku, který bude zobrazen v této sekci.
+    - divider_text: HTML pole pro vložení textu, který bude zobrazen v této sekci.
+    - divider_link_title: Pole typu CharField pro titulek odkazu, který bude zobrazen v této sekci.
+    - divider_link: Pole typu URLField pro vložení URL odkazu, který bude zobrazen v této sekci.
+
+    Metody modelu:
+    - __str__: Pro získání textové reprezentace modelu (dle hodnoty pole pro název článku).
+    - get_data: Slouží k získání všech hodnot tohoto modelu pro vykreslení na domácí stránce.
     '''
 
     display_divider_section = models.BooleanField(
@@ -40,7 +43,7 @@ class HomePageDividerSection(SingletonModel):
     )
 
     divider_link_title = models.CharField(
-        _('Hero Section Link Title'),
+        _('Divider Section Link Title'),
         default='View More',
         max_length=100,
         null=True, blank=True
@@ -55,10 +58,10 @@ class HomePageDividerSection(SingletonModel):
     def __str__(self):
         return "Homepage Divider Section Configuration"
 
-    @property
-    def get_divider_settings(self):
+
+    def get_data(self):
         '''
-        Vlastnost, která slouží k získání hodnot všech polí tohoto modelu.
+        Metoda, která slouží k získání hodnot všech polí tohoto modelu pro vykreslení na domácí stránce.
 
         Pokud není k dispozici obrázek pro oddělovač, jeho URL bude None.
         Vrací slovník obsahující následující informace:

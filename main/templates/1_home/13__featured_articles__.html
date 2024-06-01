@@ -1,34 +1,34 @@
-<!-- Featured articles - 3 vybrané články -->
-<!-- Určeno pro 1_home/10__base__.html -->
+<!-- Featured articles - 3 selected articles -->
+<!-- For 1_home/10__base__.html -->
 
 
-<!-- Podmínka kontrolující, zda má být sekce viditelná -->
+<!-- Condition checking whether the section should be visible -->
 {% if featured_data.display_featured_section %}
 
-    <!-- Hlavní kontejner -->
+    <!-- Main container -->
     <section class="pt-0">
         <div class="container">
 
-            <!-- Tlačítko pro skrytí/zobrazení editačního formuláře sekce (pouze pro url edit a superuser) -->
+            <!-- Button to show/hide the section editing form (only for url edit and superuser) -->
             {% with name='Featured' %}
             {% include '1_home/_home_data/_edit_button_.html' %}
             {% endwith %}
 
-            <!-- Editační formulář sekce (pouze pro url edit a superuser) -->
+            <!-- Section editing form (only for url edit and superuser) -->
             {% if user.is_superuser and request.path == '/edit/' %}
             {% include '1_home/_home_edit/__featured__.html' %}
             {% endif %}
 
-            <!-- Hlavní část: Zobrazení článků -->
+            <!-- Main part: Displaying articles -->
             {% include '1_home/_home_data/__featured_articles__.html' %}
 
         </div>
     </section>
 
-<!-- Pokud je sekce skrytá -->
+<!-- If the section is hidden -->
 {% else %}
 
-    <!-- Tlačítko pro zobrazení sekce (pouze pro url edit a superuser) -->
+    <!-- Button to display the section (only for url edit and superuser) -->
     {% with section_url='edit-featured-section' name='Featured' %}
     {% include '1_home/_home_data/_section_display_.html' %}
     {% endwith %}

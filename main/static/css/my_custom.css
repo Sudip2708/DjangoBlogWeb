@@ -1,0 +1,182 @@
+/* ###################################### */
+/* DEFINICE VLASTNÍCH CSS (JEDNA POLOŽKA) */
+/* ###################################### */
+
+/* background */
+.my-background-090909 { background: #090909; }
+.my-background-f2f2f2 { background: #f2f2f2; }
+.my-background-0e0e0e { background: #0e0e0e; }
+
+/* color */
+.my-color-grey { color: grey; }
+.my-color-f0f0f0 { color: #f0f0f0; }
+.my-color-a0a0a0 { color: #a0a0a0; }
+.my-color-808080 { color: #808080; }
+
+/* font-size */
+.my-font-size-0-8rem { font-size: 0.8rem; }
+.my-font-size-0-9rem { font-size: 0.9rem; }
+.my-font-size-1-0rem { font-size: 1rem; }
+
+/* font-weight */
+.my-font-weight-bold { font-weight: bold; }
+
+/* height */
+.my-height-auto { height: auto; }
+
+/* letter-spacing */
+.my-letter-spacing-1 { letter-spacing: 1px; }
+
+/* margin */
+.my-margin-0-auto { margin: 0 auto; }
+
+/* margin-bottom */
+.my-margin-bottom-auto { margin-bottom: auto; }
+
+/* margin-left */
+.my-margin-left-4px { margin-left: 4px; }
+.my-margin-left-5px { margin-left: 5px; }
+.my-margin-left-6px { margin-left: 6px; }
+.my-margin-left-8px { margin-left: 8px; }
+.my-margin-left-15px { margin-left: 15px; }
+.my-margin-left-28px { margin-left: 28px; }
+.my-margin-left-45px { margin-left: 45px; }
+
+/* margin-right */
+.my-margin-right-0px { margin-right: 0px; }
+.my-margin-right-4px { margin-right: 4px; }
+
+/* margin-top */
+.my-margin-top-auto { margin-top: auto; }
+
+/* max-width */
+.my-max-width-680px { max-width: 680px; }
+.my-max-width-800px { max-width: 800px; }
+
+/* padding */
+.my-padding-1-2rem { padding: 1.2rem; }
+
+/* padding-right */
+.my-padding-right-5px { padding-right: 5px; }
+
+/* width */
+.my-width-100 { width: 100%; }
+
+/* ##################################### */
+/* DEFINICE VLASTNÍCH CSS (VÍCE POLOŽEK) */
+/* ##################################### */
+
+.my-date-label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-size: 0.8rem;
+    color: #a0a0a0;
+}
+
+.my-edit-homepage-button {
+    color: #808080;
+    font-family: "Times New Roman", sans-serif;
+    font-style: italic;
+    font-weight: bold;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.my-article-image {
+    width: auto;
+    height: calc(25vw * 0.75);
+    object-fit: cover;
+}
+
+.my-search-option-frame {
+    border-radius: 0.25rem;
+    padding: 1.5rem;
+    border: 1px solid #dee2e6;
+    margin: 0.3rem;
+}
+
+.my-dropdown-text {
+    color: black;
+    margin-top: 0.8rem;
+    margin-left: 1rem;
+}
+
+/* ######################### */
+/* PŘEPISOVÁNÍ BOODSTRAP CSS */
+/* ######################### */
+
+/* dropdown items */
+.dropdown-menu li {
+    position: relative;
+}
+
+.dropdown-submenu {
+    display: none;
+    position: absolute;
+    right: 100%;
+    top: -7px;
+    float: left;
+}
+
+.dropdown-menu > li:hover > .dropdown-submenu {
+    display: block;
+}
+
+/* form items */
+.form-label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-size: 0.8rem;
+    color: grey;
+}
+
+.form-control {
+    display: block;
+    width: 100%;
+    padding: 0.75rem 1rem;
+    font-size: 2rem;
+    line-height: 2;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #ced4da;
+    border-radius: 0.25rem;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+/* btn items */
+.btn.btn-link:focus {
+    background-color: white;
+    outline: 4px solid white;
+}
+
+/* ######################### */
+/* PŘEPISOVÁNÍ OSTATNÍCH CSS */
+/* ######################### */
+
+/* Šipky pro posun bočního panelu při najetí myši */
+.bi.bi-arrow:hover {
+    fill: #888888;
+    transition: fill 0.3s ease;
+}
+
+/* Šipky pro posun bočního panelu při odjetí myši */
+.bi.bi-arrow {
+    transition: fill 0.1s ease;
+}
+
+/* ################ */
+/* NASTAVENÍ @MEDIA */
+/* ################ */
+@media (max-width: 767px) {
+    /*
+    templates/1_home/_home_edit/_edit_data/_submit_button_with_display_checkbox_.html
+    templates/3_articles/_articles_data/_view_setup_data/_author_.html
+    */
+    .d-flex.flex-wrap {
+        flex-direction: column; /* Sloupce se zobrazí pod sebou */
+    }
+    /* templates/2_main/_search_data/_form_data/_input_field_.html */
+    .col {
+        width: 100%; /* Sloupce zabírají celou šířku */
+    }
+}

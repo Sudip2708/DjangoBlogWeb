@@ -1,0 +1,58 @@
+<!-- Extension for 3_articles/30__base__.html -->
+
+<!-- Check if the page has multiple pages -->
+{% if page_obj.has_next or page_obj.has_previous %}
+
+    <!-- Navigation for page numbers -->
+    <nav aria-label="Page navigation example">
+        <ul class="pagination pagination-template d-flex justify-content-center">
+
+            <!-- Display previous page (if exists) -->
+            {% if page_obj.has_previous %}
+
+                <!-- Link to the first page -->
+                <li class="page-item">
+                    <a href="?page=1" class="page-link">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                </li>
+
+                <!-- Number of the previous page -->
+                <li class="page-item">
+                    <a href="?page={{ page_obj.previous_page_number }}" class="page-link">
+                        {{ page_obj.previous_page_number }}
+                    </a>
+                </li>
+
+            {% endif %}
+
+            <!-- Display current page -->
+            <li class="page-item active">
+                <p class="page-link">
+                    {{ page_obj.number }}
+                </p>
+            </li>
+
+            <!-- Display next page (if exists) -->
+            {% if page_obj.has_next %}
+
+                <!-- Number of the next page -->
+                <li class="page-item">
+                    <a href="?page={{ page_obj.next_page_number }}" class="page-link">
+                        {{ page_obj.next_page_number }}
+                    </a>
+                </li>
+
+                <!-- Link to the last page -->
+                <li class="page-item">
+                    <a href="?page={{ page_obj.paginator.num_pages }}" class="page-link">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+                </li>
+
+            {% endif %}
+
+        </ul>
+    </nav>
+
+{% endif %}

@@ -1,79 +1,63 @@
-print("### main/articles/views/article_update.py")
+from django.contrib.auth.decorators import login_required
+from django.utils.decorators import method_decorator
+from django.views.generic.edit import UpdateView
+from django.urls import reverse
 
-### Definice třídy pohledu pro úpravu článku
-
-
-from taggit.models import Tag
-
-
-
-from django.shortcuts import redirect, reverse
-from django.views.generic import UpdateView
-from django.http import HttpResponse
+from .article_create import ArticleCreateView
 
 
-from articles.forms.article_form import ArticleForm
-from articles.models.article import Article
-from .article_common_contex_mixin import CommonContextMixin
-from articles.utilities.get_author import get_author
-from articles.utilities.clean_main_picture_max_size import clean_main_picture_max_size
-from articles.utilities.clean_tagify_input import clean_tagify_input
-from articles.utilities.check_and_delete_unused_tags import check_and_delete_unused_tags
-
-
-class ArticleUpdateView(UpdateView, CommonContextMixin):
+@method_decorator(login_required, name='dispatch')
+class ArticleUpdateView(ArticleCreateView, UpdateView):
     '''
-    Definice pohledu pro stránku pro úpravu článku.
+    Pohled pro úpravu vytvořeného článku (jen pro přihlášené uživatele).
 
-    :param UpdateView: Třída pro definici pohledu pro úpravu článku
-    :param CommonContextMixin: Společný obsah pro stránky pro vytvoření a úpravu článku.
-    :return: Stránka pro správu uživatelského účtu.
+    Pohled zpracovává následující URL:
+    - article-update: Stránka pro úpravu vytvořeného článku.
+
+    Pohled dědí ze základní třídy UpdateView a vlastní třídy pro vytvoření článku ArticleCreateView.
+
+    Atributy poděděné z ArticleCreateView:
+    - self.model: Určuje model, se kterým tento pohled pracuje.
+    - self.template_name: Určuje cestu k šabloně, která bude použita pro zobrazení výsledků.
+    - self.user: Instance uživatele (buď CustomUser, nebo AnonymousUserWithSettings).
+    - self.url_name: URL jméno adresy, ze které požadavek přišel.
+
+    Metody poděděné z ArticleCreateView:
+    - get_form_class: Metoda, která vrací formulář na základě zvolené záložky stránky.
+    - form_valid: Metoda, která do formuláře přidává informace o autorovi (instanci autora).
+    - get_success_url: Metoda, která vytváří adresu pro přesměrování po úspěšném založení článku.
+
+    Metody přetížené z ArticleCreateView:
+    - get_context_data: Metoda, která vytváří obsah pro vykreslení šablony.
     '''
-
-    # Použitý model pro aktualizaci článku
-    model = Article
-
-    # Cesta k šabloně pro aktualizaci článku
-    template_name = '5_create_article/50__base__.html'
-
-    # Použitý formulář pro aktualizaci článku
-    form_class = ArticleForm
 
     def get_context_data(self, **kwargs):
-        # Získání běžného kontextu a přidání vlastního názvu pro stránku
+        '''
+        Metoda pro vytvoření kontextu.
+
+        Kontext poděděný z ArticleCreateView:
+        - context['user']: Instance uživatele.
+        - context['url_name']: URL jménu adresy z které požadavek přišel.
+        - context['sidebar_search_form']: Formulář pro hledání (pro postranní panel).
+        - context['published_categories']: Publikované kategorie (pro dropdown menu a postranní panel).
+        - context['footer']: Data pro vykreslení patičky (na domácí stránce je již zahrnuto)
+        - context['user_thumbnail']: Miniatura profilového obrázku (pro přihlášeného a nepřihlášeného uživatele).
+
+        Kontext vytvořený tímto pohledem:
+        - context['tab_urls']: Reverzní cesty na jednotlivé záložky.
+        - context['current_tab']: Aktuální záložka stránky.
+        - context['title']: Název stránky.
+        '''
+
+        # Vytvoření URL adres pro jednotlivé záložky stránky
+        tab_urls = {
+            'for_overview': reverse('article-update', kwargs={'slug': self.object.slug, 'current_tab': 'overview'}),
+            'for_content': reverse('article-update', kwargs={'slug': self.object.slug, 'current_tab': 'content'}),
+            'for_settings': reverse('article-update', kwargs={'slug': self.object.slug, 'current_tab': 'settings'}),
+        }
+
         context = super().get_context_data(**kwargs)
-
-        # Kontext pro výběr tagů za pomocí tagify
-        tags = Tag.objects.all()
-        tag_names = [tag.name for tag in tags]
-        tags_name_str = ','.join(tag_names)
-        context['tags_name_str'] = tags_name_str
-
+        context['tab_urls'] = tab_urls
         context['title'] = 'Update Your Article'
+
         return context
-
-    def form_valid(self, form):
-        # Při úspěšném odeslání formuláře, nastavíme autora na aktuálního uživatele
-        form.instance.author = get_author(self.request.user)
-
-        # Validace a změna formátu obrázku
-        if form.instance.main_picture_max_size_tracker.has_changed('main_picture_max_size'):
-            form = clean_main_picture_max_size(form)
-
-        # Úprava tagů
-        form.cleaned_data['tags'] = clean_tagify_input(form.cleaned_data['tags'])
-        check_and_delete_unused_tags(form.instance, form.cleaned_data['tags'])
-
-        # Uložení formuláře a přesměrování na detail aktualizovaného článku
-        form.save()
-
-        # Kontrola, zda bylo zmáčknuté tlačítko pro odeslání dat s návratem na stránku pro úpravy
-        submit_change_value = self.request.POST.get('submit_change')
-        if submit_change_value:
-            return redirect(reverse("article-update",
-                                    kwargs={'slug': form.instance.slug, 'current_tab': submit_change_value }))
-        else:
-            return redirect(reverse("article-detail",
-                                    kwargs={'slug': form.instance.slug}))
-
-

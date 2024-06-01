@@ -1,0 +1,47 @@
+<!-- Search form -->
+<!-- Intended for 2_main/22__search__.html -->
+
+<form method="GET" action="{% url 'article-search' %}">
+
+    <!-- Container for query input field and submit button -->
+    <div class="p-3">
+
+        <!-- Query input field (and submit button - only for "md" and larger sizes) -->
+        {% include '2_main/_search_data/_form_data/_input_field_.html' %}
+
+        <!-- Error announcement -->
+        {% include '2_main/_search_data/_form_data/_error_messages_.html' %}
+
+    </div>
+
+    <!-- Dropdown button for display on "md" and larger sizes -->
+    <div class="d-none d-md-block" >
+        {% include '2_main/_search_data/_form_data/_collapse_button_.html' %}
+    </div>
+
+    <!-- Content of the dropdown -->
+    <div id="searchOptionsCollapse" class="collapse" >
+        <div class="my-max-width-680px my-margin-0-auto">
+            <div class="my-search-option-frame">
+
+                <!-- Checkbox inputs for specifying the search location -->
+                {% include '2_main/_search_data/_form_data/_check_box_inputs_.html' %}
+
+                <div class="pt-4 row">
+
+                    <!-- Date selection field -->
+                    {% include '2_main/_search_data/_form_data/_date_inputs_.html' %}
+
+                    <!-- Author selection field -->
+                    {% include '2_main/_search_data/_form_data/_autor_input_.html' %}
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- Submit button and dropdown button (only for sizes smaller than md) -->
+    {% include '2_main/_search_data/_form_data/_submit_button_md_.html' %}
+
+</form>

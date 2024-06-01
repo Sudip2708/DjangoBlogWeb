@@ -1,21 +1,26 @@
 from django.utils.translation import gettext_lazy as _
 from django.db import models
+
 from articles.models.article import Article
-from .singleton_model import SingletonModel
+
+from .data.singleton_model import SingletonModel
 
 
 class HomePageFeaturedArticles(SingletonModel):
     '''
-    Databázový model pro Home Page Featured Articles Section
+    Databázový model pro Home Page Featured Articles Section.
 
-    Obsahuje pole pro nastavení zobrazení a článků této sekce.
-    Metoda __str__ definuje textovou reprezentaci instance tohoto modelu.
-    Metoda get_divider_settings slouží k získání všech hodnot tohoto modelu.
+    Model dědí ze SingletonModel, což je abstraktní třída definovaná pro vytvoření jediné instance.
 
-    display_divider_section - je Boolean pole pro hodnotu reprezentující zobrazení nebo skrytí sekce
-    featured_article_1 - je cizí klíč na první doporučený článek, který bude zobrazen v této sekci
-    featured_article_2 - je cizí klíč na druhý doporučený článek, který bude zobrazen v této sekci
-    featured_article_3 - je cizí klíč na třetí doporučený článek, který bude zobrazen v této sekci
+    Model vytváří následující pole:
+    - display_divider_section: Boolean pole pro hodnotu reprezentující zobrazení nebo skrytí sekce.
+    - featured_article_1: Cizí klíč na první doporučený článek, který bude zobrazen v této sekci.
+    - featured_article_2: Cizí klíč na druhý doporučený článek, který bude zobrazen v této sekci.
+    - featured_article_3: Cizí klíč na třetí doporučený článek, který bude zobrazen v této sekci.
+
+    Metody modelu:
+    - __str__: Pro získání textové reprezentace modelu (dle hodnoty pole pro název článku).
+    - get_data: Slouží k získání všech hodnot tohoto modelu pro vykreslení na domácí stránce.
     '''
 
     display_featured_section = models.BooleanField(
@@ -23,7 +28,6 @@ class HomePageFeaturedArticles(SingletonModel):
         default=True,
     )
 
-    # Featured articles
     featured_article_1 = models.ForeignKey(
         Article,
         related_name='featured_article_1',
@@ -52,10 +56,9 @@ class HomePageFeaturedArticles(SingletonModel):
         return "Homepage Featured Articles Configuration"
 
 
-    @property
-    def get_featured_settings(self):
+    def get_data(self):
         '''
-        Vlastnost, která slouží k získání hodnot všech polí tohoto modelu.
+        Metoda, která slouží k získání hodnot všech polí tohoto modelu pro vykreslení na domácí stránce.
 
         Vrací slovník obsahující následující informace:
         zobrazení sekce a seznam článků.

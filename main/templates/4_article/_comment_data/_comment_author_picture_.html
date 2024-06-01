@@ -1,20 +1,8 @@
-<!-- Profilový obrázek autora kometáře -->
-<!-- Určeno pro 4_article/43__display_comments__.html -->
+<!-- Author's profile picture for comment -->
+<!-- Intended for 4_article/43__display_comments__.html -->
 
-
-<!-- Zobrazení obrázku pokud existuje -->
-{% if comment.user %}
-    <img alt="Comment User Profile Picture"
-         src="{{ comment.user.profile_picture_thumbnail.url }}?{% now 'U' %}"
-         class="img-fluid rounded-circle flex-shrink-0"
-         width="50"/>
-
-<!-- Zobrazení defaultního obrázku -->
-{% else %}
-    {% load static %}
-    <img alt="Default Profile Picture"
-         src="{% static 'img/user.svg' %}"
-         class="img-fluid rounded-circle flex-shrink-0"
-         width="50"/>
-
-{% endif %}
+<!-- Displaying the image if it exists -->
+<img alt="Comment User Profile Picture"
+     src="{{ user_thumbnail }}?{% now 'U' %}"
+     class="img-fluid rounded-circle flex-shrink-0"
+     width="50"/>

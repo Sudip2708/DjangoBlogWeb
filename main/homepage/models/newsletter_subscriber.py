@@ -1,18 +1,20 @@
 from django.db import models
-from users.models import CustomUser
+
+from users.models.custom_user import CustomUser
+
 
 class NewsletterSubscriber(models.Model):
     '''
     Databázový model pro uchovávání informací o zájemcích o zasílání novinek.
 
-    Obsahuje pole pro e-mailovou adresu, odkaz na uživatele, který se přihlásil k odběru (v případě, že existuje),
-    a datum, kdy se uživatel přihlásil k odběru.
-    Metoda __str__ definuje textovou reprezentaci instance tohoto modelu.
-    Třída Meta určuje lidsky čitelné jméno modelu v jednotném a množném čísle.
+    Model dědí z třídy models.Model a vytváří následující pole:
+    - email: Pole pro uchování e-mailové adresy zájemce o zasílání novinek
+    - user: ForeignKey pole pro propojení s modelem CustomUser, pokud se uživatel přihlásil k odběru
+    - subscribed_at: Pole typu DateTimeField, které uchovává datum a čas přihlášení k odběru
 
-    email - je pole pro uchování e-mailové adresy zájemce o zasílání novinek
-    user - je ForeignKey pole pro propojení s modelem CustomUser, pokud se uživatel přihlásil k odběru
-    subscribed_at - je pole typu DateTimeField, které uchovává datum a čas přihlášení k odběru
+    Metody modelu:
+    - __str__: Pro získání textové reprezentace modelu (dle hodnoty pole pro název článku).
+    - class Meta: Určuje lidsky čitelné jméno modelu v jednotném a množném čísle.
     '''
 
     email = models.EmailField(
@@ -24,7 +26,8 @@ class NewsletterSubscriber(models.Model):
         CustomUser,
         on_delete=models.SET_NULL,
         null=True, blank=True,
-        verbose_name='Subscribed User'
+        verbose_name='Subscribed User',
+        related_name='newsletter_subscriptions'
     )
 
     subscribed_at = models.DateTimeField(

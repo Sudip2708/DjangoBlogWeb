@@ -1,0 +1,22 @@
+<!-- Display tabs for returning to navigation for the current tag or similar articles -->
+<!-- Intended for 3_articles/_page_navigation_data/_tags_.html -->
+
+<!-- Tab for returning to search results -->
+{% if url_name == 'article-search-results-category' %}
+
+    <li class="nav-item ">
+        <a href="{% url 'article-search-results' query=query %}" class="nav-link">
+            Hide Category
+        </a>
+    </li>
+
+<!-- Tab for returning to similar articles -->
+{% elif url_name == 'article-search-similar-category' %}
+
+    <li class="nav-item ">
+        <a href="{% url 'article-search-similar' query=query %}" class="nav-link">
+            Hide Category
+        </a>
+    </li>
+
+{% endif %}

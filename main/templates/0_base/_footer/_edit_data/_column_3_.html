@@ -1,13 +1,11 @@
-<!-- Nastavení položek 3. sloupce editační části patičky -->
-<!-- Rozšířenní pro 0_base/_footer/_edit_data/__columns_setting__.html -->
+<!-- Setting items for the 3rd column of the footer editing section -->
+<!-- Extension for 0_base/_footer/__edit_section__.html -->
 
-
-<!-- Načtení šablonových tagů -->
 {% load crispy_forms_tags %}
 
 <div class="col-lg-3">
 
-    <!-- Nastavení položek pro vybrané odkazy -->
+    <!-- Setting items for selected links -->
     {{ footer_edit_form.url_field_1|as_crispy_field  }}
     {{ footer_edit_form.url_field_2|as_crispy_field  }}
     {{ footer_edit_form.url_field_3|as_crispy_field  }}

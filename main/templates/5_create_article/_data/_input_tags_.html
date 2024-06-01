@@ -1,0 +1,33 @@
+<!-- Field for selecting article tags -->
+<!-- For 5_create_article/53__settings__.html -->
+
+<div id="" class="mb-4">
+
+    <!-- Field description -->
+    <label for="{{ form.tags.id_for_label }}"
+           class="form-label requiredField">
+        {{ form.tags.label }}
+    </label>
+
+    <!-- Input field (uses script for tagify) -->
+    <input name='tags'
+           value="{% for tag in form.tags.value %}{{ tag }}{% if not forloop.last %}, {% endif %}{% endfor %}"
+           class='form-control tags-input'
+           placeholder='Add tag' >
+
+    <!-- Information text -->
+    <div class="my-color-grey my-font-size-0-8rem">
+        Use a comma or enter to separate individual tags.
+    </div>
+
+</div>
+
+<!-- Loading settings for Tagify elements (for tag suggestions) -->
+<script src="https://cdn.jsdelivr.net/npm/@yaireo/tagify"></script>
+
+<!-- Creating a variable for Tagify tag suggestions -->
+<script>var tags_name_str = "{{ tags_name_str }}";</script>
+
+<!-- Script for Tagify tag suggestions -->
+{% load static %}
+<script src="{% static 'js/_tagify_input.js' %}"></script>

@@ -1,7 +1,8 @@
 from django import forms
 
-from homepage.models.footer_section import FooterSettings
 from articles.models.article import Article
+
+from ..models.footer_section import FooterSettings
 
 
 class FooterSettingsForm(forms.ModelForm):
@@ -35,9 +36,6 @@ class FooterSettingsForm(forms.ModelForm):
         Tato metoda inicializuje instanci formuláře pro úpravu sekce patičky.
         Vytváří pole pro jednotlivé části formuláře pomocí metody self.fields, která přidává pole do formuláře. 
         Každé pole má svůj vlastní widget, který určuje, jak bude pole zobrazeno ve webovém rozhraní.
-
-        :param args: Pozicinální argumenty pro inicializaci.
-        :param kwargs: Klíčové argumenty pro inicializaci.
         '''
 
         # Volání initu nadřazené třídy
@@ -55,7 +53,7 @@ class FooterSettingsForm(forms.ModelForm):
 
         # Cyklus pro vytvoření polí pro zobrazení adresy
         for key, value in instance.address_values.items():
-            # Pokud jde o email vytvoř pole pro email
+            # Pokud jde o email, vytvoř pole pro email
             if key == 'email':
                 self.fields[key] = forms.EmailField(
                     label=value["label"],
@@ -70,7 +68,7 @@ class FooterSettingsForm(forms.ModelForm):
                     required=False
                 )
 
-        # Cyklus pro vytvoření textových polí pro zadání url sociálních sítí
+        # Cyklus pro vytvoření textových polí pro zadání URL sociálních sítí
         for key, value in instance.social_media.items():
             self.fields[key] = forms.CharField(
                 label=value["label"],
@@ -103,13 +101,13 @@ class FooterSettingsForm(forms.ModelForm):
             initial_choice = (value["article_id"], value["title"])
             self.fields[key] = forms.ChoiceField(
                 label=f"{n}. Article",
-                choices= [initial_choice] + articles_choices,
+                choices=[initial_choice] + articles_choices,
                 widget=forms.Select(attrs={'class': 'form-control'})
             )
 
         # Cyklus pro vytvoření polí pro editaci hodnot posledního řádku
         for key, value in instance.end_line.items():
-            # Pro nastavením viditelnosti vytvoř boolean pole
+            # Pro nastavení viditelnosti vytvoř boolean pole
             if key == "display_footer_end_section":
                 self.fields[key] = forms.BooleanField(
                     label=value["label"],
@@ -123,4 +121,3 @@ class FooterSettingsForm(forms.ModelForm):
                     initial=value["value"],
                     required=False
                 )
-

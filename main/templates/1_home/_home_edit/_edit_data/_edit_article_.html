@@ -1,13 +1,18 @@
-<!-- Výběr článku -->
-<!-- Rozšířenní pro 1_home/_home_edit/__featured__.html -->
-<!-- Rozšířenní pro 1_home/_home_edit/__latest__.html -->
-<!-- Rozšířenní pro 1_home/_home_edit/__gallery__.html -->
+<!-- Article selection -->
+<!-- Extension for 1_home/_home_edit/__featured__.html -->
+<!-- Extension for 1_home/_home_edit/__latest__.html -->
+<!-- Extension for 1_home/_home_edit/__gallery__.html -->
 
+{% load widget_tweaks %}
 
-<!-- Načtení tagu pro přidání crispy vzhledu -->
-{% load crispy_forms_tags %}
+<div class="form-group mb-4 {{ class }}">
 
-<div class="{{ class }}">
-    {{ article|as_crispy_field }}
+    <!-- Field label -->
+    <label for="{{ field.id_for_label }}"
+           class="form-label">
+        {{ field.label }}
+    </label>
+
+    <!-- Field input -->
+    {{ field|add_class:"form-control"  }}
 </div>
-

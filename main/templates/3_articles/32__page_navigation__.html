@@ -1,0 +1,27 @@
+<!-- Extension for 3_articles/30__base__.html -->
+
+<div class="d-none d-md-block">
+
+    <!-- Navigation bar for the page with all articles and the page with categories -->
+    {% if url_name == 'article-list' or url_name == 'article-category-list' %}
+        {% include '3_articles/_page_navigation_data/_categories_.html' %}
+
+
+    <!-- Navigation bar for the page for a specific tag -->
+    {% elif 'article-tag' in url_name %}
+        {% include '3_articles/_page_navigation_data/_tags_.html' %}
+
+
+    <!-- Navigation bar for the page with user's own articles -->
+    {% elif url_name == 'my-articles' %}
+        {% include '3_articles/_page_navigation_data/_my_articles_.html' %}
+
+
+    <!-- Navigation bar for the page with search results -->
+    {% elif 'search' in url_name %}
+        {% include '3_articles/_page_navigation_data/_search_results_.html' %}
+
+
+    {% endif %}
+
+</div>

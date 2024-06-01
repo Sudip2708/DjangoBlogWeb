@@ -2,9 +2,9 @@
 
 /*
 Scrip je vložen v této šabloně:
-main/templates/5_create_article/50__base__.html
+main/templates/0_base/_head/__scripts__.html
 Scrip je použit v těchto částech kodu:
-main/templates/5_create_article/54__content__.html
+main/templates/5_create_article/52__content__.html
 */
 
 // Nastavení inicializace TinyMCE pro obsah článku

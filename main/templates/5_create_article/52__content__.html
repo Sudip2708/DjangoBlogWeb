@@ -1,0 +1,11 @@
+<!-- Extension for 5_create_article/50__base__.html -->
+
+<!-- Input field for article content (HTML field with TinyMCE editor) -->
+{{ form.content }}
+
+<!-- Submit buttons -->
+<div class="pt-4">
+    {% with current_tab='content' %}
+    {% include '5_create_article/_data/_buttons_both_.html' %}
+    {% endwith %}
+</div>

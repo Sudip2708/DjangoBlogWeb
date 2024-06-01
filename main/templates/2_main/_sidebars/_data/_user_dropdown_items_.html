@@ -1,0 +1,40 @@
+<!-- Inner user menu items -->
+<!-- Intended for 2_main/_sidebars/_user/__user__.html -->
+
+<!-- Link to create an article (if the user doesn't have a linked author account) -->
+{% if not user.linked_author %}
+    <a class="d-block my-dropdown-text" href="{% url 'article-create' current_tab='overview' %}">
+        <button class="btn btn-light">Create an Article</button>
+    </a>
+{% endif %}
+
+{% if user.is_authenticated %}
+    <!-- Link to favorite authors page -->
+    <a class="d-block my-dropdown-text" href="#">
+        <button class="btn btn-light">Favorite Authors</button>
+    </a>
+
+    <!-- Link to user account settings page -->
+    <a class="d-block my-dropdown-text" href="{% url 'profile-update-user' %}">
+        <button class="btn btn-light">Account Settings</button>
+    </a>
+
+    <!-- Divider -->
+    <hr class="dropdown-divider my-color-grey">
+
+    <!-- Link to logout -->
+    <a class="d-block my-dropdown-text" href="{% url 'account_logout' %}">
+        <button class="btn btn-light">Logout</button>
+    </a>
+
+{% else %}
+
+    <!-- Divider -->
+    <hr class="dropdown-divider my-color-grey">
+
+    <!-- Link to login -->
+    <a class="d-block my-dropdown-text" href="{% url 'account_login' %}">
+        <button class="btn btn-light">Login</button>
+    </a>
+
+{% endif %}

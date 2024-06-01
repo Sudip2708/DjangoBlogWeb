@@ -1,0 +1,26 @@
+<!-- Display tab for switching to categories for the current tag and similar articles -->
+<!-- Intended for 3_articles/_page_navigation_data/_tags_.html -->
+
+<!-- Condition to check if there is any content for the search result -->
+{% if articles_results %}
+
+    <!-- Tab for displaying categories for search result -->
+    {% if url_name == 'article-search-results' %}
+        <li class="nav-item ">
+            <a href="{% url 'article-search-results-category' query=query category_slug='first' %}"
+            class="nav-link">
+                Show Category
+            </a>
+        </li>
+
+    <!-- Tab for displaying categories for similar articles -->
+    {% elif url_name == 'article-search-similar' %}
+        <li class="nav-item ">
+            <a href="{% url 'article-search-similar-category' query=query category_slug='first' %}"
+            class="nav-link">
+                Show Category
+            </a>
+        </li>
+    {% endif %}
+
+{% endif %}

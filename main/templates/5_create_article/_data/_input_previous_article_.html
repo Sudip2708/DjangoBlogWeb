@@ -1,0 +1,21 @@
+<!-- Field for selecting the previous article -->
+<!-- For 5_create_article/53__settings__.html -->
+
+<div id="div_id_previous_article" class="col-md-6 mb-4">
+
+    <!-- Field description -->
+    <label for="{{ form.previous_article.id_for_label }}"
+           class="form-label">
+        {{ form.previous_article.label }}
+    </label>
+
+    <!-- Input field -->
+    {% load widget_tweaks %}
+    {{ form.previous_article|add_class:"form-control" }}
+
+    <!-- Information text -->
+    <div class="my-color-grey my-font-size-0-8rem">
+        This field is not mandatory. It is used to connect your own articles.
+    </div>
+
+</div>

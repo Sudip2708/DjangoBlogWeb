@@ -1,0 +1,33 @@
+<!-- Displaying the current main image -->
+<!-- For 5_create_article/51__overview__.html -->
+
+<!-- Container grouping inner elements with class specification -->
+<div class="class">
+
+    <!-- Checking if the image exists -->
+    {% if article.main_picture_for_article %}
+
+        <!-- Displaying on XL devices and larger -->
+        <img alt="Article Main Picture"
+             src="{{ article.main_picture_for_article.url }}?{% now 'U' %}"
+             class="img-fluid d-none d-xl-block"/>
+
+        <!-- Displaying on LG devices and smaller -->
+        <img alt="Article Main Picture"
+             src="{{ article.main_picture_preview.url }}?{% now 'U' %}"
+             class="img-fluid d-block d-xl-none"/>
+
+    <!-- If not, displaying the default image -->
+    {% else %}
+
+        <!-- Loading the address to the static folder -->
+        {% load static %}
+
+        <!-- Default image -->
+        <img alt="Image Not Uploaded Yet"
+             src="{% static 'img/no-image.jpg' %}"
+             class="img-fluid"/>
+
+    {% endif %}
+
+</div>

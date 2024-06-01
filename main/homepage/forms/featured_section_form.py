@@ -1,61 +1,63 @@
 from django import forms
 from django.utils import timezone
 
-from homepage.models.featured_section import HomePageFeaturedArticles
 from articles.models.article import Article
+
+from ..models.featured_section import HomePageFeaturedArticles
 
 
 class FeaturedArticlesForm(forms.ModelForm):
     '''
-    Formulář pro editaci nastavení Featured Articles sekce domácí stránky.
+    Formulář pro nastavení Featured Articles sekce domácí stránky.
 
-    Tato třída formuláře slouží k vytvoření formuláře pro úpravu nastavení této sekce.
-    Obsahuje pole pro zobrazení a editaci jednotlivých nastavení,
-    jako je například zobrazení sekce a výběr významných článků.
-    Také obsahuje inicializační metodu pro úpravu widgetů
-    a naplnění polí výběrovými možnostmi.
+    Formulář je navázán na pohled EditFeaturedArticlesSection.
+
+    Formulář definuje tato pole:
+    - display_featured_section: Viditelnost sekce.
+    - featured_article_1: První vybraný článek.
+    - featured_article_2: Druhý vybraný článek.
+    - featured_article_3: Třetí vybraný článek.
     '''
 
     class Meta:
         '''
-        Meta třída pro specifikaci modelu a polí, která budou zahrnuta ve formuláři.
+        Třída Meta je speciální vnitřní třída pro konfiguraci formuláře.
 
-        Tato meta třída definuje strukturu a vzhled formuláře pro editaci nastavení této sekce.
-        Obsahuje informace o tom, který model je použit pro tento formulář,
-        jaká pole jsou zahrnuta a jaké widgety jsou použity pro jejich zobrazení.
+        Třída Meta poskytuje metadata a konfiguraci pro hlavní třídu,
+        a zde definuje následující atributy:
+        - model: Určuje model, na kterém je formulář založen.
+        - fields: Definuje pole, která budou zahrnuta ve formuláři.
+        - widgets: Umožňuje specifikovat vlastní widgety pro jednotlivá pole formuláře.
+
+        Widgety použité v tomto kódu:
+        - forms.CheckboxInput: Pole pro zaškrtávací boolean hodnotu.
+        - forms.Select: Pole pro výběr z přednastavených hodnot.
         '''
 
-        # Nastavení modelu a prázdného seznamu pro pole sekce
         model = HomePageFeaturedArticles
         fields = ['display_featured_section', 'featured_article_1', 'featured_article_2', 'featured_article_3']
-
-        # Nastavení vzhledu widgetů pro pole formuláře
         widgets = {
-            'display_featured_section': forms.CheckboxInput(attrs={'class': 'form-check-input'}),
-            'featured_article_1': forms.Select(attrs={'class': 'form-control'}),
-            'featured_article_2': forms.Select(attrs={'class': 'form-control'}),
-            'featured_article_3': forms.Select(attrs={'class': 'form-control'}),
+            'display_featured_section': forms.CheckboxInput(),
+            'featured_article_1': forms.Select(),
+            'featured_article_2': forms.Select(),
+            'featured_article_3': forms.Select(),
         }
 
     def __init__(self, *args, **kwargs):
         '''
         Inicializační metoda formuláře.
 
-        Tato metoda slouží k inicializaci instance formuláře.
-        Přijímá libovolný počet pozicinálních argumentů a klíčových argumentů,
-        které jsou dále předány nadřazené třídě.
-        Zde přepisuje seznam nabízených článků pro pole Select tak,
-        aby se nabídli jen články se statusem publish a srovnané sestupně dle data publish
+        Metoda nejprve volá inicializaci nadřazené třídy a poté vytváří obsah
+        pro nabídku pro výběr předchozího a následujícího článku.
 
-        :param args: Pozicinální argumenty pro inicializaci.
-        :param kwargs: Klíčové argumenty pro inicializaci.
+        Metoda filtruje všechny publikované články a řadí je od nejnovějšího po nejstarší,
+        a tento seznam přidává jako queryset pro vytvoření nabídky hodnot
+        pro pole 'featured_article_1' - 'featured_article_3'.
         '''
 
-        # Volání initu nadřazené třídy
         super().__init__(*args, **kwargs)
 
-        # Naplnění polí pro výběr článků seznamem publikovaných článků
-        published_articles = Article.objects.filter(status='publish', published__lte=timezone.now())
+        published_articles = Article.objects.filter(status='publish').order_by('-published')
         self.fields['featured_article_1'].queryset = published_articles
         self.fields['featured_article_2'].queryset = published_articles
         self.fields['featured_article_3'].queryset = published_articles

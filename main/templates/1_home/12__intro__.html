@@ -1,22 +1,22 @@
-<!-- Intro Section - úvodní text stránky -->
-<!-- Určeno pro 1_home/10__base__.html -->
+<!-- Intro Section - introductory text of the page -->
+<!-- For 1_home/10__base__.html -->
 
 
-<!-- Podmínka kontrolující, zda má být sekce viditelná -->
+<!-- Condition checking whether the section should be visible -->
 {% if intro_data.display_intro_section %}
 
-    <!-- Hlavní kontejner -->
+    <!-- Main container -->
     <section id="intro">
         <div class="container">
             <div class="row">
                 <div class="col-lg-8">
 
-                    <!-- Tlačítko pro skrytí/zobrazení editačního formuláře sekce (pouze pro url edit a superuser) -->
+                    <!-- Button to show/hide the section editing form (only for url edit and superuser) -->
                     {% with name='Intro' %}
                     {% include '1_home/_home_data/_edit_button_.html' %}
                     {% endwith %}
 
-                    <!-- Nadpis -->
+                    <!-- Title -->
                     {% with text=intro_data.intro_title %}
                     {% include '1_home/_home_data/_display_h2_text_.html' %}
                     {% endwith %}
@@ -26,7 +26,7 @@
                     {% include '1_home/_home_data/_display_div_text_.html'%}
                     {% endwith %}
 
-                    <!-- Editační formulář sekce (pouze pro url edit a superuser) -->
+                    <!-- Section editing form (only for url edit and superuser) -->
                     {% if user.is_superuser and request.path == '/edit/' %}
                     {% include '1_home/_home_edit/__intro__.html' %}
                     {% endif %}
@@ -36,10 +36,10 @@
         </div>
     </section>
 
-<!-- Pokud je sekce skrytá -->
+<!-- If the section is hidden -->
 {% else %}
 
-    <!-- Tlačítko pro zobrazení sekce (pouze pro url edit a superuser) -->
+    <!-- Button to display the section (only for url edit and superuser) -->
     {% with section_url='edit-intro-section' name='Intro' %}
     {% include '1_home/_home_data/_section_display_.html' %}
     {% endwith %}

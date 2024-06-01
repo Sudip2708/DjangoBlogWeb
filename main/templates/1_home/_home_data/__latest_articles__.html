@@ -1,38 +1,35 @@
-<!-- Část pro články sekce -->
-<!-- Rozšířenní pro 1_home/15__latest_articles__.html -->
+<!-- Extension for 1_home/15__latest_articles__.html -->
 
-
-<!-- Hlavní kontejner -->
 <div class="row gy-4">
 
-    <!-- Procházení článků -->
+    <!-- Loop through articles -->
     {% for article in latest_data.articles %}
 
-        <!-- Kontrola, článek obsahuje data -->
+        <!-- Check if the article contains data -->
         {% if article %}
 
-            <!-- Kontejner pro obsah článku -->
+            <!-- Container for the article content -->
             <div class="col-md-4">
 
-                <!-- Hlavní obrázek -->
-                {% include '3_articles/_articles/_article_data/_main_picture_.html' %}
+                <!-- Main image -->
+                {% include '3_articles/_articles_data/_view_setup_data/_main_picture_.html' %}
 
-                <!-- Kontejner pro datum vytvoření a kategorii -->
+                <!-- Container for creation date and category -->
                 <div class="d-flex align-items-center justify-content-between mb-2">
 
-                    <!-- Datum vytvoření -->
-                    {% include '3_articles/_articles/_article_data/_published_date_.html' %}
+                    <!-- Creation date -->
+                    {% include '3_articles/_articles_data/_view_setup_data/_published_date_.html' %}
 
-                    <!-- Kategorie -->
-                    {% include '3_articles/_articles/_article_data/_category_.html' %}
+                    <!-- Category -->
+                    {% include '3_articles/_articles_data/_view_setup_data/_category_.html' %}
 
                 </div>
 
-                <!-- Nadpis -->
-                {% include '3_articles/_articles/_article_data/_title_.html' %}
+                <!-- Title -->
+                {% include '3_articles/_articles_data/_view_setup_data/_title_.html' %}
 
-                <!-- Popis -->
-                {% include '3_articles/_articles/_article_data/_overview_.html' %}
+                <!-- Overview -->
+                {% include '3_articles/_articles_data/_view_setup_data/_overview_.html' %}
 
             </div>
 

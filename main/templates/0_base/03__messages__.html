@@ -1,23 +1,22 @@
-<!-- Část pro zobrazení jednorázových oznamů -->
-<!-- Určeno pro 0_base/00__base__.html -->
+<!-- Section for displaying flash messages -->
+<!-- For 0_base/00__base__.html -->
 
-
-<!-- Podmínka zjišťující, zda je součástí i oznam -->
+<!-- Condition to check if there are any messages -->
 {% if messages %}
 
-    <!-- Kontejner pro výpis oznamů -->
-    <div class="alert alert-dismissible fade show fw-bold text-dark mt-4" role="alert" style="letter-spacing: 1px;">
+    <!-- Container for displaying messages -->
+    <div class="alert alert-dismissible fade show fw-bold text-dark mt-2 my-letter-spacing-1" role="alert">
         <ul class="list-unstyled">
 
-            <!-- Cyklus pro výpis oznamů -->
+            <!-- Loop for displaying messages -->
             {% for message in messages %}
 
-                <!-- Výpis oznamu -->
-                <li class="mb-1 text-center" >
+                <!-- Display message -->
+                <li class="text-center" >
                     <span class="text-muted">{{ message|upper }}</span>
                 </li>
 
-                <!-- Zavírací tlačítko oznamu -->
+                <!-- Close button for the message -->
                 <button type="button"
                         class="btn-close"
                         data-bs-dismiss="alert"

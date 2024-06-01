@@ -1,0 +1,39 @@
+<!-- Checkbox inputs for specifying the search location -->
+<!-- Intended for 2_main/_search_data/_search_form_.html -->
+
+{% load widget_tweaks %}
+
+<!-- Introductory text -->
+<p class="my-font-size-0-9rem my-color-a0a0a0">Where do you want to search?</p>
+
+<!-- Container grouping checkbox buttons -->
+<div class="row">
+
+    <!-- Checkbox button for searching in article titles -->
+    <div class="col">
+        {{ search_form.search_in_title|add_class:"form-check-input" }}
+        <label for="{{ search_form.search_in_title.id_for_label }}"
+               class="form-check-label my-font-size-0-9rem">
+            {{ search_form.search_in_title.label }}
+        </label>
+    </div>
+
+    <!-- Checkbox button for searching in article descriptions -->
+    <div class="col">
+        {{ search_form.search_in_description|add_class:"form-check-input" }}
+        <label for="{{ search_form.search_in_description.id_for_label }}"
+               class="form-check-label my-font-size-0-9rem">
+            {{ search_form.search_in_description.label }}
+        </label>
+    </div>
+
+    <!-- Checkbox button for searching in article content -->
+    <div class="col">
+        {{ search_form.search_in_content|add_class:"form-check-input" }}
+        <label for="{{ search_form.search_in_content.id_for_label }}"
+               class="form-check-label my-font-size-0-9rem">
+            {{ search_form.search_in_content.label }}
+        </label>
+    </div>
+
+</div>

@@ -1,21 +1,67 @@
-<!-- Šablona stránky pro vytvoření nebo úpravu článku -->
-
-
-<!-- Odkaz na nadřazenou šablonu -->
 {% extends '2_main/20__base__.html' %}
 
-
-<!-- Začátek vnitřního bloku -->
 {% block inner_content %}
 
-    <!-- Nadpis a navigace stránky -->
-    {% include '5_create_article/51__title_and_navigation__.html' %}
+    <!-- Title -->
+    <header><h2>{{ title }}</h2></header>
 
-    <!-- Formulář -->
-    {% include '5_create_article/52__form__.html' %}
+    <!-- Navigation -->
+    <ul class="nav nav-tabs justify-content-end mb-4 pt-4" id="myTabs">
 
-    <!-- Skripty navázané na tuto stránku -->
-    {% include '5_create_article/53__scripts__.html' %}
+        <li class="nav-item">
+            <a class="nav-link {% if current_tab == 'overview' %}active{% endif %}"
+               href="{{ tab_urls.for_overview }}">
+                Overview
+            </a>
+        </li>
 
-<!-- End of block for the parent template -->
+        <li class="nav-item">
+            <a class="nav-link {% if current_tab == 'content' %}active{% endif %}"
+               href="{{ tab_urls.for_content }}">
+                Content
+            </a>
+        </li>
+
+        <li class="nav-item">
+            <a class="nav-link {% if current_tab == 'settings' %}active{% endif %}"
+               href="{{ tab_urls.for_settings }}">
+                Settings
+            </a>
+        </li>
+
+    </ul>
+
+    <!-- Form -->
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+
+        <!-- Display errors -->
+        {% if form.errors %}
+            {% for field, errors in form.errors.items %}
+                {% for error in errors %}
+                    <div class="alert alert-danger">{{ error }}</div>
+                {% endfor %}
+            {% endfor %}
+        {% endif %}
+
+        <!-- Container for tab contents -->
+        <div class="tab-content">
+
+            {% if current_tab == 'overview' %}
+                {% include '5_create_article/51__overview__.html' %}
+
+            {% elif current_tab == 'content' %}
+                {% include '5_create_article/52__content__.html' %}
+
+            {% elif current_tab == 'settings' %}
+                {% include '5_create_article/53__settings__.html' %}
+
+            {% endif %}
+
+        </div>
+    </form>
+
+    <!-- Confirmation for leaving the page -->
+    {% include '5_create_article/54__confirm_leave__.html' %}
+
 {% endblock inner_content %}

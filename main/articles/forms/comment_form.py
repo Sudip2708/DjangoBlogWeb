@@ -1,23 +1,39 @@
-print("### main/articles/forms/comment_form.py")
-
-### Definuje formuláře (na webu) pro aplikaci.
-
 from django import forms
-from articles.models.article_comment import ArticleComment
+
+from ..models.article_comment import ArticleComment
 
 
-class CommentForm(forms.ModelForm):
-    # Pole pro obsah komentáře s vlastními atributy pro vzhled (CSS třídy, placeholder, id, atd.)
-    content = forms.CharField(widget=forms.Textarea(attrs={
-        'class': 'form-control',
-        'placeholder': 'Type your comment',
-        'id': 'usercomment',
-        'rows': '4'
-    }))
+class ArticleCommentForm(forms.ModelForm):
+    '''
+    Formulář pro definování a správu vybraných polí modelu ArticleComment.
+
+    Formulář je použit v pohledu:
+    - ArticleDetailView: Zobrazení konkrétního článku.
+
+    Formulář slouží pro zadání komentáře k článku.
+    '''
 
     class Meta:
-        # Specifikace modelu, pro který je formulář vytvořen
-        model = ArticleComment
+        '''
+        Třída Meta je speciální vnitřní třída pro konfiguraci formuláře.
 
-        # Seznam polí, která budou zahrnuta ve formuláři
+        Třída Meta poskytuje metadata a konfiguraci pro hlavní třídu,
+        a zde definuje následující atributy:
+        - model: Určuje model, na kterém je formulář založen.
+        - fields: Definuje pole, která budou zahrnuta ve formuláři.
+        - widgets: Umožňuje specifikovat vlastní widgety pro jednotlivá pole formuláře.
+
+        Widgety použité v tomto kódu:
+        - forms.Textarea: Pole pro zadání delšího textu (zde omezeno na 4 řádky).
+        '''
+
+        model = ArticleComment
         fields = ('content',)
+        widgets = {
+            'content': forms.Textarea(attrs={
+                'class': 'form-control',
+                'placeholder': 'Type your comment',
+                'id': 'usercomment',
+                'rows': '4'
+            }),
+        }

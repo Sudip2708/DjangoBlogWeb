@@ -1,0 +1,27 @@
+<!-- Display category tabs for the current tag or similar articles -->
+<!-- Intended for 3_articles/_page_navigation_data/_tags_.html -->
+
+<!-- Loop to iterate through categories -->
+{% for category in category_tabs %}
+
+    <!-- Display categories for the selected tag -->
+    {% if url_name == 'article-tag-list-category' %}
+        <li class="nav-item ">
+            <a href="{% url 'article-tag-list-category' tag_slug=current_tag.slug category_slug=category.slug %}"
+            class="nav-link {% if category == current_category %}active{% endif %}">
+                {{ category.name }}
+            </a>
+        </li>
+
+    <!-- Display categories for similar articles -->
+    {% elif url_name == 'article-tag-list-similar-category' %}
+        <li class="nav-item ">
+            <a href="{% url 'article-tag-list-similar-category' tag_slug=current_tag.slug category_slug=category.slug %}"
+            class="nav-link {% if category == current_category %}active{% endif %}">
+                {{ category.name }}
+            </a>
+        </li>
+
+    {% endif %}
+
+{% endfor %}

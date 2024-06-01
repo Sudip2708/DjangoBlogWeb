@@ -1,44 +1,44 @@
-<!-- Newsletter Section - část pro objednání zasílání novinek -->
-<!-- Určeno pro 1_home/10__base__.html -->
+<!-- Newsletter Section - part for subscribing to newsletters -->
+<!-- For 1_home/10__base__.html -->
 
 
-<!-- Podmínka kontrolující, zda má být sekce viditelná -->
+<!-- Condition checking whether the section should be visible -->
 {% if newsletter_data.display_newsletter_section %}
 
-    <!-- Hlavní kontejner -->
+    <!-- Main container -->
     <section class="pt-0">
         <div class="container">
             <div class="row">
 
-                <!-- Tlačítko pro skrytí/zobrazení editačního formuláře sekce (pouze pro url edit a superuser) -->
+                <!-- Button to show/hide the section editing form (only for url edit and superuser) -->
                 {% with name='Newsletter' %}
                 {% include '1_home/_home_data/_edit_button_.html' %}
                 {% endwith %}
 
-                <!-- Kontejner pro nadpis a podnadpis -->
+                <!-- Container for title and subtitle -->
                 <div class="col-md-6">
 
-                    <!-- Nadpis sekce -->
+                    <!-- Section title -->
                     {% with text=newsletter_data.newsletter_title clss='mb-2' %}
                     {% include '1_home/_home_data/_display_h2_text_.html' %}
                     {% endwith %}
 
-                    <!-- Podnadpis sekce -->
+                    <!-- Section subtitle -->
                     {% with text=newsletter_data.newsletter_description clss='mb-4' %}
                     {% include '1_home/_home_data/_display_div_text_.html'%}
                     {% endwith %}
 
                 </div>
 
-                <!-- Formuláře -->
+                <!-- Forms -->
                 <div class="col-md-8">
 
-                    <!-- Editační formulář sekce (pouze pro url edit a superuser) -->
+                    <!-- Section editing form (only for url edit and superuser) -->
                     {% if user.is_superuser and request.path == '/edit/' %}
                     {% include '1_home/_home_edit/__newsletter__.html' %}
                     {% endif %}
 
-                    <!-- Hlavní část: Pole pro vložení a odeslání emailu -->
+                    <!-- Main content: Input field for entering and submitting email -->
                     {% include '1_home/_home_data/_input_email_field_.html' %}
 
                 </div>
@@ -47,10 +47,10 @@
         </div>
     </section>
 
-<!-- Pokud je sekce skrytá -->
+<!-- If the section is hidden -->
 {% else %}
 
-    <!-- Tlačítko pro zobrazení sekce (pouze pro url edit a superuser) -->
+    <!-- Button to display the section (only for url edit and superuser) -->
     {% with section_url='edit-newsletter-section' name='Newsletter' %}
     {% include '1_home/_home_data/_section_display_.html' %}
     {% endwith %}

@@ -1,23 +1,40 @@
-<!-- Výběr nadpisu a případné navigace pro jednotlivé stránky -->
-<!-- Určeno pro 3_articles/30__base__.html -->
+<!-- Extension for 3_articles/30__base__.html -->
 
+<header>
 
-<!-- Nadpis a navigace pro články tříděných dle kategorií -->
-{% if url_name == 'article-list' or url_name == 'article-category-list' %}
-    {% include '3_articles/_page_title/__for_categories__.html' %}
+    <!-- Display for devices larger than mobile -->
+    <div class="d-none d-md-block">
 
-<!-- Nadpis a navigace pro stránku s vlastními články -->
-{% elif url_name == 'my-articles' %}
-    {% include '3_articles/_page_title/__for_my_articles__.html' %}
+        <!-- Title -->
+        <h2>{{ page_title }}</h2>
 
-<!-- Nadpis a navigace pro výsledek hledání -->
-{% elif search_query %}
-    {% include '3_articles/_page_title/__for_search_results__.html' %}
+        <!-- Subtitle for search results -->
+        {% if display_text %}
+            <h4>{{ display_text|safe }}</h4>
+        {% endif %}
 
-<!-- Nadpis a navigace pro články tříděných dle tagů -->
-{% elif tag_slug %}
-    {% include '3_articles/_page_title/__for_tags__.html' %}
+        <!-- Additional text (informs about the possibility of displaying the navigation bar) -->
+        {% if page_subtitle %}
+            <p class="text-lg fw-light text-secondary mt-2 ">
+                {{ page_subtitle }}
+            </p>
+        {% endif %}
 
-{% endif %}
+    </div>
 
+    <!-- Display for mobile devices -->
+    <div class="d-md-none">
 
+        <!-- Title -->
+        <h2>
+            {{ page_title_mobile }}
+        </h2>
+
+        <!-- Subtitle for search results -->
+        {% if display_text %}
+            <h6>{{ display_text|safe }}</h6>
+        {% endif %}
+
+    </div>
+
+</header>

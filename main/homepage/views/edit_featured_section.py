@@ -1,13 +1,14 @@
 from django.shortcuts import redirect
 from django.views.generic import View
-from homepage.forms.featured_section_form import FeaturedArticlesForm
-from homepage.models.featured_section import HomePageFeaturedArticles
 from django.contrib import messages
+
+from ..forms.featured_section_form import FeaturedArticlesForm
+from ..models.featured_section import HomePageFeaturedArticles
 
 
 class EditFeaturedArticlesSection(View):
     '''
-    Třída pro zpracování dat formuláře pro sekci označených článků na Home Page
+    Pohled pro zpracování dat formuláře pro sekci označených článků na Home Page
 
     Tato třída postupuje následovně:
     Po obdržení POST požadavku na zpracování dat z formuláře vytvoří instanci formuláře FeaturedArticlesForm.
@@ -27,11 +28,6 @@ class EditFeaturedArticlesSection(View):
         a přesměruje uživatele na stránku pro úpravu domovské stránky.
         Pokud formulář není validní, zobrazí chybovou zprávu
         a přesměruje uživatele zpět na stránku pro úpravu s neuloženými změnami.
-
-        :param request: Objekt HttpRequest obsahující data zaslaná klientem.
-        :param args: Další pozicinální argumenty.
-        :param kwargs: Další klíčové argumenty.
-        :return: HttpResponse objekt reprezentující odpověď serveru na požadavek.
         '''
 
         # Načtení formuláře
@@ -66,11 +62,6 @@ class EditFeaturedArticlesSection(View):
         Tato metoda kontroluje, zda požadavek GET obsahuje parametr 'show_featured_section'.
         Pokud ano, nastaví hodnotu pro zobrazení sekce patičky na True a provede přesměrování
         na stránku pro úpravu domovské stránky. Jinak pokračuje v běžném chování.
-
-        :param request: Objekt HttpRequest obsahující data zaslaná klientem.
-        :param args: Další pozicinální argumenty.
-        :param kwargs: Další klíčové argumenty.
-        :return: HttpResponse objekt reprezentující odpověď serveru na požadavek.
         '''
 
         # Kontrola zda požadavek get v sobě obsahuje pořadavek na zviditelnění sekce

@@ -1,25 +1,18 @@
-<!-- Základní šablona pro všechny stránky obsahující boční panel -->
-
-
-<!-- Odkaz na nadřazenou šablonu -->
 {% extends '0_base/00__base__.html' %}
 
-
-<!-- Začátek vnitřního bloku -->
 {% block main_content %}
 
-    <!-- Základní kontejner -->
     <section>
         <div class="container">
             <div class="row gy-5">
 
-                <!-- Nastavení počtu sloupců pro obsah, když uživatel má zapnutý sidebar (2/3 plochy) -->
-                <main class="{% if user.sidebar %}col-xl-8{% endif %}">
+                <!-- Setting the number of columns for content when the user has sidebar enabled (2/3 layout) -->
+                <main class="{% if user.sidebar.show_sidebars %}col-xl-8{% endif %}">
 
-                    <!-- Kontejner por vnitřní obsah -->
+                    <!-- Container for inner content -->
                     <div class="container">
 
-                        <!-- Část pro vložení navázaných šablon s dalším obsahem -->
+                        <!-- Section for inserting linked templates with additional content -->
                         {% block inner_content %}
                         {% endblock inner_content %}
 
@@ -27,7 +20,7 @@
 
                 </main>
 
-                <!-- Postranní panel - zobrazí se je-li zapnut -->
+                <!-- Sidebar - displayed if enabled -->
                 {% include '2_main/21__sidebar__.html' %}
 
             </div>

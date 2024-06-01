@@ -1,0 +1,23 @@
+<!-- Displaying the sidebar (if not displayed) -->
+<!-- Intended for 0_base/_header/_dropdown_data/__dropdown_menu__.html -->
+
+<!-- Limited to XL and larger devices -->
+<div class="d-none d-xl-block">
+
+    <!-- Check if the user does not have the sidebar enabled -->
+    {% if not user.sidebar.show_sidebars  %}
+
+        <!-- Button -->
+        <li class="nav-item">
+            <a class="dropdown-item my-font-size-0-9rem"
+               href="{% url 'user_navigation_settings' hash='#bool_show_sidebars' %}">
+                Show Sidebar
+            </a>
+        </li>
+
+        <!-- Divider line -->
+        <li class="nav-item"><hr class="dropdown-divider"></li>
+
+    {% endif %}
+
+</div>

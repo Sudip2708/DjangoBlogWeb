@@ -1,1 +1,0 @@
-print("### main/articles/forms/__init__.py")

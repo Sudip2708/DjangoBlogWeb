@@ -1,34 +1,26 @@
-<!-- Výchozí šablona pro domácí stránku -->
-
-
-<!-- Odkaz na nadřazenou šablonu -->
 {% extends '0_base/00__base__.html' %}
 
-
-<!-- Začátek vnitřního bloku -->
 {% block main_content %}
 
-    <!-- Hero Section - úvodní obrázek stránky -->
+    <!-- Hero Section - introductory image of the page -->
     {% include '1_home/11__hero__.html' %}
 
-    <!-- Intro Section - úvodní text stránky -->
+    <!-- Intro Section - introductory text of the page -->
     {% include '1_home/12__intro__.html' %}
 
-    <!-- Featured articles - 3 vybrané články -->
+    <!-- Featured articles - 3 selected articles -->
     {% include '1_home/13__featured_articles__.html' %}
 
-    <!-- Divider Section - oddělovač stránky -->
+    <!-- Divider Section - page divider -->
     {% include '1_home/14__divider__.html' %}
 
-    <!-- Latest articles - 3 nejnovější články -->
+    <!-- Latest articles - 3 newest articles -->
     {% include '1_home/15__latest_articles__.html' %}
 
-    <!-- Newsletter Section - část pro objednání zasílání novinek -->
+    <!-- Newsletter Section - section for subscribing to newsletters -->
     {% include '1_home/16__newsletter__.html' %}
 
-    <!-- Gallery Section - galerie hlavních obrázků (pro 4 články) -->
+    <!-- Gallery Section - gallery of main images (for 4 articles) -->
     {% include '1_home/17__gallery__.html' %}
 
-<!-- End of block for the parent template -->
 {% endblock main_content %}
-

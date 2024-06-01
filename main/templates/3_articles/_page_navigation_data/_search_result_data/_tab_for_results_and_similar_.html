@@ -1,0 +1,18 @@
+<!-- Display tabs for the current tag and similar articles -->
+<!-- Intended for 3_articles/_page_navigation_data/_tags_.html -->
+
+<!-- Tab for displaying search result -->
+<li class="nav-item ">
+    <a href="{% url 'article-search-results' query=query %}"
+       class="nav-link {% if url_name == 'article-search-results' %}active{% endif %}">
+        Search Result
+    </a>
+</li>
+
+<!-- Tab for displaying similar articles -->
+<li class="nav-item ">
+    <a href="{% url 'article-search-similar' query=query %}"
+       class="nav-link {% if url_name == 'article-search-similar' %}active{% endif %}">
+        Similar Articles
+    </a>
+</li>

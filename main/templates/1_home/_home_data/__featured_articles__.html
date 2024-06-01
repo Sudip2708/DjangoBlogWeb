@@ -1,55 +1,55 @@
-<!-- Část pro články sekce -->
-<!-- Rozšířenní pro 1_home/13__featured_articles__.html -->
+<!-- Extension for 1_home/13__featured_articles__.html -->
 
-
-<!-- Procházení článků -->
+<!-- Loop through articles -->
 {% for article in featured_data.articles %}
 
-    <!-- Kontrola, článek obsahuje data -->
+    <!-- Check if the article contains data -->
     {% if article %}
 
-        <!-- Hlavní kontejner -->
+        <!-- Main container -->
         <div class="row d-flex align-items-stretch g-0">
 
-            <!-- Umístnění hlavního obrázku před článkem (pro zařízení > LG + sudá iterace) -->
+            <!-- Placement of the main image before the article (for devices > LG + even iteration) -->
             {% if forloop.counter|divisibleby:2 %}
                 <div class="col-lg-5 d-none d-lg-block">
                     {% include '1_home/_home_data/_main_picture_.html' %}
                 </div>
             {% endif %}
 
-            <!-- Umístnění hlavního obrázku nad článkem (pro zařízení < LG) -->
+            <!-- Placement of the main image above the article (for devices < LG) -->
             <div class="col-lg-5 mt-5 mb-2 d-lg-none">
                 {% include '1_home/_home_data/_main_picture_.html' %}
             </div>
 
-            <!-- Kontejner pro obsah článku -->
-            <div class="col-lg-7 ">
+            <!-- Container for the article content -->
+            <div class="col-lg-7">
                 <div class="text-inner d-flex align-items-center h-100 bg-light">
                     <div class="content px-4 px-lg-5">
 
-                        <!-- Kategorie -->
-                        {% include '3_articles/_articles/_article_data/_category_.html' %}
+                        <!-- Category -->
+                        {% include '3_articles/_articles_data/_view_setup_data/_category_.html' %}
 
-                        <!-- Nadpis -->
+                        <!-- Title -->
                         {% with class='mb-3' %}
-                        {% include '3_articles/_articles/_article_data/_title_.html' %}
+                        {% include '3_articles/_articles_data/_view_setup_data/_title_.html' %}
                         {% endwith %}
 
-                        <!-- Popis -->
-                        {% include '1_home/_home_data/_overview_.html' %}
+                        <!-- Description -->
+                        <p class="text-sm">
+                            {{ article.overview }}
+                        </p>
 
-                        <!-- Kontejner pro patičku článku -->
+                        <!-- Container for article footer -->
                         <ul class="list-inline list-separated text-gray-500 mb-0">
 
-                            <!-- Odkaz na autora -->
-                            {% include '3_articles/_articles/_article_data/_author_.html' %}
+                            <!-- Author link -->
+                            {% include '3_articles/_articles_data/_view_setup_data/_author_.html' %}
 
-                            <!-- Stáří článku -->
-                            {% include '3_articles/_articles/_article_data/_published_ago_.html' %}
+                            <!-- Article age -->
+                            {% include '3_articles/_articles_data/_view_setup_data/_published_ago_.html' %}
 
-                            <!-- Počet komentářů -->
-                            {% include '3_articles/_articles/_article_data/_comment_count_.html' %}
+                            <!-- Comment count -->
+                            {% include '3_articles/_articles_data/_view_setup_data/_comment_count_.html' %}
 
                         </ul>
 
@@ -57,7 +57,7 @@
                 </div>
             </div>
 
-            <!-- Umístnění hlavního obrázku před článkem (pro zařízení > LG + lichá iterace) -->
+            <!-- Placement of the main image after the article (for devices > LG + odd iteration) -->
             {% if not forloop.counter|divisibleby:2 %}
                 <div class="col-lg-5 d-none d-lg-block">
                     {% include '1_home/_home_data/_main_picture_.html' %}

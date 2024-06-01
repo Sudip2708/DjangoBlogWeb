@@ -1,30 +1,54 @@
-<!-- Panel pro vyhledávání -->
-<!-- Určeno pro 2_main/21__sidebar__.html -->
+<!-- Inner content of the search panel -->
+<!-- Intended for 2_main/21__sidebar__.html -->
 
+{% load widget_tweaks %}
 
-<!-- Hlavní kontejner sdružující prvky panelu -->
-<div class="px-1 mt-2">
+<div class="card mb-4">
+    <div class="card-body">
 
-    <!-- Kontejner pro prvky pro vyditelnost a pohyb panelu -->
-    <div class="d-flex justify-content-between">
+        <!-- Title and button to toggle inner content -->
+        <div class="d-flex justify-content-between align-items-center">
 
-        <!-- Vyditelnost panelu -->
-        <div class="d-inline-block">
-            {% with ar_exp=user.sidebar_search ar_con='sidebar_search' title='Search' %}
-                {% include '2_main/_sidebars/_common/__button_collapse__.html' %}
-            {% endwith %}
+            <!-- Panel title -->
+            <h3 class="h6">Search in Articles</h3>
+
+            <!-- Button to toggle inner content -->
+            <button class="btn btn-link my-font-size-0-8rem p-0 my-color-f0f0f0"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#show_search_options"
+                    aria-expanded="{{ sidebar.show_options }}"
+                    aria-controls="show_search_options">
+                {% if sidebar.show_options %}Hide Search Options{% else %}Show Search Options{% endif %}
+            </button>
+
         </div>
 
-        <!-- Pohyb panelu -->
-        <div class="d-inline-block">
-            {% with order=user.sidebar_search_order last=is_last up='#MoveUp_search' dn='#MoveDn_search' %}
-            {% include '2_main/_sidebars/_common/__sidebar_moves__.html' %}
-            {% endwith %}
-        </div>
+        <!-- Form panel for searching -->
+        <form action="{% url 'article-search' %}" method="get" >
+
+            {% csrf_token %}
+
+            <!-- Container for query input field and submit button -->
+            <div class="input-group border-bottom">
+
+                <!-- Query input field -->
+                {{ sidebar_search_form.query|add_class:"form-control border-0 shadow-0 ps-0" }}
+
+                <!-- Submit button -->
+                <button class="btn btn-link btn-sm shadow-0 px-0 btn-lg "
+                        type="submit">
+                    <i class="fas fa-search m-3"></i>
+                </button>
+
+            </div>
+
+            <!-- Container for collapsible content for search extension -->
+            <div class="collapse {% if sidebar.show_options %}show{% endif %}"
+                 id="show_search_options">
+                {% include '2_main/_sidebars/_data/_search_options_items_.html' %}
+            </div>
+
+        </form>
 
     </div>
-
-    <!-- Vnitřní položky panelu -->
-    {% include '2_main/_sidebars/_search/__search_mainframe__.html' %}
-
 </div>

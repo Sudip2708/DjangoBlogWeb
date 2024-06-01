@@ -1,0 +1,64 @@
+{% extends '2_main/20__base__.html' %}
+
+{% block inner_content %}
+
+    <!-- Title -->
+    <header><h2>{{ page_title }}</h2></header>
+
+    <!-- Navigation -->
+    <nav class="nav nav-tabs justify-content-end mb-5 pt-4">
+
+        <!-- Tab for user -->
+        <li class="nav-item">
+            <a href="{% url tab_url.user %}"
+               class="nav-link {% if url_name == tab_url.user %} active {% endif %}">
+                {{ tab_names.user }}
+            </a>
+        </li>
+
+        <!-- Tab for author (if exists) -->
+        {% if user.linked_author %}
+            <li class="nav-item">
+                <a href="{% url tab_url.author %}"
+                   class="nav-link {% if url_name == tab_url.author %} active {% endif %}">
+                    {{ tab_names.author }}
+                </a>
+            </li>
+        {% endif %}
+
+    </nav>
+
+    <!-- Form -->
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="row">
+
+            <!-- Profile picture -->
+            <div class="col-md-4 mb-4">
+                <img alt="{{ profile_picture_alt }}"
+                     src="{{ profile_picture_url }}?{% now 'U' %}"
+                     class="img-fluid"/>
+            </div>
+
+            <div class="col-md-8">
+
+                <!-- Form fields -->
+                {% load crispy_forms_tags %}
+                <div class="mb-2">
+                    {{ profile_form|crispy }}
+                </div>
+
+                <!-- Submit button -->
+                <div class="form-group pt-4">
+                    <button type="submit"
+                            class="btn btn-outline-info btn-lg">
+                        {{ submit_button_text }}
+                    </button>
+                </div>
+
+            </div>
+
+        </div>
+    </form>
+
+{% endblock %}

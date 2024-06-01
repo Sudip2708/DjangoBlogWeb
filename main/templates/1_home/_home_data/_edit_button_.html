@@ -1,24 +1,19 @@
-<!-- Tlačítko pro rozevírací nabídku editace jednotlivích sekcí HomePage  -->
-<!-- Na tento kod je navázaný script pro změnu prvního slova v textu Show na Hide a naopak -->
+<!-- Button for expanding the edit menu for individual sections of the HomePage -->
+<!-- This code is linked to a script that toggles the first word in the text between "Show" and "Hide" -->
 <!-- 0_base/04__footer__.html -->
-<!-- Rozšířenní pro 1_home/11__hero__.html -->
-<!-- Rozšířenní pro 1_home/12__intro__.html -->
-<!-- Rozšířenní pro 1_home/13__featured_articles__.html -->
-<!-- Rozšířenní pro 1_home/14__divider__.html -->
-<!-- Rozšířenní pro 1_home/15__latest_articles__.html -->
-<!-- Rozšířenní pro 1_home/16__newsletter__.html -->
-<!-- Rozšířenní pro 1_home/17__gallery__.html -->
+<!-- Extension for 1_home/11__hero__.html -->
+<!-- Extension for 1_home/12__intro__.html -->
+<!-- Extension for 1_home/13__featured_articles__.html -->
+<!-- Extension for 1_home/14__divider__.html -->
+<!-- Extension for 1_home/15__latest_articles__.html -->
+<!-- Extension for 1_home/16__newsletter__.html -->
+<!-- Extension for 1_home/17__gallery__.html -->
 
-
-
-<!-- CSS pro tuto část -->
-{% include '1_home/css/css_edit_homepage_button.html' %}
-
-<!-- Kontrola zda je přihlášen super uživatel a zda je na stránce pro úpravu domácí stránky  -->
+<!-- Check if the user is a superuser and if they are on the homepage editing page -->
 {% if user.is_superuser and request.path == '/edit/' %}
 
-    <!-- Odkaz na rozevření a skrytí nabídky -->
-    <a class="edit-homepage-button"
+    <!-- Link to expand and collapse the menu -->
+    <a class="my-edit-homepage-button"
        type="button"
        data-bs-toggle="collapse"
        data-bs-target="#{{ name|lower }}SectionCollapse"

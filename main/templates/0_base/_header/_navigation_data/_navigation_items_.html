@@ -1,0 +1,31 @@
+<!-- Položka pro navigaci stránky v hlavičce webu -->
+<!-- Určeno pro 0_base/_header/__navigation__.html -->
+
+<!-- Odkaz na domácí stránku -->
+<li class="nav-item">
+    <a class="nav-link {% if url_name == 'home-page' or url_name == 'home-page-edit' %}active{% endif %}"
+       href="{% url 'home-page' %}">
+        Home
+    </a>
+</li>
+
+<!-- Odkaz na stránku s články -->
+<li class="nav-item">
+    <a class="nav-link {% if url_name == 'article-list' %}active{% endif %}"
+       href="{% url 'article-list' %}">
+        Articles
+    </a>
+</li>
+
+<!-- Podmínka kontrolující, zda je uživatel přihlášen -->
+{% if not user.is_authenticated and not user.sidebar.show_sidebars %}
+
+        <!-- Odkaz na přihlášení uživatele -->
+        <li class="nav-item">
+            <a class="nav-link {% if request.path == '/accounts/login/' %}active{% endif %} "
+               href="{% url 'account-login' %}">
+                Log In
+            </a>
+        </li>
+
+{% endif %}

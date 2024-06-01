@@ -1,0 +1,32 @@
+<!-- Dropdown menu for page navigation -->
+<!-- Intended for 0_base/_header/__dropdown_display__.html -->
+
+<div class="btn-group ">
+
+    <!-- Dropdown button -->
+    {% include '0_base/_header/_dropdown_data/_button_.html' %}
+
+    <!-- Container grouping menu items -->
+    <ul class="dropdown-menu dropdown-menu-end">
+
+        <!-- Sidebar - to display the sidebar (on XL devices and larger) -->
+        {% include '0_base/_header/_dropdown_data/_show_sidebar_.html' %}
+
+        <!-- Category Tab / Similar Tab - to show and hide the navigation bar (on devices smaller than LG) -->
+        {% include '0_base/_header/_dropdown_data/_special_offer_.html' %}
+
+        <!-- Categories - dropdown menu with categories (always visible) -->
+        {% include '0_base/_header/_dropdown_data/_category_dropdown_.html' %}
+
+        <!-- Homepage / Articles / Search in Articles (for devices smaller than LG) -->
+        {% include '0_base/_header/_dropdown_data/_homepage_articles_search_.html' %}
+
+        <!-- Create an Article / My Articles / Favorite Authors (for logged-in users) -->
+        {% include '0_base/_header/_dropdown_data/_create_article_and_favorite_.html' %}
+
+        <!-- Manage Profile / Logout / Login -->
+        {% include '0_base/_header/_dropdown_data/_profile_and_login_.html' %}
+
+    </ul>
+
+</div>

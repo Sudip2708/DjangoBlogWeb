@@ -1,28 +1,20 @@
-<!-- Hlavička stránky se základnímy prvky pro navigaci -->
-<!-- Určeno pro 0_base/00__base__.html -->
+<!-- Page header with basic navigation elements -->
+<!-- For 0_base/00__base__.html -->
 
-
-<!-- Dočasné umístění CSS -->
-{% include '0_base/css/css_header.html' %}
-
-<!-- Kontejner slučující prvky hlavní navigace stránky -->
 <nav class="navbar navbar-expand-lg navbar-light bg-white border-bottom py-3">
     <div class="container py-1">
 
-        <!-- Nadpis s odkazem na domácí stránku -->
-        {% include '0_base/_header/_navigation/_data/_nav_title_.html' %}
+        <!-- Title with a link to the homepage -->
+        <a class="navbar-brand text-sm fw-bold text-dark"
+           href="{% url 'home-page' %}">
+            Bootstrap Blog
+        </a>
 
-        <!-- Navigační lišta -->
+        <!-- Navigation bar -->
         {% include '0_base/_header/__navigation__.html' %}
 
-        <!-- Zobrazení rozklápěcího menu -->
+        <!-- Display dropdown menu -->
         {% include '0_base/_header/__dropdown_display__.html' %}
 
     </div>
 </nav>
-
-<!-- Vyskakující okno pro vyhledávání -->
-{% include '0_base/_header/__search_popup__.html' %}
-
-<!-- Script pro zobrazení nabídky s možnostmi vyhledávání -->
-{% include '0_base/script/script_header.html' %}

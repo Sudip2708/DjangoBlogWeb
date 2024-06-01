@@ -1,0 +1,25 @@
+<!-- Link to the author -->
+<!-- Intended for 1_home/_home_data/__featured_articles__.html -->
+<!-- Intended for 3_articles/_articles/__article_setup__.html -->
+
+<li class="list-inline-item">
+
+    <!-- Link -->
+    <a class="d-flex align-items-center flex-wrap text-reset"
+       href="!#">
+
+        <!-- Profile Picture -->
+        <div class="avatar flex-shrink-0">
+            <img alt="Author Profile Picture"
+                 src="{{ article.author.profile_picture_thumbnail.url }}?{% now 'U' %}"
+                 class="img-fluid"/>
+        </div>
+
+        <!-- Name -->
+        <small>
+            {{ article.author }}
+        </small>
+
+    </a>
+
+</li>

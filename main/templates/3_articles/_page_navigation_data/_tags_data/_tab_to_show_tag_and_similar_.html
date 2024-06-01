@@ -1,0 +1,22 @@
+<!-- Display tabs for returning to navigation for the current tag or similar articles -->
+<!-- Intended for 3_articles/_page_navigation_data/_tags_.html -->
+
+<!-- Tab for returning to the currently selected tag -->
+{% if url_name == 'article-tag-list-category' %}
+    <li class="nav-item ">
+        <a href="{% url 'article-tag-list' tag_slug=current_tag.slug %}"
+        class="nav-link">
+            Hide Category
+        </a>
+    </li>
+
+<!-- Tab for returning to similar articles -->
+{% elif url_name == 'article-tag-list-similar-category' %}
+    <li class="nav-item ">
+        <a href="{% url 'article-tag-list-similar' tag_slug=current_tag.slug %}"
+        class="nav-link">
+            Hide Category
+        </a>
+    </li>
+
+{% endif %}

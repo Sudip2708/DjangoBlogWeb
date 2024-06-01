@@ -1,13 +1,14 @@
 from django.shortcuts import redirect
 from django.views.generic import View
-from homepage.forms.divider_section_form import DividerSectionForm
-from homepage.models.divider_section import HomePageDividerSection
 from django.contrib import messages
+
+from ..forms.divider_section_form import DividerSectionForm
+from ..models.divider_section import HomePageDividerSection
 
 
 class EditDividerSection(View):
     '''
-    Třída pro zpracování dat formuláře pro Divider sekci na Home Page
+    Pohled pro zpracování dat formuláře pro Divider sekci na Home Page
 
     Tato třída postupuje následovně:
     Po obdržení POST požadavku na zpracování dat z formuláře vytvoří instanci formuláře DividerSectionForm.
@@ -27,11 +28,6 @@ class EditDividerSection(View):
         a přesměruje uživatele na stránku pro úpravu domovské stránky.
         Pokud formulář není validní, zobrazí chybovou zprávu
         a přesměruje uživatele zpět na stránku pro úpravu s neuloženými změnami.
-
-        :param request: Objekt HttpRequest obsahující data zaslaná klientem.
-        :param args: Další pozicinální argumenty.
-        :param kwargs: Další klíčové argumenty.
-        :return: HttpResponse objekt reprezentující odpověď serveru na požadavek.
         '''
 
         # Načtení formuláře
@@ -66,11 +62,6 @@ class EditDividerSection(View):
         Tato metoda kontroluje, zda požadavek GET obsahuje parametr 'show_divider_section'.
         Pokud ano, nastaví hodnotu pro zobrazení sekce patičky na True a provede přesměrování
         na stránku pro úpravu domovské stránky. Jinak pokračuje v běžném chování.
-
-        :param request: Objekt HttpRequest obsahující data zaslaná klientem.
-        :param args: Další pozicinální argumenty.
-        :param kwargs: Další klíčové argumenty.
-        :return: HttpResponse objekt reprezentující odpověď serveru na požadavek.
         '''
 
         # Kontrola zda požadavek get v sobě obsahuje pořadavek na zviditelnění sekce

@@ -1,19 +1,17 @@
-<!-- Prvky navigační lišty -->
-<!-- Určeno pro 0_base/02__header__.html -->
+<!-- Navigation list items -->
+<!-- Intended for 0_base/02__header__.html -->
 
-
-<!-- Kontejner slučující jednotlivé prvky navigace -->
-<div class="collapse navbar-collapse right-padding" id="navbarSupportedContent">
+<div class="collapse navbar-collapse my-padding-right-5px" id="navbarSupportedContent">
     <ul class="navbar-nav ms-auto mb-2 mb-lg-0 align-items-lg-center">
 
-        <!-- Základní položky pro všechny uživatele (přihlášené i nepřihlášené) -->
-        {% include '0_base/_header/_navigation/__navigation_items__.html' %}
+        <!-- Basic items for all users (authenticated and non-authenticated) -->
+        {% include '0_base/_header/_navigation_data/_navigation_items_.html' %}
 
-        <!-- Položky pro zobrazení dodatečných nabídek pro dané prvky stránky -->
-        {% include '0_base/_header/_navigation/__special_offer__.html' %}
+        <!-- Items to display additional offers for specific page elements -->
+        {% include '0_base/_header/_navigation_data/_special_offer_.html' %}
 
-        <!-- Položky hledání a nastavení jazyka -->
-        {% include '0_base/_header/_navigation/_data/_search_and_language_.html' %}
+        <!-- Search and language setting items -->
+        {% include '0_base/_header/_navigation_data/_search_and_language_.html' %}
 
     </ul>
 </div>

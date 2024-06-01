@@ -1,13 +1,14 @@
 from django.shortcuts import redirect
 from django.views.generic import View
-from homepage.forms.footer_section_form import FooterSettingsForm
-from homepage.models.footer_section import FooterSettings
 from django.contrib import messages
-from .save_footer_data import save_footer_data
+
+from ..forms.footer_section_form import FooterSettingsForm
+from ..models.footer_section import FooterSettings
+from ..models.data.save_footer_data import save_footer_data
 
 class EditFooterSection(View):
     '''
-    Třída pro zpracování dat formuláře pro sekci patičky na Home Page
+    Pohled pro zpracování dat formuláře pro sekci patičky na Home Page
 
     Tato třída postupuje následovně:
     Po obdržení POST požadavku na zpracování dat z formuláře vytvoří instanci formuláře FooterSettingsForm.
@@ -25,11 +26,6 @@ class EditFooterSection(View):
         a přesměruje uživatele na stránku pro úpravu domovské stránky.
         Pokud formulář není validní, zobrazí chybovou zprávu
         a přesměruje uživatele zpět na stránku pro úpravu s neuloženými změnami.
-
-        :param request: Objekt HttpRequest obsahující data zaslaná klientem.
-        :param args: Další pozicinální argumenty.
-        :param kwargs: Další klíčové argumenty.
-        :return: HttpResponse objekt reprezentující odpověď serveru na požadavek.
         '''
 
         # Načtení formuláře
@@ -44,7 +40,7 @@ class EditFooterSection(View):
 
         # Pokud formulář validní není
         else:
-            # Navrácení na stránku úprav a zobrazení zprávu o neúspěchu
+            # Navrácení na stránku úprav a zobrazení zprávy o neúspěchu
             messages.error(request, "Provedené úpravy nebyly uloženy.")
             return redirect('home-page-edit')
 
@@ -55,14 +51,9 @@ class EditFooterSection(View):
         Tato metoda kontroluje, zda požadavek GET obsahuje parametr 'show_footer_section'.
         Pokud ano, nastaví hodnotu pro zobrazení sekce patičky na True a provede přesměrování
         na stránku pro úpravu domovské stránky. Jinak pokračuje v běžném chování.
-
-        :param request: Objekt HttpRequest obsahující data zaslaná klientem.
-        :param args: Další pozicinální argumenty.
-        :param kwargs: Další klíčové argumenty.
-        :return: HttpResponse objekt reprezentující odpověď serveru na požadavek.
         '''
 
-        # Kontrola zda požadavek get v sobě obsahuje pořadavek na zviditelnění sekce
+        # Kontrola, zda požadavek get obsahuje požadavek na zviditelnění sekce
         if 'show_footer_section' in request.GET:
 
             # Pokud ano - změna hodnoty a návrat na stránku pro úpravu HomePage
@@ -71,6 +62,6 @@ class EditFooterSection(View):
             footer_settings.save()
             return redirect('home-page-edit')
 
-        # Pokud ne, pokračuj normálně
+        # Pokud ne, pokračujte normálně
         else:
             return super().get(request, *args, **kwargs)

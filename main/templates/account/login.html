@@ -1,12 +1,12 @@
 <!-- Linking to the parent template -->
-{% extends 'account/__shared/__base__.html' %}
+{% extends 'account/_shared/_base_.html' %}
 
 <!-- Start of block for the parent template -->
 {% block inner_content %}
 
 
     <!-- Picture -->
-    {% include 'account/__shared/__picture__.html' with atr="login" %}
+    {% include 'account/_shared/_picture_.html' with atr="login" %}
 
     <!-- Login form -->
     <div class="col-md-7 col-lg-5 col-xl-5 offset-xl-1">
@@ -14,31 +14,31 @@
             {% csrf_token %}
 
             <!-- Hidden field for redirect value -->
-            {% include 'account/__shared/__redirect_value__.html' %}
+            {% include 'account/_shared/_redirect_value_.html' %}
 
             <!-- Error messages for non input field -->
-            {% include 'account/__shared/__error_messages__.html' %}
+            {% include 'account/_shared/_error_messages_.html' %}
 
             <!-- Email -->
-            {% include 'account/__login/__email_input__.html' %}
+            {% include 'account/_login/_email_input_.html' %}
 
             <!-- Password -->
-            {% include 'account/__login/__password_input__.html' %}
+            {% include 'account/_login/_password_input_.html' %}
 
             <!-- Remember me Checkbox -->
-            {% include 'account/__login/__remember_me__.html' %}
+            {% include 'account/_login/_remember_me_.html' %}
 
             <!-- Submit Button -->
-            {% include 'account/__login/__submit_button__.html' %}
+            {% include 'account/_login/_submit_button_.html' %}
 
             <!-- Help links -->
-            {% include 'account/__login/__help_links__.html' %}
+            {% include 'account/_login/_help_links_.html' %}
 
             <!-- Or separator -->
-            {% include 'account/__login/__or_separator__.html' %}
+            {% include 'account/_login/_or_separator_.html' %}
 
             <!-- Sign in with Google -->
-            {% include 'account/__login/__login_with_google__.html' %}
+            {% include 'account/_login/_login_with_google_.html' %}
 
         </form>
 
@@ -48,6 +48,6 @@
 
     </div>
 
-    {% include 'account/__login/__script_for_showing_password__.html' %}
+    {% include 'account/_shared/_script_for_showing_password_.html' %}
 
 {% endblock inner_content %}

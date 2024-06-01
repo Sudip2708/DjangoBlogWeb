@@ -1,0 +1,22 @@
+<!-- Article tags -->
+<!-- Intended for 3_articles/_articles/__article_setup__.html -->
+
+<!-- Creating a list of tags -->
+<ul class="list-inline mb-2">
+
+    <!-- Creating a tag array (square brackets with non-breaking space) -->
+    <small class="text-gray-500">[&nbsp</small>
+
+        <!-- Loop to create tags -->
+        {% for tag in article.tags.all %}
+            <li class="list-inline-item">
+                <a class="small"
+                   href="{% url 'article-tag-list' tag_slug=tag.slug %}">
+                    {{tag}}
+                </a>
+            </li>
+        {% endfor %}
+
+    <small class="text-gray-500">]</small>
+
+</ul>

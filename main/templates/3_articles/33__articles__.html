@@ -1,0 +1,26 @@
+<!-- Extension for 3_articles/30__base__.html -->
+
+
+<!-- Display info text when the similar tab contains no articles -->
+{% if not articles_results %}
+
+    <h6 class="my-color-808080">
+        {{ info_text }}
+    </h6>
+
+{% else %}
+
+    <!-- Loop to display articles -->
+    {% for article in articles_results %}
+
+        <!-- When the sidebar is enabled and the screen size is xl, articles only occupy 2/3 of the space -->
+        <div class="{% if user.sidebar.show_sidebars %}col-xl-6{% else %}col-xl-4{% endif %} col-lg-4 col-md-6 col-sm-12 mb-3">
+
+            <!-- Definition of article items -->
+            {% include '3_articles/_articles_data/_article_view_setup_.html' %}
+
+        </div>
+
+    {% endfor %}
+
+{% endif %}
