@@ -819,3 +819,5 @@ Pročištění projektu od nepoužívaného JS a přepis vlastních JS z šablon
 ###
 Závěrečná restrukturizace projektu + doplnění vysvětlivek a popisů.
 ###
+Přidání popisu projektu a screenshotů.
+###
