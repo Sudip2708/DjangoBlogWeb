@@ -8,7 +8,7 @@ from ..models.intro_section import HomePageIntroSection
 
 class EditIntroSection(View):
     '''
-    Pohled pro zpracování dat formuláře pro úvodní sekci na Home Page
+    Pohled pro zpracování dat formuláře pro úvodní sekci na Home Page.
 
     Tato třída postupuje následovně:
     Po obdržení POST požadavku na zpracování dat z formuláře vytvoří instanci formuláře IntroSectionForm.
@@ -16,7 +16,7 @@ class EditIntroSection(View):
     Získává nebo vytváří instanci modelu HomePageIntroSection.
     Nastavuje hodnoty z formuláře do příslušných polí instance modelu.
     Uložení změn do databáze voláním metody save() na instanci modelu.
-    Nakonec provede přesměrování na stránku home-page-edit.
+    Nakonec provede přesměrování na stránku homepage-edit.
     '''
 
     def post(self, request, *args, **kwargs):
@@ -44,15 +44,15 @@ class EditIntroSection(View):
             intro_section.intro_description = form.cleaned_data['intro_description']
             intro_section.display_intro_section = form.cleaned_data['display_intro_section']
 
-            # Uložení změn do databáze a přesměrování na stránku home-page-edit
+            # Uložení změn do databáze a přesměrování na stránku homepage-edit
             intro_section.save()
-            return redirect('home-page-edit')
+            return redirect('homepage-edit')
 
         # Pokud formulář validní není
         else:
             # Navrácení na stránku úprav a zobrazení zprávy o neúspěchu
             messages.error(request, "Provedené úpravy nebyly uloženy.")
-            return redirect('home-page-edit')
+            return redirect('homepage-edit')
 
     def get(self, request, *args, **kwargs):
         '''
@@ -70,7 +70,7 @@ class EditIntroSection(View):
             intro_section, _ = HomePageIntroSection.objects.get_or_create(pk=1)
             intro_section.display_intro_section = True
             intro_section.save()
-            return redirect('home-page-edit')
+            return redirect('homepage-edit')
 
         # Pokud ne, pokračuj normálně
         else:

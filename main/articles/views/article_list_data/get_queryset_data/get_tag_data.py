@@ -6,7 +6,7 @@ from ....models.article import Article
 
 def get_tag_data(self):
     '''
-    Metoda pro vytvoření seznamu článků pro konkrétní tag
+    Metoda pro vytvoření seznamu článků pro konkrétní tag.
 
     Atributy přidané nebo měněné touto metodou:
     - self.current_tag: Aktuálně vybraný tag.

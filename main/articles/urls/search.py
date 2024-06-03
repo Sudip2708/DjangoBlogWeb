@@ -13,6 +13,7 @@ urlpatterns = [
     # Zobrazení oznamu o chybném zadání.
     path('error/', SearchInputView.as_view(), name='article-search-error'),
 
+    # Stránka pro zadání vyhledávání.
     path('input/', SearchInputView.as_view(), name='article-search-input'),
 
     # Zobrazení výsledků vyhledávání.

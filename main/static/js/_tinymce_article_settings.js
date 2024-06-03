@@ -1,4 +1,4 @@
-// Script pro nastavení zadávání tagů za pomoci tagify našeptávače
+// Script pro nastavení editoru TinyMCE pro editaci článků
 
 /*
 Scrip je vložen v této šabloně:

@@ -3,8 +3,8 @@
 
 <!-- Odkaz na domácí stránku -->
 <li class="nav-item">
-    <a class="nav-link {% if url_name == 'home-page' or url_name == 'home-page-edit' %}active{% endif %}"
-       href="{% url 'home-page' %}">
+    <a class="nav-link {% if url_name == 'homepage' or url_name == 'homepage-edit' %}active{% endif %}"
+       href="{% url 'homepage' %}">
         Home
     </a>
 </li>
@@ -18,13 +18,13 @@
 </li>
 
 <!-- Podmínka kontrolující, zda je uživatel přihlášen -->
-{% if not user.is_authenticated and not user.sidebar.show_sidebars %}
+{% if not user.is_authenticated and url_name == 'homepage' %}
 
         <!-- Odkaz na přihlášení uživatele -->
         <li class="nav-item">
             <a class="nav-link {% if request.path == '/accounts/login/' %}active{% endif %} "
                href="{% url 'account-login' %}">
-                Log In
+                Login
             </a>
         </li>
 

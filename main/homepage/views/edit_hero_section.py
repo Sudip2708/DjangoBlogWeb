@@ -8,7 +8,7 @@ from ..models.hero_section import HomePageHeroSection
 
 class EditHeroSection(View):
     '''
-    Pohled pro zpracování dat formuláře pro Hero sekci z Home Page
+    Pohled pro zpracování dat formuláře pro Hero sekci z Home Page.
 
     Tato třída postupuje následovně:
     Po obdržení POST požadavku na zpracování dat z formuláře vytvoří instanci formuláře HeroSectionForm.
@@ -16,7 +16,7 @@ class EditHeroSection(View):
     Získává nebo vytváří instanci modelu HomePageHeroSection.
     Nastavuje hodnoty z formuláře do příslušných polí instance modelu.
     Uložení změn do databáze voláním metody save() na instanci modelu.
-    Nakonec provede přesměrování na stránku home-page-edit.
+    Nakonec provede přesměrování na stránku homepage-edit.
     '''
 
     def post(self, request, *args, **kwargs):
@@ -46,15 +46,15 @@ class EditHeroSection(View):
             hero_section.hero_link = form.cleaned_data['hero_link']
             hero_section.display_hero_section = form.cleaned_data['display_hero_section']
 
-            # Uložení změn do databáze a přesměrování na stránku home-page-edit
+            # Uložení změn do databáze a přesměrování na stránku homepage-edit
             hero_section.save()
-            return redirect('home-page-edit')
+            return redirect('homepage-edit')
 
         # Pokud formulář validní není
         else:
             # Navrácení na stránku úprav a zobrazení zprávy o neúspěchu
             messages.error(request, "Provedené úpravy nebyly uloženy.")
-            return redirect('home-page-edit')
+            return redirect('homepage-edit')
 
     def get(self, request, *args, **kwargs):
         '''
@@ -72,7 +72,7 @@ class EditHeroSection(View):
             hero_section = HomePageHeroSection.singleton()
             hero_section.display_hero_section = True
             hero_section.save()
-            return redirect('home-page-edit')
+            return redirect('homepage-edit')
 
         # Pokud ne, pokračuj normálně
         else:

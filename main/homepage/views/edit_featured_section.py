@@ -8,7 +8,7 @@ from ..models.featured_section import HomePageFeaturedArticles
 
 class EditFeaturedArticlesSection(View):
     '''
-    Pohled pro zpracování dat formuláře pro sekci označených článků na Home Page
+    Pohled pro zpracování dat formuláře pro sekci označených článků na Home Page.
 
     Tato třída postupuje následovně:
     Po obdržení POST požadavku na zpracování dat z formuláře vytvoří instanci formuláře FeaturedArticlesForm.
@@ -16,7 +16,7 @@ class EditFeaturedArticlesSection(View):
     Získává nebo vytváří instanci modelu HomePageFeaturedArticles.
     Nastavuje hodnoty z formuláře do příslušných polí instance modelu.
     Uložení změn do databáze voláním metody save() na instanci modelu.
-    Nakonec provede přesměrování na stránku home-page-edit.
+    Nakonec provede přesměrování na stránku homepage-edit.
     '''
 
     def post(self, request, *args, **kwargs):
@@ -45,15 +45,15 @@ class EditFeaturedArticlesSection(View):
             featured_articles.featured_article_3 = form.cleaned_data['featured_article_3']
             featured_articles.display_featured_section = form.cleaned_data['display_featured_section']
 
-            # Uložení změn do databáze a přesměrování na stránku home-page-edit
+            # Uložení změn do databáze a přesměrování na stránku homepage-edit
             featured_articles.save()
-            return redirect('home-page-edit')
+            return redirect('homepage-edit')
 
         # Pokud formulář validní není
         else:
             # Navrácení na stránku úprav a zobrazení zprávu o neúspěchu
             messages.error(request, "Provedené úpravy nebyly uloženy.")
-            return redirect('home-page-edit')
+            return redirect('homepage-edit')
 
     def get(self, request, *args, **kwargs):
         '''
@@ -71,7 +71,7 @@ class EditFeaturedArticlesSection(View):
             featured_articles = HomePageFeaturedArticles.singleton()
             featured_articles.display_featured_section = True
             featured_articles.save()
-            return redirect('home-page-edit')
+            return redirect('homepage-edit')
 
         # Pokud ne, pokračuj normálně
         else:

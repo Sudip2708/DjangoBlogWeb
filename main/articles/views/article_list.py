@@ -9,7 +9,7 @@ from .article_list_data.get_context_data import get_context_data
 
 class ArticleListView(BaseView, ListView):
     '''
-    Pohled pro stránku s výpisem článků
+    Pohled pro stránku s výpisem článků.
 
     Pohled zpracovává následující URL:
     - article-list: Stránka zobrazující všechny publikované články.

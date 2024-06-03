@@ -5,7 +5,7 @@
 <div class="d-none d-xl-block">
 
     <!-- Condition - When the user has the sidebar enabled and we are not on the home page -->
-    {% if user.sidebar.show_sidebars and not request.path == '/' %}
+    {% if user.sidebar.show_sidebars and url_name != 'homepage' and url_name != 'homepage-edit' and request.path != '/accounts/login/' and request.path != '/accounts/signup/' %}
 
         <!-- Display the icon to hide the sidebar -->
         <a class="p-0 my-margin-left-28px my-margin-right-0px"

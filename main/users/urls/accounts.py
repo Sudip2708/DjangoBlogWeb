@@ -6,16 +6,16 @@ from allauth.account.views import LoginView, SignupView
 # Definování adres začínajících s prefixem 'accounts/'
 urlpatterns = [
 
-    # URL pro účet uživatele (registrace, přihlášení, atd.)
-    path('', include('allauth.urls')),
+    # URL pro účet uživatele (registrace, přihlášení, atd.).
+    path('', include('allauth.urls'), name='account-allauth'),
 
-    # URL pro přihlášení pomocí sociálních sítí
-    path('social/', include('allauth.socialaccount.urls')),
+    # URL pro přihlášení pomocí sociálních sítí.
+    path('social/', include('allauth.socialaccount.urls'), name='account-allauth-social'),
 
-    # URL pro stránku pro přihlášení
+    # Stránkapro přihlášení.
     path('login/', LoginView.as_view(), name='account-login'),
 
-    # URL pro stránku pro registraci
+    # Stránkapro registraci.
     path('signup/', SignupView.as_view(), name='account-signup'),
 
 ]

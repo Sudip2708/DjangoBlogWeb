@@ -13,7 +13,7 @@ from .search_data.get_context_data import get_context_data
 
 class SearchView(BaseView, ListView):
     '''
-    Pohled pro zpracování vyhledávání v článcích
+    Pohled pro zpracování vyhledávání v článcích.
 
     Pohled zpracovává následující URL:
     - article-search: Základní adresa sloužící k zadání a vyhodnocení parametrů hledání.

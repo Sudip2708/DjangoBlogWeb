@@ -10,19 +10,19 @@
         <!-- Display if the navigation is not switched to categories -->
         {% if url_name == 'article-search-results' or url_name == 'article-search-similar' %}
 
-            <!-- Display tabs for the current tag and similar articles -->
+            <!-- Display tabs for the search result and similar articles -->
             {% include '3_articles/_page_navigation_data/_search_result_data/_tab_for_results_and_similar_.html' %}
 
-            <!-- Display tab for switching to categories for the current tag and similar articles -->
+            <!-- Display tab for switching to categories for the search result and similar articles -->
             {% include '3_articles/_page_navigation_data/_search_result_data/_tab_to_show_categories_.html' %}
 
         <!-- Display if the navigation is switched to categories -->
         {% else %}
 
-            <!-- Display category tabs for the current tag or similar articles -->
+            <!-- Display category tabs for the search result or similar articles -->
             {% include '3_articles/_page_navigation_data/_search_result_data/_tab_for_categories_.html' %}
 
-            <!-- Display tabs for returning to navigation for the current tag or similar articles -->
+            <!-- Display tabs for returning to navigation for the search result or similar articles -->
             {% include '3_articles/_page_navigation_data/_search_result_data/_tab_to_show_results_and_similar_.html' %}
 
         {% endif %}

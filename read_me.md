@@ -49,24 +49,34 @@ Na unit testy mi už vůbec nevyšel čas. Možná se k nim dostanu, pokud o mě
 
 Celkově jsem připraven. Pokud tedy sháníte někoho, na koho byste se mohli spolehnout, že se bude snažit odvést dokonalou práci, protože bere svou práci jako svoji vizitku, pak jsem tu pro vás. Programování mě baví, mám ho v krvi a těším se na další výzvy a nové schopnosti.
 
+## Podrobný rozbor projektu
 
-## Pár snímků obrazovky
+[• Popis všech URL adres projektu](read_me_data/01_url_list.md)
 
-![Screenshots Homepage](screenshots/01_homepage.jpg "Screenshots Homepage")
+[• Podrobný popis pohledů](read_me_data/02_view_list.md)
 
-![Screenshots Login](screenshots/02-login.jpg "Screenshots Login")
+[• Seznam všech instalovaných pip](read_me_data/03_pip_install.md)
 
-![Screenshots Articles](screenshots/03_articles.jpg "Screenshots Articles")
+[• Podrobný popis hlavičky ](read_me_data/04_header.md)
 
-![Screenshots Create-Overview](screenshots/04_create_overview.jpg "Screenshots Create-Overview")
+[• Úplný strom projektu s popisem souborů](read_me_data/05_tree.md)
 
-![Screenshots Create-Content](screenshots/05_create_content.jpg "Screenshots Create-Content")
+## Screen Shots
 
-![Screenshots Create-Settings](screenshots/06_create_settings.jpg "Screenshots Create-Settings")
+![](read_me_data/screenshots/01_homepage.jpg)
 
-![Screenshots User-Settings](screenshots/07_user_settings.jpg "Screenshots User-Settings")
+![](read_me_data/screenshots/02-login.jpg)
 
-![Screenshots Search](screenshots/08_search.jpg "Screenshots Search")
+![](read_me_data/screenshots/03_articles.jpg)
 
-![Screenshots Edit-Homepage](screenshots/09_edit_homepage.jpg "Screenshots Edit-Homepage")
+![](read_me_data/screenshots/04_create_overview.jpg)
 
+![](read_me_data/screenshots/05_create_content.jpg)
+
+![](read_me_data/screenshots/06_create_settings.jpg)
+
+![](read_me_data/screenshots/07_user_settings.jpg)
+
+![](read_me_data/screenshots/08_search.jpg)
+
+![](read_me_data/screenshots/09_edit_homepage.jpg)

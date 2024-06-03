@@ -7,7 +7,7 @@ from ..forms.search_form import ArticleSearchForm
 
 class SearchInputView(BaseView, TemplateView):
     '''
-    Pohled pro zobrazení stránky pro vyhledávání (a pro oznam chyb ve vyhledávání)
+    Pohled pro zobrazení stránky pro vyhledávání (a pro oznam chyb ve vyhledávání).
 
     Pohled zpracovává následující URL:
     - article-search-input: Stránka pro zadání vyhledávání.

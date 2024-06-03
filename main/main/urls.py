@@ -44,7 +44,7 @@ urlpatterns = [
     path('profile/', include('users.urls.profile')),
 
     # Adresy pro nastavení postranního panelu
-    path('settings/', include('users.urls.sidebar')),
+    path('settings/', include('users.urls.sidebar_settings')),
 
 ]
 

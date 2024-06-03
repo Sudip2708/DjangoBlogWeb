@@ -1,7 +1,7 @@
 <!-- Displaying the category list (only on the article page and category page) -->
 <!-- Intended for 0_base/_header/_dropdown_data/__dropdown_menu__.html -->
 
-<!-- Display on devices smaller than LG -->
+<!-- Display on devices MD - LG -->
 <div class="d-none d-md-block d-lg-none">
 
     <!-- Check if we are on the article list page or the category page -->
@@ -28,6 +28,75 @@
             <a class="dropdown-item my-font-size-0-9rem "
                href="{% url 'user_navigation_settings' hash='#bool_show_tab_for_similar' %}">
                 {% if user.settings.show_tab_for_similar %}Hide Similar Tab{% else %}Show Similar Tab{% endif %}
+            </a>
+        </li>
+
+        <!-- Divider line -->
+        <li class="nav-item"><hr class="dropdown-divider"></li>
+
+    {% endif %}
+
+</div>
+
+<!-- Display on devices smaller than LG -->
+<div class="d-lg-none">
+
+    <!-- Option to edit the article -->
+    {% if url_name == 'article-detail' and user == article.author.linked_user %}
+        <li class="nav-item">
+            <a class="btn btn-link my-font-size-0-8rem p-0 my-color-f0f0f0"
+            href="{% url 'article-update' slug=article.slug current_tab='overview' %}">
+                Edit Article
+            </a>
+        </li>
+
+        <!-- Divider line -->
+        <li class="nav-item"><hr class="dropdown-divider"></li>
+
+    <!-- Option to delete the article -->
+    {% elif url_name == 'article-update' and user == article.author.linked_user %}
+        <li class="nav-item">
+            <a class="btn btn-link my-font-size-0-8rem p-0 my-color-f0f0f0"
+               href="{% url 'article-delete' object.slug %}">
+                Delete Article
+            </a>
+        </li>
+
+        <!-- Divider line -->
+        <li class="nav-item"><hr class="dropdown-divider"></li>
+
+    <!-- Option to return to edit the article -->
+    {% elif url_name == 'article-delete' and user == article.author.linked_user %}
+        <li class="nav-item">
+            <a class="btn btn-link my-font-size-0-8rem p-0 my-color-f0f0f0"
+               href="{% url 'article-update' slug=article.slug current_tab='overview' %}">
+                Return to Article
+            </a>
+        </li>
+
+        <!-- Divider line -->
+        <li class="nav-item"><hr class="dropdown-divider"></li>
+
+    {% endif %}
+
+    <!-- Option to show the edit button for the homepage -->
+    {% if user.is_superuser and url_name == 'homepage' %}
+        <li class="nav-item">
+            <a class="btn btn-link my-font-size-0-8rem p-0 my-color-f0f0f0"
+               href="{% url 'homepage-edit' %}">
+                Show Edit Buttons
+            </a>
+        </li>
+
+        <!-- Divider line -->
+        <li class="nav-item"><hr class="dropdown-divider"></li>
+
+    <!-- Option to hide the edit button for the homepage -->
+    {% elif user.is_superuser and url_name == 'homepage-edit' %}
+        <li class="nav-item">
+            <a class="btn btn-link my-font-size-0-8rem p-0 my-color-f0f0f0"
+               href="{% url 'homepage' %}">
+                Hide Edit Buttons
             </a>
         </li>
 

@@ -8,7 +8,7 @@ from ..models.latest_section import HomePageLatestArticles
 
 class EditLatestArticlesSection(View):
     '''
-    Pohled pro zpracování dat formuláře pro sekci nejnovějších článků na Home Page
+    Pohled pro zpracování dat formuláře pro sekci nejnovějších článků na Home Page.
 
     Tato třída postupuje následovně:
     Po obdržení POST požadavku na zpracování dat z formuláře vytvoří instanci formuláře LatestArticlesForm.
@@ -16,7 +16,7 @@ class EditLatestArticlesSection(View):
     Získává nebo vytváří instanci modelu HomePageLatestArticles.
     Nastavuje hodnoty z formuláře do příslušných polí instance modelu.
     Uložení změn do databáze voláním metody save() na instanci modelu.
-    Nakonec provede přesměrování na stránku home-page-edit.
+    Nakonec provede přesměrování na stránku homepage-edit.
     '''
 
     def post(self, request, *args, **kwargs):
@@ -47,15 +47,15 @@ class EditLatestArticlesSection(View):
             latest_articles_section.latest_article_3 = form.cleaned_data['latest_article_3']
             latest_articles_section.display_latest_section = form.cleaned_data['display_latest_section']
 
-            # Uložení změn do databáze a přesměrování na stránku home-page-edit
+            # Uložení změn do databáze a přesměrování na stránku homepage-edit
             latest_articles_section.save()
-            return redirect('home-page-edit')
+            return redirect('homepage-edit')
 
         # Pokud formulář validní není
         else:
             # Navrácení na stránku úprav a zobrazení zprávy o neúspěchu
             messages.error(request, "Provedené úpravy nebyly uloženy.")
-            return redirect('home-page-edit')
+            return redirect('homepage-edit')
 
     def get(self, request, *args, **kwargs):
         '''
@@ -73,7 +73,7 @@ class EditLatestArticlesSection(View):
             latest_articles_section, _ = HomePageLatestArticles.objects.get_or_create(pk=1)
             latest_articles_section.display_latest_section = True
             latest_articles_section.save()
-            return redirect('home-page-edit')
+            return redirect('homepage-edit')
 
         # Pokud ne, pokračuj normálně
         else:

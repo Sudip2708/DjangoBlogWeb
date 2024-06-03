@@ -8,13 +8,13 @@ from ..models.data.save_footer_data import save_footer_data
 
 class EditFooterSection(View):
     '''
-    Pohled pro zpracování dat formuláře pro sekci patičky na Home Page
+    Pohled pro zpracování dat formuláře pro sekci patičky na Home Page.
 
     Tato třída postupuje následovně:
     Po obdržení POST požadavku na zpracování dat z formuláře vytvoří instanci formuláře FooterSettingsForm.
     Ověří, zda je formulář platný. Pokud ano, pokračuje.
     Uložení dat z formuláře voláním funkce save_footer_data().
-    Nakonec provede přesměrování na stránku home-page-edit.
+    Nakonec provede přesměrování na stránku homepage-edit.
     '''
 
     def post(self, request, *args, **kwargs):
@@ -34,15 +34,15 @@ class EditFooterSection(View):
         # Kontrola, zda je formulář validní
         if form.is_valid():
 
-            # Volání metody pro uložení dat do databáze a přesměrování na stránku home-page-edit
+            # Volání metody pro uložení dat do databáze a přesměrování na stránku homepage-edit
             save_footer_data(form)
-            return redirect('home-page-edit')
+            return redirect('homepage-edit')
 
         # Pokud formulář validní není
         else:
             # Navrácení na stránku úprav a zobrazení zprávy o neúspěchu
             messages.error(request, "Provedené úpravy nebyly uloženy.")
-            return redirect('home-page-edit')
+            return redirect('homepage-edit')
 
     def get(self, request, *args, **kwargs):
         '''
@@ -60,7 +60,7 @@ class EditFooterSection(View):
             footer_settings = FooterSettings.singleton()
             footer_settings.display_footer_section = True
             footer_settings.save()
-            return redirect('home-page-edit')
+            return redirect('homepage-edit')
 
         # Pokud ne, pokračujte normálně
         else:

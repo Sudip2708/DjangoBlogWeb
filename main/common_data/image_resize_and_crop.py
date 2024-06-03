@@ -1,6 +1,6 @@
 def image_resize_and_crop(image, new_width='as_original', new_aspect_ratio='as_original'):
     '''
-    Funkce pro zmenšení a oříznutí obrázku.
+    Funkce pro změnu velikosti a oříznutí obrázku.
 
     Funkce je součástí souboru common_data/image_processing.py,
     který je použit v těcto souborech:
