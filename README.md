@@ -19,12 +19,17 @@ Jedná se o můj třetí projekt (druhý dělaný v Django), který mě má posu
 
 
 ## Rozbor projektu
+
+- Pro představu jak vypadá samotný web je zde 
+[kompletní seznam screenshotů.](readme_data/06_screenshots.md)
+
 - Pro rychlou orientaci v projektu poslouží 
 [seznam všech URL jmen použitých v projektu.](readme_data/01_url_list.md)
 
 - Pro hlubší pochopení projektu pak poslouží 
-[podrobný popis struktury pohledů,](readme_data/02_view_list.md)
-[a podrobný popis struktury hlavičky.](readme_data/04_header.md)
+[podrobný popis struktury pohledů](readme_data/02_view_list.md)
+a
+[podrobný popis struktury hlavičky.](readme_data/04_header.md)
 
 - Pro přehled instalovaných balíčků je připraven 
 [seznam pip instalací.](readme_data/03_pip_install.md)
@@ -32,8 +37,6 @@ Jedná se o můj třetí projekt (druhý dělaný v Django), který mě má posu
 - Pro kompletní obsah celého projektu slouží
 [strom projektu s popisem souborů.](readme_data/05_tree.md)
 
-- Pro představu jak vypadá samotný web je zde 
-[kompletní seznam screenshotů.](readme_data/06_screenshots.md)
 
 
 ## Moje cesta
