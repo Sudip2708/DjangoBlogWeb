@@ -90,7 +90,7 @@ class AuthorProfileView(BaseView, FormView):
         '''
         context = super().get_context_data(**kwargs)
 
-        context['page_title'] = 'Edit User Profile'
+        context['page_title'] = 'Edit Author Profile'
         context['profile_form'] = AuthorProfileForm(instance=self.author)
         context['profile_picture_url'] = self.author.profile_picture.url
         context['profile_picture_alt'] = "Author Profile Picture"

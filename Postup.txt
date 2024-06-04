@@ -823,3 +823,5 @@ Přidání popisu projektu a screenshotů.
 ###
 Přidání podrobných popisů projektů (součást read_me.md souboru).
 ###
+Doplnění Screenshotů obrazovky a úprava vzhledu README.md a jeho vnitřních souborů.
+###

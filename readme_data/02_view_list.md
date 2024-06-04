@@ -1,6 +1,6 @@
 ### Pohledy projetku
-###### 
 
+###### Vytvoření a úprava článku
     ArticleCreateView: Pohled pro vytvoření článku (pouze pro přihlášené uživatele).
     ArticleUpdateView: Pohled pro úpravu vytvořeného článku (pouze pro přihlášené uživatele).
     
@@ -17,8 +17,7 @@
         - Formulář
         - Potvrzení odchodu ze stránky při neuložených změnách (JS)
     
-###### 
-
+###### Smazání článku
     ArticleDeleteView: Pohled pro smazání článku (jen pro přihlášené uživatele).
     
         Pohled zpracovává následující URL:
@@ -32,8 +31,7 @@
         - Tlačítko pro smazání
         - Tlačítko pro návrat na úpravu článku
     
-######   
-
+###### Zobrazení celého článku
     ArticleDetailView: Pohled pro stránku s výpisem jednoho článku.
     
         Pohled zpracovává následující URL:
@@ -55,8 +53,7 @@
         - Komentáře uživatelů
         - Formulář pro přidání komentáře
 
-######   
-
+###### Zobrazení náhledů článků
     ArticleListView: Pohled pro stránku s výpisem článků.
     MyArticlesView: Pohled pro stránku s vlastními články uživatele (jen pro přihlášené uživatele).
     SearchView: Pohled pro zpracování vyhledávání v článcích.
@@ -110,8 +107,7 @@
             - Počet článků na stránku bez postranního panelu, a s postranním panelem: 6/4
                 - Případné zlepšení: Pro zobrazení na mobilních zařízeních namísto stránkování mít nekonečný seznam.
 
-###### 
-
+###### Vyhledávání v článcích
     SearchInputView: Pohled pro zobrazení stránky pro vyhledávání (a pro oznamování chyb ve vyhledávání).
     
         Pohled zpracovává následující URL:
@@ -130,8 +126,7 @@
                 - Články mezi dvěma daty.
             - Pole pro specifikaci autora
 
-###### 
-
+###### Domácí stránky
     HomePageView: Pohled pro zobrazení obsahu domovské stránky.
     
         Pohled zpracovává následující URL:
@@ -147,8 +142,7 @@
         - Gallery Section: Čtyři vybrané hlavní obrázky článklů (Obrázky je možné rozkliknout do plného zobrazení.)
         - Footer Section: Patička stránky (Zde jsem nic neměnil a ponechal vše tak, jak je v původní šabloně.)
 
-###### 
-
+###### Nastavení domácí stránky
     HomePageEditView: Pohled pro úpravu obsahu domovské stránky (pouze pro superuživatele).
 
         Pohled zpracovává následující URL:
@@ -172,8 +166,7 @@
             - EditFooterSection: Zpracování dat formuláře pro sekci patičky na Home Page.
                 (URL pro zpracování pohledu: edit-footer-section)
 
-###### 
-
+###### Nastavení uživatelských účtů
     UserProfileView: Pohled pro úpravu a nastavení dat uživatele.
     AuthorProfileView: Pohled pro úpravu a nastavení dat autora.
 
@@ -188,8 +181,7 @@
             - Author: Pro nastavení profilového obrázku a uživatelského jména autora (Zobrazí se pouze je-li uživatel i autor)
         - Formulář
 
-###### 
-
+###### Pohledy pro nastavení bočního panelu
     user_navigation_settings: Pohled pro nastavení viditelnosti navigačních panelů a postranního panelu.
     user_sidebar_appearance: Pohled pro změnu boolean hodnot v databázi pro nastavení bočního panelu.
     user_sidebar_movements: Pohled pro změnu pořadí bočních panelů.
@@ -218,3 +210,5 @@
             - user: Pozice pabelu pro položky uživatele.
             - category: Pozice pabelu pro kategorie.
             - tags: Pozice pabelu pro tagy.
+
+[<<< Přechod na stránku README.](README.md)
