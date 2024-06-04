@@ -246,7 +246,7 @@
 
 ###### Šablony (pro svou rozsáhlost jsou umístněné ve vlastním souboru)
     ├─ templates
-[>>> Prohlédnout si souborovou strukturu templates.](readme_data/05_tree_templates.md)
+[>>> Prohlédnout si souborovou strukturu templates.](05_tree_templates.md)
 
 ###### Users
     └─ users
