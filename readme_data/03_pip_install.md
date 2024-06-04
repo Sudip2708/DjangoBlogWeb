@@ -57,4 +57,4 @@
     $ pip install crispy-bootstrap5
         - Balíček pro integraci django-crispy-forms s Bootstrap 5.
 
-[<<< Přechod na stránku README.](README.md)
+[<<< Přechod na stránku README.](../README.md)

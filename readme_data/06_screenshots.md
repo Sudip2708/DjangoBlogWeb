@@ -75,4 +75,4 @@
 ###### Delete Article:
 ![](screen_shots/2024-06-04_14-17-01.jpg)
 
-[<<< Přechod na stránku README.](README.md)
+[<<< Přechod na stránku README.](../README.md)

@@ -211,4 +211,4 @@
             - category: Pozice pabelu pro kategorie.
             - tags: Pozice pabelu pro tagy.
 
-[<<< Přechod na stránku README.](README.md)
+[<<< Přechod na stránku README.](../README.md)

@@ -825,3 +825,5 @@ Přidání podrobných popisů projektů (součást read_me.md souboru).
 ###
 Doplnění Screenshotů obrazovky a úprava vzhledu README.md a jeho vnitřních souborů.
 ###
+Oprava zpětných odkazů na README.dm ve vnitřních .md souborech.
+###

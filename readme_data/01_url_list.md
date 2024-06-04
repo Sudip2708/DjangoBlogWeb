@@ -55,4 +55,4 @@
     user_sidebar_movements: URL pro změnu pořadí postranních panelů.
     user_navigation_settings: URL pro nastavení viditelnosti navigačních panelů a postranního panelu.
 
-[<<< Přechod na stránku README.](README.md)
+[<<< Přechod na stránku README.](../README.md)

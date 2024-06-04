@@ -301,4 +301,4 @@
             ├─ user_sidebar_appearance.py			   / Pohled user_sidebar_appearance - pro změnu boolean hodnot v databázi pro nastavení bočního panelu.
             └─ user_sidebar_movements.py			   / Pohled user_sidebar_movements - pro změnu pořadí bočních panelů.
 
-[<<< Přechod na stránku README.](README.md)
+[<<< Přechod na stránku README.](../README.md)

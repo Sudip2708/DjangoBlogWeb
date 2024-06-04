@@ -85,7 +85,7 @@
             - Logout: Odkaz na stránku pro odhlášení (pouze pro přihlášeného uživatele).
             - Login: Odkaz na stránku pro přihlášení (pouze pro nepřihlášeného uživatele).
 
-[<<< Přechod na stránku README.](README.md)
+[<<< Přechod na stránku README.](../README.md)
 
 
 
