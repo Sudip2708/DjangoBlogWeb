@@ -20,16 +20,16 @@ This is my third project (second in Django), which is intended to advance me on 
 
 ## Project Analysis
 
-- [A list of all URLs used in the project](readme_data/01_url_list_[en].md) 
+- [A list of all URLs used in the project](01_url_list_[en].md) 
 can be used for quick orientation in the project.
-- [A detailed description of the view structure](readme_data/02_view_list_[en].md) 
-and [a detailed description of the header structure.](readme_data/04_header.md) 
+- [A detailed description of the view structure](02_view_list_[en].md) 
+and [a detailed description of the header structure.](04_header.md) 
 can be used for a deeper understanding of the project.
-- [A list of pip installations](readme_data/03_pip_install_[en].md)  
+- [A list of pip installations](03_pip_install_[en].md)  
 is available for an overview of the installed packages.
-- [A project tree with file descriptions](readme_data/05_tree_[en].md) 
+- [A project tree with file descriptions](05_tree_[en].md) 
 is available for the complete content of the entire project.
-- [A complete list of screenshots](readme_data/06_screenshots_[en].md) 
+- [A complete list of screenshots](06_screenshots_[en].md) 
 is available to give an idea of how the website itself looks.
 
 
