@@ -212,4 +212,4 @@
     │  └─ socialaccount	
     │	  └─ login.html
 
-[<<< Přechod na stránku se stromovou strukturou celého projektu.](05_tree.md)
+[<<< Přechod na stránku se stromovou strukturou celého projektu.](05_tree_[cz].md)

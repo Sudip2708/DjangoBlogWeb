@@ -831,3 +831,5 @@ Opravení zobrazení a přidávání komentářů.
 Přidání screenshots pro responzivní chování.
 Překlady všech vysvětlivek kodu z češtiny do angličtiny.
 ###
+Oprava několika odkazů v readme souborech.
+###
