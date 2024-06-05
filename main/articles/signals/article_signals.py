@@ -16,19 +16,17 @@ from .article_handlers import (
 )
 
 
-# Zpracování defaultních hodnot
+# Processing default values
 @receiver(pre_save, sender=Article)
 def handle_default_values_pre_save(sender, instance, **kwargs):
     default_values_handler.handle_default_values_pre_save(instance)
 
-
-# Smazání nepoužívaných tagů
+# Deleting unused tags
 @receiver(post_save, sender=Article)
 def handle_delete_unused_tags_post_save(sender, instance, **kwargs):
     delete_unused_tags_handler.handle_delete_unused_tags_post_save(instance)
 
-
-# Zpracování statusu publish
+# Processing status 'publish'
 @receiver(pre_save, sender=Article)
 def handle_status_pre_save(sender, instance, **kwargs):
     status_update_handler.handle_status_pre_save(instance)
@@ -37,14 +35,12 @@ def handle_status_pre_save(sender, instance, **kwargs):
 async def handle_status_post_save(sender, instance, **kwargs):
     await status_update_handler.handle_status_post_save(instance)
 
-
-# Zpracování hlavního obrázku
+# Processing main picture
 @receiver(post_save, sender=Article)
 async def handle_picture_post_save(sender, instance, **kwargs):
     await main_picture_handler.handle_picture_post_save(instance)
 
-
-# Smazání článku
+# Deleting an article
 @receiver(pre_delete, sender=Article)
 def handle_article_pre_delete(sender, instance, **kwargs):
     delete_article_handler.handle_article_pre_delete(instance)

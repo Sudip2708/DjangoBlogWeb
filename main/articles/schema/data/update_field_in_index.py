@@ -1,23 +1,24 @@
 from whoosh.index import open_dir
 from django.conf import settings
 
+
 def update_field_in_index(self, article_id, field_name, new_value):
     '''
-    Metoda třídy ArticleSchema pro aktualizaci konkrétního pole indexu.
+    Method of the ArticleSchema class for updating a specific field in the index.
 
-    Metoda očekává následující údaje:
-    article_id = ID článku, pro který má být aktualizace provedena.
-    field_name = Jméno pole, které má být aktualizováno.
-    new_value = Nová data pro toto pole.
+    The method expects the following data:
+    article_id = ID of the article for which the update is to be performed.
+    field_name = Name of the field to be updated.
+    new_value = New data for this field.
 
-    Nejprve metoda otevře soubor s indexy a poté načte metody pro zápis (writer).
-    Následně aktualizuje data pro dané pole a článek a uloží změny.
+    First, the method opens the index file and then loads the methods for writing (writer).
+    Then it updates the data for the specified field and article, and saves the changes.
     '''
 
-    # Načtení souboru s indexem pro zápis.
+    # Open the index file for writing.
     ix = open_dir(settings.INDEX_DIRECTORY)
     writer = ix.writer()
 
-    # Aktualizace dat a uložení změn.
+    # Update the data and save the changes.
     writer.update_document(id=str(article_id), **{field_name: new_value})
     writer.commit()

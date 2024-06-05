@@ -5,23 +5,23 @@ from ..models.article_author import ArticleAuthor
 
 class ArticleSearchForm(forms.Form):
     '''
-    Formulář pro definici polí pro vyhledávání v článcích.
+    Form for defining fields for searching in articles.
 
-    Formulář je použit následujícími pohledy:
-    - SearchInputView: Stránka pro zadání dotazu pro vyhledávání v článcích.
-    - SearchView: Stránka pro zpracování zadaného dotazu pro vyhledávání v článcích.
+    This form is used by the following views:
+    - SearchInputView: Page for entering a query for searching in articles.
+    - SearchView: Page for processing the entered query for searching in articles.
 
-    Tento formulář definuje následující pole, která jsou použita
-    pro zadání hledání v publikovaných článcích:
-    - query: Pole pro zadání textu pro vyhledávání.
-    - search_in_title: Pole pro specifikaci hledání zadaného textu v názvu článku.
-    - search_in_description: Pole pro specifikaci hledání zadaného textu v popisu článku.
-    - search_in_content: Pole pro specifikaci hledání zadaného textu v obsahu článku.
-    - date_from: Pole pro specifikaci data, od kterého byl článek publikován.
-    - date_to: Pole pro specifikaci data, před kterým byl článek publikován.
-    - author: Pole pro specifikaci autora.
+    This form defines the following fields used
+    for entering search criteria in published articles:
+    - query: Field for entering text for searching.
+    - search_in_title: Field for specifying searching the entered text in the article title.
+    - search_in_description: Field for specifying searching the entered text in the article overview.
+    - search_in_content: Field for specifying searching the entered text in the article content.
+    - date_from: Field for specifying the date from which the article was published.
+    - date_to: Field for specifying the date before which the article was published.
+    - author: Field for specifying the author.
 
-    Formulář má definovanou metodu clean pro validaci dat.
+    The form has a defined clean method for data validation.
     '''
 
     query = forms.CharField(
@@ -75,22 +75,22 @@ class ArticleSearchForm(forms.Form):
 
     def clean(self):
         '''
-        Metoda pro kontrolu zadaných dat formuláře.
+        Method for checking the entered form data.
 
-        Metoda nejprve z formuláře vytáhne data a přiřadí je proměným.
+        The method first retrieves the data from the form and assigns it to variables.
 
-        Po té zkontroluje, zda byl zadán dotaz pro hledání, nebo datup před, či po, a nebo autor,
-        a pokud nebyl zadána ani jedna položky vyvolá výjimku upozorňující na nezadání parametru.
+        Then it checks whether a search query, date before or after, or author was entered,
+        and if none of these parameters were entered, it raises an exception warning about the lack of input.
 
-        Následně se ověří, zda byl zadán dotaz pro hledání a zda je vybraná alespoň jedna oblast hledání,
-        v případě že není zadaná žádná oblast hledání, vyvolá výjimku upozorňující na tento stav.
+        It then verifies whether a search query was entered and whether at least one search area is selected,
+        and if no search area is selected, it raises an exception alerting to this condition.
 
-        Následně proběhne kontrola, zda byl zdadán datum před i datum po,
-        a pokud ano, ověří, zda datum před není větší než datum po,
-        pokud ano, vyvolá výjimku upozorňující na tento problém.
+        Then it checks whether both a date before and a date after were entered,
+        and if so, it verifies that the date before is not greater than the date after,
+        if it is, it raises an exception alerting to this issue.
         '''
 
-        # Načtení dat z formuláře
+        # Retrieve data from the form
         cleaned_data = super().clean()
         query = cleaned_data.get('query', '')
         before = cleaned_data.get('date_to', '')
@@ -100,20 +100,20 @@ class ArticleSearchForm(forms.Form):
         overview = cleaned_data.get('search_in_description', False)
         content = cleaned_data.get('search_in_content', False)
 
-        # Kontrola, zda byl zadán parametr pro hledání.
+        # Check if a search parameter was entered
         if not (query or before or after or author):
             raise forms.ValidationError(
                 "No search parameter was entered."
             )
 
-        # Kontrola, zda při zadání dotazu je specifikována i oblast hledání.
+        # Check if a search term was entered, but no search area is checked
         if query:
             if not title and not overview and not content:
                 raise forms.ValidationError(
                     "A search term was entered, but no search area is checked."
                 )
 
-        # Kontrola, zda při zadání data před a po nedošlo k prohození těchto údajů.
+        # Check if the date for Published After is not greater than the date for Published Before
         if before and after and before < after:
             raise forms.ValidationError(
                 "The date for Published After must not be greater than the date for Published Before."

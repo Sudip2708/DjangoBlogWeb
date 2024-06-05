@@ -8,21 +8,21 @@ from ..article_author import ArticleAuthor
 
 class ForeignKeyMixin(models.Model):
     '''
-    Mixin pro model Article přidávající pole, která jsou provázaná s dalšími modely.
+    Mixin for the Article model adding fields related to other models.
 
-    Pole vytvořená tímto mixinem:
-    - author: Cizí klíč na autora článku.
-    - category: Cizí klíč na kategorii, do které článek patří.
-    - tags: Propojení na modul Taggit pro správu tagů.
-    - previous_article: Cizí klíč na vlastní třídu pro definici předcházejícího článku.
-    - next_article: Cizí klíč na vlastní třídu pro definici následujícího článku.
+    Fields created by this mixin:
+    - author: Foreign key to the author of the article.
+    - category: Foreign key to the category the article belongs to.
+    - tags: Connection to the Taggit module for managing tags.
+    - previous_article: Foreign key to the previous article.
+    - next_article: Foreign key to the next article.
 
-    Mixin má definovanou vnitřní třídu Meta pro nastavení abstraktního chování.
-    (Samostatně nevytváří ID a tabulku v databázi.)
+    The mixin defines an inner Meta class to set abstract behavior.
+    (It does not create its own ID or table in the database.)
 
-    Mixin přidává atribut:
-    self.tags_to_delete: seznam pro kontrolu smazaných tagů
-    (je plněn metodou clean ve formuláři a mazán v post_save signálu handle_delete_unused_tags_post_save).
+    The mixin adds an attribute:
+    self.tags_to_delete: a list for checking deleted tags
+    (it is filled by the clean method in the form and deleted in the post_save signal handle_delete_unused_tags_post_save).
     '''
 
     author = models.ForeignKey(
@@ -40,7 +40,6 @@ class ForeignKeyMixin(models.Model):
         blank=True,
         null=True,
         on_delete=models.SET_NULL,
-
     )
 
     tags = TaggableManager(
@@ -70,8 +69,3 @@ class ForeignKeyMixin(models.Model):
 
     class Meta:
         abstract = True
-
-
-
-
-

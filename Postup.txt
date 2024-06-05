@@ -827,3 +827,7 @@ Doplnění Screenshotů obrazovky a úprava vzhledu README.md a jeho vnitřních
 ###
 Oprava zpětných odkazů na README.dm ve vnitřních .md souborech.
 ###
+Opravení zobrazení a přidávání komentářů.
+Přidání screenshots pro responzivní chování.
+Překlady všech vysvětlivek kodu z češtiny do angličtiny.
+###

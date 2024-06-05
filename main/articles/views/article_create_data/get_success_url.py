@@ -1,14 +1,15 @@
 from django.urls import reverse_lazy
 
+
 def get_success_url(self):
     '''
-    Metoda pro vytvoření návratové adresy (po úspěšném uložení formuláře).
+    Method to create a success URL (after successfully saving the form).
 
-    Metoda nejprve zjistí, zda bylo kliknuto na tlačítko
-    s definicí návratu na rozpracovaný článek a pokračování v úpravě ('continue_editing'),
-    nebo na tlačítko pro zobrazení stránky s článkem.
+    The method first checks whether the button clicked was
+    to return to the draft article and continue editing ('continue_editing'),
+    or to view the article page.
 
-    Metoda následně vrací požadovanou adresu.
+    The method then returns the desired URL.
     '''
 
     if self.request.POST.get('submit_change') == 'continue_editing':

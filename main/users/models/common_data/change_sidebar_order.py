@@ -1,33 +1,33 @@
 def change_sidebar_order(dictionary, hash):
     '''
-    Funkce pro změnu pořadí postranních panelů.
+    Function for changing the order of sidebar panels.
 
-    Funkce obdrží slovník s názvy postranních panelů a jako klíče jejich pořadí,
-    a hash, který obsahuje informaci o směru pohybu (#MoveUp/#MoveDn)
-    a informaci s jakým panelem je posouváno (7. znak je podtržítko,
-    takže 8 znak a dál je název klíče panelu ve slovníku).
+    This function receives a dictionary with the names of the sidebar panels and their order as keys,
+    and a hash containing information about the direction of movement (#MoveUp/#MoveDn)
+    and information about which panel is being moved (the 7th character is an underscore,
+    so the 8th character and beyond is the key name of the panel in the dictionary).
 
-    Funkce nejprve vygeneruje ze získaného hashe tyto dvě hodnoty.
-    A následně získává hodnotu pozice aktuálně posouvaného bočního panelu.
-    Po té, za pomoci proměnné pro směr pohybu vypočítá novou hodnotu pořadí (+1/-1),
-    a po té projde jednotlivé hodnoty slovníku a vrátí klíč k hodnotě, která odpovídá nové hodnotě umístění.
+    The function first generates these two values from the received hash.
+    Then it retrieves the value of the position of the currently moved sidebar panel.
+    Afterwards, using the variable for the direction of movement, it calculates the new order value (+1/-1),
+    and then iterates through the dictionary values and returns the key for the value that corresponds to the new position.
 
-    Funkce nakonec prohodí mezi sebou hodnoty u těchto dvou slovníků,
-    a vrací upravený slovník.
+    Finally, the function swaps the values between these two dictionaries,
+    and returns the modified dictionary.
     '''
 
     try:
 
-        # Načtení proměných z obdrženého hashe
+        # Retrieving variables from the received hash
         move = hash[:7]
         actual_sidebar = hash[8:]
 
-        # Získání druhého sidebaru (s kterým se bude prohazovat pozice)
+        # Getting the second sidebar (with which the position will be swapped)
         actual_position = dictionary[actual_sidebar]
         new_position = actual_position + (-1 if move == '#MoveUp' else +1)
         next_sidebar = next(key for key, value in dictionary.items() if value == new_position)
 
-        # Prohození hodnot pořadí a navrácení slovníku
+        # Swapping order values and returning the dictionary
         dictionary[actual_sidebar], dictionary[next_sidebar] = (
             dictionary[next_sidebar], dictionary[actual_sidebar]
         )

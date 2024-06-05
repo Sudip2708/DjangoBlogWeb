@@ -3,49 +3,50 @@ from django.shortcuts import get_object_or_404
 from ....models.article import Article
 from ....models.article_category import ArticleCategory
 
+
 def get_queryset_for_categories(self):
     '''
-    Metoda pro vytvoření seznamu článků pro vybranou kategorii.
+    Method to create a list of articles for the selected category.
 
-    Metoda je určená pro tyto URL:
-    - article-category-list: Stránka zobrazující všechny publikované články roztříděné do kategorií.
+    This method is intended for the following URL:
+    - article-category-list: Page showing all published articles sorted into categories.
 
-    Atributy přidané nebo měněné touto metodou:
-    - self.current_category: Aktuálně vybraná kategorie
-    - self.category_tabs: Seznam všech publikovaných kategorií.
-    - self.page_title: Název stránky.
-    - self.page_title_mobile: Název stránky pro mobilní zařízení.
-    - self.page_subtitle: Podnázev stránky (zobrazí se, když je navigace pro kategorie skrytá).
+    Attributes added or modified by this method:
+    - self.current_category: Currently selected category.
+    - self.category_tabs: List of all published categories.
+    - self.page_title: Page title.
+    - self.page_title_mobile: Page title for mobile devices.
+    - self.page_subtitle: Subtitle for the page (shown when category navigation is hidden).
 
-    Metoda nejprve načte z adresy slug aktuálně vybrané kategorie,
-    a po té získá její instanci a uloží ji jako atribut self.current_category.
-    (V případě, že nebude nalezena kategorie pro daný slug, vyvolá se výjimka 404.)
+    The method first retrieves the currently selected category slug from the URL,
+    then gets its instance and saves it as the attribute self.current_category.
+    (If no category is found for the given slug, a 404 exception is raised.)
 
-    Metoda následně ověří, jestli má uživate zapnuté zbrazení navigace pro kategorie.
-    Pokud ano, vytvoří atributy self.category_tabs, self.page_title a self.page_title_mobile.
-    Pokud ne, vytvoří atributy self.page_title, self.page_title_mobile a self.page_subtitle.
+    The method then checks whether the user has enabled category navigation.
+    If yes, it creates attributes self.category_tabs, self.page_title, and self.page_title_mobile.
+    If not, it creates attributes self.page_title, self.page_title_mobile, and self.page_subtitle.
 
-    Metoda vyhledá a vrací všechny publikované články pro danou kategorii.
-    (Články jsou seřazeny od nejnovějšího po nejstarší.)
+    The method retrieves and returns all published articles for the specified category.
+    (Articles are sorted from newest to oldest.)
     '''
 
-    # Načtení aktuální kategorie
+    # Retrieving the current category
     current_category_slug = self.kwargs['category_slug']
     self.current_category = get_object_or_404(ArticleCategory, slug=current_category_slug)
 
-    # Vytvoření hodnot pro stránku se zapnutou navigací pro kategorie
+    # Creating values for the page with category navigation enabled
     if self.user.settings.get('show_category_navigation'):
         self.category_tabs = ArticleCategory.objects.exclude(id=1)
         self.page_title = 'Article Categories'
         self.page_title_mobile = f'Category: {self.current_category.name}'
 
-    # Vytvoření hodnot pro stránku bez zapnuté navigace pro kategorie
+    # Creating values for the page without category navigation enabled
     else:
         self.page_title = f'Articles for Category: {self.current_category.name}'
         self.page_title_mobile = f'Category: {self.current_category.name}'
         self.page_subtitle = 'To see tab for categories click on Show Category in navbar.'
 
-    # Vytvoření a návrácení instancí článků
+    # Creating and returning instances of articles
     queryset = Article.objects.filter(category=self.current_category, status='publish') \
                               .order_by('-created')
     return queryset

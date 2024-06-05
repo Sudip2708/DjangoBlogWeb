@@ -15,21 +15,21 @@ from ..models.footer_section import FooterSettings
 
 class HomePageView(BaseView, TemplateView):
     '''
-    Pohled pro zobrazení obsahu domovské stránky.
+    View for displaying the content of the home page.
 
-    Pohled načítá jednotlivé data pro sekce stránky z jejich modelů
-    a navrací šablonu s daty pro zobrazení domácí stránky.
+    This view loads the data for individual sections of the page from their models
+    and returns a template with the data for displaying the home page.
     '''
 
     template_name = '1_home/10__base__.html'
 
     def __init__(self):
         '''
-        Metoda pro základní inicializaci třídy.
+        Method for basic class initialization.
 
-        Metoda načítá instance modelů jednotlivých sekcí a vytváří pro ně atributy.
-        Atributy jsou použity jakv tomto kodu, tak i v pohledu HomePageEditView,
-        který dědí z tohoto pohledu.
+        The method loads instances of the models of individual sections and creates attributes for them.
+        Attributes are used both in this code and in the HomePageEditView view,
+        which inherits from this view.
         '''
         self.hero_instance = HomePageHeroSection.singleton()
         self.intro_instance = HomePageIntroSection.singleton()
@@ -42,12 +42,12 @@ class HomePageView(BaseView, TemplateView):
 
     def get_context_data(self, **kwargs):
         '''
-        Metoda pro vytvoření kontextových dat pro zobrazení domovské stránky.
+        Method for creating context data for displaying the home page.
 
-        Metoda nejprve načítá kontext z nadřazené třídy,
-        a následně přidává vlastní obsah pro vykreslení jednotlivých sekcí,
-        voláním metody 'get_data' na každém modelu sekce.
-        Metoda vrací upravený kontext.
+        The method first loads the context from the parent class,
+        and then adds custom content for rendering individual sections,
+        by calling the 'get_data' method on each section model.
+        The method returns the modified context.
         '''
 
         context = super().get_context_data(**kwargs)
@@ -65,9 +65,9 @@ class HomePageView(BaseView, TemplateView):
 
     def get(self, request, *args, **kwargs):
         '''
-        Metoda pro zobrazení domovské stránky.
+        Method for displaying the home page.
 
-        Metoda načte kontext a navrátí šablonu s daty pro domácí stránku.
+        The method loads the context and returns a template with the data for the home page.
         '''
 
         context = self.get_context_data(**kwargs)

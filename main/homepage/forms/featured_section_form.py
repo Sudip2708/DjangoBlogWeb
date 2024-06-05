@@ -1,5 +1,4 @@
 from django import forms
-from django.utils import timezone
 
 from articles.models.article import Article
 
@@ -8,30 +7,30 @@ from ..models.featured_section import HomePageFeaturedArticles
 
 class FeaturedArticlesForm(forms.ModelForm):
     '''
-    Formulář pro nastavení Featured Articles sekce domácí stránky.
+    Form for setting up the Featured Articles section of the home page.
 
-    Formulář je navázán na pohled EditFeaturedArticlesSection.
+    The form is linked to the EditFeaturedArticlesSection view.
 
-    Formulář definuje tato pole:
-    - display_featured_section: Viditelnost sekce.
-    - featured_article_1: První vybraný článek.
-    - featured_article_2: Druhý vybraný článek.
-    - featured_article_3: Třetí vybraný článek.
+    The form defines the following fields:
+    - display_featured_section: Visibility of the section.
+    - featured_article_1: First selected article.
+    - featured_article_2: Second selected article.
+    - featured_article_3: Third selected article.
     '''
 
     class Meta:
         '''
-        Třída Meta je speciální vnitřní třída pro konfiguraci formuláře.
+        The Meta class is a special inner class for configuring the form.
 
-        Třída Meta poskytuje metadata a konfiguraci pro hlavní třídu,
-        a zde definuje následující atributy:
-        - model: Určuje model, na kterém je formulář založen.
-        - fields: Definuje pole, která budou zahrnuta ve formuláři.
-        - widgets: Umožňuje specifikovat vlastní widgety pro jednotlivá pole formuláře.
+        The Meta class provides metadata and configuration for the main class,
+        and here it defines the following attributes:
+        - model: Specifies the model on which the form is based.
+        - fields: Defines the fields that will be included in the form.
+        - widgets: Allows specifying custom widgets for individual form fields.
 
-        Widgety použité v tomto kódu:
-        - forms.CheckboxInput: Pole pro zaškrtávací boolean hodnotu.
-        - forms.Select: Pole pro výběr z přednastavených hodnot.
+        Widgets used in this code:
+        - forms.CheckboxInput: Field for checkbox boolean value.
+        - forms.Select: Field for selection from predefined values.
         '''
 
         model = HomePageFeaturedArticles
@@ -45,14 +44,14 @@ class FeaturedArticlesForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         '''
-        Inicializační metoda formuláře.
+        Initialization method of the form.
 
-        Metoda nejprve volá inicializaci nadřazené třídy a poté vytváří obsah
-        pro nabídku pro výběr předchozího a následujícího článku.
+        The method first calls the initialization of the parent class and then creates content
+        for the selection menu for choosing previous and next articles.
 
-        Metoda filtruje všechny publikované články a řadí je od nejnovějšího po nejstarší,
-        a tento seznam přidává jako queryset pro vytvoření nabídky hodnot
-        pro pole 'featured_article_1' - 'featured_article_3'.
+        The method filters all published articles and sorts them from newest to oldest,
+        and adds this list as a queryset to create the menu options
+        for the 'featured_article_1' - 'featured_article_3' fields.
         '''
 
         super().__init__(*args, **kwargs)

@@ -7,34 +7,34 @@ from ..models.gallery_section import HomePageGallerySection
 
 class GallerySectionForm(forms.ModelForm):
     '''
-    Formulář pro editaci nastavení Gallery sekce domácí stránky.
+    Form for editing Gallery section settings on the homepage.
 
-    Formulář je navázán na pohled EditGalleryArticlesSection.
+    This form class is associated with the EditGalleryArticlesSection view.
 
-    Formulář definuje tato pole:
-    - display_gallery_section: Viditelnost sekce.
-    - gallery_article_1: První vybraný článek.
-    - gallery_article_2: Druhý vybraný článek.
-    - gallery_article_3: Třetí vybraný článek.
-    - gallery_article_4: Čtvrtý vybraný článek.
+    The form defines the following fields:
+    - display_gallery_section: Visibility of the section.
+    - gallery_article_1: First selected article.
+    - gallery_article_2: Second selected article.
+    - gallery_article_3: Third selected article.
+    - gallery_article_4: Fourth selected article.
     '''
 
     class Meta:
         '''
-        Třída Meta je speciální vnitřní třída pro konfiguraci formuláře.
+        The Meta class is a special inner class for configuring the form.
 
-        Třída Meta poskytuje metadata a konfiguraci pro hlavní třídu,
-        a zde definuje následující atributy:
-        - model: Určuje model, na kterém je formulář založen.
-        - fields: Definuje pole, která budou zahrnuta ve formuláři.
-        - widgets: Umožňuje specifikovat vlastní widgety pro jednotlivá pole formuláře.
+        The Meta class provides metadata and configuration for the main class,
+        and here it defines the following attributes:
+        - model: Specifies the model on which the form is based.
+        - fields: Defines the fields to be included in the form.
+        - widgets: Allows specifying custom widgets for individual form fields.
 
-        Widgety použité v tomto kódu:
-        - forms.CheckboxInput: Pole pro zaškrtávací boolean hodnotu.
-        - forms.Select: Pole pro výběr z přednastavených hodnot.
+        Widgets used in this code:
+        - forms.CheckboxInput: Field for boolean checkbox values.
+        - forms.Select: Field for selecting from predefined values.
         '''
 
-        # Nastavení modelu a prázdného seznamu pro pole sekce
+        # Setting the model and an empty list for the section fields
         model = HomePageGallerySection
         fields = ['display_gallery_section', 'gallery_article_1', 'gallery_article_2', 'gallery_article_3', 'gallery_article_4']
         widgets = {
@@ -47,14 +47,14 @@ class GallerySectionForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         '''
-        Inicializační metoda formuláře.
+        Form initialization method.
 
-        Metoda nejprve volá inicializaci nadřazené třídy a poté vytváří obsah
-        pro nabídku pro výběr předchozího a následujícího článku.
+        This method first calls the initialization of the parent class and then creates content
+        for the selection menu for the previous and next articles.
 
-        Metoda filtruje všechny publikované články a řadí je od nejnovějšího po nejstarší,
-        a tento seznam přidává jako queryset pro vytvoření nabídky hodnot
-        pro pole 'featured_article_1' - 'featured_article_3'.
+        The method filters all published articles and sorts them from newest to oldest,
+        and adds this list as a queryset to create a selection of values
+        for the 'featured_article_1' - 'featured_article_3' fields.
         '''
 
         super().__init__(*args, **kwargs)

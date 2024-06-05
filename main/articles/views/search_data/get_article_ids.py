@@ -9,28 +9,28 @@ from .get_article_ids_data.search_in_author import search_in_author
 
 def get_article_ids(search_parameters):
     '''
-    Funkce pro získání ID článků na základě zadaných parametrů hledání.
+    Function for obtaining article IDs based on the provided search parameters.
 
-    Funkce přijímá slovník `search_parameters`, který obsahuje parametry pro hledání.
+    The function accepts a dictionary `search_parameters`, which contains search parameters.
 
-    Funkce nejprve definuje proměnné `query` a `display_text` pro vytvoření dotazu a popisného textu,
-    který oznamuje, jaká data byla hledána. Následně zkontroluje, zda byl zadán dotaz pro vyhledávání.
-    Pokud ano, volá funkci pro vytvoření dotazu a popisného textu pro toto pole.
-    Poté zkontroluje, zda bylo zadáno datum pro specifikaci publikování článku.
-    Pokud ano, volá funkci pro vytvoření dotazu a popisného textu pro toto pole.
-    Poté zkontroluje, zda byl zadán autor.
-    Pokud ano, volá funkci pro vytvoření dotazu a popisného textu pro toto pole.
+    The function first defines variables `query` and `display_text` for creating a query and descriptive text,
+    announcing what data was searched for. It then checks if a search query was provided.
+    If so, it calls the function to create a query and descriptive text for this field.
+    Then it checks if a date was specified for article publication.
+    If so, it calls the function to create a query and descriptive text for this field.
+    Then it checks if an author was specified.
+    If so, it calls the function to create a query and descriptive text for this field.
 
-    Následně provede vyhledání článků v indexovém schématu a vytvoří množinu jedinečných ID článků.
+    Then it performs a search for articles in the index schema and creates a set of unique article IDs.
 
-    Funkce vrací seznam ID článků a text popisující obsah vyhledávání.
+    The function returns a list of article IDs and a text describing the search content.
     '''
 
-    # Definice proměnných pro vytvoření dotazu a popisného textu
+    # Definition of variables for creating a query and descriptive text
     query = None
     display_text = ""
 
-    # Pokud je zadán hledaný výraz
+    # If a search term is provided
     search_therm = search_parameters['query']
     search_fields = [i for i in ('title', 'overview', 'content') if search_parameters[i]]
     if search_therm:
@@ -38,7 +38,7 @@ def get_article_ids(search_parameters):
         query = term_query
         display_text += term_text
 
-    # Pokud je zadán parameter hledání podle data
+    # If a search parameter for date is provided
     before_date = search_parameters['before']
     after_date = search_parameters['after']
     if before_date or after_date:
@@ -46,7 +46,7 @@ def get_article_ids(search_parameters):
         query = date_query if query is None else And([query, date_query])
         display_text += date_text
 
-    # Pokud je zadán parameter hledání podle autora
+    # If a search parameter for author is provided
     author_id = search_parameters['author']
 
     if author_id:
@@ -54,10 +54,10 @@ def get_article_ids(search_parameters):
         query = author_query if query is None else And([query, author_query])
         display_text += author_text
 
-    # Vyhledání dotazu Whoosh a získání ID článků
+    # Searching the Whoosh query and obtaining article IDs
     with ArticleSchema().ix.searcher() as searcher:
         results = searcher.search(query, sortedby=sorting.FieldFacet('published', reverse=True))
         article_ids = [int(hit['id']) for hit in results]
 
-    # Návrat ID článků a textu, který se má zobrazit
+    # Returning article IDs and the text to be displayed
     return article_ids, display_text

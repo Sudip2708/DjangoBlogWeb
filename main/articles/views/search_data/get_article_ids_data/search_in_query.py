@@ -6,49 +6,49 @@ from ....schema.article_schema import ArticleSchema
 
 def search_in_query(search_term, search_fields):
     '''
-    Funkce pro vytvoření dotazu a popisného textu pro hledání článků na základě zadaného dotazu.
+    Function for creating a query and descriptive text for searching articles based on the provided query.
 
-    Funkce přijímá hledaný termín a seznam polí určených k vyhledávání.
-    Nejprve vytvoří instanci indexového schématu,
-    a následně zkontroluje, zda hledaný termín obsahuje mezery (tj. slova).
-    Pokud ano, rozdělí tato slova a vytvoří dotaz pro každé slovo a pole určených k vyhledávání,
-    a popisný text, který je kombinací těchto slov.
-    Pokud neobsahuje mezery, vytvoří dotaz pro dané slovo a pole určených k vyhledávání,
-    a popisný text pro dané slovo.
-    Nakonec zkontroluje, zda jsou vybraná všechna pole k hledání,
-    pokud ne, doplní do textu zmínku o polích, ve kterých se hledalo.
+    The function takes the search term and a list of fields intended for searching.
+    It first creates an instance of the index schema
+    and then checks if the search term contains spaces (i.e., words).
+    If it does, it splits those words and creates a query for each word and field intended for searching,
+    and descriptive text that is a combination of these words.
+    If it does not contain spaces, it creates a query for the given word and fields intended for searching,
+    and descriptive text for the given word.
+    Finally, it checks if all fields for searching are selected,
+    if not, it adds a mention of the fields where the search was conducted to the text.
 
-    Funkce vrací vytvořený dotaz a popisný text.
+    The function returns the created query and descriptive text.
     '''
 
-    # Získání Whoosh schématu
+    # Getting the Whoosh schema
     article_schema = ArticleSchema()
 
-    # Kontrola, zda hledaný výraz obsahuje alespoň jednu mezeru
+    # Checking if the search term contains at least one space
     if ' ' in search_term:
 
-        # Rozdělení hledaného výrazu na jednotlivá slova
+        # Splitting the search term into individual words
         search_words = search_term.split()
 
-        # Vytvoření dotazu pro každé slovo zvlášť a spojení pomocí operátoru OR
+        # Creating a query for each word separately and combining them using the OR operator
         parser = MultifieldParser(search_fields, schema=article_schema.get_schema())
         term_queries = [parser.parse(word) for word in search_words]
         query = Or(term_queries)
 
-        # Vytvoření popisného textu pro výsledek hledání
+        # Creating descriptive text for the search result
         display_text = f"with the terms: {' '.join(search_words)}"
 
-    # Pokud hledaný výraz neobsahuje mezeru, použije se původní
+    # If the search term does not contain a space, use the original
     else:
 
-        # Vytvoření dotazu pro celý hledaný výraz
+        # Creating a query for the entire search term
         parser = MultifieldParser(search_fields, schema=article_schema.get_schema())
         query = parser.parse(search_term)
 
-        # Vytvoření popisného textu pro výsledek hledání, pokud jsou vybrána jen některá pole
+        # Creating descriptive text for the search result, if only specific fields are selected
         display_text = f"with the term {search_term}"
 
-    # Přidání popisu hledaných polí, pokud nejsou vybrána všechna pole
+    # Adding a description of the searched fields if not all fields are selected
     if len(search_fields) == 1:
         display_text += f" in {search_fields[0]}"
     elif len(search_fields) == 2:

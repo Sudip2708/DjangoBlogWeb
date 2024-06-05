@@ -1,6 +1,6 @@
-# Definice výchozích hodnot pro nastavení uživatele
+# Definition of default settings for user settings
 
-# Slovník pro nastavení vzhledu postranního panelu
+# Dictionary for sidebar appearance settings
 # self.sidebar
 sidebar_setting_values = {
     "show_sidebars": True,
@@ -15,7 +15,7 @@ sidebar_setting_values = {
     "show_tags_options": True,
 }
 
-# Slovník pro nastavení pořadí postranních panelů
+# Dictionary for sidebar panel order settings
 # self.sidebar_order
 sidebar_order_values = {
     "search": 1,
@@ -24,7 +24,7 @@ sidebar_order_values = {
     "tags": 4,
 }
 
-# Slovník pro dodatečná nastavení uživatele
+# Dictionary for additional user settings
 # self.settings
 additional_setting_values = {
     "show_category_navigation": True,

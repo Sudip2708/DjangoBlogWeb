@@ -8,71 +8,71 @@ from ..models.featured_section import HomePageFeaturedArticles
 
 class EditFeaturedArticlesSection(View):
     '''
-    Pohled pro zpracování dat formuláře pro sekci označených článků na Home Page.
+    View for processing the form data for the Featured Articles section on the Home Page.
 
-    Tato třída postupuje následovně:
-    Po obdržení POST požadavku na zpracování dat z formuláře vytvoří instanci formuláře FeaturedArticlesForm.
-    Ověří, zda je formulář platný. Pokud ano, pokračuje.
-    Získává nebo vytváří instanci modelu HomePageFeaturedArticles.
-    Nastavuje hodnoty z formuláře do příslušných polí instance modelu.
-    Uložení změn do databáze voláním metody save() na instanci modelu.
-    Nakonec provede přesměrování na stránku homepage-edit.
+    This class proceeds as follows:
+    Upon receiving a POST request to process form data, it creates an instance of the FeaturedArticlesForm form.
+    It checks if the form is valid. If yes, it proceeds.
+    It retrieves or creates an instance of the HomePageFeaturedArticles model.
+    It sets the values from the form to the corresponding fields of the model instance.
+    It saves the changes to the database by calling the save() method on the model instance.
+    Finally, it redirects to the homepage-edit page.
     '''
 
     def post(self, request, *args, **kwargs):
         '''
-        Zpracování HTTP POST požadavku.
+        Processing the HTTP POST request.
 
-        Tato metoda zpracovává odeslaný formulář pro úpravu HomePageFeaturedArticles na domovské stránce.
-        Pokud je formulář validní, aktualizuje hodnoty v databázi
-        a přesměruje uživatele na stránku pro úpravu domovské stránky.
-        Pokud formulář není validní, zobrazí chybovou zprávu
-        a přesměruje uživatele zpět na stránku pro úpravu s neuloženými změnami.
+        This method processes the submitted form for editing HomePageFeaturedArticles on the homepage.
+        If the form is valid, it updates the values in the database
+        and redirects the user to the homepage editing page.
+        If the form is not valid, it displays an error message
+        and redirects the user back to the editing page with unsaved changes.
         '''
 
-        # Načtení formuláře
+        # Load the form
         form = FeaturedArticlesForm(request.POST)
 
-        # Kontrola, zda je formulář validní
+        # Check if the form is valid
         if form.is_valid():
 
-            # Získání nebo vytvoření instance modelu HomePageFeaturedArticles
+            # Retrieve or create an instance of the HomePageFeaturedArticles model
             featured_articles = HomePageFeaturedArticles.singleton()
 
-            # Nastavení hodnot z formuláře do instance modelu
+            # Set the values from the form to the model instance
             featured_articles.featured_article_1 = form.cleaned_data['featured_article_1']
             featured_articles.featured_article_2 = form.cleaned_data['featured_article_2']
             featured_articles.featured_article_3 = form.cleaned_data['featured_article_3']
             featured_articles.display_featured_section = form.cleaned_data['display_featured_section']
 
-            # Uložení změn do databáze a přesměrování na stránku homepage-edit
+            # Save the changes to the database and redirect to the homepage-edit page
             featured_articles.save()
             return redirect('homepage-edit')
 
-        # Pokud formulář validní není
+        # If the form is not valid
         else:
-            # Navrácení na stránku úprav a zobrazení zprávu o neúspěchu
-            messages.error(request, "Provedené úpravy nebyly uloženy.")
+            # Return to the editing page and display an error message
+            messages.error(request, "The changes made were not saved.")
             return redirect('homepage-edit')
 
     def get(self, request, *args, **kwargs):
         '''
-        Zpracování HTTP GET požadavku.
+        Processing the HTTP GET request.
 
-        Tato metoda kontroluje, zda požadavek GET obsahuje parametr 'show_featured_section'.
-        Pokud ano, nastaví hodnotu pro zobrazení sekce patičky na True a provede přesměrování
-        na stránku pro úpravu domovské stránky. Jinak pokračuje v běžném chování.
+        This method checks if the GET request contains the parameter 'show_featured_section'.
+        If yes, it sets the value for displaying the footer section to True and redirects
+        to the homepage editing page. Otherwise, it continues with normal behavior.
         '''
 
-        # Kontrola zda požadavek get v sobě obsahuje pořadavek na zviditelnění sekce
+        # Check if the get request contains a request to show the section
         if 'show_featured_section' in request.GET:
 
-            # Pokud ano - změna hodnoty a návrat na stránku pro úpravu HomePage
+            # If yes - change the value and return to the HomePage editing page
             featured_articles = HomePageFeaturedArticles.singleton()
             featured_articles.display_featured_section = True
             featured_articles.save()
             return redirect('homepage-edit')
 
-        # Pokud ne, pokračuj normálně
+        # If not, continue normally
         else:
             return super().get(request, *args, **kwargs)

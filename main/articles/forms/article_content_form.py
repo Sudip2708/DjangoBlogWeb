@@ -8,29 +8,29 @@ from ..schema.article_schema import ArticleSchema
 
 class ArticleContentForm(forms.ModelForm):
     '''
-    Formulář pro definování a správu pole 'content' modelu Article.
+    Form for defining and managing the 'content' field of the Article model.
 
-    Formulář je použit v pohledech:
-    - ArticleCreateView: Pro vytvoření nového článku.
-    - ArticleUpdateView: Pro úpravu existujícího článku.
+    This form is used in views:
+    - ArticleCreateView: To create a new article.
+    - ArticleUpdateView: To edit an existing article.
 
-    Tento formulář je napojen pouze na pole 'content'
-    a příslušnou záložku stránky pro jejich úpravu.
+    This form is connected only to the 'content' field
+    and the corresponding tab of the page for their editing.
     '''
 
     class Meta:
         '''
-        Třída Meta je speciální vnitřní třída pro konfiguraci formuláře.
+        Meta class is a special inner class for form configuration.
 
-        Třída Meta poskytuje metadata a konfiguraci pro hlavní třídu,
-        a zde definuje následující atributy:
-        - model: Určuje model, na kterém je formulář založen.
-        - fields: Definuje pole, která budou zahrnuta ve formuláři.
-        - widgets: Umožňuje specifikovat vlastní widgety pro jednotlivá pole formuláře.
+        The Meta class provides metadata and configuration for the main class,
+        and here it defines the following attributes:
+        - model: Specifies the model on which the form is based.
+        - fields: Defines the fields to be included in the form.
+        - widgets: Allows specifying custom widgets for individual form fields.
 
-        Widgety použité v tomto kódu:
-        - TinyMCE: Pole je vykreslené pomocí rozšíření TinyMCE sloužícího
-                   k vytváření a editaci obsahu článku jako HTML obsahu.
+        Widgets used in this code:
+        - TinyMCE: The field is rendered using the TinyMCE extension for
+                   creating and editing article content as HTML content.
         '''
 
         model = Article
@@ -45,18 +45,18 @@ class ArticleContentForm(forms.ModelForm):
 
     def clean(self):
         '''
-        Metoda pro očištění a ověření dat formuláře.
+        Method for cleaning and validating form data.
 
-        Metoda se používá k provedení dodatečných kontrol a úprav na vyčištěných datech
-        (cleaned_data) poté, co byla zvalidována standardním způsobem.
+        This method is used to perform additional checks and modifications on cleaned data
+        (cleaned_data) after it has been validated in the standard way.
 
-        Zde metoda nejprve ověří, zda upravovaný článek má hodnotu pole status nastavenou na 'publish'
-        (článek je určen k publikování a má tak vytvořen záznam v indexu whoosh pro rychlejší fulltextové vyhledávání).
-        Pokud ano, získá obsah pole (které je vytvořené jako HTML field prostřednictvím TinyMCE),
-        a následně převede tento obsah na text (bez HTML tagů) pomocí BeautifulSoup,
-        a poté volá metodu update_index třídy ArticleSchema pro aktualizování dat daného pole.
+        Here, the method first checks whether the edited article has the status field set to 'publish'
+        (the article is intended for publishing and thus has a record in the whoosh index for faster full-text search).
+        If so, it retrieves the content of the field (which is created as an HTML field via TinyMCE),
+        then converts this content to text (without HTML tags) using BeautifulSoup,
+        and then calls the update_index method of the ArticleSchema class to update the data of the respective field.
 
-        Metoda navrací pohledu očištěná data pro další zpracování.
+        The method returns cleaned data to the view for further processing.
         '''
         cleaned_data = super().clean()
 

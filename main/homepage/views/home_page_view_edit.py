@@ -13,28 +13,28 @@ from ..forms.footer_section_form import FooterSettingsForm
 
 class HomePageEditView(HomePageView):
     '''
-    Pohled pro úpravu obsahu domovské stránky.
+    View for editing the content of the home page.
 
-    Pohled dědí veškerá data z  HomePageView
-    a přidává data pro úpravu obsahu prostřednictvím příslušných formulářů.
+    This view inherits all data from HomePageView
+    and adds data for editing the content via the respective forms.
     '''
 
     template_name = '1_home/10__base__.html'
 
     def get_context_data(self, **kwargs):
         '''
-        Metoda pro vytvoření kontextových dat pro zobrazení domovské stránky.
+        Method for creating context data for displaying the home page.
 
-        Metoda nejprve načítá kontext z nadřazené třídy,
-        a následně přidává vlastní obsah pro editaci jednotlivých sekcí,
-        načtením formulářů pro jednotlivé sekce.
-        Metoda vrací upravený kontext.
+        The method first loads the context from the parent class,
+        and then adds custom content for editing individual sections,
+        by loading the forms for each section.
+        The method returns the modified context.
         '''
 
-        # Zavolání metody rodičovské třídy pro získání kontextových dat
+        # Calling the method of the parent class to get context data
         context = super().get_context_data(**kwargs)
 
-        # Vytvoření formulářů pro editaci obsahu
+        # Creating forms for editing content
         hero_edit_form = HeroSectionForm(instance=self.hero_instance)
         intro_edit_form = IntroSectionForm(instance=self.intro_instance)
         featured_edit_form = FeaturedArticlesForm(instance=self.featured_instance)
@@ -44,7 +44,7 @@ class HomePageEditView(HomePageView):
         gallery_edit_form = GallerySectionForm(instance=self.gallery_instance)
         footer_edit_form = FooterSettingsForm(instance=self.footer_instance)
 
-        # Přidání formulářů do kontextu
+        # Adding forms to the context
         context.update({
             'hero_edit_form': hero_edit_form,
             'intro_edit_form': intro_edit_form,
@@ -60,9 +60,9 @@ class HomePageEditView(HomePageView):
 
     def get(self, request, *args, **kwargs):
         '''
-        Metoda pro zobrazení domovské stránky.
+        Method for displaying the home page.
 
-        Metoda načte kontext a navrátí šablonu s daty pro domácí stránku.
+        The method loads the context and returns a template with the data for the home page.
         '''
 
         context = self.get_context_data(**kwargs)

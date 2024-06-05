@@ -1,22 +1,22 @@
 def get_context_data(self, context, **kwargs):
     '''
-    Metoda pro přidání obsahu potřebného k vykreslení stránky.
+    Method for adding necessary content to render the page.
 
-    Metoda je určená pro tyto URL:
-    - my-articles: Stránka pro články od autora navázaného na uživatele.
+    This method is intended for the following URL:
+    - my-articles: Page for articles by the author associated with the user.
 
-    Metoda dědí z třídy BaseView následující obsah:
-    - context['user']: Instance uživatele.
-    - context['url_name']: URL jménu adresy z které požadavek přišel.
-    - context['sidebar_search_form']: Formulář pro hledání (pro postranní panel).
-    - context['published_categories']: Publikované kategorie (pro dropdown menu a postranní panel).
-    - context['footer']: Data pro vykreslení patičky (na domácí stránce je již zahrnuto)
-    - context['user_thumbnail']: Miniatura profilového obrázku (pro přihlášeného a nepřihlášeného uživatele).
+    The method inherits the following content from the BaseView class:
+    - context['user']: User instance.
+    - context['url_name']: URL name of the address from which the request came.
+    - context['sidebar_search_form']: Search form (for the sidebar).
+    - context['published_categories']: Published categories (for the dropdown menu and sidebar).
+    - context['footer']: Data for rendering the footer (already included on the home page).
+    - context['user_thumbnail']: Thumbnail of the profile picture (for logged-in and logged-out users).
 
-    Metoda vytváří a přidává tento obsah:
-    - context['page_title']: Nadpis stránky.
-    - context['mobile_page_title']: Nadpis stránky pro mobilní zařízení.
-    - context['current_tab']: Název aktuálně zvolená záložka.
+    The method creates and adds the following content:
+    - context['page_title']: Page title.
+    - context['mobile_page_title']: Page title for mobile devices.
+    - context['current_tab']: Name of the currently selected tab.
     '''
 
     context['page_title'] = 'My Articles'

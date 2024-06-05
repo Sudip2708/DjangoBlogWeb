@@ -7,21 +7,21 @@ from .data.singleton_model import SingletonModel
 
 class HomePageGallerySection(SingletonModel):
     '''
-    Databázový model pro gallery sekce na domovské stránce.
+    Database model for the gallery section on the home page.
 
-    Model dědí ze SingletonModel, což je abstraktní třída definovaná pro vytvoření jediné instance.
+    The model inherits from SingletonModel, which is an abstract class defined to create a single instance.
 
-    Model vytváří následující pole:
-    - display_gallery_section: Boolean pole pro hodnotu reprezentující zobrazení nebo skrytí sekce.
-    - gallery_article_1: Pole typu JSONField pro uložení dat prvního článku v galerii.
-    - gallery_article_2: Pole typu JSONField pro uložení dat druhého článku v galerii.
-    - gallery_article_3: Pole typu JSONField pro uložení dat třetího článku v galerii.
-    - gallery_article_4: Pole typu JSONField pro uložení dat čtvrtého článku v galerii.
+    The model creates the following fields:
+    - display_gallery_section: Boolean field for representing the display or hiding of the section.
+    - gallery_article_1: JSONField for storing data of the first article in the gallery.
+    - gallery_article_2: JSONField for storing data of the second article in the gallery.
+    - gallery_article_3: JSONField for storing data of the third article in the gallery.
+    - gallery_article_4: JSONField for storing data of the fourth article in the gallery.
 
-    Metody modelu:
-    - __str__: Pro získání textové reprezentace modelu (dle hodnoty pole pro název článku).
-    - __init__: Slouží pro inicializaci defaultních hodnot.
-    - get_data: Slouží k získání všech hodnot tohoto modelu pro vykreslení na domácí stránce.
+    Model methods:
+    - __str__: To get the textual representation of the model (based on the article name field value).
+    - __init__: Used for initializing default values.
+    - get_data: Used to retrieve all the values of this model for rendering on the home page.
     '''
 
     display_gallery_section = models.BooleanField(
@@ -67,10 +67,10 @@ class HomePageGallerySection(SingletonModel):
 
     def get_data(self):
         '''
-        Metoda, která slouží k získání hodnot všech polí tohoto modelu pro vykreslení na domácí stránce.
+        Method to retrieve the values of all fields of this model for rendering on the home page.
 
-        Vrací slovník obsahující následující informace:
-        zobrazení sekce a seznam s daty článků galerie.
+        Returns a dictionary containing the following information:
+        section display and a list with data of gallery articles.
         '''
 
         return {

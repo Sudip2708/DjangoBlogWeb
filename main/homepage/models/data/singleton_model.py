@@ -2,13 +2,13 @@ from django.db import models
 
 class SingletonModel(models.Model):
     '''
-    Abstraktní třída pro implementaci Singleton návrhového vzoru v modelech Django.
+    Abstract class for implementing the Singleton design pattern in Django models.
 
-    Tato abstraktní třída poskytuje základní funkcionalitu pro implementaci Singletonu.
-    Třída vytváří nebo získává jedinou instanci modelu a zajistí,
-    že existuje pouze jedna instance tohoto modelu v rámci celé aplikace.
-    Atribut abstract indikuje, že se jedná o abstraktní třídu,
-    která není mapována na žádnou tabulku v databázi.
+    This abstract class provides basic functionality for implementing the Singleton.
+    The class creates or retrieves a single instance of the model and ensures
+    that there is only one instance of this model throughout the entire application.
+    The abstract attribute indicates that this is an abstract class,
+    which is not mapped to any table in the database.
     '''
 
     class Meta:
@@ -17,10 +17,12 @@ class SingletonModel(models.Model):
     @classmethod
     def singleton(cls):
         '''
-        Třídní metoda pro získání jediné instance modelu.
+        Class method for getting the single instance of the model.
 
-        Tato metoda vrací jedinou instanci modelu a pokud tato instance neexistuje, vytvoří ji.
-        Navrací instanci modelau a Bool hodnotu, zda byla vytvořena (True) nebo získána (False).
+        This method returns the single instance of the model,
+        and if this instance does not exist, it creates it.
+        Returns the model instance and a Boolean value indicating
+        whether it was created (True) or retrieved (False).
         '''
 
         obj, created = cls.objects.get_or_create(pk=1)
@@ -28,11 +30,11 @@ class SingletonModel(models.Model):
 
     def save(self, *args, **kwargs):
         '''
-        Přetížení metoda save.
+        Overridden save method.
 
-        Tato metoda přepisuje standardní metodu pro uložení instance modelu tak,
-        aby vždy nastavila primární klíč na hodnotu 1, a tím zajišťuje,
-        že v databázi bude pouze jedna instance tohoto modelu.
+        This method overrides the standard method for saving the model instance
+        to always set the primary key to the value 1, ensuring that there will
+        be only one instance of this model in the database.
         '''
 
         self.pk = 1

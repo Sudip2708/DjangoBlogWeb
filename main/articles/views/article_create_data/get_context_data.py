@@ -5,36 +5,36 @@ from taggit.models import Tag
 
 def get_context_data(self, context, **kwargs):
     '''
-    Metoda pro vytvoření kontextu.
+    Method for creating context.
 
-    Kontext poděděný z BaseView:
-    - context['user']: Instance uživatele.
-    - context['url_name']: URL jménu adresy z které požadavek přišel.
-    - context['sidebar_search_form']: Formulář pro hledání (pro postranní panel).
-    - context['published_categories']: Publikované kategorie (pro dropdown menu a postranní panel).
-    - context['footer']: Data pro vykreslení patičky (na domácí stránce je již zahrnuto)
-    - context['user_thumbnail']: Miniatura profilového obrázku (pro přihlášeného a nepřihlášeného uživatele).
+    Context inherited from BaseView:
+    - context['user']: User instance.
+    - context['url_name']: URL name of the address from which the request came.
+    - context['sidebar_search_form']: Search form (for the sidebar).
+    - context['published_categories']: Published categories (for dropdown menu and sidebar).
+    - context['footer']: Data for footer rendering (already included on the home page)
+    - context['user_thumbnail']: Profile thumbnail (for logged-in and non-logged-in users).
 
-    Kontext vytvořený tímto pohledem:
-    - context['tab_urls']: Reverzní cesty na jednotlivé záložky.
-    - context['current_tab']: Aktuální záložka stránky.
-    - context['title']: Název stránky.
-    - context['tags_name_str']: Řetězec tagů pro automatické doplňování tagů
-        (používáno ve skriptu pro Tagify a vytváří se pouze pro sekci nastavení).
+    Context created by this view:
+    - context['tab_urls']: Reverse paths to individual tabs.
+    - context['current_tab']: Current page tab.
+    - context['title']: Page title.
+    - context['tags_name_str']: String of tags for automatic tag completion
+        (used in Tagify script and created only for the settings section).
     '''
 
-    # Vytvoření URL adres pro jednotlivé záložky stránky
+    # Creating URL addresses for individual page tabs
     tab_urls = {
         'for_overview': reverse('article-create', kwargs={'current_tab': 'overview'}),
         'for_content': reverse('article-create', kwargs={'current_tab': 'content'}),
         'for_settings': reverse('article-create', kwargs={'current_tab': 'settings'}),
     }
 
-    # Vytvoření seznamu existujících tagů a převedení na řetězec.
-    all_tags =  list(Tag.objects.values_list('name', flat=True))
+    # Creating a list of existing tags and converting it to a string.
+    all_tags = list(Tag.objects.values_list('name', flat=True))
     tags_name_str = ','.join(all_tags)
 
-    # Vytvoření proměné pro aktuální záložku
+    # Creating a variable for the current tab
     current_tab = self.kwargs.get('current_tab')
 
     context['tab_urls'] = tab_urls

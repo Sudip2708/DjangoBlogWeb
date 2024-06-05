@@ -11,22 +11,23 @@ from .data.footer_section_default import DEFAULT_END_LINE
 
 class FooterSettings(SingletonModel):
     '''
-    Databázový model pro nastavení patičky.
+    Database model for footer settings.
 
-    Model dědí ze SingletonModel, což je abstraktní třída definovaná pro vytvoření jediné instance.
+    The model inherits from SingletonModel, which is an abstract class defined
+    to create a single instance.
 
-    Model vytváří následující pole:
-    - display_footer_section: Boolean pole pro hodnotu reprezentující zobrazení nebo skrytí sekce.
-    - address_values: Pole typu JSONField pro uložení hodnot týkajících se adresy.
-    - social_media: Pole typu JSONField pro uložení hodnot sociálních médií.
-    - site_links: Pole typu JSONField pro uložení odkazů na stránky.
-    - articles: Pole typu JSONField pro uložení seznamu článků.
-    - end_line: Pole typu JSONField pro uložení obsahu posledního řádku patičky.
+    The model creates the following fields:
+    - display_footer_section: Boolean field for representing the display or hiding of the section.
+    - address_values: JSONField for storing address-related values.
+    - social_media: JSONField for storing social media values.
+    - site_links: JSONField for storing links to pages.
+    - articles: JSONField for storing a list of articles.
+    - end_line: JSONField for storing the content of the footer's last line.
 
-    Metody modelu:
-    - __str__: Pro získání textové reprezentace modelu (dle hodnoty pole pro název článku).
-    - __init__: Slouží pro inicializaci defaultních hodnot.
-    - get_data: Slouží k získání všech hodnot tohoto modelu pro vykreslení na domácí stránce.
+    Model methods:
+    - __str__: To get the textual representation of the model (based on the article name field value).
+    - __init__: Used for initializing default values.
+    - get_data: Used to retrieve all the values of this model for rendering on the home page.
     '''
 
     display_footer_section = models.BooleanField(
@@ -45,9 +46,9 @@ class FooterSettings(SingletonModel):
 
     def __init__(self, *args, **kwargs):
         '''
-        Inicializační metoda modelu.
+        Initialization method of the model.
 
-        Tato metoda načítá defaultní hodnoty pro prázdná pole.
+        This method loads default values for empty fields.
         '''
 
         super().__init__(*args, **kwargs)
@@ -66,11 +67,11 @@ class FooterSettings(SingletonModel):
 
     def get_data(self):
         '''
-        Metoda, která slouží k získání hodnot všech polí tohoto modelu pro vykreslení na domácí stránce.
+        Method to retrieve the values of all fields of this model for rendering on the home page.
 
-        Vrací slovník obsahující následující informace:
-        zobrazení sekce, slovníku hodnot pro adresu, sociální média, odkazy na vybrané stránky,
-        vybrané články a obsah posledního řádku.
+        Returns a dictionary containing the following information:
+        section display, dictionary of address values, social media, links to selected pages,
+        selected articles, and the content of the last line.
         '''
 
         return {

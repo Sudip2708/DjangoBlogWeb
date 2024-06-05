@@ -8,31 +8,31 @@ from homepage.models.footer_section import FooterSettings
 
 class BaseView(View):
     '''
-    Definice základní třídy pohledu z které dědí všechny ostatní třídy pohledu.
+    Definition of the base view class from which all other view classes inherit.
 
-    Tato třída nejprve v metodě dispatch po obdržení requestu vytvoří atributy:
-    - self.user: Instance uživatele.
-    - self.url_name: URL jménu adresy z které požadavek přišel
+    This class first creates attributes in the dispatch method upon receiving a request:
+    - self.user: User instance.
+    - self.url_name: URL name of the address from which the request came.
 
-    Dále pak v metodě get_context_data přidává kontext:
-    - context['user']: Instance uživatele.
-    - context['url_name']: URL jménu adresy z které požadavek přišel.
-    - context['sidebar_search_form']: Formulář pro hledání (pro postranní panel).
-    - context['published_categories']: Publikované kategorie (pro dropdown menu a postranní panel).
-    - context['footer']: Data pro vykreslení patičky (na domácí stránce je již zahrnuto)
-    - context['user_thumbnail']: Miniatura profilového obrázku (pro přihlášeného a nepřihlášeného uživatele).
+    It then adds context in the get_context_data method:
+    - context['user']: User instance.
+    - context['url_name']: URL name of the address from which the request came.
+    - context['sidebar_search_form']: Search form (for the sidebar).
+    - context['published_categories']: Published categories (for dropdown menu and sidebar).
+    - context['footer']: Data for rendering the footer (already included on the home page).
+    - context['user_thumbnail']: Profile picture thumbnail (for logged-in and logged-out users).
     '''
 
     def dispatch(self, request, *args, **kwargs):
         '''
-        Metoda definuje základní atributy společné všem ostatním třídám, které z této třídy budou dědit.
+        This method defines basic attributes shared by all other classes that inherit from this class.
 
-        Atributy definopvané touto metodou:
-        - self.user: Instance uživatele (buď CustomUser, nebo AnonymousUserWithSettings).
-        - self.url_name: URL jménu adresy z které požadavek přišel
-        - self.default_profile_picture: URL cesta k defaultnímu obrázku pro nepřihlášeného uživatele.
+        Attributes defined by this method:
+        - self.user: User instance (either CustomUser or AnonymousUserWithSettings).
+        - self.url_name: URL name of the address from which the request came.
+        - self.default_profile_picture: URL path to the default image for logged-out users.
 
-        Metoda následně volá dispatch() nadřazené třídy.
+        The method then calls the dispatch() of the parent class.
         '''
 
         self.user = request.user
@@ -43,18 +43,18 @@ class BaseView(View):
 
     def get_context_data(self, **kwargs):
         '''
-        Metoda definuje základní kontext společný všem ostatním třídám, které z této třídy budou dědit.
+        This method defines basic context shared by all other classes that inherit from this class.
 
-        Kontext definovaný touto metodou:
-        - context['user']: Instance uživatele.
-        - context['url_name']: URL jménu adresy z které požadavek přišel.
-        - context['sidebar_search_form']: Formulář pro hledání (pro postranní panel).
-        - context['published_categories']: Publikované kategorie (pro dropdown menu a postranní panel).
-        - context['footer']: Data pro vykreslení patičky (na domácí stránce je již zahrnuto)
-        - context['user_thumbnail']: Miniatura profilového obrázku (pro přihlášeného a nepřihlášeného uživatele).
+        Context defined by this method:
+        - context['user']: User instance.
+        - context['url_name']: URL name of the address from which the request came.
+        - context['sidebar_search_form']: Search form (for the sidebar).
+        - context['published_categories']: Published categories (for dropdown menu and sidebar).
+        - context['footer']: Data for rendering the footer (already included on the home page).
+        - context['user_thumbnail']: Profile picture thumbnail (for logged-in and logged-out users).
 
-        Metoda nejprve načte kontext z nadřazené třídy
-        a následně ho vrací, společně s přidáním vlastních hodnot.
+        The method first loads the context from the parent class
+        and then returns it, along with adding its own values.
         '''
 
         context = super().get_context_data(**kwargs)

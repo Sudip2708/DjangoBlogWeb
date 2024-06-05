@@ -10,27 +10,27 @@ from ..forms.author_profile_form import AuthorProfileForm
 
 class AuthorProfileView(BaseView, FormView):
     '''
-    Pohled pro úpravu a nastavení dat autora.
+    View for editing and setting author data.
 
-    Pohled zpracovává následující URL:
-    - profile-update-author: Stránka pro úpravu autorského účtu.
+    This view handles the following URL:
+    - profile-update-author: Page for editing the author account.
 
-    Pohled dědí ze základní třídy FormView a vlastní třídy BaseView.
+    Inherits from the FormView and BaseView classes.
 
-    Atributy přetížené z CreateView:
-    - self.model: Určuje model, se kterým tento pohled pracuje.
-    - self.template_name: Určuje cestu k šabloně, která bude použita pro zobrazení výsledků.
-    - self.form_class: Určuje formulář napojený na tento pohled.
-    - self.success_url: Určuje návratovou adresu po úspěšném uložení dat (stejná stránka).
+    Attributes overridden from CreateView:
+    - self.model: Specifies the model this view works with.
+    - self.template_name: Specifies the path to the template used for displaying the results.
+    - self.form_class: Specifies the form connected to this view.
+    - self.success_url: Specifies the return address after successful data saving (the same page).
 
-    Atributy poděděné z BaseView:
-    - self.user: Instance uživatele (buď CustomUser, nebo AnonymousUserWithSettings).
-    - self.url_name: URL adresa, ze které požadavek přišel.
+    Inherited attributes from BaseView:
+    - self.user: Instance of the user (either CustomUser or AnonymousUserWithSettings).
+    - self.url_name: URL address from which the request came.
 
-    Metody definované v tomto pohledu:
-    - get_form_kwargs: Metoda pro získání argumentů pro vytvoření instance formuláře (zde pro přidání instance autora).
-    - form_valid: Metoda, která se volá po úspěšném ověření formuláře (zde pro zobrazení oznamu o úspěšném uložení dat).
-    - get_context_data: Metoda, která vrací obsah pro vykreslení šablony.
+    Methods defined in this view:
+    - get_form_kwargs: Method for obtaining arguments for creating a form instance (here for adding an author instance).
+    - form_valid: Method called after successful form validation (here for displaying a message about successful data saving).
+    - get_context_data: Method that returns content for rendering the template.
     '''
 
     model = ArticleAuthor
@@ -40,11 +40,11 @@ class AuthorProfileView(BaseView, FormView):
 
     def get_form_kwargs(self):
         '''
-        Metoda pro získání argumentů pro vytvoření instance formuláře.
+        Method for obtaining arguments for creating a form instance.
 
-        Metoda nejprve načte argumenty z nadřazené třídy,
-        následně vytvoří a přidá argument pro instanci přihlášeného uživatele
-        a data předává dál do formuláře.
+        This method first loads arguments from the parent class,
+        then creates and adds an argument for the instance of the logged-in user
+        and passes the data to the form.
         '''
         kwargs = super().get_form_kwargs()
         self.author = self.request.user.linked_author
@@ -53,11 +53,11 @@ class AuthorProfileView(BaseView, FormView):
 
     def form_valid(self, form):
         '''
-        Metoda, která se volá po úspěšném ověření formuláře.
+        Method called after successful form validation.
 
-        Metoda nejprve uloží data formuláře,
-        po té vytvoří oznam o úspěšné aktualizaci dat
-        a přesměruje na stránku pro editaci dat autora.
+        This method first saves the form data,
+        then creates a message about successful data update
+        and redirects to the author data editing page.
         '''
         form.save()
         messages.success(self.request, 'Your profile has been updated successfully.')
@@ -65,28 +65,28 @@ class AuthorProfileView(BaseView, FormView):
 
     def get_context_data(self, **kwargs):
         '''
-        Metoda pro získání dat pro kontext šablony.
+        Method for obtaining data for the template context.
 
-        Metoda nejprve získá kontext z nadřazené třídy
-        a po té vytváří a přidává vlastní kontext pro vykreslení šablony.
-        Metoda vrací kontext pro vykreslení šablony.
+        This method first gets the context from the parent class
+        and then creates and adds custom context for rendering the template.
+        The method returns the context for rendering the template.
 
-        Kontext poděděný z BaseView:
-        - context['user']: Instance uživatele.
-        - context['url_name']: URL jménu adresy z které požadavek přišel.
-        - context['sidebar_search_form']: Formulář pro hledání (pro postranní panel).
-        - context['published_categories']: Publikované kategorie (pro dropdown menu a postranní panel).
-        - context['footer']: Data pro vykreslení patičky (na domácí stránce je již zahrnuto)
-        - context['user_thumbnail']: Miniatura profilového obrázku (pro přihlášeného a nepřihlášeného uživatele).
+        Context inherited from BaseView:
+        - context['user']: User instance.
+        - context['url_name']: URL name of the address from which the request came.
+        - context['sidebar_search_form']: Search form (for the sidebar).
+        - context['published_categories']: Published categories (for dropdown menu and sidebar).
+        - context['footer']: Data for rendering the footer (already included on the homepage).
+        - context['user_thumbnail']: Profile picture thumbnail (for logged-in and anonymous users).
 
-        Kontext přidaný v tomto kódu:
-        - context['page_title']: Nadpis stránky.
-        - context['profile_form']: Formulář stránky.
-        - context['profile_picture_url']: URL adresa profilového obrázku.
-        - context['profile_picture_alt']: Zástupný text pro profilový obrázek.
-        - context['submit_button_text']: Popisek odesílacího tlačítka.
-        - context['tab_names']: Popisek pro záložky stránky.
-        - context['tab_url']: URL pro záložky stránky.
+        Context added in this code:
+        - context['page_title']: Page title.
+        - context['profile_form']: Page form.
+        - context['profile_picture_url']: Profile picture URL.
+        - context['profile_picture_alt']: Alternative text for the profile picture.
+        - context['submit_button_text']: Submit button label.
+        - context['tab_names']: Tab labels for the page.
+        - context['tab_url']: URL for page tabs.
         '''
         context = super().get_context_data(**kwargs)
 
@@ -100,3 +100,4 @@ class AuthorProfileView(BaseView, FormView):
         context['tab_url'] = {'user': 'profile-update-user', 'author': 'profile-update-author'}
 
         return context
+

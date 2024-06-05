@@ -6,29 +6,29 @@ from homepage.models.newsletter_section import HomePageNewsletterSection
 
 class NewsletterSectionForm(forms.ModelForm):
     '''
-    Formulář pro nastavení sekce Novinek na domovské stránce.
+    Form for setting up the Newsletter section on the homepage.
 
-    Formulář je navázán na pohled EditNewsletterSection.
+    This form class is associated with the EditNewsletterSection view.
 
-    Formulář definuje tato pole:
-    - display_newsletter_section: Viditelnost sekce.
-    - newsletter_title: Nadpis sekce.
-    - newsletter_description: Popisný text sekce.
+    The form defines the following fields:
+    - display_newsletter_section: Visibility of the section.
+    - newsletter_title: Section title.
+    - newsletter_description: Descriptive text for the section.
     '''
 
     class Meta:
         '''
-        Třída Meta je speciální vnitřní třída pro konfiguraci formuláře.
+        The Meta class is a special inner class for configuring the form.
 
-        Třída Meta poskytuje metadata a konfiguraci pro hlavní třídu,
-        a zde definuje následující atributy:
-        - model: Určuje model, na kterém je formulář založen.
-        - fields: Definuje pole, která budou zahrnuta ve formuláři.
-        - widgets: Umožňuje specifikovat vlastní widgety pro jednotlivá pole formuláře.
+        The Meta class provides metadata and configuration for the main class,
+        and here it defines the following attributes:
+        - model: Specifies the model on which the form is based.
+        - fields: Defines the fields to be included in the form.
+        - widgets: Allows specifying custom widgets for individual form fields.
 
-        Widgety použité v tomto kódu:
-        - forms.CheckboxInput: Pole pro zaškrtávací boolean hodnotu.
-        - TinyMCE: Pole pro zadání textu pomocí modulu TinyMCE.
+        Widgets used in this code:
+        - forms.CheckboxInput: Field for boolean checkbox values.
+        - TinyMCE: Field for entering text using the TinyMCE module.
         '''
 
         model = HomePageNewsletterSection

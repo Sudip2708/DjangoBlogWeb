@@ -1,22 +1,21 @@
 from whoosh.query import Term
-
 from ....models.article_author import ArticleAuthor
 
 
 def search_in_author(author_id):
     '''
-    Funkce pro vytvoření dotazu a popisného textu pro hledání článků podle autora.
+    Function for creating a query and descriptive text for searching articles by author.
 
-    Funkce obdrží ID autora a na jeho základě vytvoří dotaz pro hledání v indexu schématu
-    a popisný text oznamující, že bylo hledáno podle autora.
+    The function receives the author's ID and creates a query for searching in the schema index
+    based on that ID, along with a descriptive text indicating that the search was performed by author.
 
-    Funkce vrací vytvořený dotaz a popisný text.
+    The function returns the created query and descriptive text.
     '''
 
-    # Vytvoření dotazu
+    # Creating the query
     author_query = Term('author', author_id)
 
-    # Vytvoření popisného textu pro výsledek hledání
+    # Creating descriptive text for the search result
     author_name = ArticleAuthor.objects.get(id=author_id).name
     display_text = f"written by the author {author_name}"
 

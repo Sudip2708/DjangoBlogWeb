@@ -3,22 +3,10 @@ from django.urls import path
 from ..views.my_articles import MyArticlesView
 
 
-# Definování adres začínajících s prefixem 'my-articles/'
+# Defining URLs starting with the prefix 'my-articles/'
 urlpatterns = [
 
-    # Zobrazení článků přihlášeného uživatele (je-li i autora).
+    # Display articles of the logged-in user (if they are also authors).
     path('<str:current_tab>/', MyArticlesView.as_view(), name='my-articles'),
 
 ]
-
-
-
-
-
-
-
-
-
-
-
-

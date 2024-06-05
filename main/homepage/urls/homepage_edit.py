@@ -11,46 +11,33 @@ from ..views.edit_gallery_section import EditGallerySection
 from ..views.edit_footer_section import EditFooterSection
 
 
-# Definování adres začínajících s prefixem 'edit/' (editace domácí stránky superuživatelem)
+# Defining URLs starting with prefix 'edit/' (homepage editing by superuser)
 urlpatterns = [
 
-    # Editace domácí stránky.
+    # Editing the homepage.
     path('', HomePageEditView.as_view(), name='homepage-edit'),
 
-    # Editace sekce Hero.
+    # Editing the Hero section.
     path('hero/', EditHeroSection.as_view(), name='edit-hero-section'),
 
-    # UEditace sekce Intro.
+    # Editing the Intro section.
     path('intro/', EditIntroSection.as_view(), name='edit-intro-section'),
 
-    # Editace sekce Featured.
+    # Editing the Featured section.
     path('featured/', EditFeaturedArticlesSection.as_view(), name='edit-featured-section'),
 
-    # Editace sekce Divider.
+    # Editing the Divider section.
     path('divider/', EditDividerSection.as_view(), name='edit-divider-section'),
 
-    # Editace sekce Latest.
+    # Editing the Latest section.
     path('latest/', EditLatestArticlesSection.as_view(), name='edit-latest-section'),
 
-    # Editace sekce Newsletter.
+    # Editing the Newsletter section.
     path('newsletter/', EditNewsletterSection.as_view(), name='edit-newsletter-section'),
 
-    # Editace sekce Gallery.
+    # Editing the Gallery section.
     path('gallery/', EditGallerySection.as_view(), name='edit-gallery-section'),
 
-    # Editace sekce Footer.
+    # Editing the Footer section.
     path('footer/', EditFooterSection.as_view(), name='edit-footer-section'),
 ]
-
-
-
-
-
-
-
-
-
-
-
-
-

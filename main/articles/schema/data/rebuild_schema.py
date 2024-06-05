@@ -8,32 +8,32 @@ from ...models.article import Article
 
 def rebuild_schema(self):
     '''
-    Funkce pro smazání a znovuvytvoření celého schématu.
+    Function for deleting and recreating the entire schema.
 
-    Nejprve funkce zjišťuje, zda existuje složka pro schémata (podle umístění definovaného v settings.py).
-    Pokud složka existuje, funkce nejprve uzavře index (pro případ, že by byl někde otevřen)
-    a poté smaže celou složku pomocí příkazu shutil.rmtree().
+    First, the function checks if the schema folder exists (according to the location defined in settings.py).
+    If the folder exists, the function first closes the index (in case it is open somewhere)
+    and then deletes the entire folder using the shutil.rmtree() command.
 
-    Poté funkce vytvoří novou složku pro index a zavolá metodu pro vytvoření indexu.
+    Then the function creates a new folder for the index and calls the method to create the index.
 
-    Následně funkce načte všechny články ze modelu Article se statusem 'publish'
-    a každý článek cyklem zapíše do indexu.
+    Next, the function loads all articles from the Article model with the 'publish' status
+    and writes each article to the index using a loop.
     '''
 
-    # Načtení schématu
+    # Load the schema
     from ...schema.article_schema import ArticleSchema
 
-    # Smazání původní složky (pokud existuje)
+    # Delete the original folder (if it exists)
     if os.path.exists(settings.INDEX_DIRECTORY):
         ix = open_dir(settings.INDEX_DIRECTORY)
         ix.close()
         shutil.rmtree(settings.INDEX_DIRECTORY)
 
-    # Vytvoření nové složky s indexem
+    # Create a new folder with the index
     os.makedirs(settings.INDEX_DIRECTORY)
     ArticleSchema().create_index()
 
-    # Indexování článků
+    # Indexing articles
     articles = Article.objects.filter(status='publish')
     for article in articles:
         ArticleSchema().index_article(article)

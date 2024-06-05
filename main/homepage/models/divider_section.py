@@ -7,20 +7,21 @@ from .data.singleton_model import SingletonModel
 
 class HomePageDividerSection(SingletonModel):
     '''
-    Databázový model pro Home Page Divider Section.
+    Database model for the Home Page Divider Section.
 
-    Model dědí ze SingletonModel, což je abstraktní třída definovaná pro vytvoření jediné instance.
+    The model inherits from SingletonModel, which is an abstract class defined
+    to create a single instance.
 
-    Model vytváří následující pole:
-    - display_divider_section: Boolean pole pro hodnotu reprezentující zobrazení nebo skrytí sekce.
-    - divider_image: Pole pro upload obrázku, který bude zobrazen v této sekci.
-    - divider_text: HTML pole pro vložení textu, který bude zobrazen v této sekci.
-    - divider_link_title: Pole typu CharField pro titulek odkazu, který bude zobrazen v této sekci.
-    - divider_link: Pole typu URLField pro vložení URL odkazu, který bude zobrazen v této sekci.
+    The model creates the following fields:
+    - display_divider_section: Boolean field for representing the display or hiding of the section.
+    - divider_image: Field for uploading an image to be displayed in this section.
+    - divider_text: HTML field for inserting text to be displayed in this section.
+    - divider_link_title: CharField for the title of the link to be displayed in this section.
+    - divider_link: URLField for inserting the URL link to be displayed in this section.
 
-    Metody modelu:
-    - __str__: Pro získání textové reprezentace modelu (dle hodnoty pole pro název článku).
-    - get_data: Slouží k získání všech hodnot tohoto modelu pro vykreslení na domácí stránce.
+    Model methods:
+    - __str__: To get the textual representation of the model (based on the article name field value).
+    - get_data: Used to retrieve all the values of this model for rendering on the home page.
     '''
 
     display_divider_section = models.BooleanField(
@@ -58,17 +59,16 @@ class HomePageDividerSection(SingletonModel):
     def __str__(self):
         return "Homepage Divider Section Configuration"
 
-
     def get_data(self):
         '''
-        Metoda, která slouží k získání hodnot všech polí tohoto modelu pro vykreslení na domácí stránce.
+        Method to retrieve the values of all fields of this model for rendering on the home page.
 
-        Pokud není k dispozici obrázek pro oddělovač, jeho URL bude None.
-        Vrací slovník obsahující následující informace:
-        zobrazení sekce, URL obrázku, text sekce, popis odkazu a URL odkazu.
+        If an image for the divider is not available, its URL will be None.
+        Returns a dictionary containing the following information:
+        section display, image URL, section text, link description, and link URL.
         '''
 
-        # Dosazení hodnoty None, když není obrázek
+        # Assign None if there is no image
         divider_image_url = self.divider_image.url if self.divider_image else None
 
         return {

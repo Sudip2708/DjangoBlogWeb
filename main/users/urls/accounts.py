@@ -3,19 +3,19 @@ from django.urls import path, include
 from allauth.account.views import LoginView, SignupView
 
 
-# Definování adres začínajících s prefixem 'accounts/'
+# Defining URLs starting with the prefix 'accounts/'
 urlpatterns = [
 
-    # URL pro účet uživatele (registrace, přihlášení, atd.).
+    # URL for user account (registration, login, etc.).
     path('', include('allauth.urls'), name='account-allauth'),
 
-    # URL pro přihlášení pomocí sociálních sítí.
+    # URL for logging in using social networks.
     path('social/', include('allauth.socialaccount.urls'), name='account-allauth-social'),
 
-    # Stránkapro přihlášení.
+    # Page for logging in.
     path('login/', LoginView.as_view(), name='account-login'),
 
-    # Stránkapro registraci.
+    # Page for signing up.
     path('signup/', SignupView.as_view(), name='account-signup'),
 
 ]

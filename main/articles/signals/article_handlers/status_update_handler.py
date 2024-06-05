@@ -5,16 +5,16 @@ from ...schema.article_schema import ArticleSchema
 
 def handle_status_pre_save(article):
     '''
-    Handler pro zachycení signálu pre_save pro změnu statusu článku.
+    Handler for capturing the pre_save signal for changing the article status.
 
-    Handler ověřuje, zda instance článku již existuje (není to nový objekt).
-    Pokud existuje, načte se stará instance článku na základě primárního klíče (pk)
-    a uloží se původní status do atributu `previous_status`.
+    The handler checks if the article instance already exists (it's not a new object).
+    If it exists, the old instance of the article is loaded based on the primary key (pk),
+    and the original status is saved to the `previous_status` attribute.
 
-    Pokud je instance nový objekt, atribut `previous_status` se nastaví na None.
+    If the instance is a new object, the `previous_status` attribute is set to None.
     '''
 
-    # Zkontrolujte, zda instance již existuje (není to nový objekt)
+    # Check if the instance already exists (it's not a new object)
     if article.pk:
         article_class = article._meta.model
         old_instance = article_class.objects.get(pk=article.pk)
@@ -25,20 +25,20 @@ def handle_status_pre_save(article):
 
 async def handle_status_post_save(article):
     '''
-    Asynchronní handler pro zachycení post_save signálu pro změnu statusu článku.
+    Asynchronous handler for capturing the post_save signal for changing the article status.
 
-    Handler ověřuje, zda již byl tento kód proveden (kontrola atributu `_status_save_done`).
-    Pokud ne, zkontroluje, zda se status článku změnil.
+    The handler checks if this code has already been executed (checking the `_status_save_done` attribute).
+    If not, it checks if the article status has changed.
 
-    Pokud se status změnil a nový status je 'publish', článek se zaindexuje pomocí `ArticleSchema`,
-    a pokud není nastavený datum publikování, nastaví se na aktuální datum a čas.
-    A pokud se status změnil a původní status byl 'publish', článek se odstraní z indexu Whoosh.
+    If the status has changed and the new status is 'publish', the article is indexed using `ArticleSchema`,
+    and if the publication date is not set, it is set to the current date and time.
+    If the status has changed and the previous status was 'publish', the article is removed from the Whoosh index.
 
-    Nakonec se nastaví atribut `_status_save_done` na True, aby se zabránilo opakovanému
-    spuštění tohoto kódu, a instance se uloží.
+    Finally, the `_status_save_done` attribute is set to True to prevent repeated
+    execution of this code, and the instance is saved.
     '''
 
-    # Kontrola, zda již byl tento kod proveden
+    # Check if this code has already been executed
     if not hasattr(article, '_status_save_done'):
 
         if article.previous_status != article.status:
@@ -51,6 +51,6 @@ async def handle_status_post_save(article):
             elif article.previous_status == 'publish':
                 ArticleSchema().delete_article_from_index(article.id)
 
-            # Nastavení '_status_save_done' pro kontrolu, zda již byl tento kod proveden
+            # Set '_status_save_done' to control if this code has already been executed
             article._status_save_done = True
             article.save()

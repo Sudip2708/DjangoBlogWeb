@@ -6,30 +6,19 @@ from ..views.article_detail import ArticleDetailView
 from ..views.article_update import ArticleUpdateView
 
 
-# Definování adres začínajících s prefixem 'article/'
+# Defining URLs starting with the prefix 'article/'
 urlpatterns = [
 
-    # Zobrazení stránky pro vytvoření nového článku.
+    # Display the page for creating a new article.
     path('create/<str:current_tab>/', ArticleCreateView.as_view(), name='article-create'),
 
-    # Zobrazení stránky pro úpravu již existujícího článku.
+    # Display the page for updating an existing article.
     path('<slug:slug>/update/<str:current_tab>/', ArticleUpdateView.as_view(), name='article-update'),
 
-    # Stránka pro potvrzení smazání článku.
+    # Page for confirming the deletion of an article.
     path('<slug:slug>/delete/',  ArticleDeleteView.as_view(), name='article-delete'),
 
-    # Zobrazení konkrétního článku.
+    # Display a specific article.
     path('<slug:slug>/', ArticleDetailView.as_view(), name='article-detail'),
 
 ]
-
-
-
-
-
-
-
-
-
-
-

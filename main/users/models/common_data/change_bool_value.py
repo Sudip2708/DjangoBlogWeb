@@ -1,12 +1,12 @@
 def change_bool_value(dictionary, field_key):
     '''
-    Funkce pro změnu boolean hodnot ve slovníku.
+    Function for changing boolean values in a dictionary.
 
-    Funkce obdrží slovník s příslušnými daty a klíč,
-    dle kterého následně ve slovníku vyhledá zápis
-    a změní bool hodnotu na její opak.
+    This function receives a dictionary with the relevant data and a key,
+    based on which it then searches for the entry in the dictionary
+    and changes the boolean value to its opposite.
 
-    Funkce vrací slovník s aktualizovanými daty.
+    The function returns the dictionary with updated data.
     '''
 
     try:

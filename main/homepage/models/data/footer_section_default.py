@@ -1,4 +1,4 @@
-# Původní hodnoty pro nastavení footeru
+# Default values for footer settings
 
 DEFAULT_ADDRESS_VALUES = {
     "company_name": {"value": "Bootstrap Blog",

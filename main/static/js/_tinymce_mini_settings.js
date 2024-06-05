@@ -1,9 +1,9 @@
-// Script pro nastavení editoru TinyMCE pro editaci HomePage
+// Script for setting up TinyMCE editor for editing the HomePage
 
 /*
-Scrip je vložen v této šabloně:
+This script is included in this template:
 main/templates/0_base/_head/__scripts__.html
-Scrip je použit v těchto částech kodu:
+This script is used in these parts of the code:
 main/templates/1_home/_hero/__edit_section__.html
 main/templates/1_home/_intro/__edit_section__.html
 main/templates/1_home/_divider/__edit_section__.html
@@ -11,28 +11,29 @@ main/templates/1_home/_latest_articles/__edit_section__.html
 main/templates/1_home/_newsletter/__edit_section__.html
 */
 
-// **Nastavení inicializace TinyMCE simple verze**
+// Configuration for initializing the simple version of TinyMCE
 tinymce.init({
 
-    // **Výběr elementu pomocí třídy CSS**
+    // Selecting the element using CSS class
     selector: '.tinymce-simple',
 
-    // **Použít pouze základní plugin a atomatické nastavování velikosti dle textu**
+    // Use only basic plugin and automatic resizing based on text
     plugins: ['basic', 'autoresize'],
 
-    // **Skrytí položek menu**
+    // Hide menu items
     menubar: false,
 
-    // **Základní nástrojová lišta**
+    // Basic toolbar
     toolbar:  'styles fontfamily fontsizeinput | bold italic underline | lineheight | forecolor backcolor',
 
-    // Skrytí loga TinyMCE
+    // Hide TinyMCE branding
     branding: false,
     statusbar: false,
-    // Nastavení výšky (dle textu)
-    autoresize_bottom_margin: 25, // Dolní okraj editoru (v pixelech)
-    autoresize_overflow_padding: 10, // Padding po stranách editoru (v pixelech)
-    max_height: 500, // Maximální výška editoru (v pixelech)
-    min_height: 50 // Minimální výška editoru (v pixelech)
+
+    // Set height (based on text)
+    autoresize_bottom_margin: 25, // Bottom margin of the editor (in pixels)
+    autoresize_overflow_padding: 10, // Padding on the sides of the editor (in pixels)
+    max_height: 500, // Maximum height of the editor (in pixels)
+    min_height: 50 // Minimum height of the editor (in pixels)
 
 });

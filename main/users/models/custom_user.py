@@ -8,60 +8,58 @@ from .custom_user_data.profile_picture_processing import profile_picture_process
 
 class CustomUser(AbstractUser, UserSettingsMixin):
     '''
-    Třída definující nastavení polí pro přihlášeného uživatele.
+    Class defining field settings for authenticated users.
 
-    Třída dědí z tříd:
-    - AbstractUser: Třída poskytující implementaci běžných funkcí pro správu uživatelského účtu.
-    - UserSettingsMixin: Třída pro oddělení obsahu pro správu a nastavení postranních panelů.
+    The class inherits from:
+    - AbstractUser: Class providing implementation of common functions for managing user accounts.
+    - UserSettingsMixin: Class for separating content for managing and setting sidebar panels.
 
-    Třída vytváří nebo přepisuje tyto pole:
-    - email: Email uživatele.
-    - username: Jméno zvolené uživatelem.
-    - username_slug: Slug pro jméno zvolené uživatelem (pro URL).
-    - profile_picture: Profilový obrázek uživatele.
-    - profile_picture_thumbnail: Miniatura profilového obrázku.
+    The class creates or overrides these fields:
+    - email: User's email.
+    - username: User-chosen username.
+    - username_slug: Slug for the user-chosen username (for URL).
+    - profile_picture: User's profile picture.
+    - profile_picture_thumbnail: Thumbnail of the profile picture.
 
-    Z mixinu UserSettingsMixin třída dědí tato pole:
-    - sidebar_settings: Pole pro slovník s daty pro nastavení vzhledu bočního panelu.
-    - sidebar_order: Pole pro slovník s daty pro nastavení pořadí bočních panelů.
-    - settings: Pole pro slovník s daty pro další dodatečná nastavení.
+    From the UserSettingsMixin mixin, the class inherits these fields:
+    - sidebar_settings: Field for a dictionary with data for setting the appearance of the sidebar.
+    - sidebar_order: Field for a dictionary with data for setting the order of sidebar panels.
+    - settings: Field for a dictionary with data for additional user settings.
 
-    Z třídy AbstractUser dědí ještě i tato pole:
-    - id: Identifikační číslo uživatele.
-    - password: Heslo uživatele.
-    - first_name: Jméno uživatele.
-    - last_name: Příjmení uživatele.
-    - date_joined: Datum registrace.
-    - last_login: Datum posledního přihlášení.
-    - is_superuser: Nastavení, jestli je uživatel i superuživatel.
-    - is_staff: Nastavení, jestli je uživatel ve skupině staff.
-    - is_active: Nastavení, jestli je uživatel přihlášen.
-    - groups: Nastavení skupin, do kterých uživatel patří.
-    - user_permissions: Nastavení uživatelových práv.
+    It also inherits these fields from the AbstractUser class:
+    - id: User's identification number.
+    - password: User's password.
+    - first_name: User's first name.
+    - last_name: User's last name.
+    - date_joined: Date of registration.
+    - last_login: Date of the last login.
+    - is_superuser: Setting whether the user is also a superuser.
+    - is_staff: Setting whether the user is in the staff group.
+    - is_active: Setting whether the user is logged in.
+    - groups: Settings for groups to which the user belongs.
+    - user_permissions: User's permissions settings.
 
-    Třída definuje tyto atributy pro profilové obrázky:
-    - default_picture: Cesta z Media k defaultnímu obrázku (použit při vytvoření instance bez udání obrázku).
-    - upload_path: Cesta z Media pro uložení všech velikostních variant hlavního obrázku.
-    - new_picture: Boolean hodnota, zda došlo k novému nahrání obrázku (nastavuje se ve formuláři po obdržení
-                   nového souboru pro obrázek a je zachytávána v post_save signálu pro zpracování obrázku).
+    The class defines these attributes for profile pictures:
+    - default_picture: Path from Media to the default picture (used when creating an instance without specifying an image).
+    - upload_path: Path from Media to save all size variants of the main image.
+    - new_picture: Boolean value indicating whether a new image has been uploaded (set in the form after receiving a new image file and captured in the post_save signal for image processing).
 
-    Třída dále nastavuje atribut:
-    - USERNAME_FIELD: Definice pole, které se má použít jako primární identifikátor pro přihlášení (zde 'email').
-    - REQUIRED_FIELDS: Přepsání defaultní hodnoty ('email') hodnotou pro 'username' pro vyřešení konfliktu s migrací.
+    Furthermore, the class sets:
+    - USERNAME_FIELD: Definition of the field to be used as the primary identifier for login (here 'email').
+    - REQUIRED_FIELDS: Overriding the default value ('email') with the value for 'username' to resolve conflicts with migration.
 
-    A přes 'objects' nastavuje vlastního manažera,
-    který se má použít pro změnu nastavení identifikace uživatele
-    a superuživatele (z uživatelského jména na email).
+    And it sets a custom manager via 'objects',
+    which should be used to change the user and superuser identification settings (from username to email).
 
-    Metody definované v této části modelu:
-    - __str__: Získání textové reprezentace modelu (dle hodnoty pole pro jméno autora).
-    - profile_picture_processing: Metoda pro úpravu profilového obrázku.
+    Methods defined in this part of the model:
+    - __str__: Getting the text representation of the model (based on the value of the author's name field).
+    - profile_picture_processing: Method for processing the profile picture.
 
-    Metody definované v UserSettingsMixin:
-    - get_sorted_sidebar_panels: Metoda vrací data pro vykreslení postranních panelů v nastaveném pořadí.
-    - change_sidebar_bool_value: Metoda pro změnu boolean hodnot pro nastavení bočního panelu.
-    - change_sidebar_order_value: Metoda pro změnu pořadí bočních panelů.
-    - change_settings_bool_value: Metoda pro změnu boolean hodnot pro dodatečná nastavení uživatele.
+    Methods defined in UserSettingsMixin:
+    - get_sorted_sidebar_panels: Method returns data for rendering sidebar panels in the specified order.
+    - change_sidebar_bool_value: Method for changing boolean values for sidebar settings.
+    - change_sidebar_order_value: Method for changing the order of sidebar panels.
+    - change_settings_bool_value: Method for changing boolean values for additional user settings.
     '''
 
     email = models.EmailField(
@@ -104,8 +102,8 @@ class CustomUser(AbstractUser, UserSettingsMixin):
     objects = CustomUserManager()
 
     def __str__(self):
-        return self.username_slug
+        return self.slug
 
     def profile_picture_processing(self):
-        ''' Metoda pro úpravu profilového obrázku (a vytvoření miniatury). '''
+        ''' Method for processing the profile picture (and creating a thumbnail). '''
         return profile_picture_processing(self)

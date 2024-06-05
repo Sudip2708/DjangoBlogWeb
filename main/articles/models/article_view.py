@@ -5,20 +5,20 @@ from users.models.custom_user import CustomUser
 
 class ArticleView(models.Model):
     '''
-    Model reprezentující zobrazení článku.
+    Model representing a view of an article.
 
-    Tento model uchovává informace o zobrazení článku, včetně uživatele, který článek zobrazil,
-    a obsahuje následující pole:
-    - article: Pole typu ForeignKey, které odkazuje na článek, který byl zobrazen.
-    - user: Pole typu ForeignKey, které odkazuje na uživatele, který zobrazil článek.
-        (Toto pole může být prázdné pro nepřihlášené uživatele).
-    - ip_address: Pole pro IP adresu uživatele, použité pro rozlišení jedinečných přístupů u nepřihlášených uživatelů.
-    - created: Pole pro datum a čas vytvoření instance (zobrazení článku).
+    This model stores information about the view of an article, including the user who viewed the article,
+    and includes the following fields:
+    - article: ForeignKey field referencing the article that was viewed.
+    - user: ForeignKey field referencing the user who viewed the article.
+        (This field may be empty for unauthenticated users).
+    - ip_address: Field for the user's IP address, used to differentiate unique views for unauthenticated users.
+    - created: Field for the date and time the instance (article view) was created.
 
-    Metody modelu:
-    - __str__: Získání textové reprezentace modelu (dle hodnoty jména uživatele).
-    - record_view: Zaznamená zhlédnutí článku.
-    - get_view_count: Vrací počet zhlédnutí článku.
+    Model methods:
+    - __str__: Obtains the textual representation of the model (based on the username).
+    - record_view: Records a view of the article.
+    - get_view_count: Returns the count of views for the article.
     '''
 
     article = models.ForeignKey(
@@ -54,9 +54,9 @@ class ArticleView(models.Model):
     @staticmethod
     def record_view(article, user, ip_address):
         '''
-        Statická metoda pro zaznamenání zhlédnutí článku.
+        Static method to record a view of the article.
 
-        Vytváří novou instanci ArticleView s příslušnými parametry.
+        Creates a new instance of ArticleView with the relevant parameters.
         '''
         ArticleView.objects.create(
             article=article,
@@ -67,8 +67,8 @@ class ArticleView(models.Model):
     @staticmethod
     def get_view_count(article):
         '''
-        Statická metoda pro získání počtu zhlédnutí článku.
+        Static method to retrieve the count of views for the article.
 
-        Vrací počet záznamů v ArticleView pro daný článek.
+        Returns the count of records in ArticleView for the given article.
         '''
         return ArticleView.objects.filter(article=article).count()

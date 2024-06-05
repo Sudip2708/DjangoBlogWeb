@@ -4,50 +4,50 @@ from ...models.article_author import ArticleAuthor
 
 def get_queryset(self):
     '''
-    Metoda slouží k získání článků zobrazených na stránce.
+    Method for retrieving articles displayed on the page.
 
-    Metoda je určená pro tyto URL:
-    - my-articles: Stránka pro články od autora navázaného na uživatele.
+    This method is intended for the following URL:
+    - my-articles: Page for articles by the author associated with the user.
 
-    Stránka má následující záložky:
-    - all: Všechny články řazené dle data vytvoření sestupně.
-    - drafted: Rozepsané články.
-    - publish: Publikované články (články pro veřejnost).
-    - archive: Archivované články.
+    The page has the following tabs:
+    - all: All articles sorted by creation date in descending order.
+    - drafted: Drafted articles.
+    - publish: Published articles (articles for the public).
+    - archive: Archived articles.
 
-    Atributy přidané nebo měněné touto metodou:
-    - self.page_title: Název stránky.
-    - self.page_title_mobile: Atribut pro nadpis stránky pro mobilní zařízení.
-    - self.current_tab: Atribut pro název aktuálně zobrazené záložky.
+    Attributes added or modified by this method:
+    - self.page_title: Page title.
+    - self.page_title_mobile: Attribute for the page title for mobile devices.
+    - self.current_tab: Attribute for the name of the currently displayed tab.
 
-    Metoda v tomto kodu zjistí z jaké záložky požadavek přišel
-    a následně vytváří obsah pro zobrazení článků dané záložky.
+    This method determines the originating tab from the request's address
+    and then creates content for displaying articles of the corresponding tab.
 
-    Metoda vrací instance článků určených k zobrazení na stránce.
+    The method returns instances of articles intended for display on the page.
     '''
 
-    # Načtení aktuální záložky z adresy stránky
+    # Retrieving the current tab from the page address
     self.current_tab = self.kwargs.get('current_tab')
 
-    # Načtení autora
+    # Retrieving the author
     author = ArticleAuthor.objects.get(id=self.user.linked_author.id)
 
-    # Načtení článků pro záložku Drafted
+    # Retrieving articles for the Drafted tab
     if self.current_tab == 'drafted':
         queryset = Article.objects.filter(author=author, status='drafted') \
                                   .order_by('-created')
 
-    # Načtení článků pro záložku Publish
+    # Retrieving articles for the Publish tab
     elif self.current_tab == 'publish':
         queryset = Article.objects.filter(author=author, status='publish') \
                                   .order_by('-created')
 
-    # Načtení článků pro záložku Archiv
+    # Retrieving articles for the Archive tab
     elif self.current_tab == 'archive':
         queryset = Article.objects.filter(author=author, status='archive') \
                                   .order_by('-created')
 
-    # Načtení článků pro záložku All
+    # Retrieving articles for the All tab
     else:
         queryset = Article.objects.filter(author=author) \
                                   .order_by('-created')

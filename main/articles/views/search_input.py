@@ -7,63 +7,63 @@ from ..forms.search_form import ArticleSearchForm
 
 class SearchInputView(BaseView, TemplateView):
     '''
-    Pohled pro zobrazení stránky pro vyhledávání (a pro oznam chyb ve vyhledávání).
+    View for displaying the search page (and for announcing search errors).
 
-    Pohled zpracovává následující URL:
-    - article-search-input: Stránka pro zadání vyhledávání.
-    - article-search-error: Stránka pro oznámení chyb vyhledávání.
+    This view handles the following URLs:
+    - article-search-input: Page for entering search.
+    - article-search-error: Page for announcing search errors.
 
-    Atributy přetížené z TemplateView:
-    - template_name: Určuje cestu k šabloně, která bude použita pro zobrazení výsledků.
+    Attributes overridden from TemplateView:
+    - template_name: Specifies the path to the template used for rendering the results.
 
-    Pohled dědí ze základní třídy TemplateView a vlastní třídy BaseView
-    a následně vytváří obsah pro vykreslení stránky pro hledání
-    a pro vykreslení stránky oznamující chybu v zadání vyhledávání.
+    The view inherits from the base class TemplateView and its custom class BaseView
+    and then creates content for rendering the search page
+    and for rendering the page announcing an error in entering the search.
     '''
 
     template_name = '2_main/22__search__.html'
 
     def get_context_data(self, **kwargs):
         '''
-        Metoda pro předání kontextu potřebného pro vykreslení stránky.
+        Method for passing the context needed to render the page.
 
-        Metoda dědí z třídy BaseView následující obsah:
-        - context['user']: Instance uživatele.
-        - context['url_name']: URL jménu adresy z které požadavek přišel.
-        - context['sidebar_search_form']: Formulář pro hledání (pro postranní panel).
-        - context['published_categories']: Publikované kategorie (pro dropdown menu a postranní panel).
-        - context['footer']: Data pro vykreslení patičky (na domácí stránce je již zahrnuto)
-        - context['user_thumbnail']: Miniatura profilového obrázku (pro přihlášeného a nepřihlášeného uživatele).
+        This method inherits the content from the BaseView class:
+        - context['user']: User instance.
+        - context['url_name']: URL name of the address from which the request came.
+        - context['sidebar_search_form']: Search form (for the sidebar).
+        - context['published_categories']: Published categories (for dropdown menu and sidebar).
+        - context['footer']: Data for rendering the footer (already included on the homepage)
+        - context['user_thumbnail']: Profile thumbnail (for logged-in and logged-out users).
 
-        Metoda přepsuje tento obsah (pouze v případě chyby):
-        - context['sidebar_search_form']:  Formulář pro hledání (pro postranní panel).
+        This method overrides this content (only in case of error):
+        - context['sidebar_search_form']: Search form (for the sidebar).
 
-        Metoda přidává tento obsah:
-        - context['page_title']: Nadpis stránky.
-        - context['search_form']: Formulář pro hledání na stránce
+        This method adds this content:
+        - context['page_title']: Page title.
+        - context['search_form']: Search form on the page.
 
-        Metoda nejprve načte kontext nadřazené třídy
-        a po té zkontroluje, zda požadavek přišel ze stránky pro vyhledávání,
-        pokud ano, vytvoří pro ní nadpis a prázdný formulář.
+        The method first loads the context of the parent class,
+        and then checks if the request came from the search page,
+        if so, it creates a title and an empty form for it.
 
-        Následně metoda zkontroluje zda přišel požadavek ze stránbky pro oznam chyb,
-        pokud ano, získá přeposlaná data a následně z nich vytáhne
-        formulář s oznamem o chybě a předvyplněnými daty.
-        Ten pak předá jako kontext pro vykreslení vlastního formuláře
-        a zároveň s ním i přepíše formulář obdržený z BaseView,
-        určený pro hledání z postranního panelu.
-        A následně vytvoří a přidá nadpis.
+        Then the method checks if the request came from the error announcement page,
+        if so, it retrieves the forwarded data and then extracts
+        the form with the error message and pre-filled data from it.
+        It then passes it as context for rendering its own form
+        and also overwrites the form received from BaseView,
+        intended for searching from the sidebar.
+        And then it creates and adds a title.
 
-        Metoda vrací obsah potřebný pro vykreslení stránky
+        The method returns the content needed to render the page.
         '''
         context = super().get_context_data(**kwargs)
 
-        # Kontex pro stránku vyhledávání
+        # Context for the search page
         if self.url_name == 'article-search-input':
             context['page_title'] = 'Search in Articles'
             context['search_form'] = ArticleSearchForm()
 
-        # Kontex pro stránku s výpisem chyb
+        # Context for the page with error display
         elif self.url_name == 'article-search-error':
             error_data = self.request.session.pop('search_error_data', None)
             if error_data:

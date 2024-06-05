@@ -9,47 +9,48 @@ from .article_create import ArticleCreateView
 @method_decorator(login_required, name='dispatch')
 class ArticleUpdateView(ArticleCreateView, UpdateView):
     '''
-    Pohled pro úpravu vytvořeného článku (jen pro přihlášené uživatele).
+    View for updating a created article (only for logged-in users).
 
-    Pohled zpracovává následující URL:
-    - article-update: Stránka pro úpravu vytvořeného článku.
+    This view processes the following URL:
+    - article-update: Page for updating a created article.
 
-    Pohled dědí ze základní třídy UpdateView a vlastní třídy pro vytvoření článku ArticleCreateView.
+    The view inherits from the base class UpdateView and its custom class for creating articles ArticleCreateView.
 
-    Atributy poděděné z ArticleCreateView:
-    - self.model: Určuje model, se kterým tento pohled pracuje.
-    - self.template_name: Určuje cestu k šabloně, která bude použita pro zobrazení výsledků.
-    - self.user: Instance uživatele (buď CustomUser, nebo AnonymousUserWithSettings).
-    - self.url_name: URL jméno adresy, ze které požadavek přišel.
+    Attributes inherited from ArticleCreateView:
+    - self.model: Specifies the model this view works with.
+    - self.template_name: Specifies the path to the template used for rendering the results.
+    - self.user: User instance (either CustomUser or AnonymousUserWithSettings).
+    - self.url_name: URL name of the address from which the request came.
 
-    Metody poděděné z ArticleCreateView:
-    - get_form_class: Metoda, která vrací formulář na základě zvolené záložky stránky.
-    - form_valid: Metoda, která do formuláře přidává informace o autorovi (instanci autora).
-    - get_success_url: Metoda, která vytváří adresu pro přesměrování po úspěšném založení článku.
+    Methods inherited from ArticleCreateView:
+    - get_form_class: Method for returning the form based on the selected tab of the page.
+    - form_valid: Method for adding author information (author instance) to the form.
+    - get_success_url: Method for creating the redirect URL after successfully creating the article.
 
-    Metody přetížené z ArticleCreateView:
-    - get_context_data: Metoda, která vytváří obsah pro vykreslení šablony.
+    Overridden methods from ArticleCreateView:
+    - get_context_data: Method for creating the context.
+
     '''
 
     def get_context_data(self, **kwargs):
         '''
-        Metoda pro vytvoření kontextu.
+        Method for creating the context.
 
-        Kontext poděděný z ArticleCreateView:
-        - context['user']: Instance uživatele.
-        - context['url_name']: URL jménu adresy z které požadavek přišel.
-        - context['sidebar_search_form']: Formulář pro hledání (pro postranní panel).
-        - context['published_categories']: Publikované kategorie (pro dropdown menu a postranní panel).
-        - context['footer']: Data pro vykreslení patičky (na domácí stránce je již zahrnuto)
-        - context['user_thumbnail']: Miniatura profilového obrázku (pro přihlášeného a nepřihlášeného uživatele).
+        Context inherited from ArticleCreateView:
+        - context['user']: User instance.
+        - context['url_name']: URL name of the address from which the request came.
+        - context['sidebar_search_form']: Search form (for the sidebar).
+        - context['published_categories']: Published categories (for the dropdown menu and sidebar).
+        - context['footer']: Data for rendering the footer (already included on the home page)
+        - context['user_thumbnail']: Profile thumbnail (for logged-in and logged-out users).
 
-        Kontext vytvořený tímto pohledem:
-        - context['tab_urls']: Reverzní cesty na jednotlivé záložky.
-        - context['current_tab']: Aktuální záložka stránky.
-        - context['title']: Název stránky.
+        Context created by this view:
+        - context['tab_urls']: Reverse paths to individual tabs.
+        - context['current_tab']: Current page tab.
+        - context['title']: Page title.
         '''
 
-        # Vytvoření URL adres pro jednotlivé záložky stránky
+        # Creating URLs for individual page tabs
         tab_urls = {
             'for_overview': reverse('article-update', kwargs={'slug': self.object.slug, 'current_tab': 'overview'}),
             'for_content': reverse('article-update', kwargs={'slug': self.object.slug, 'current_tab': 'content'}),

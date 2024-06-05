@@ -12,36 +12,36 @@ from .my_articles_data.get_context_data import get_context_data
 @method_decorator(login_required, name='dispatch')
 class MyArticlesView(BaseView, ListView):
     '''
-    Pohled pro stránku s vlastními články uživatele (jen pro přihlášené uživatele).
+    View for the page displaying the user's own articles (only for logged-in users).
 
-    Pohled zpracovává následující URL:
-    - my-articles: Stránka pro články od autora navázaného na uživatele.
+    This view processes the following URL:
+    - my-articles: Page for articles authored by the user associated with the logged-in user.
 
-    Stránka má následující záložky:
-    - all: Všechny články řazené dle data vytvoření sestupně.
-    - drafted: Rozepsané články.
-    - publish: Publikované články (články pro veřejnost).
-    - archive: Archivované články.
+    The page has the following tabs:
+    - all: All articles sorted by creation date in descending order.
+    - drafted: Drafted articles.
+    - publish: Published articles (articles for the public).
+    - archive: Archived articles.
 
-    Pohled dědí ze základní třídy ListView a vlastní třídy BaseView.
+    The view inherits from the base class ListView and its custom class BaseView.
 
-    Atributy přetížené z ListView:
-    - self.template_name: Určuje cestu k šabloně, která bude použita pro zobrazení výsledků.
-    - self.context_object_name: Název proměnné v kontextu šablony, která bude obsahovat výsledný seznam objektů.
+    Attributes overridden from ListView:
+    - self.template_name: Specifies the path to the template used for rendering the results.
+    - self.context_object_name: Name of the variable in the template context that will contain the resulting list of objects.
 
-    Atributy poděděné z BaseView:
-    - self.user: Instance uživatele (buď CustomUser, nebo AnonymousUserWithSettings).
-    - self.url_name: URL jménu adresy z které požadavek přišel.
+    Attributes inherited from BaseView:
+    - self.user: User instance (either CustomUser or AnonymousUserWithSettings).
+    - self.url_name: URL name of the address from which the request came.
 
-    Atributy definované tímto pohledem:
-    - self.page_title: Název stránky.
-    - self.page_title_mobile: Atribut pro nadpis stránky pro mobilní zařízení.
-    - self.current_tab: Atribut pro název aktuálně zobrazené záložky.
+    Attributes defined by this view:
+    - self.page_title: Page title.
+    - self.page_title_mobile: Attribute for the page title for mobile devices.
+    - self.current_tab: Attribute for the name of the currently displayed tab.
 
-    Metody definované v tomto pohledu:
-    - get_queryset: Metoda slouží k získání instancí článků a dat potřebných pro vykreslení stránky.
-    - get_paginate_by: Metoda pro určení počtu článků na stránce při stránkování výsledků vyhledávání.
-    - get_context_data: Metoda pro předání kontextu potřebného pro vykreslení stránky.
+    Methods defined in this view:
+    - get_queryset: Method for retrieving instances of articles and data needed to render the page.
+    - get_paginate_by: Method for determining the number of articles per page when paginating search results.
+    - get_context_data: Method for passing the context needed to render the page.
     '''
 
     template_name = '3_articles/30__base__.html'
@@ -49,29 +49,29 @@ class MyArticlesView(BaseView, ListView):
 
     def get_queryset(self):
         '''
-        Metoda slouží k získání instancí článků a dat potřebných pro vykreslení stránky.
+        Method for retrieving instances of articles and data needed to render the page.
 
-        Metoda volá stejnojmenou metodu uloženou v samostatném souboru
-        a vrací její výsledek.
+        This method calls the method with the same name stored in a separate file
+        and returns its result.
         '''
         return get_queryset(self)
 
     def get_paginate_by(self, queryset):
         '''
-        Metoda pro určení počtu článků na stránce při stránkování výsledků vyhledávání.
+        Method for determining the number of articles per page when paginating search results.
 
-        Metoda volá stejnojmenou metodu uloženou v samostatném souboru
-        a vrací její výsledek.
+        This method calls the method with the same name stored in a separate file
+        and returns its result.
         '''
         return get_paginate_by(self, queryset)
 
     def get_context_data(self, **kwargs):
         '''
-        Metoda pro předání kontextu potřebného pro vykreslení stránky.
+        Method for passing the context needed to render the page.
 
-        Metoda nejprve načte kontext nadřazené třídy,
-        a po té volá stejnojmenou metodu uloženou v samostatném souboru,
-        které kontext předá a následně vrací její výsledek.
+        This method first loads the context of the parent class,
+        and then calls the method with the same name stored in a separate file,
+        passing it the context, and then returns its result.
         '''
         context = super().get_context_data(**kwargs)
         return get_context_data(self, context, **kwargs)

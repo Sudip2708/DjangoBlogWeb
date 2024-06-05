@@ -3,13 +3,13 @@ from ...models.article_author import ArticleAuthor
 
 def get_or_create_author(user):
     '''
-    Funkce pro získání instance autora na základě uživatelského jména.
+    Function to retrieve an author instance based on the user's username.
 
-    Funkce vyhledá dle instance uživatele instanci autora v modelu ArticleAuthor.
-    Pokud uživatel nemá založený účet autora,
-    vytvoří pro něj metodou 'get_or_create' nový.
+    The function searches for an author instance in the ArticleAuthor model based on the user instance.
+    If the user does not have an associated author account,
+    it creates a new one using the 'get_or_create' method.
 
-    Funkce navrací instanci autora.
+    The function returns the author instance.
     '''
 
     author, created = ArticleAuthor.objects.get_or_create(linked_user=user)

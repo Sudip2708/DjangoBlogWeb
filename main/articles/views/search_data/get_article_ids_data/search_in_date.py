@@ -4,27 +4,27 @@ from dateutil.parser import parse as parse_date
 
 def search_in_date(before_date, after_date):
     '''
-    Funkce pro vytvoření dotazu a popisného textu pro hledání článků podle data.
+    Function for creating a query and descriptive text for searching articles by date.
 
-    Funkce obdrží řetězec ve formátu 'yyyy-mm-dd' pro datum před a po.
+    The function receives strings in the format 'yyyy-mm-dd' for the date before and after.
 
-    Následně tyto řetězce převede na objekt datetime (nebo hodnotu None)
-    a použije je pro vytvoření dotazu pro hledání v indexu schématu,
-    a poté vytvoří popisný text dle parametrů hledání.
+    It then converts these strings to datetime objects (or None values)
+    and uses them to create a query for searching in the schema index,
+    and then creates descriptive text according to the search parameters.
 
-    Funkce vrací vytvořený dotaz a popisný text.
+    The function returns the created query and descriptive text.
     '''
 
-    # Převod zadaných hodnot na objekty datetime nebo None
+    # Conversion of provided values to datetime objects or None
     parse_before = parse_date(before_date) if before_date else None
     parse_after = parse_date(after_date) if after_date else None
 
-    # Vytvoření dotazu
+    # Creating the query
     date_query = DateRange("published",
                            parse_after, parse_before,
-                           startexcl=False, endexcl=False )
+                           startexcl=False, endexcl=False)
 
-    # Vytvoření popisného textu pro výsledek hledání
+    # Creating descriptive text for the search result
     display_text = ""
     if before_date:
         display_text += f"published before {parse_before.strftime('%d. %m. %Y')}"

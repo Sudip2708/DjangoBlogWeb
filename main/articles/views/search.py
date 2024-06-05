@@ -13,40 +13,40 @@ from .search_data.get_context_data import get_context_data
 
 class SearchView(BaseView, ListView):
     '''
-    Pohled pro zpracování vyhledávání v článcích.
+    View for processing article searches.
 
-    Pohled zpracovává následující URL:
-    - article-search: Základní adresa sloužící k zadání a vyhodnocení parametrů hledání.
-    - article-search-results: Stránka pro zobrazení výsledků vyhledávání.
-    - article-search-similar: Stránka pro zobrazení podobných článků pro články z výsledku vyhledávání.
-    - article-search-results-category: Stránka pro zobrazení kategorií pro vásledek vyhledávání.
-    - article-search-similar-category: Stránka pro zobrazení kategorií pro podobné články.
+    This view handles the following URLs:
+    - article-search: Base address for entering and evaluating search parameters.
+    - article-search-results: Page for displaying search results.
+    - article-search-similar: Page for displaying similar articles for articles from the search results.
+    - article-search-results-category: Page for displaying categories for the search result.
+    - article-search-similar-category: Page for displaying categories for similar articles.
 
-    Pohled dědí ze základní třídy ListView a vlastní třídy BaseView.
+    The view inherits from the base class ListView and its custom class BaseView.
 
-    Atributy přetížené z ListView:
-    - template_name: Určuje cestu k šabloně, která bude použita pro zobrazení výsledků.
-    - context_object_name: Název proměnné v kontextu šablony, která bude obsahovat výsledný seznam objektů.
+    Attributes overridden from ListView:
+    - template_name: Specifies the path to the template used for rendering the results.
+    - context_object_name: Name of the variable in the template context that will contain the resulting list of objects.
 
-    Atributy poděděné z BaseView:
-    - self.user: Instance uživatele (buď CustomUser, nebo AnonymousUserWithSettings).
-    - self.url_name: URL jménu adresy z které požadavek přišel.
+    Attributes inherited from BaseView:
+    - self.user: User instance (either CustomUser or AnonymousUserWithSettings).
+    - self.url_name: URL name of the address from which the request came.
 
-    Atributy definované tímto pohledem:
-    - self.search_parameters: Atribut obsahující slovník s parametry dotazu
-    - self.article_ids: Atribut pro ID článku na základě hledaných dat.
-    - self.page_title: Atribut pro nadpis stránky
-    - self.page_title_mobile: Atribut pro nadpis stránky pro mobilní zařízení.
-    - self.display_text: Atribut pro popisný text, informující o tom, co bylo hledáno.
-    - self.info_text: Informační text (zobrazí se, když není nalezen žádný podobný článek).
-    - self.category_items: Atribut pro výčet kategorií pro výsledek hledání.
-    - self.current_category_tab: Atribut pro aktuálně vybranou záložku kategorie.
+    Attributes defined by this view:
+    - self.search_parameters: Attribute containing a dictionary with query parameters.
+    - self.article_ids: Attribute for article IDs based on the searched data.
+    - self.page_title: Attribute for the page title.
+    - self.page_title_mobile: Attribute for the page title for mobile devices.
+    - self.display_text: Attribute for descriptive text informing about what was searched for.
+    - self.info_text: Information text (displayed when no similar article is found).
+    - self.category_items: Attribute for listing categories for search results.
+    - self.current_category_tab: Attribute for the currently selected category tab.
 
-    Metody definované v tomto pohledu:
-    - get: Metoda pro získání dat formuláře pro vykreslení stránky.
-    - get_queryset: Metoda slouží k získání instancí článků a dat potřebných pro vykreslení stránky.
-    - get_paginate_by: Metoda pro určení počtu článků na stránce při stránkování výsledků vyhledávání.
-    - get_context_data: Metoda pro předání kontextu potřebného pro vykreslení stránky.
+    Methods defined in this view:
+    - get: Method for retrieving form data to render the page.
+    - get_queryset: Method for retrieving instances of articles and data needed to render the page.
+    - get_paginate_by: Method for determining the number of articles per page when paginating search results.
+    - get_context_data: Method for passing the context needed to render the page.
     '''
 
     template_name = '3_articles/30__base__.html'
@@ -54,68 +54,68 @@ class SearchView(BaseView, ListView):
 
     def get(self, request, *args, **kwargs):
         '''
-        Metoda pro zpracování příchozího požadavku.
+        Method for processing incoming requests.
 
-        Metoda nejprve ověří dle jména URL, zda jde o požadavek ze stránky article-search,
-        sloužící k zadání a vyhodnocení parametrů hledání.
+        The method first checks by URL name whether it is a request from the article-search page,
+        used for entering and evaluating search parameters.
 
-        Pokud ano, načte instanci formuláře a provede kontrolu zadaných dat.
-        Pokud jsou data v pořádky volá funkci pro vytvoření slovníku s parametry pro hledání,
-        a přepošle tento slovník na adrsu article-search-results,
-        pro získání dat potřebných pro zobrazení výsledků hledání.
+        If so, it loads an instance of the form and performs a check of the entered data.
+        If the data is correct, it calls a function to create a dictionary with search parameters,
+        and redirects this dictionary to the article-search-results address,
+        to obtain data needed to display search results.
 
-        Pokud data nejsou validní volá stránku pro zobrazení chyb v zadání.
+        If the data is not valid, it redirects to the page for displaying errors in entry.
 
-        Pokud metoda get obdrží již předpřipravená data, volá metodu get nadřazené třídy
-        a předává data na další zpracování.
+        If the get method receives pre-prepared data, it calls the get method of the parent class
+        and passes the data for further processing.
         '''
 
-        # Zachycení dotazu od uživatele
+        # Capturing user query
         if self.url_name == 'article-search':
 
             form = ArticleSearchForm(request.GET)
             if form.is_valid():
 
-                # Vytvoření slovníků s parametry pro hledání a přeposlání zpracovaných dat
+                # Creating dictionaries with search parameters and forwarding processed data
                 search_parameters = get_search_parameters(form.cleaned_data)
-                return redirect(reverse('article-search-results',kwargs={'query': search_parameters}))
+                return redirect(reverse('article-search-results', kwargs={'query': search_parameters}))
 
             else:
 
-                # Přeposlání formuláře na stránku pro zobrazení chyby
-                request.session['search_error_data'] = {'form_data': form.data,}
+                # Forwarding the form to the page for displaying entry errors
+                request.session['search_error_data'] = {'form_data': form.data}
                 return redirect(reverse('article-search-error'))
 
         else:
 
-            # Pokud se jedná přeposlání zpracovaných dat, je volána metoda get nadřazené třídy
+            # If it is a forwarding of processed data, the get method of the parent class is called
             return super().get(request, *args, **kwargs)
 
     def get_queryset(self):
         '''
-        Metoda slouží k získání instancí článků a dat potřebných pro vykreslení stránky.
+        Method for retrieving instances of articles and data needed to render the page.
 
-        Metoda volá stejnojmenou metodu uloženou v samostatném souboru
-        a vrací její výsledek.
+        This method calls the method with the same name stored in a separate file
+        and returns its result.
         '''
         return get_queryset(self)
 
     def get_paginate_by(self, queryset):
         '''
-        Metoda pro určení počtu článků na stránce při stránkování výsledků vyhledávání.
+        Method for determining the number of articles per page when paginating search results.
 
-        Metoda volá stejnojmenou metodu uloženou v samostatném souboru
-        a vrací její výsledek.
+        This method calls the method with the same name stored in a separate file
+        and returns its result.
         '''
         return get_paginate_by(self, queryset)
 
     def get_context_data(self, **kwargs):
         '''
-        Metoda pro předání kontextu potřebného pro vykreslení stránky.
+        Method for passing the context needed to render the page.
 
-        Metoda nejprve načte kontext nadřazené třídy,
-        a po té volá stejnojmenou metodu uloženou v samostatném souboru,
-        které kontext předá a následně vrací její výsledek.
+        This method first loads the context of the parent class,
+        and then calls the method with the same name stored in a separate file,
+        passing it the context, and then returns its result.
         '''
         context = super().get_context_data(**kwargs)
         return get_context_data(self, context, **kwargs)

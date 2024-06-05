@@ -11,16 +11,12 @@ from .article_author_handlers import (
 )
 
 
-# Zpracování defaultních hodnot
+# Processing default values
 @receiver(pre_save, sender=ArticleAuthor)
 def handle_title_slug(sender, instance, **kwargs):
     default_values_handler.handle_default_values_pre_save(instance)
 
-
-# Zpracování profilového obrázku
+# Processing profile picture
 @receiver(post_save, sender=ArticleAuthor)
 async def handle_picture_post_save(sender, instance, **kwargs):
     await profile_picture_handler.handle_picture_post_save(instance)
-
-
-

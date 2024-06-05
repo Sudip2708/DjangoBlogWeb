@@ -3,39 +3,27 @@ from django.urls import path
 from ..views.article_list import ArticleListView
 
 
-# Definování adres začínajících s prefixem 'articles/'
+# Defining URLs starting with the prefix 'articles/'
 urlpatterns = [
 
-    # Zobrazení všech článků.
+    # Display all articles.
     path('all', ArticleListView.as_view(), name='article-list'),
 
-    # Zobrazení článků pro vybranou kategorii.
+    # Display articles for the selected category.
     path('category/<slug:category_slug>/', ArticleListView.as_view(), name='article-category-list'),
 
-    # Zobrazení článků pro vybraný tag.
+    # Display articles for the selected tag.
     path('tag/<slug:tag_slug>/', ArticleListView.as_view(), name='article-tag-list'),
 
-    # Zobrazení článků pro vybraný tag, rostříděných dle kategorií.
+    # Display articles for the selected tag, sorted by categories.
     path('tag/<slug:tag_slug>/category/<slug:category_slug>/', ArticleListView.as_view(),
          name='article-tag-list-category'),
 
-    # Zobrazení podobných článků pro vybraný tag (na základě shodných tagů).
+    # Display similar articles for the selected tag (based on matching tags).
     path('tag/<slug:tag_slug>/similar/', ArticleListView.as_view(), name='article-tag-list-similar'),
 
-    # Zobrazení podobných článků pro vybraný tag, rostříděných dle kategorií.
+    # Display similar articles for the selected tag, sorted by categories.
     path('tag/<slug:tag_slug>/similar/category/<slug:category_slug>/', ArticleListView.as_view(),
          name='article-tag-list-similar-category'),
 
 ]
-
-
-
-
-
-
-
-
-
-
-
-

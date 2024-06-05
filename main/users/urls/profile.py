@@ -4,13 +4,13 @@ from ..views.profile_update_user import UserProfileView
 from ..views.profile_update_author import AuthorProfileView
 
 
-# Definování adres začínajících s prefixem 'profile/'
+# Defining URLs starting with the prefix 'profile/'
 urlpatterns = [
 
-    # Editace uživatelského účtu.
+    # Editing user account.
     path('update/user', UserProfileView.as_view(), name='profile-update-user'),
 
-    # Editace účtu autora.
+    # Editing author account.
     path('update/author', AuthorProfileView.as_view(), name='profile-update-author'),
 
 ]

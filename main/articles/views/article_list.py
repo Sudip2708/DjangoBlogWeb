@@ -9,38 +9,38 @@ from .article_list_data.get_context_data import get_context_data
 
 class ArticleListView(BaseView, ListView):
     '''
-    Pohled pro stránku s výpisem článků.
+    View for displaying a list of articles.
 
-    Pohled zpracovává následující URL:
-    - article-list: Stránka zobrazující všechny publikované články.
-    - article-category-list: Stránka zobrazující všechny publikované články roztříděné do kategorií.
-    - article-tag-list: Stránka pro zobrazení článků pro daný tag.
-    - article-tag-list-similar: Stránka pro zobrazení podobných článků pro daný tag.
-    - article-tag-list-category: Stránka pro zobrazení kategorií pro články pro daný tag.
-    - article-tag-list-similar-category: Stránka pro zobrazení kategorií pro podobné články pro daný tag.
+    This view processes the following URLs:
+    - article-list: Page displaying all published articles.
+    - article-category-list: Page displaying all published articles categorized.
+    - article-tag-list: Page displaying articles for a given tag.
+    - article-tag-list-similar: Page displaying similar articles for a given tag.
+    - article-tag-list-category: Page displaying categories for articles for a given tag.
+    - article-tag-list-similar-category: Page displaying categories for similar articles for a given tag.
 
-    Pohled dědí ze základní třídy ListView a vlastní třídy BaseView.
+    The view inherits from the base class ListView and its custom class BaseView.
 
-    Atributy přetížené z ListView:
-    - self.template_name: Určuje cestu k šabloně, která bude použita pro zobrazení výsledků.
-    - self.context_object_name: Název proměnné v kontextu šablony, která bude obsahovat výsledný seznam objektů.
+    Overridden attributes from ListView:
+    - self.template_name: Specifies the path to the template used for rendering the results.
+    - self.context_object_name: The name of the variable in the template context that will contain the resulting object list.
 
-    Atributy poděděné z BaseView:
-    - self.user: Instance uživatele (buď CustomUser, nebo AnonymousUserWithSettings).
-    - self.url_name: URL jménu adresy z které požadavek přišel.
+    Inherited attributes from BaseView:
+    - self.user: User instance (either CustomUser or AnonymousUserWithSettings).
+    - self.url_name: URL name of the address from which the request came.
 
-    Atributy definované tímto pohledem:
-    - self.page_title: Název stránky.
-    - self.page_title_mobile: Atribut pro nadpis stránky pro mobilní zařízení.
-    - self.page_subtitle: Podnázev stránky (zobrazí se, když je navigace pro kategorie skrytá).
-    - self.info_text: Informační text (zobrazí se, když není nalezen žádný podobný článek).
-    - self.current_category: Instance aktuálně vybrané kategorie (pouze pro kategorie).
-    - self.category_tabs = Seznam kategorií pro obsah self.article_ids (pouze pro kategorie).
+    Attributes defined by this view:
+    - self.page_title: Page title.
+    - self.page_title_mobile: Attribute for page title for mobile devices.
+    - self.page_subtitle: Page subtitle (displayed when navigation for categories is hidden).
+    - self.info_text: Informational text (displayed when no similar article is found).
+    - self.current_category: Instance of the currently selected category (only for categories).
+    - self.category_tabs = List of categories for content self.article_ids (only for categories).
 
-    Metody definované v tomto pohledu:
-    - get_queryset: Metoda slouží k získání instancí článků a dat potřebných pro vykreslení stránky.
-    - get_paginate_by: Metoda pro určení počtu článků na stránce při stránkování výsledků vyhledávání.
-    - get_context_data: Metoda pro předání kontextu potřebného pro vykreslení stránky.
+    Methods defined in this view:
+    - get_queryset: Method for retrieving article instances and data needed for rendering the page.
+    - get_paginate_by: Method for determining the number of articles per page when paginating search results.
+    - get_context_data: Method for passing the context required for rendering the page.
     '''
 
     template_name = '3_articles/30__base__.html'
@@ -48,29 +48,29 @@ class ArticleListView(BaseView, ListView):
 
     def get_queryset(self, *args, **kwargs):
         '''
-        Metoda slouží k získání instancí článků a dat potřebných pro vykreslení stránky.
+        Method for retrieving article instances and data needed for rendering the page.
 
-        Metoda volá stejnojmenou metodu uloženou v samostatném souboru
-        a vrací její výsledek.
+        This method calls the same-named method stored in a separate file
+        and returns its result.
         '''
         return get_queryset(self, *args, **kwargs)
 
     def get_paginate_by(self, queryset):
         '''
-        Metoda pro určení počtu článků na stránce při stránkování výsledků vyhledávání.
+        Method for determining the number of articles per page when paginating search results.
 
-        Metoda volá stejnojmenou metodu uloženou v samostatném souboru
-        a vrací její výsledek.
+        This method calls the same-named method stored in a separate file
+        and returns its result.
         '''
         return get_paginate_by(self, queryset)
 
     def get_context_data(self, **kwargs):
         '''
-        Metoda pro předání kontextu potřebného pro vykreslení stránky.
+        Method for passing the context required for rendering the page.
 
-        Metoda nejprve načte kontext nadřazené třídy,
-        a po té volá stejnojmenou metodu uloženou v samostatném souboru,
-        které kontext předá a následně vrací její výsledek.
+        This method first loads the context of the parent class,
+        and then calls the same-named method stored in a separate file,
+        passing the context, and returns its result.
         '''
         context = super().get_context_data(**kwargs)
         return get_context_data(self, context, **kwargs)

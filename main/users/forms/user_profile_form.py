@@ -6,33 +6,33 @@ from ..models.custom_user import CustomUser
 
 class UserProfileForm(forms.ModelForm):
     '''
-    Formulář pro správu uživatelského účtu.
+    Form for managing the user account.
 
-    Tento formulář definuje pole přístupná uživateli pro editaci obsahu.
-    Je použit v pohledu UserProfileView.
+    This form defines the fields accessible to the user for editing content.
+    It is used in the UserProfileView.
 
-    Definovaná pole:
-    - username: Přezdívka uživatele.
-    - first_name: Křestní jméno uživatele.
-    - last_name: Příjmení uživatele.
-    - profile_picture: Profilový obrázek autora.
+    Defined fields:
+    - username: The user's nickname.
+    - first_name: The user's first name.
+    - last_name: The user's last name.
+    - profile_picture: The user's profile picture.
     '''
 
     class Meta:
         '''
-        Třída Meta je speciální vnitřní třída pro konfiguraci formuláře.
+        The Meta class is a special inner class for configuring the form.
 
-        Třída Meta poskytuje metadata a konfiguraci pro hlavní třídu,
-        a zde definuje následující atributy:
-        - model: Určuje model, na kterém je formulář založen.
-        - fields: Definuje pole, která budou zahrnuta ve formuláři.
-        - widgets: Umožňuje specifikovat vlastní widgety pro jednotlivá pole formuláře.
+        The Meta class provides metadata and configuration for the main class,
+        and here it defines the following attributes:
+        - model: Specifies the model on which the form is based.
+        - fields: Defines the fields to be included in the form.
+        - widgets: Allows specifying custom widgets for individual form fields.
 
-        Widgety použité v tomto kódu:
-        - forms.TextInput: Pole pro zadání krátkého textu.
-        - forms.FileInput: Pole pro nahrání souborů.
-          (Pro pole obrázku je použito forms.FileInput s atributem accept nastaveným na 'image/*',
-          aby se omezilo nahrání pouze obrazových souborů.)
+        Widgets used in this code:
+        - forms.TextInput: A field for entering short text.
+        - forms.FileInput: A field for uploading files.
+          (For the image field, forms.FileInput is used with the accept attribute set to 'image/*',
+          to restrict uploads to image files only.)
         '''
 
         model = CustomUser
@@ -48,18 +48,18 @@ class UserProfileForm(forms.ModelForm):
 
     def clean(self):
         '''
-        Metoda pro očištění a ověření dat formuláře.
+        Method for cleaning and validating form data.
 
-        Používá se k provedení dodatečných kontrol a úprav na vyčištěných datech
-        (cleaned_data), poté, co byla zvalidována standardním způsobem.
+        It is used to perform additional checks and modifications on cleaned_data
+        after it has been validated in the standard way.
 
-        Dále kontroluje, zda byl nahraný profilový obrázek.
-        Pokud ano, ověří, zda jde o platný obrázek pomocí modulu PIL.
-        Pokud ověření proběhne úspěšně, nastaví atributu instance článku new_picture na True,
-        což slouží pro detekci změny obrázku a pro další zpracování v signálech post_save instance článku.
-        Pokud ověření neproběhne úspěšně, vyvolá výjimku forms.ValidationError s informací.
+        It also checks if a profile picture has been uploaded.
+        If so, it verifies whether it is a valid image using the PIL module.
+        If the verification is successful, it sets the new_picture attribute of the instance to True,
+        which serves to detect the change of the image and for further processing in the post_save signals of the instance.
+        If the verification is not successful, it raises a forms.ValidationError with the information.
 
-        Navrací očištěná data pro další zpracování.
+        Returns the cleaned data for further processing.
         '''
 
         cleaned_data = super().clean()

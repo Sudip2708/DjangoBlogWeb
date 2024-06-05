@@ -6,29 +6,29 @@ from ..models.intro_section import HomePageIntroSection
 
 class IntroSectionForm(forms.ModelForm):
     '''
-    Formulář pro nastavení Intro sekce domácí stránky.
+    Form for setting up the Intro section of the homepage.
 
-    Formulář je navázán na pohled EditIntroSection.
+    This form class is associated with the EditIntroSection view.
 
-    Formulář definuje tato pole:
-    - display_intro_section: Viditelnost sekce.
-    - intro_title: Nadpis sekce.
-    - intro_description: Doplňující text.
+    The form defines the following fields:
+    - display_intro_section: Visibility of the section.
+    - intro_title: Section title.
+    - intro_description: Additional text.
     '''
 
     class Meta:
         '''
-        Třída Meta je speciální vnitřní třída pro konfiguraci formuláře.
+        The Meta class is a special inner class for configuring the form.
 
-        Třída Meta poskytuje metadata a konfiguraci pro hlavní třídu,
-        a zde definuje následující atributy:
-        - model: Určuje model, na kterém je formulář založen.
-        - fields: Definuje pole, která budou zahrnuta ve formuláři.
-        - widgets: Umožňuje specifikovat vlastní widgety pro jednotlivá pole formuláře.
+        The Meta class provides metadata and configuration for the main class,
+        and here it defines the following attributes:
+        - model: Specifies the model on which the form is based.
+        - fields: Defines the fields to be included in the form.
+        - widgets: Allows specifying custom widgets for individual form fields.
 
-        Widgety použité v tomto kódu:
-        - forms.CheckboxInput: Pole pro zaškrtávací boolean hodnotu.
-        - TinyMCE: Pole pro zadání textu pomocí modulu TinyMCE.
+        Widgets used in this code:
+        - forms.CheckboxInput: Field for boolean checkbox values.
+        - TinyMCE: Field for entering text using the TinyMCE module.
         '''
 
         model = HomePageIntroSection
@@ -38,4 +38,3 @@ class IntroSectionForm(forms.ModelForm):
             'intro_title': TinyMCE(),
             'intro_description': TinyMCE(),
         }
-

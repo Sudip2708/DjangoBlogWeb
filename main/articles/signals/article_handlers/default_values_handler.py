@@ -1,44 +1,43 @@
 from django.utils.text import slugify
 
 from common_data.get_unique_value import get_unique_value
-
 from ...models.article_category import ArticleCategory
 
 
 def handle_default_values_pre_save(article):
     '''
-    Handler pro zachycení signálu pre_save pro kontrolu výchozích hodnot.
+    Handler to capture the pre_save signal for checking default values.
 
-    Handler kontroluje, zda se jedná o vytvoření nové instance (instance ještě nemá přidělené ID).
-    Pokud ano, zkontroluje, zda je vyplněna kategorie článku.
-    Pokud není, přidá článku kategorii 'Uncategorized' (kategorie s ID 1 v modelu ArticleCategory).
-    Dále pak kontroluje, zda je vyplněn status článku.
-    Pokud není, přidá článku status 'drafted' (který slouží pro vytváření článků).
+    The handler checks if it's creating a new instance (the instance doesn't have an assigned ID yet).
+    If it is, it checks if the article category is filled.
+    If not, it adds the category 'Uncategorized' to the article (category with ID 1 in the ArticleCategory model).
+    Then it checks if the article status is filled.
+    If not, it adds the status 'drafted' (which is used for creating articles).
 
-    Následně handler zkontroluje, zda článek obsahuje nadpis.
-    Pokud ne, volá funkci 'get_unique_value' pro vytvoření jedinečného názvu.
+    The handler then checks if the article contains a title.
+    If not, it calls the 'get_unique_value' function to create a unique name.
 
-    A poté handler zkontroluje, zda hodnota pole 'slug' odpovídá hodnotě pole 'title' pro nadpis článku.
-    Pokud ne, aktualizuje toto pole správnou hodnotou.
+    Then the handler checks if the value of the 'slug' field corresponds to the value of the 'title' field for the article title.
+    If not, it updates this field with the correct value.
     '''
-    # Kontrola, zda se jedná o vytvoření instance
+    # Check if it's creating a new instance
     if not article.id:
 
-        # Vytvoření kategorie, pokud není
+        # Create a category if it doesn't exist
         if not article.category:
             article.category = ArticleCategory.objects.get(id=1)
 
-        # Vytvoření statusu, pokud není
+        # Create a status if it doesn't exist
         if not article.status:
             article.status = 'drafted'
 
-    # Vytvoření jedinečného jména článku
+    # Create a unique article title
     if not article.title:
         model = article._meta.model
         field = 'title'
-        value = f'Článek {article.id}'
+        value = f'Article {article.id}'
         article.title = get_unique_value(model, field, value)
 
-    # Kontrola, zda slug odpovídá aktuální hodnotě názvu článku
+    # Check if the slug matches the current title value of the article
     if article.slug != slugify(article.title):
         article.slug = slugify(article.title)

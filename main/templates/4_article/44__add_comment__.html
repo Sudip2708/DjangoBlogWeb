@@ -2,9 +2,6 @@
 
 <div class="mb-5">
 
-    <!-- Title and Comment Count -->
-    {% include '4_article/_comment_data/_title_and_comment_count_.html' %}
-
     <!-- Comment Form -->
     <form method="post" action="." class="commenting-form">
 
@@ -12,7 +9,25 @@
         {% csrf_token %}
 
         <!-- Comment Input Field with Submit Button -->
-        {% include '4_article/_comment_data/_comment_creation_.html' %}
+        <div class="row gy-3">
+
+            <!-- Field for entering a comment -->
+            <div class="col-md-12">
+                <div class="form-group">
+                    <h3 class="h6 mb-4">Add Comment</h3>
+                    {{ form.content }}
+                </div>
+            </div>
+
+            <!-- Submit button -->
+            <div class="col-md-12">
+                <button class="btn btn-secondary" type="submit">
+                    Submit Comment
+                </button>
+            </div>
+
+        </div>
+
 
     </form>
 

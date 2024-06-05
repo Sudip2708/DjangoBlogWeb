@@ -2,12 +2,13 @@ from ...forms.article_overview_form import ArticleOverviewForm
 from ...forms.article_content_form import ArticleContentForm
 from ...forms.article_settings_form import ArticleSettingsForm
 
+
 def get_form_class(self):
     '''
-    Metoda pro navrácení příslušného formuláře (dle záložky stránky).
+    Method to return the appropriate form class (based on the page tab).
 
-    Metoda vytváří atribut current_tab pro aktuálně vybranou záložku
-    a následně pro tuto záložku vrací příslušnou třídu pro vytvoření formuláře.
+    The method creates the current_tab attribute for the currently selected tab
+    and then returns the corresponding class for creating the form for this tab.
     '''
 
     self.current_tab = self.kwargs.get('current_tab')

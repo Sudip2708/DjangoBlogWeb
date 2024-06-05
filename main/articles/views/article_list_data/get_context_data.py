@@ -1,37 +1,37 @@
 def get_context_data(self, context, **kwargs):
     '''
-    Metoda pro přidání obsahu potřebného k vykreslení stránky.
+    Method for adding content necessary for rendering the page.
 
-    Metoda je určená pro tyto URL:
-    - article-list: Stránka zobrazující všechny publikované články.
-    - article-category-list: Stránka zobrazující všechny publikované články roztříděné do kategorií.
-    - article-tag-list: Stránka pro zobrazení článků pro daný tag.
-    - article-tag-list-similar: Stránka pro zobrazení podobných článků pro daný tag.
-    - article-tag-list-category: Stránka pro zobrazení kategorií pro články pro daný tag.
-    - article-tag-list-similar-category: Stránka pro zobrazení kategorií pro podobné články pro daný tag.
+    This method is intended for the following URLs:
+    - article-list: Page displaying all published articles.
+    - article-category-list: Page displaying all published articles sorted into categories.
+    - article-tag-list: Page for displaying articles for a specific tag.
+    - article-tag-list-similar: Page for displaying similar articles for a specific tag.
+    - article-tag-list-category: Page for displaying categories for articles for a specific tag.
+    - article-tag-list-similar-category: Page for displaying categories for similar articles for a specific tag.
 
-    Metoda dědí z třídy BaseView následující obsah:
-    - context['user']: Instance uživatele.
-    - context['url_name']: URL jménu adresy z které požadavek přišel.
-    - context['sidebar_search_form']: Formulář pro hledání (pro postranní panel).
-    - context['published_categories']: Publikované kategorie (pro dropdown menu a postranní panel).
-    - context['footer']: Data pro vykreslení patičky (na domácí stránce je již zahrnuto)
-    - context['user_thumbnail']: Miniatura profilového obrázku (pro přihlášeného a nepřihlášeného uživatele).
+    The method inherits the following content from the BaseView class:
+    - context['user']: User instance.
+    - context['url_name']: URL name of the address from which the request came.
+    - context['sidebar_search_form']: Search form (for the sidebar).
+    - context['published_categories']: Published categories (for dropdown menu and sidebar).
+    - context['footer']: Data for rendering the footer (included on the home page)
+    - context['user_thumbnail']: Profile picture thumbnail (for logged-in and logged-out users).
 
-    Metoda přidává kombinace těchto obsahů:
-    - context['page_title']: Nadpis stránky.
-    - context['mobile_page_title']: Nadpis stránky pro mobilní zařízení (jen pro všechny články a kategorie).
-    - context['page_subtitle']: Podnadpis (pokud nejsou zobrazeny kategorie).
-    - context['info_text']: Informační text o případném nenalezení žádného výsledu (pro podobné články).
-    - context['current_category']: Instance aktuálně vybrané kategorie.
-    - context['category_tabs']: Instance kategorií pro daný obsah.
-    - context['current_tag']: Instance aktuálně vybraného tagu.
+    The method adds combinations of these contents:
+    - context['page_title']: Page title.
+    - context['mobile_page_title']: Page title for mobile devices (only for all articles and categories).
+    - context['page_subtitle']: Subtitle (if categories are not displayed).
+    - context['info_text']: Informational text about a possible lack of any results (for similar articles).
+    - context['current_category']: Instance of the currently selected category.
+    - context['category_tabs']: Category instances for the given content.
+    - context['current_tag']: Instance of the currently selected tag.
     '''
 
-    # Kontex pro všechny stránky
+    # Context for all pages
     context['page_title'] = self.page_title
 
-    # Kontex pro stránku se všemi články
+    # Context for the page with all articles
     if self.url_name == 'article-list':
         context['page_title_mobile'] = self.page_title_mobile
         if self.user.settings.get('show_category_navigation'):
@@ -40,7 +40,7 @@ def get_context_data(self, context, **kwargs):
         else:
             context['page_subtitle'] = self.page_subtitle
 
-    # Kontex pro stránku s kategoriemi
+    # Context for the page with categories
     elif self.url_name == 'article-category-list':
         context['page_title_mobile'] = self.page_title_mobile
         context['current_category'] = self.current_category
@@ -49,7 +49,7 @@ def get_context_data(self, context, **kwargs):
         else:
             context['page_subtitle'] = self.page_subtitle
 
-    # Pokud jsme na stránce s podobnýmy články na základě tagu
+    # If we are on the page with similar articles based on a tag
     elif self.url_name.startswith('article-tag'):
         context['current_tag'] = self.current_tag
         if not self.article_ids:

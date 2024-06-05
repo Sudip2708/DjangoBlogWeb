@@ -2,41 +2,42 @@ from .get_queryset_data.get_queryset_for_articles import get_queryset_for_articl
 from .get_queryset_data.get_queryset_for_categories import get_queryset_for_categories
 from .get_queryset_data.get_queryset_for_tags import get_queryset_for_tags
 
+
 def get_queryset(self, *args, **kwargs):
     '''
-    Metoda slouží k získání článků zobrazených na stránce.
+    Method for obtaining the articles displayed on the page.
 
-    Metoda je určená pro tyto URL:
-    - article-list: Stránka zobrazující všechny publikované články.
-    - article-category-list: Stránka zobrazující všechny publikované články roztříděné do kategorií.
-    - article-tag-list: Stránka pro zobrazení článků pro daný tag.
-    - article-tag-list-similar: Stránka pro zobrazení podobných článků pro daný tag.
-    - article-tag-list-category: Stránka pro zobrazení kategorií pro články pro daný tag.
-    - article-tag-list-similar-category: Stránka pro zobrazení kategorií pro podobné články pro daný tag.
+    This method is intended for the following URLs:
+    - article-list: Page displaying all published articles.
+    - article-category-list: Page displaying all published articles sorted into categories.
+    - article-tag-list: Page for displaying articles for a specific tag.
+    - article-tag-list-similar: Page for displaying similar articles for a specific tag.
+    - article-tag-list-category: Page for displaying categories for articles for a specific tag.
+    - article-tag-list-similar-category: Page for displaying categories for similar articles for a specific tag.
 
-    Atributy přidané nebo měněné touto metodou:
-    - self.page_title: Název stránky.
-    - self.page_title_mobile: Název stránky pro mobilní zařízení.
-    - self.page_subtitle: Podnázev stránky (zobrazí se, když je navigace pro kategorie skrytá).
-    - self.info_text: Informační text (zobrazí se, když není nalezen žádný podobný článek).
-    - self.current_category: Instance aktuálně vybrané kategorie (pouze pro kategorie).
-    - self.category_tabs = Seznam kategorií pro obsah self.article_ids (pouze pro kategorie).
+    Attributes added or modified by this method:
+    - self.page_title: Page title.
+    - self.page_title_mobile: Page title for mobile devices.
+    - self.page_subtitle: Subtitle (displayed when category navigation is hidden).
+    - self.info_text: Informational text (displayed when no similar articles are found).
+    - self.current_category: Instance of the currently selected category (only for categories).
+    - self.category_tabs: List of categories for the content in self.article_ids (only for categories).
 
-    Metoda v tomto kodu zjistí z jaké adresy požadavek přišel
-    a následně volá příslušnou metodu pro spracování požadavku.
+    In this code, the method determines from which address the request came
+    and then calls the appropriate method to process the request.
 
-    Metoda vrací instance článků určených k zobrazení na stránce.
+    The method returns instances of articles intended to be displayed on the page.
     '''
 
-    # Nastavení pro stránku zobrazující všechny články
+    # Configuration for the page displaying all articles
     if self.url_name == 'article-list':
         queryset = get_queryset_for_articles(self)
 
-    # Nastavení pro stránky zobrazující obsah pro určitou kategorii.
+    # Configuration for pages displaying content for a specific category
     elif self.url_name == 'article-category-list':
         queryset = get_queryset_for_categories(self)
 
-    # Nastavení pro stránky zobrazující obsah pro určitý tag.
+    # Configuration for pages displaying content for a specific tag
     elif self.url_name.startswith('article-tag'):
         queryset = get_queryset_for_tags(self)
 

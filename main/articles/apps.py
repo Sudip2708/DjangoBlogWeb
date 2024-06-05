@@ -5,6 +5,6 @@ class ArticlesConfig(AppConfig):
     name = 'articles'
 
     def ready(self):
-        ''' Registrace manipulátorů pro signály. '''
+        ''' Signal Handler Registration. '''
         import articles.signals.article_signals # noqa
         import articles.signals.article_author_signals  # noqa

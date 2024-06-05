@@ -3,19 +3,44 @@
 <div class="mb-5">
 
     <!-- Title and Comment Count -->
-    {% include '4_article/_comment_data/_title_and_comment_count_.html' %}
+    <header>
+        <h3 class="h6 mb-4">
+            Article Comments
+            <span class="fw-light text-gray-600 small ms-2">
+                ({{ article.comments.count }})
+            </span>
+        </h3>
+    </header>
 
     <!-- Loop through comments -->
-    {% for comment in article.get_comments %}
+    {% for comment in article.comments.all %}
 
         <!-- Container grouping inner items -->
         <div class="d-flex align-items-start">
 
             <!-- User Profile Picture -->
-            {% include '4_article/_comment_data/_comment_author_picture_.html' %}
+            <img alt="Comment User Profile Picture"
+                 src="{{ user_thumbnail }}?{% now 'U' %}"
+                 class="img-fluid rounded-circle flex-shrink-0"
+                 width="50"/>
 
             <!-- Display Comment with Author Name and Creation Date -->
-            {% include '4_article/_comment_data/_comment_display_.html' %}
+            <div class="pb-4 ms-3 mb-4">
+
+                <!-- User's name -->
+                <strong>{{ comment.user.username }}</strong>
+
+                <!-- Comment date -->
+                <p class="small text-gray-500">
+                    {{ comment.created|timesince }} ago
+                </p>
+
+                <!-- Comment -->
+                <p class="mb-0 text-sm">
+                    {{ comment.content }}
+                </p>
+
+            </div>
 
         </div>
 

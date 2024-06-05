@@ -153,34 +153,34 @@ MEDIA_ROOT = BASE_DIR / 'media'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 #############################################################################################
-# Nastavení pro Session pro ukládání dat pro nepřihlášené uživatele
+# Settings for Session to store data for non-logged-in users
 
-# Nastavení pro ukládání session dat do databáze
+# Settings for storing session data in the database
 SESSION_ENGINE = 'django.contrib.sessions.backends.db'
 
-# Další SESSION související nastavení
-SESSION_COOKIE_AGE = 3600  # Doba platnosti session cookie v sekundách (např. 1 hodina)
-SESSION_SAVE_EVERY_REQUEST = True  # Ukládat session data na každý request
+# Additional SESSION related settings
+SESSION_COOKIE_AGE = 3600  # Session cookie expiration time in seconds (e.g., 1 hour)
+SESSION_SAVE_EVERY_REQUEST = True  # Save session data on every request
 
 #############################################################################################
 
-# Nastavení pro taggit, aby nerozlišoval mezi malým a velkým písmem
+# Settings for taggit to be case insensitive
 TAGGIT_CASE_INSENSITIVE = True
 
 #############################################################################################
 
-# Nastavení cesty pro indexaci Whoosh
+# Settings for Whoosh indexing path
 INDEX_DIRECTORY = BASE_DIR / 'articles' / 'schema' / 'article_index'
 
 #############################################################################################
-# Nastavení pro AllAuth:
+# Settings for AllAuth:
 
-# označení pořadí v site (v nové verzi AllAuth se již site nezobrazuje, tak je možné, že toto nastavení není již potřeba)
+# site order designation (in the new version of AllAuth, site is no longer displayed, so this setting may not be needed)
 SITE_ID = 1
 
-# Do MIDDLEWARE přidat řádek "allauth.account.middleware.AccountMiddleware",
+# Add the line "allauth.account.middleware.AccountMiddleware" to MIDDLEWARE
 
-# Definice backendů pro autentizaci
+# Definition of authentication backends
 AUTHENTICATION_BACKENDS = [
     # Needed to login by username in Django admin, regardless of `allauth`
     'django.contrib.auth.backends.ModelBackend',
@@ -188,35 +188,35 @@ AUTHENTICATION_BACKENDS = [
     'allauth.account.auth_backends.AuthenticationBackend',
 ]
 
-# Tato volba určuje, zda je povinné mít e-mail při vytváření uživatelského účtu:
-# Nastavením na True vyžadujete, aby uživatel poskytl e-mail při registraci.
+# This option specifies whether it is mandatory to have an email when creating a user account:
+# Setting it to True requires the user to provide an email during registration.
 ACCOUNT_EMAIL_REQUIRED = True
-# Tato volba určuje, zda je povinné mít uživatelské jméno při vytváření uživatelského účtu:
-# Nastavením na False umožňujete uživatelům vytvářet účty bez uživatelského jména.
+# This option specifies whether it is mandatory to have a username when creating a user account:
+# Setting it to False allows users to create accounts without a username.
 ACCOUNT_USERNAME_REQUIRED = False
-# Tato volba nastavuje metodu autentizace pro uživatelský účet.
-# V tomto případě je nastaveno na 'email', což znamená, že se uživatelé přihlašují pomocí své e-mailové adresy.
+# This option sets the authentication method for the user account.
+# In this case, it is set to 'email', which means users log in using their email address.
 ACCOUNT_AUTHENTICATION_METHOD = 'email'
 
-# Tato volba určuje, kam bude uživatel přesměrován po úspěšném přihlášení.
-# V tomto případě je uživatel přesměrován na domovskou stránku '/'.
+# This option specifies where the user will be redirected after successful login.
+# In this case, the user is redirected to the home page '/'.
 LOGIN_REDIRECT_URL = '/'
 ACCOUNT_LOGIN_ON_EMAIL_CONFIRMATION = 'auto'
 ACCOUNT_LOGOUT_ON_GET = True
-#Zakázání potvrzovacího pole pro přihlášení k soc. sítím
+# Disable confirmation field for social media login
 # SOCIALACCOUNT_LOGIN_ON_GET=True
 
-# Nastavení pro vývoj:
+# Development settings:
 ACCOUNT_EMAIL_VERIFICATION = "none"
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
-# Nastavení pro produkci:
-# Tato volba určuje, zda je vyžadováno ověření e-mailu po registraci.
-# Nastavením na 'optional' znamená, že ověření e-mailu je volitelné pro uživatele.
-# Může být nastaveno i na 'mandatory' (povinné) nebo 'none' (žádné ověření).
-#ACCOUNT_EMAIL_VERIFICATION = "mandatory"
-#EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-#+Dále je třeba nastavit další informace o SMTP serveru, jako jsou EMAIL_HOST, EMAIL_PORT, EMAIL_USE_TLS, atd. Podle konkrétního nastavení vašeho SMTP serveru.
+# Production settings:
+# This option specifies whether email verification is required after registration.
+# Setting it to 'optional' means email verification is optional for users.
+# It can also be set to 'mandatory' or 'none'.
+# ACCOUNT_EMAIL_VERIFICATION = "mandatory"
+# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+# Additionally, you need to set other SMTP server details like EMAIL_HOST, EMAIL_PORT, EMAIL_USE_TLS, etc. according to your SMTP server configuration.
 
 # Provider specific settings
 SOCIALACCOUNT_PROVIDERS = {
@@ -238,15 +238,15 @@ SOCIALACCOUNT_PROVIDERS = {
     }
 }
 '''
-'openid': Tato položka znamená, že vaše aplikace chce používat OpenID Connect pro autentizaci uživatele. Získáváním openid získáváte identifikátor uživatele, který můžete použít k jednoznačnému identifikování uživatele.
-'email': Tato položka znamená, že žádáte o přístup k e-mailové adrese uživatele. Běžně je e-mailová adresa jednou z informací poskytovaných OpenID Connect.
-'profile': Tato položka znamená, že žádáte o přístup k dalším profilovým informacím o uživateli. To může zahrnovat jméno, příjmení, obrázek profilu a další informace, které jsou veřejně dostupné.
-'access_type': 'online': Určuje typ přístupu. V tomto případě je nastaveno na 'online', což znamená, že aplikace žádá o přístup online, a uživatel je přesměrován k přihlášení, pokud není přihlášen.
+'openid': This item means that your application wants to use OpenID Connect to authenticate the user. By acquiring openid, you obtain the user's identifier, which you can use to uniquely identify the user.
+'email': This item means that you are requesting access to the user's email address. The email address is usually one of the pieces of information provided by OpenID Connect.
+'profile': This item means that you are requesting access to additional profile information about the user. This may include the first name, last name, profile picture, and other publicly available information.
+'access_type': 'online': Specifies the type of access. In this case, it is set to 'online', which means the application requests online access, and the user is redirected to log in if not already logged in.
 '''
 
 #############################################################################################
 
-# Nastavení Crispy forms na Bottstrap 5:
+# Settings for Crispy forms to use Bootstrap 5:
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
 CRISPY_TEMPLATE_PACK = 'bootstrap5'
 ACCOUNT_FORMS = {
@@ -258,3 +258,5 @@ ACCOUNT_FORMS = {
     'reset_password': 'allauth.account.forms.ResetPasswordForm',
     'reset_password_from_key': 'allauth.account.forms.ResetPasswordKeyForm',
 }
+
+#############################################################################################

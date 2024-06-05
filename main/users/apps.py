@@ -6,5 +6,5 @@ class UsersConfig(AppConfig):
     name = 'users'
 
     def ready(self):
-        ''' Registrace manipulátorů pro signály. '''
+        ''' Signal Handler Registration. '''
         import users.signals.user_signals # noqa

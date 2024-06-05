@@ -6,34 +6,34 @@ from ..models.divider_section import HomePageDividerSection
 
 class DividerSectionForm(forms.ModelForm):
     '''
-    Formulář pro nastavení Divider sekce domácí stránky.
+    Form for setting up the Divider section of the home page.
 
-    Formulář je navázán na pohled EditDividerSection.
+    The form is linked to the EditDividerSection view.
 
-    Formulář definuje tato pole:
-    - display_divider_section: Viditelnost sekce.
-    - divider_image: Obrázek pozadí sekce.
-    - divider_text: Text sekce.
-    - divider_link_title: Popis odkazu.
-    - divider_link: URL odkazu.
+    The form defines the following fields:
+    - display_divider_section: Visibility of the section.
+    - divider_image: Background image of the section.
+    - divider_text: Text of the section.
+    - divider_link_title: Description of the link.
+    - divider_link: URL of the link.
     '''
 
     class Meta:
         '''
-        Třída Meta je speciální vnitřní třída pro konfiguraci formuláře.
+        The Meta class is a special inner class for configuring the form.
 
-        Třída Meta poskytuje metadata a konfiguraci pro hlavní třídu,
-        a zde definuje následující atributy:
-        - model: Určuje model, na kterém je formulář založen.
-        - fields: Definuje pole, která budou zahrnuta ve formuláři.
-        - widgets: Umožňuje specifikovat vlastní widgety pro jednotlivá pole formuláře.
+        The Meta class provides metadata and configuration for the main class,
+        and here it defines the following attributes:
+        - model: Specifies the model on which the form is based.
+        - fields: Defines the fields that will be included in the form.
+        - widgets: Allows specifying custom widgets for individual form fields.
 
-        Widgety použité v tomto kódu:
-        - forms.CheckboxInput: Pole pro zaškrtávací boolean hodnotu.
-        - forms.FileInput: Pole pro nahrání souborů (zde omezeno na obrázek).
-        - TinyMCE: Pole pro zadání textu pomocí modulu TinyMCE.
-        - forms.TextInput: Pole pro zadání krátkého textu.
-        - forms.URLInput: Pole pro zadání URL.
+        Widgets used in this code:
+        - forms.CheckboxInput: Field for checkbox boolean value.
+        - forms.FileInput: Field for uploading files (limited to images here).
+        - TinyMCE: Field for entering text using the TinyMCE module.
+        - forms.TextInput: Field for entering short text.
+        - forms.URLInput: Field for entering a URL.
         '''
 
         model = HomePageDividerSection

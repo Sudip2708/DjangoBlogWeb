@@ -5,17 +5,17 @@ from users.models.custom_user import CustomUser
 
 class ArticleComment(models.Model):
     '''
-    Model reprezentující komentář k článku.
+    Model representing a comment on an article.
 
-    Tento model uchovává informace o komentáři, který uživatel přidal k článku,
-    a obsahuje následující pole:
-    - article: Pole typu ForeignKey, které odkazuje na článek, ke kterému je komentář připojen.
-    - user: Pole typu ForeignKey, které odkazuje na uživatele, který vytvořil komentář.
-    - content: Pole pro obsah komentáře.
-    - created: Pole pro datum a čas vytvoření komentáře.
+    This model stores information about the comment that a user added to an article
+    and includes the following fields:
+    - article: ForeignKey field referencing the article to which the comment is attached.
+    - user: ForeignKey field referencing the user who created the comment.
+    - content: Field for the content of the comment.
+    - created: Field for the date and time the comment was created.
 
-    Metody modelu:
-    - __str__: Získání textové reprezentace modelu (dle hodnoty jména uživatele).
+    Model methods:
+    - __str__: Obtains the textual representation of the model (based on the username).
     '''
 
     article = models.ForeignKey(

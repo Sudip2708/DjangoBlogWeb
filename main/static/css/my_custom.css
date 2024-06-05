@@ -1,6 +1,6 @@
-/* ###################################### */
-/* DEFINICE VLASTNÍCH CSS (JEDNA POLOŽKA) */
-/* ###################################### */
+/* #################################### */
+/* CUSTOM CSS DEFINITIONS (SINGLE ITEM) */
+/* #################################### */
 
 /* background */
 .my-background-090909 { background: #090909; }
@@ -62,9 +62,9 @@
 /* width */
 .my-width-100 { width: 100%; }
 
-/* ##################################### */
-/* DEFINICE VLASTNÍCH CSS (VÍCE POLOŽEK) */
-/* ##################################### */
+/* ####################################### */
+/* CUSTOM CSS DEFINITIONS (MULTIPLE ITEMS) */
+/* ####################################### */
 
 .my-date-label {
     display: block;
@@ -101,9 +101,9 @@
     margin-left: 1rem;
 }
 
-/* ######################### */
-/* PŘEPISOVÁNÍ BOODSTRAP CSS */
-/* ######################### */
+/* ######################## */
+/* OVERRIDING BOOTSTRAP CSS */
+/* ######################## */
 
 /* dropdown items */
 .dropdown-menu li {
@@ -149,34 +149,34 @@
     outline: 4px solid white;
 }
 
-/* ######################### */
-/* PŘEPISOVÁNÍ OSTATNÍCH CSS */
-/* ######################### */
+/* #################### */
+/* OVERRIDING OTHER CSS */
+/* #################### */
 
-/* Šipky pro posun bočního panelu při najetí myši */
+/* Hover Sidebar Arrows */
 .bi.bi-arrow:hover {
     fill: #888888;
     transition: fill 0.3s ease;
 }
 
-/* Šipky pro posun bočního panelu při odjetí myši */
+/* Mouse-Out Sidebar Arrows */
 .bi.bi-arrow {
     transition: fill 0.1s ease;
 }
 
-/* ################ */
-/* NASTAVENÍ @MEDIA */
-/* ################ */
+/* ############### */
+/* @MEDIA SETTINGS */
+/* ############### */
 @media (max-width: 767px) {
     /*
     templates/1_home/_home_edit/_edit_data/_submit_button_with_display_checkbox_.html
     templates/3_articles/_articles_data/_view_setup_data/_author_.html
     */
     .d-flex.flex-wrap {
-        flex-direction: column; /* Sloupce se zobrazí pod sebou */
+        flex-direction: column; /* Columns Displayed Below Each Other */
     }
     /* templates/2_main/_search_data/_form_data/_input_field_.html */
     .col {
-        width: 100%; /* Sloupce zabírají celou šířku */
+        width: 100%; /* Columns Occupy Full Width */
     }
 }

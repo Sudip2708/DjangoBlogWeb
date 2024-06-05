@@ -1,18 +1,17 @@
 def setting_values_check(dictionary, default_values):
     '''
-    Funkce pro kontrolu položek slovníku dle defaultních hodnot.
+    Function for checking dictionary items against default values.
 
-    Funkce slouží k tomu, aby se dal aktualizovat seznam hodnot nastavení,
-    dle seznamu defaultních hodnot (zejména při jejich rozšíření).
-    Funkce obdrží slovník, který má být zkontrolován a slovník s defaultním nastavením.
-    Funkce následně projde všechny položky slovníku s defaultním nastavením
-    a kontroluje, zda kontrolovaný slovník obsahuje všechny klíče,
-    které jsou obsaženy v defaultních hodnotách.
+    The function is used to update the settings list based on the list of default values.
+    The function receives a dictionary to be checked and a dictionary with default settings.
+    The function then iterates through all items of the dictionary with default settings
+    and checks if the checked dictionary contains all keys
+    that are present in the default values.
 
-    Pokud některý klíč chybí nebo nemá vyplněnou hodnotu,
-    bude přidán (nebo aktualizován) s defaultní hodnotou.
+    If any key is missing or does not have a value filled in,
+    it will be added (or updated) with the default value.
 
-    Funkce vrací zkontrolovaný nebo aktualizovaný slovník.
+    The function returns the checked or updated dictionary.
     '''
 
     for key, value in default_values.items():

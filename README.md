@@ -1,4 +1,5 @@
 # Django Blog Web
+[[switch to english]](readme_data/README_[en].md)
 
 Smyslem tohoto projektu bylo naučit se struktuře Django, 
 jeho možnostem, ale také k nalezení optimálního přístupu k řešení výzev, 
@@ -21,17 +22,17 @@ Jedná se o můj třetí projekt (druhý dělaný v Django), který mě má posu
 ## Rozbor projektu
 
 - Pro rychlou orientaci v projektu poslouží 
-[seznam všech URL jmen použitých v projektu.](readme_data/01_url_list.md)
+[seznam všech URL jmen použitých v projektu.](readme_data/01_url_list_[cz].md)
 - Pro hlubší pochopení projektu pak poslouží 
-[podrobný popis struktury pohledů](readme_data/02_view_list.md)
+[podrobný popis struktury pohledů](readme_data/02_view_list_[cz].md)
 a
-[podrobný popis struktury hlavičky.](readme_data/04_header.md)
+[podrobný popis struktury hlavičky.](readme_data/04_header_[cz].md)
 - Pro přehled instalovaných balíčků je připraven 
-[seznam pip instalací.](readme_data/03_pip_install.md)
+[seznam pip instalací.](readme_data/03_pip_install_[cz].md)
 - Pro kompletní obsah celého projektu slouží
-[strom projektu s popisem souborů.](readme_data/05_tree.md)
+[strom projektu s popisem souborů.](readme_data/05_tree_[cz].md)
 - Pro představu jak vypadá samotný web je zde 
-[kompletní seznam screenshotů.](readme_data/06_screenshots.md)
+[kompletní seznam screenshotů.](readme_data/06_screenshots_[cz].md)
 
 
 

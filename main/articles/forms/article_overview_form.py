@@ -7,33 +7,33 @@ from ..schema.article_schema import ArticleSchema
 
 class ArticleOverviewForm(forms.ModelForm):
     '''
-    Formulář pro definování a správu vybraných polí modelu Article.
+    Form for defining and managing selected fields of the Article model.
 
-    Formulář je použit v pohledech:
-    - ArticleCreateView: Pro vytvoření nového článku.
-    - ArticleUpdateView: Pro úpravu existujícího článku.
+    This form is used in views:
+    - ArticleCreateView: To create a new article.
+    - ArticleUpdateView: To edit an existing article.
 
-    Tento formulář je napojen na pole 'title', 'overview' a 'main_picture_max_size'
-    a příslušnou záložku stránky pro jejich úpravu.
+    This form is connected to the 'title', 'overview', and 'main_picture_max_size' fields
+    and the corresponding tab of the page for their editing.
     '''
 
     class Meta:
         '''
-        Třída Meta je speciální vnitřní třída pro konfiguraci formuláře.
+        Meta class is a special inner class for form configuration.
 
-        Třída Meta poskytuje metadata a konfiguraci pro hlavní třídu,
-        a zde definuje následující atributy:
-        - model: Určuje model, na kterém je formulář založen.
-        - fields: Definuje pole, která budou zahrnuta ve formuláři.
-        - widgets: Umožňuje specifikovat vlastní widgety pro jednotlivá pole formuláře.
+        The Meta class provides metadata and configuration for the main class,
+        and here it defines the following attributes:
+        - model: Specifies the model on which the form is based.
+        - fields: Defines the fields to be included in the form.
+        - widgets: Allows specifying custom widgets for individual form fields.
 
-        Widgety použité v tomto kódu:
-        - forms.TextInput: Pole pro zadání krátkého textu.
-        - forms.Textarea: Pole pro zadání delšího textu (zde omezeno na 4 řádky).
-        - forms.FileInput: Pole pro nahrání souborů.
-          (Pro pole obrázku je použito forms.FileInput, aby se odstranilo pole
-          informující o názvu aktuálního obrázku. Poli je přidáno omezení
-          na vstup pouze pro obrazové soubory.)
+        Widgets used in this code:
+        - forms.TextInput: Field for entering short text.
+        - forms.Textarea: Field for entering longer text (limited to 4 rows here).
+        - forms.FileInput: Field for uploading files.
+          (For the picture field, forms.FileInput is used to remove the field
+          informing about the name of the current picture. The field has added
+          restriction for input only for image files.)
         '''
 
         model = Article
@@ -55,25 +55,25 @@ class ArticleOverviewForm(forms.ModelForm):
 
     def clean(self):
         '''
-        Metoda pro očištění a ověření dat formuláře.
+        Method for cleaning and validating form data.
 
-        Metoda se používá k provedení dodatečných kontrol a úprav na vyčištěných datech
-        (cleaned_data) poté, co byla zvalidována standardním způsobem.
+        This method is used to perform additional checks and modifications on cleaned data
+        (cleaned_data) after it has been validated in the standard way.
 
-        Zde metoda nejprve ověří, zda upravovaný článek má hodnotu pole status nastavenou na 'publish'
-        (článek je určen k publikování a má tak vytvořen záznam v indexu whoosh pro rychlejší fulltextové vyhledávání).
-        Pokud ano, získá obsah pole 'title' a 'overview' a poté volá metodu update_index
-        třídy ArticleSchema pro aktualizování dat daného pole.
+        Here, the method first checks whether the edited article has the status field set to 'publish'
+        (the article is intended for publishing and thus has a record in the whoosh index for faster full-text search).
+        If so, it retrieves the content of the 'title' and 'overview' fields and then calls the update_index
+        method of the ArticleSchema class to update the data of the respective fields.
 
-        Metoda dále kontroluje, zda byl nahraný i obrázek.
-        Pokud ano, obrázek ověří, zda jde otevřít v PIL (modul pro úpravu obrázků),
-        a následně i vnitřní metodou PIL verify(), ověří že se skutečně jedná o obrázek.
-        Pokud ověření projde, metoda nastavuje atribut instance článku new_picture na hodnotu True.
-        Tento atribut pak slouží pro detekci změny obrázku, pro zachycení signálů post_save instance článku,
-        pro dodatečné úpravy azpracování hlavního obrázku článku.
-        Pokud ověření neproběhne úspěšně, je vyvolaná výjimka forms.ValidationError s informačním textem.
+        The method also checks whether an image has been uploaded.
+        If so, it verifies whether the uploaded file can be opened in PIL (Python Imaging Library),
+        and then internally using the PIL verify() method, it verifies that it is indeed an image.
+        If the verification passes, the method sets the article instance attribute new_picture to True.
+        This attribute is then used to detect changes to the image for capturing post_save signals of the article instance,
+        for additional processing and editing of the main article image.
+        If the verification fails, a forms.ValidationError exception is raised with an informative message.
 
-        Metoda navrací pohledu očištěná data pro další zpracování.
+        The method returns cleaned data to the view for further processing.
         '''
 
         cleaned_data = super().clean()

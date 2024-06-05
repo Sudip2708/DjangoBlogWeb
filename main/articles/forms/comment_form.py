@@ -5,26 +5,26 @@ from ..models.article_comment import ArticleComment
 
 class ArticleCommentForm(forms.ModelForm):
     '''
-    Formulář pro definování a správu vybraných polí modelu ArticleComment.
+    Form for defining and managing selected fields of the ArticleComment model.
 
-    Formulář je použit v pohledu:
-    - ArticleDetailView: Zobrazení konkrétního článku.
+    This form is used in the view:
+    - ArticleDetailView: Display of a specific article.
 
-    Formulář slouží pro zadání komentáře k článku.
+    The form is used to enter a comment for the article.
     '''
 
     class Meta:
         '''
-        Třída Meta je speciální vnitřní třída pro konfiguraci formuláře.
+        Meta class is a special inner class for form configuration.
 
-        Třída Meta poskytuje metadata a konfiguraci pro hlavní třídu,
-        a zde definuje následující atributy:
-        - model: Určuje model, na kterém je formulář založen.
-        - fields: Definuje pole, která budou zahrnuta ve formuláři.
-        - widgets: Umožňuje specifikovat vlastní widgety pro jednotlivá pole formuláře.
+        The Meta class provides metadata and configuration for the main class,
+        and here it defines the following attributes:
+        - model: Specifies the model on which the form is based.
+        - fields: Defines the fields to be included in the form.
+        - widgets: Allows specifying custom widgets for individual form fields.
 
-        Widgety použité v tomto kódu:
-        - forms.Textarea: Pole pro zadání delšího textu (zde omezeno na 4 řádky).
+        Widgets used in this code:
+        - forms.Textarea: Field for entering longer text (limited to 4 rows here).
         '''
 
         model = ArticleComment
@@ -32,7 +32,7 @@ class ArticleCommentForm(forms.ModelForm):
         widgets = {
             'content': forms.Textarea(attrs={
                 'class': 'form-control',
-                'placeholder': 'Type your comment',
+                'placeholder': 'Type your comment here',
                 'id': 'usercomment',
                 'rows': '4'
             }),

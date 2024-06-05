@@ -3,19 +3,19 @@ from django.db import models
 
 class DatesAndStatusMixin(models.Model):
     '''
-    Mixin pro model Article přidávající pole, která jsou provázaná s datem, a pole pro status.
+    Mixin for the Article model adding fields related to dates and status.
 
-    Pole vytvořená tímto mixinem:
-    - created: Datum vytvoření článku (automaticky vytvořeno při založení instance).
-    - updated: Datum poslední úpravy článku (automaticky vytvořeno při uložení instance).
-    - published: Datum publikování článku (vytvořeno při změně statusu na 'publish').
-    - status: Pole určující status článku, které má tyto tři volby:
-        - drafted: Pro nově vytvořené články a články, které se přepracovávají.
-        - publish: Pro hotové články, které jsou určené ke zveřejnění.
-        - archive: Pro hotové články, které nechceme, aby byly veřejně přístupné.
+    Fields created by this mixin:
+    - created: The date the article was created (automatically generated when the instance is created).
+    - updated: The date of the last update to the article (automatically updated when the instance is saved).
+    - published: The date the article was published (set when the status changes to 'publish').
+    - status: Field indicating the status of the article, with three options:
+        - drafted: For newly created articles and articles being revised.
+        - publish: For finished articles intended for publication.
+        - archive: For finished articles not intended for public access.
 
-    Mixin má definovanou vnitřní třídu Meta pro nastavení abstraktního chování.
-    (Samostatně nevytváří ID a tabulku v databázi.)
+    The mixin defines an inner Meta class to set abstract behavior.
+    (It does not create its own ID or table in the database.)
     '''
 
     created = models.DateTimeField(

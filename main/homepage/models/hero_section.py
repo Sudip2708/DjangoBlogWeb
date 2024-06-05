@@ -6,20 +6,20 @@ from .data.singleton_model import SingletonModel
 
 class HomePageHeroSection(SingletonModel):
     '''
-    Databázový model pro Home Page Hero Section.
+    Database model for the Home Page Hero Section.
 
-    Model dědí ze SingletonModel, což je abstraktní třída definovaná pro vytvoření jediné instance.
+    The model inherits from SingletonModel, which is an abstract class defined to create a single instance.
 
-    Model vytváří následující pole:
-    - display_hero_section: Boolean pole pro hodnotu reprezentující zobrazení nebo skrytí sekce.
-    - hero_image: Pole pro upload obrázku, který bude zobrazen v této sekci.
-    - hero_title: HTML pole pro vložení textu, který bude zobrazen v této sekci.
-    - hero_link_title: Pole typu CharField pro titulek odkazu, který bude zobrazen v této sekci.
-    - hero_link: Pole typu URLField pro vložení URL odkazu, který bude zobrazen v této sekci.
+    The model creates the following fields:
+    - display_hero_section: Boolean field for representing the display or hiding of the section.
+    - hero_image: Field for uploading an image to be displayed in this section.
+    - hero_title: HTML field for inserting text to be displayed in this section.
+    - hero_link_title: CharField for the title of the link to be displayed in this section.
+    - hero_link: URLField for inserting the URL link to be displayed in this section.
 
-    Metody modelu:
-    - __str__: Pro získání textové reprezentace modelu (dle hodnoty pole pro název článku).
-    - get_data: Slouží k získání všech hodnot tohoto modelu pro vykreslení na domácí stránce.
+    Model methods:
+    - __str__: To get the textual representation of the model (based on the article name field value).
+    - get_data: Used to retrieve all the values of this model for rendering on the home page.
     '''
 
     display_hero_section = models.BooleanField(
@@ -58,14 +58,14 @@ class HomePageHeroSection(SingletonModel):
 
     def get_data(self):
         '''
-        Metoda, která slouží k získání hodnot všech polí tohoto modelu pro vykreslení na domácí stránce.
+        Method to retrieve the values of all fields of this model for rendering on the home page.
 
-        Pokud není k dispozici obrázek pro oddělovač, jeho URL bude None.
-        Vrací slovník obsahující následující informace:
-        zobrazení sekce, URL obrázku, nadpis sekce, popisu odkazu a URL odkazu.
+        If there is no image for the divider, its URL will be None.
+        Returns a dictionary containing the following information:
+        section display, URL of the image, section title, link description, and URL of the link.
         '''
 
-        # Dosazení hodnoty None, když není obrázek
+        # Assigning None if there is no image
         hero_image_url = self.hero_image.url if self.hero_image else None
 
         return {
@@ -75,7 +75,3 @@ class HomePageHeroSection(SingletonModel):
             'hero_link_title': self.hero_link_title,
             'hero_link': self.hero_link,
         }
-
-
-
-

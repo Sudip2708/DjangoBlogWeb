@@ -8,60 +8,60 @@ from ..models.data.save_footer_data import save_footer_data
 
 class EditFooterSection(View):
     '''
-    Pohled pro zpracování dat formuláře pro sekci patičky na Home Page.
+    View for processing the form data for the footer section on the Home Page.
 
-    Tato třída postupuje následovně:
-    Po obdržení POST požadavku na zpracování dat z formuláře vytvoří instanci formuláře FooterSettingsForm.
-    Ověří, zda je formulář platný. Pokud ano, pokračuje.
-    Uložení dat z formuláře voláním funkce save_footer_data().
-    Nakonec provede přesměrování na stránku homepage-edit.
+    This class proceeds as follows:
+    Upon receiving a POST request to process form data, it creates an instance of the FooterSettingsForm form.
+    It checks if the form is valid. If yes, it proceeds.
+    It saves the form data by calling the save_footer_data() function.
+    Finally, it redirects to the homepage-edit page.
     '''
 
     def post(self, request, *args, **kwargs):
         '''
-        Zpracování HTTP POST požadavku.
+        Processing the HTTP POST request.
 
-        Tato metoda zpracovává odeslaný formulář pro úpravu FooterSettingsForm.
-        Pokud je formulář validní, volá metodu pro uložení dat
-        a přesměruje uživatele na stránku pro úpravu domovské stránky.
-        Pokud formulář není validní, zobrazí chybovou zprávu
-        a přesměruje uživatele zpět na stránku pro úpravu s neuloženými změnami.
+        This method processes the submitted form for editing FooterSettingsForm.
+        If the form is valid, it calls the method to save the data
+        and redirects the user to the homepage editing page.
+        If the form is not valid, it displays an error message
+        and redirects the user back to the editing page with unsaved changes.
         '''
 
-        # Načtení formuláře
+        # Load the form
         form = FooterSettingsForm(request.POST)
 
-        # Kontrola, zda je formulář validní
+        # Check if the form is valid
         if form.is_valid():
 
-            # Volání metody pro uložení dat do databáze a přesměrování na stránku homepage-edit
+            # Call the method to save data to the database and redirect to the homepage-edit page
             save_footer_data(form)
             return redirect('homepage-edit')
 
-        # Pokud formulář validní není
+        # If the form is not valid
         else:
-            # Navrácení na stránku úprav a zobrazení zprávy o neúspěchu
-            messages.error(request, "Provedené úpravy nebyly uloženy.")
+            # Return to the editing page and display an error message
+            messages.error(request, "The changes made were not saved.")
             return redirect('homepage-edit')
 
     def get(self, request, *args, **kwargs):
         '''
-        Zpracování HTTP GET požadavku.
+        Processing the HTTP GET request.
 
-        Tato metoda kontroluje, zda požadavek GET obsahuje parametr 'show_footer_section'.
-        Pokud ano, nastaví hodnotu pro zobrazení sekce patičky na True a provede přesměrování
-        na stránku pro úpravu domovské stránky. Jinak pokračuje v běžném chování.
+        This method checks if the GET request contains the parameter 'show_footer_section'.
+        If yes, it sets the value for displaying the footer section to True and redirects
+        to the homepage editing page. Otherwise, it continues with normal behavior.
         '''
 
-        # Kontrola, zda požadavek get obsahuje požadavek na zviditelnění sekce
+        # Check if the get request contains a request to show the section
         if 'show_footer_section' in request.GET:
 
-            # Pokud ano - změna hodnoty a návrat na stránku pro úpravu HomePage
+            # If yes - change the value and return to the HomePage editing page
             footer_settings = FooterSettings.singleton()
             footer_settings.display_footer_section = True
             footer_settings.save()
             return redirect('homepage-edit')
 
-        # Pokud ne, pokračujte normálně
+        # If not, continue normally
         else:
             return super().get(request, *args, **kwargs)

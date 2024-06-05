@@ -2,18 +2,18 @@ from django.http import HttpResponseRedirect
 
 def user_sidebar_movements(request, hash):
     '''
-    Pohled pro změnu pořadí bočních panelů.
+    View for changing the order of sidebars.
 
-    Pohled nejprve ověří, zda požadavek obsahuje 'hash' s požadavkem na změnu pozice bočního panelu,
-    a pokud ano, volá metodu pro změnu jeho pořadí.
+    The view first verifies if the request contains a 'hash' requesting a change in the position of the sidebar,
+    and if so, calls the method to change its order.
 
-    Následně se provede načtení předchozí stránky a návratu na ni.
+    Then, it retrieves the previous page and redirects to it.
     '''
 
-    # Ověření, zda se jedná o posun panelů a volání příslušné metody
+    # Check if it's a sidebar movement and call the corresponding method
     if hash.startswith('#Move'):
         request.user.change_sidebar_order_value(hash)
 
-    # Získání odkazu na předchozí stránku a přesměrování na ni
+    # Get the previous page link and redirect to it
     previous_page = request.META.get('HTTP_REFERER', '/')
     return HttpResponseRedirect(previous_page)

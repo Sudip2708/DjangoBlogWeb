@@ -1,8 +1,8 @@
-### Souborová struktura šablon projektu
+### File structure of the project templates
 
     ├─ templates
 
-###### Základní šablona pro všechny stránky projektu
+###### Basic template for all project pages
 
     │  ├─ 0_base
     │  │  ├─ 00__base__.html
@@ -45,7 +45,7 @@
     │  │		├─ _search_and_language_.html
     │  │		└─ _special_offer_.html
 
-###### Šablona pro domácí stránku
+###### Template for the homepage
 
     │  ├─ 1_home
     │  │  ├─ 10__base__.html
@@ -84,7 +84,7 @@
     │  │		├─ _edit_link_.html
     │  │		└─ _submit_button_with_display_checkbox_.html
 
-###### Šablona pro stránky zobrazující postranní panel
+###### Template for pages displaying a sidebar
 
     │  ├─ 2_main
     │  │  ├─ 20__base__.html
@@ -112,7 +112,7 @@
     │  │		├─ _sidebar_movement_buttons_.html
     │  │		└─ _user_dropdown_items_.html
 
-###### Šablona pro stránky zobrazující více článků
+###### Template for pages displaying multiple articles
 
     │  ├─ 3_articles
     │  │  ├─ 30__base__.html
@@ -148,7 +148,7 @@
     │  │		├─ _tab_to_show_categories_.html
     │  │		└─ _tab_to_show_tag_and_similar_.html
 
-###### Šablona pro stránku zobrazující jeden článek
+###### Template for a page displaying a single article
 
     │  ├─ 4_article
     │  │  ├─ 40__base__.html
@@ -156,23 +156,17 @@
     │  │  ├─ 42__previous_and_next__.html
     │  │  ├─ 43__display_comments__.html
     │  │  ├─ 44__add_comment__.html
-    │  │  ├─ _article_data
-    │  │  │  ├─ _content_.html
-    │  │  │  ├─ _main_picture_.html
-    │  │  │  ├─ _next_.html
-    │  │  │  ├─ _overview_.html
-    │  │  │  ├─ _previous_.html
-    │  │  │  ├─ _tags_.html
-    │  │  │  ├─ _title_.html
-    │  │  │	 └─ _update_article_.html
-    │  │  └─ _comment_data
-    │  │	 ├─ _add_comment_header_.html
-    │  │	 ├─ _comment_author_picture_.html
-    │  │	 ├─ _comment_creation_.html
-    │  │	 ├─ _comment_display_.html
-    │  │	 └─ _title_and_comment_count_.html
+    │  │  └─ _article_data
+    │  │	 ├─ _content_.html
+    │  │	 ├─ _main_picture_.html
+    │  │	 ├─ _next_.html
+    │  │	 ├─ _overview_.html
+    │  │	 ├─ _previous_.html
+    │  │	 ├─ _tags_.html
+    │  │	 ├─ _title_.html
+    │  │	 └─ _update_article_.html
 
-###### Šablona pro vytvoření a úpravu článku
+###### Template for creating and editing an article
 
     │  ├─ 5_create_article
     │  │  ├─ 50__base__.html
@@ -190,7 +184,7 @@
     │  │	 ├─ _input_tags_.html
     │  │	 └─ _main_picture_view_.html
 
-###### Přepsání vzhledu stránek AllAuth pro přihlášení a registraci
+###### Redesign of the AllAuth pages for login and registration
 
     │  ├─ account
     │  │  ├─ login.html
@@ -218,4 +212,4 @@
     │  └─ socialaccount	
     │	  └─ login.html
 
-[<<< Přechod na stránku se stromovou strukturou celého projektu.](05_tree.md)
+[<<< Go to a page with the tree structure of the entire project.](05_tree_[en].md)

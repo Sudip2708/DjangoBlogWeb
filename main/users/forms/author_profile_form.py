@@ -6,30 +6,30 @@ from articles.models.article_author import ArticleAuthor
 
 class AuthorProfileForm(forms.ModelForm):
     '''
-    Formulář pro správu účtu autora.
+    Form for managing the author's account.
 
-    Tento formulář definuje pole přístupná uživateli pro editaci obsahu.
-    Je použit v pohledu AuthorProfileView.
+    This form defines the fields accessible to the user for editing content.
+    It is used in the AuthorProfileView.
 
-    Definovaná pole:
-    - name: Uživatelské jméno autora.
-    - profile_picture: Profilový obrázek autora.
+    Defined fields:
+    - name: The author's username.
+    - profile_picture: The author's profile picture.
     '''
 
     class Meta:
         '''
-        Třída Meta slouží k konfiguraci formuláře.
+        The Meta class is used to configure the form.
 
-        Definuje následující atributy:
-        - model: Určuje model, na kterém je formulář založen.
-        - fields: Pole, která jsou zahrnuta ve formuláři.
-        - widgets: Specifikuje vlastní widgety pro jednotlivá pole formuláře.
+        It defines the following attributes:
+        - model: Specifies the model on which the form is based.
+        - fields: The fields included in the form.
+        - widgets: Specifies custom widgets for individual form fields.
 
-        Použité widgety:
-        - forms.TextInput: Pole pro krátký text.
-        - forms.FileInput: Pole pro nahrání souborů.
-          (Pro pole obrázku je použito forms.FileInput s atributem accept nastaveným na 'image/*',
-          aby se omezilo nahrání pouze obrazových souborů.)
+        Used widgets:
+        - forms.TextInput: A field for short text.
+        - forms.FileInput: A field for uploading files.
+          (For the image field, forms.FileInput is used with the accept attribute set to 'image/*',
+          to restrict uploads to image files only.)
         '''
 
         model = ArticleAuthor
@@ -43,18 +43,18 @@ class AuthorProfileForm(forms.ModelForm):
 
     def clean(self):
         '''
-        Metoda pro očištění a ověření dat formuláře.
+        Method for cleaning and validating form data.
 
-        Používá se k provedení dodatečných kontrol a úprav na vyčištěných datech
-        (cleaned_data), poté, co byla zvalidována standardním způsobem.
+        It is used to perform additional checks and modifications on cleaned_data
+        after it has been validated in the standard way.
 
-        Dále kontroluje, zda byl nahraný profilový obrázek.
-        Pokud ano, ověří, zda jde o platný obrázek pomocí modulu PIL.
-        Pokud ověření proběhne úspěšně, nastaví atributu instance článku new_picture na True,
-        což slouží pro detekci změny obrázku a pro další zpracování v signálech post_save instance článku.
-        Pokud ověření neproběhne úspěšně, vyvolá výjimku forms.ValidationError s informací.
+        It also checks if a profile picture has been uploaded.
+        If so, it verifies whether it is a valid image using the PIL module.
+        If the verification is successful, it sets the new_picture attribute of the article instance to True,
+        which serves to detect the change of the image and for further processing in the post_save signals of the article instance.
+        If the verification is not successful, it raises a forms.ValidationError with the information.
 
-        Navrací očištěná data pro další zpracování.
+        Returns the cleaned data for further processing.
         '''
 
         cleaned_data = super().clean()

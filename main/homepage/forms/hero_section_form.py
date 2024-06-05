@@ -6,34 +6,34 @@ from ..models.hero_section import HomePageHeroSection
 
 class HeroSectionForm(forms.ModelForm):
     '''
-    Formulář pro nastavení Hero sekce domácí stránky.
+    Form for setting up the Hero section of the homepage.
 
-    Formulář je navázán na pohled EditHeroSection.
+    This form class is associated with the EditHeroSection view.
 
-    Formulář definuje tato pole:
-    - display_hero_section: Viditelnost sekce.
-    - hero_image: Obrázek pozadí sekce.
-    - hero_title: Nadpis sekce.
-    - hero_link_title: Popis odkazu.
-    - hero_link: URL odkazu.
+    The form defines the following fields:
+    - display_hero_section: Visibility of the section.
+    - hero_image: Background image of the section.
+    - hero_title: Section title.
+    - hero_link_title: Link description.
+    - hero_link: Link URL.
     '''
 
     class Meta:
         '''
-        Třída Meta je speciální vnitřní třída pro konfiguraci formuláře.
+        The Meta class is a special inner class for configuring the form.
 
-        Třída Meta poskytuje metadata a konfiguraci pro hlavní třídu,
-        a zde definuje následující atributy:
-        - model: Určuje model, na kterém je formulář založen.
-        - fields: Definuje pole, která budou zahrnuta ve formuláři.
-        - widgets: Umožňuje specifikovat vlastní widgety pro jednotlivá pole formuláře.
+        The Meta class provides metadata and configuration for the main class,
+        and here it defines the following attributes:
+        - model: Specifies the model on which the form is based.
+        - fields: Defines the fields to be included in the form.
+        - widgets: Allows specifying custom widgets for individual form fields.
 
-        Widgety použité v tomto kódu:
-        - forms.CheckboxInput: Pole pro zaškrtávací boolean hodnotu.
-        - forms.FileInput: Pole pro nahrání souborů (zde omezeno na obrázek).
-        - TinyMCE: Pole pro zadání textu pomocí modulu TinyMCE.
-        - forms.TextInput: Pole pro zadání krátkého textu.
-        - forms.URLInput: Pole pro zadání URL.
+        Widgets used in this code:
+        - forms.CheckboxInput: Field for boolean checkbox values.
+        - forms.FileInput: Field for uploading files (restricted to images here).
+        - TinyMCE: Field for entering text using the TinyMCE module.
+        - forms.TextInput: Field for entering short text.
+        - forms.URLInput: Field for entering URL.
         '''
 
         model = HomePageHeroSection

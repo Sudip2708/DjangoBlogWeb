@@ -3,22 +3,10 @@ from django.urls import path
 from ..views.home_page_view import HomePageView
 
 
-# Definování adres začínajících s prefixem '' (zobrazení domácí stránky)
+# Defining URLs starting with prefix '' (displaying the homepage)
 urlpatterns = [
 
-    # Zobrazení domácí stránky.
+    # Display the homepage.
     path('', HomePageView.as_view(), name='homepage'),
 
 ]
-
-
-
-
-
-
-
-
-
-
-
-

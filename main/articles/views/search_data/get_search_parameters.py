@@ -1,15 +1,15 @@
 def get_search_parameters(form_cleaned_data):
     '''
-    Funkce pro zpracování očištěných dat získaných z formuláře.
+    Function for processing cleaned data obtained from a form.
 
-    Funkce nejprve vytvoří slovník s parametry hledání z očištěných dat získaných z formuláře.
-    Pokud jsou v datech uvedeny hodnoty dat, převede je do požadovaného formátu.
-    Pokud je v datech uvedena instance autora, převede ji na jeho ID.
+    The function first creates a dictionary with search parameters from the cleaned data obtained from the form.
+    If date values are provided in the data, it converts them to the required format.
+    If an author instance is provided in the data, it converts it to their ID.
 
-    Funkce vrací slovník se zpracovanými daty.
+    The function returns a dictionary with processed data.
     '''
 
-    # Získání slovníku z dat formuláře
+    # Creating a dictionary from form data
     search_parameters = {
         'query': form_cleaned_data.get('query'),
         'title': form_cleaned_data.get('search_in_title'),
@@ -20,17 +20,17 @@ def get_search_parameters(form_cleaned_data):
         'author': form_cleaned_data.get('author')
     }
 
-    # Převod data na formát 'yyyy-mm-dd'
+    # Converting date to the 'yyyy-mm-dd' format
     if search_parameters['before']:
         formatted_date = search_parameters['before'].strftime("%Y-%m-%d")
         search_parameters['before'] = formatted_date
 
-    # Převod data na formát 'yyyy-mm-dd'
+    # Converting date to the 'yyyy-mm-dd' format
     if search_parameters['after']:
         formatted_date = search_parameters['after'].strftime("%Y-%m-%d")
         search_parameters['after'] = formatted_date
 
-    # Převod instance autora na jeho ID
+    # Converting author instance to their ID
     if search_parameters['author']:
         author_id = search_parameters['author'].id
         search_parameters['author'] = str(author_id)

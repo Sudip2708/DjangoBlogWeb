@@ -1,68 +1,74 @@
 def image_resize_and_crop(image, new_width='as_original', new_aspect_ratio='as_original'):
     '''
-    Funkce pro změnu velikosti a oříznutí obrázku.
+    Function for resizing and cropping an image.
 
-    Funkce je součástí souboru common_data/image_processing.py,
-    který je použit v těcto souborech:
+    This function is part of the file common_data/image_processing.py,
+    which is used in the following files:
     - articles/models/article_data/main_picture_processing.py
     - articles/models/article_author_data/profile_picture_processing.py
     - users/models/custom_user_data/profile_picture_processing.py
 
-    Funkce očekává následující parametry:
-    - image = Obrázek otevřený v PIL.
-    - new_width = Požadovaná šířka obrázku v px (nepovinný parametr).
-    - new_aspect_ratio = Požadovaný poměr stran nového obrázku (šířka/výška) (nepovinný parametr).
+    The function expects the following parameters:
+    - image: Image opened in PIL.
+    - new_width: Desired width of the image in px (optional parameter).
+    - new_aspect_ratio: Desired aspect ratio of the new image (width/height) (optional parameter).
 
-    Funkce nejprve vytvoří kopii obrázku a definuje základní proměnné:
-    - width = Hodnota šířky obrázku (v px).
-    - height = Hodnota výšky obrázku (v px).
-    - image_aspect_ratio = Hodnota poměru stran.
+    The function first creates a copy of the image and defines basic variables:
+    - width: Image width value (in px).
+    - height: Image height value (in px).
+    - image_aspect_ratio: Aspect ratio value.
 
-    Poté funkce zkontroluje, zda bylo uvedeno, že se nemá měnit poměr stran
-    (new_aspect_ratio='as_original'). Pokud ano, dopočte hodnotu pro new_aspect_ratio
-    z výšky a šířky obrázku (to je potřeba pro případ, že se obrázek bude zmenšovat a bude potřeba vypočítat jeho výšku).
+    Then the function checks if it was specified not to change the aspect ratio
+    (new_aspect_ratio='as_original'). If so, it calculates the new_aspect_ratio value
+    from the image height and width (this is needed in case the image will be resized, and its height needs to be calculated).
 
-    Pokud je nastavena hodnota pro poměr stran (new_aspect_ratio),
-    funkce nejprve zjistí, zda je nový poměr větší než poměr stran u obrázku.
-    Pokud ano, vypočte dle nového poměru novou výšku a nastaví hodnoty pro oříznutí.
-    Pokud ne, vypočte dle nového poměru novou šířku a nastaví hodnoty pro oříznutí.
-    Následně funkce ořízne obrázek dle vypočítaných údajů.
+    If a value for the aspect ratio (new_aspect_ratio) is set,
+    the function first determines if the new ratio is greater than the image aspect ratio.
+    If so, it calculates the new height according to the new ratio and sets the crop values.
+    If not, it calculates the new width according to the new ratio and sets the crop values.
+    Then the function crops the image according to the calculated values.
 
-    Poté funkce zkontroluje, zda byla zadána požadovaná šířka obrázku
-    a zda šířka obrázku je větší než požadovaná šířka.
-    Pokud ano, vypočte dle poměru i požadovanou výšku a obrázek zmenší.
+    Then the function checks if a desired width for the image was specified
+    and if the image width is greater than the desired width.
+    If so, it calculates the desired height according to the ratio and resizes the image.
 
-    Funkce vrací upravený obrázek otevřený v PIL.
+    The function returns the modified image opened in PIL.
     '''
 
-    # Vytvoření kopie obrázku a definice základních proměnných
+    # Create a copy of the image and define basic variables
     new_image = image.copy()
     width, height = image.size
     image_aspect_ratio = width / height
 
-    # Když se nemá měnit poměr stran
+    # When not changing the aspect ratio
     if new_aspect_ratio == 'as_original':
-        # Nastaví poměr stran obrázku jako požadovaný poměr stran
+
+        # Set the image aspect ratio as the desired aspect ratio
         new_aspect_ratio = image_aspect_ratio
+
     else:
+
+        # When the new dimension is 'wider' than the original image (height will be cropped)
         if new_aspect_ratio > image_aspect_ratio:
-            # Když je nový rozměr 'širší' než původní obrázek (bude se ořezávat výška)
             img_height = int(width / new_aspect_ratio)
             top = (height - img_height) / 2
             bottom = height - top
             left, right = 0, width
+
+        # When the new dimension is 'narrower' than the original image (width will be cropped)
         else:
-            # Když je nový rozměr 'užší' než původní obrázek (bude se ořezávat šířka)
             img_width = int(height * new_aspect_ratio)
             left = (width - img_width) / 2
             right = width - left
             top, bottom = 0, height
-        # Oříznutí obrázku
+
+        # Crop the image
         new_image = new_image.crop((left, top, right, bottom))
 
-    # Když je zadána požadovaná šířka a šířka obrázku je větší než požadovaná šířka
+    # When a desired width is specified and the image width is greater than the desired width
     if new_width != 'as_original' and width > new_width:
-        # Vypočte požadovanou výšku a zmenší obrázek
+
+        # Calculate the desired height and resize the image
         new_height = int(new_width / new_aspect_ratio)
         new_image = new_image.resize((new_width, new_height))
 

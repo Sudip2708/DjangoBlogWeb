@@ -6,29 +6,29 @@ from ..models.article import Article
 
 class ArticleSettingsForm(forms.ModelForm):
     '''
-    Formulář pro definování a správu vybraných polí modelu Article.
+    Form for defining and managing selected fields of the Article model.
 
-    Formulář je použit v pohledech:
-    - ArticleCreateView: Pro vytvoření nového článku.
-    - ArticleUpdateView: Pro úpravu existujícího článku.
+    This form is used in views:
+    - ArticleCreateView: To create a new article.
+    - ArticleUpdateView: To edit an existing article.
 
-    Tento formulář je napojen na pole 'status', 'category', 'tags', 'previous_article' a 'next_article'
-    a příslušnou záložku stránky pro jejich úpravu.
+    This form is connected to the 'status', 'category', 'tags', 'previous_article', and 'next_article' fields
+    and the corresponding tab of the page for their editing.
     '''
 
     class Meta:
         '''
-        Třída Meta je speciální vnitřní třída pro konfiguraci formuláře.
+        Meta class is a special inner class for form configuration.
 
-        Třída Meta poskytuje metadata a konfiguraci pro hlavní třídu,
-        a zde definuje následující atributy:
-        - model: Určuje model, na kterém je formulář založen.
-        - fields: Definuje pole, která budou zahrnuta ve formuláři.
-        - widgets: Umožňuje specifikovat vlastní widgety pro jednotlivá pole formuláře.
+        The Meta class provides metadata and configuration for the main class,
+        and here it defines the following attributes:
+        - model: Specifies the model on which the form is based.
+        - fields: Defines the fields to be included in the form.
+        - widgets: Allows specifying custom widgets for individual form fields.
 
-        Widgety použité v tomto kódu:
-        - forms.Select: Pole pro výběr z přednastavených hodnot.
-        - TagWidget: Pole modulu Taggit pro správu tagů.
+        Widgets used in this code:
+        - forms.Select: Field for selecting from pre-defined values.
+        - TagWidget: Field from the Taggit module for managing tags.
         '''
 
         model = Article
@@ -43,14 +43,13 @@ class ArticleSettingsForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         '''
-        Inicializační metoda formuláře.
+        Initialization method of the form.
 
-        Metoda nejprve volá inicializaci nadřazené třídy a poté vytváří obsah
-        pro nabídku pro výběr předchozího a následujícího článku.
+        The method first calls the initialization of the parent class and then creates content
+        for the selection menu for choosing the previous and next article.
 
-        Metoda filtruje všechny publikované články a řadí je od nejnovějšího po nejstarší,
-        a tento seznam přidává jako queryset pro vytvoření nabídky hodnot
-        pro pole 'previous_article' a 'next_article'.
+        The method filters all published articles and sorts them from newest to oldest,
+        and adds this list as a queryset to create a choice set for the 'previous_article' and 'next_article' fields.
         '''
         super().__init__(*args, **kwargs)
 
@@ -60,47 +59,46 @@ class ArticleSettingsForm(forms.ModelForm):
 
     def clean(self):
         '''
-        Metoda pro očištění a ověření dat formuláře.
+        Method for cleaning and validating form data.
 
-        Metoda se používá k provedení dodatečných kontrol a úprav na vyčištěných datech
-        (cleaned_data) poté, co byla zvalidována standardním způsobem.
+        This method is used to perform additional checks and modifications on cleaned data
+        (cleaned_data) after it has been validated in the standard way.
 
-        Metoda nejprve ověří, zda bylo změněno pole pro tagy
-        a zda neobsahuje některý z výrazů ze seznamu 'invalid_tags'.
-        Pokud ano, pak tyto výrazy ze seznamu odstraní.
-        Následně metoda vytáhne seznam tagů z předešlé relace a porovná ho s aktuální relací.
-        Pokud došlo ke smazání tagu, přepíše tyto tagy do atributu instance 'tags_to_delete'.
-        (Následuje ověření a případné smazání tagu v post_save signálu 'handle_delete_unused_tags_post_save'.)
+        The method first checks whether the tags field has been changed
+        and whether it contains any of the expressions from the 'invalid_tags' list.
+        If so, it removes these expressions from the list.
+        Then the method retrieves the list of tags from the previous relation and compares it with the current relation.
+        If a tag has been deleted, these tags are overwritten to the instance attribute 'tags_to_delete'.
+        (Followed by verification and possible deletion of the tag in the post_save signal 'handle_delete_unused_tags_post_save'.)
 
-        Dále metoda ověřuje, zda došlo ke změně pole 'status' a zda nová hodnota je 'publish'
-        (článek je připraven k publikování) a následně probíhá kontrola,
-        zda jsou vyplněna všechna pole potřebná pro publikování článku:
-        - title: Titulek musí být definován a nesmí být automaticky generovaný název.
-        - overview: Popis článku musí být definován, neboť je použit pro náhled článku.
-        - content: Obsah článku musí být definován.
-        - main_picture_max_size: Hlavní obrázek musí být definován (a nesmí být defaultním obrázkem).
-        - category_id: Pole odkazující na kategorii nesmí obsahovat kategorii s ID 1 (Uncategorized).
-        - tags: Pole pro tagy musí obsahovat alespoň jeden tag.
+        Furthermore, the method checks whether the 'status' field has been changed and whether the new value is 'publish'
+        (the article is ready for publishing), and then checks whether all fields necessary for publishing the article are filled in:
+        - title: The title must be defined and must not be the automatically generated name.
+        - overview: The article overview must be defined as it is used for the article preview.
+        - content: The article content must be defined.
+        - main_picture_max_size: The main picture must be defined (and must not be the default picture).
+        - category_id: The field referring to the category must not contain the category with ID 1 (Uncategorized).
+        - tags: The tags field must contain at least one tag.
 
-        Pokud metoda zjistí nějaký nedostatek, vrací formulář s příslušnou výjimkou.
+        If any deficiency is detected, the method returns the form with the corresponding exception.
 
-        Pokud vše proběhne v pořádku, metoda navrací pohledu očištěná data pro další zpracování.
+        If everything goes well, the method returns cleaned data to the view for further processing.
         '''
         cleaned_data = super().clean()
 
-        # Zpracování změny tagů
+        # Processing tag change
         if 'tags' in self.changed_data:
             tags = cleaned_data.get('tags', [])
 
-            # Odfiltrování nežádoucích položek
+            # Filtering unwanted items
             invalid_tags = [':', '[{', 'value', '{', '}', '}]']
             cleaned_data['tags'] = [tag for tag in tags if tag not in invalid_tags]
 
-            # Kontrola, zda došlo k smazání tagu (dojde k naplnění seznamu atributu tags_to_delete).
+            # Checking if a tag has been deleted (fills the tags_to_delete attribute list).
             original_tags = list(self.instance.tags.names() if self.instance.pk else [])
             self.instance.tags_to_delete = list(set(original_tags) - set(cleaned_data['tags']))
 
-        # Kontrola článku před jeho publikací
+        # Article check before publication
         if 'status' in self.changed_data and cleaned_data.get('status') == 'publish':
             article = self.instance
 

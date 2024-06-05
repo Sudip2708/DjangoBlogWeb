@@ -2,26 +2,26 @@ from asgiref.sync import sync_to_async
 
 async def handle_picture_post_save(user):
     '''
-    Asynchronní handler pro zachycení post_save signálu pro zpracování nově uloženého profilového obrázku.
+    Asynchronous handler to capture the post_save signal for processing a newly saved profile picture.
 
-    Handler pracuje s atributem, který formulář nastaví na hodnotu True,
-    pokud je součástí formuláře i nový profilový obrázek uživatele.
+    The handler works with an attribute that the form sets to True
+    if a new profile picture of the user is part of the form.
 
-    Nejprve handler volá metodu, která pro daný obrázek zpracuje a vytvoří jeho miniaturu.
-    Poté tyto obrázky přiřadí k příslušným polím v modelu a uloží je.
+    First, the handler calls a method to process and create a thumbnail for the given image.
+    Then it assigns these images to the respective fields in the model and saves them.
 
     '''
 
-    # Kontrola změny profilového obrázku
+    # Checking for a change in the profile picture
     if user.new_picture:
 
-        # Spuštění procesu pro úpravu obrázku
+        # Running the image processing process
         picture_paths = user.profile_picture_processing()
         user.new_picture = False
 
-        # Aktualizace polí v modelu uživatele
+        # Updating fields in the user model
         user.profile_picture = picture_paths['profile_picture']
         user.profile_picture_thumbnail = picture_paths['thumbnail']
 
-        # Uložení změn v databázi
+        # Saving the changes to the database
         await sync_to_async(user.save)()

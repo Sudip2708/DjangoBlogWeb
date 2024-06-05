@@ -1,24 +1,21 @@
 from taggit.models import Tag
 
-
 def get_sorted_sidebar_panels(self):
     '''
-    Metoda pro vytvoření seznamu setříděných panelů s daty potřebnými pro jejich vykreslení.
+    Method to create a list of sorted panels with data needed for rendering.
 
-    Metoda nejprve definuje seznam slovníků s hodnotami pro vykreslení všech panelů.
-    Metoda následně vytváří nový seznam pro setříděné pořadí a na základě cyklu,
-    který ověřuje nastavené pořadí panelu v poli self.sidebar_order,
-    a na základě tohoto pořadí přidává každému seznamu dva klíče:
-    - is_first: Pro první panel.
-    - is_last: Pro poslední panel.
-    Které zajistí, že při vykreslení na stránce se u prvního a posledního panelu
-    bude objevovat pro posun pouze jeden směr.
+    The method first defines a list of dictionaries with values for rendering all panels.
+    Then, it creates a new list for sorted order based on a loop that verifies the set panel order in the self.sidebar_order field.
+    Based on this order, the method adds two keys to each dictionary in the list:
+    - is_first: For the first panel.
+    - is_last: For the last panel.
+    These keys ensure that during rendering on the page, only one direction of movement is shown for the first and last panels.
 
-    Následně metoda setřídí seznam podle první hodnoty v tuple (hodnota pořadí)
-    a ve výsledném seznamu pak ponechá pouze slovníky.
+    Subsequently, the method sorts the list according to the first value in the tuple (order value),
+    and in the resulting list, it keeps only dictionaries.
 
-    Metoda vrací seznam slovníků s daty potřebnými pro vykreslení bočního panelu,
-    setříděných dle nastaveného pořadí.
+    The method returns a list of dictionaries with data needed for rendering the sidebar panel,
+    sorted according to the set order.
     '''
 
     from articles.models.article_category import ArticleCategory
@@ -57,7 +54,7 @@ def get_sorted_sidebar_panels(self):
 
     ]
 
-    # Naplnění seznamu s tuple s přiřazenou hodnotou pořadí
+    # Filling the list with tuples with assigned order value
     sorted_panels = []
     for panel in panels:
         order = self.sidebar_order.get(panel['slug'], float('inf'))
@@ -65,7 +62,7 @@ def get_sorted_sidebar_panels(self):
         panel['is_last'] = (order == len(self.sidebar_order))
         sorted_panels.append((order, panel))
 
-    # Setřídění pořadí a ponechání pouze slovníků
+    # Sorting the order and keeping only dictionaries
     sorted_panels.sort(key=lambda x: x[0])
     sorted_panels = [panel for order, panel in sorted_panels]
 

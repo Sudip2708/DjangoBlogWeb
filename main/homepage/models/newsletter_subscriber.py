@@ -5,16 +5,16 @@ from users.models.custom_user import CustomUser
 
 class NewsletterSubscriber(models.Model):
     '''
-    Databázový model pro uchovávání informací o zájemcích o zasílání novinek.
+    Database model for storing information about newsletter subscribers.
 
-    Model dědí z třídy models.Model a vytváří následující pole:
-    - email: Pole pro uchování e-mailové adresy zájemce o zasílání novinek
-    - user: ForeignKey pole pro propojení s modelem CustomUser, pokud se uživatel přihlásil k odběru
-    - subscribed_at: Pole typu DateTimeField, které uchovává datum a čas přihlášení k odběru
+    The model inherits from the models.Model class and creates the following fields:
+    - email: Field for storing the email address of the newsletter subscriber.
+    - user: ForeignKey field for linking with the CustomUser model if the user has subscribed.
+    - subscribed_at: DateTimeField field that stores the date and time of subscription.
 
-    Metody modelu:
-    - __str__: Pro získání textové reprezentace modelu (dle hodnoty pole pro název článku).
-    - class Meta: Určuje lidsky čitelné jméno modelu v jednotném a množném čísle.
+    Model methods:
+    - __str__: To get the textual representation of the model (based on the email field value).
+    - class Meta: Specifies the human-readable name of the model in singular and plural forms.
     '''
 
     email = models.EmailField(

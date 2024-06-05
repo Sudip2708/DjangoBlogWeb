@@ -1,22 +1,23 @@
 from whoosh.index import open_dir
 from django.conf import settings
 
+
 def delete_article_from_index(self, article_id):
     '''
-    Metoda třídy ArticleSchema pro smazání indexu článku.
+    Method of the ArticleSchema class for deleting an article from the index.
 
-    Tato metoda se používá k odstranění indexu článku,
-    například v případě, kdy článek změní status a již není veřejný.
+    This method is used to remove an article from the index,
+    for example, when the article changes its status and is no longer public.
 
-    Metoda očekává instanci článku.
-    Nejprve otevře soubor s indexy a poté načte metody pro zápis (writen).
-    Následně metoda odstraní záznamy z indexu a uloží změny.
+    The method expects an article instance.
+    First, it opens the index file and then loads the methods for writing.
+    Then, the method removes the entries from the index and saves the changes.
     '''
 
-    # Načtení souboru s indexem pro zápis.
+    # Open the index file for writing.
     ix = open_dir(settings.INDEX_DIRECTORY)
     writer = ix.writer()
 
-    # Odstranění dokumentu z indexu a uložení změn.
+    # Remove the document from the index and save the changes.
     writer.delete_by_term('id', str(article_id))
     writer.commit()

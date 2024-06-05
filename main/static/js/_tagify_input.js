@@ -1,57 +1,54 @@
-// Script pro nastavení zadávání tagů za pomoci tagify našeptávače
+// Script for setting up tag input using the tagify suggester
 
 /*
-Scrip je vložen v této šabloně:
+This script is included in this template:
 main/templates/0_base/_head/__scripts__.html
-Scrip je použit v těchto částech kodu:
+This script is used in these parts of the code:
 main/templates/5_create_article/_settings/__tags__.html
 */
 
-// Načtení proměné pro řetězec tagů (předaný z šablony) a převod na seznam
+// Load the variable for the string of tags (passed from the template) and convert to a list
 var tags_list = tags_name_str.split(',');
 
-// Načtení elementu vstupního pole, kde má být použit tagify
+// Load the input field element where tagify should be used
 var input = document.querySelector('input[name=tags]'),
 
-// Přepsání chování vstupního pole dle nastavených parametrů
+// Override the behavior of the input field according to the set parameters
 tagify = new Tagify(input, {
 
-    // Nastavení maximální délky tagu na 20 znaků.
+    // Set the maximum tag length to 20 characters
     pattern : /^.{0,20}$/,
 
-    // Nastavení oddělování tagů, za pomoci čárky
+    // Set the tag delimiter to a comma
     delimiters : ",",
 
-    // Nastavení odebrání případných mezer před a za tagem.
+    // Remove any spaces before and after the tag
     trim : true,
 
-    // Nastavení odstranění neplatných tagů přímo po zadání
+    // Remove invalid tags immediately after input
     keepInvalidTags : false,
 
-    // Nastavení editace již vytvořených tagů dvojitým klikem a zakázání nepovolených tagů jako výsledek úpravi
+    // Allow editing of already created tags with a double click and disable invalid tags as a result of the edit
     editTags : {
       clicks: 2,
       keepInvalid: false
     },
 
-    // Nastavení maximálního počtu tagů na 25 pro jeden článek
+    // Set the maximum number of tags to 25 per article
     maxTags : 25,
 
-    // Nastavení našeptávače tagů (z proměné získané ze šablony a převedené na seznam)
+    // Set the tag suggester (from the variable obtained from the template and converted to a list)
     whitelist : tags_list,
 
-    // Nastavení editace tagu při stisku klávesy "Backspace"
+    // Set tag editing with the "Backspace" key press
     backspace : "edit",
 
-    // Nastavení zobrazení našeptávače v poli zadávání na jednu hodnotu a dle těchto parametrů:
-    // Hodnotu zobrazit dle počátečního písmena, zobrazit ji u textu a nerozlišovat mezi velkým a malým písmenem.
+    // Set the display of the suggester in the input field to one value and according to these parameters:
+    // Display the value according to the initial letter, show it next to the text, and ignore case
     dropdown : {
         enabled: 1,
-          fuzzySearch: false,
-          position: 'text',
-          caseSensitive: false
+        fuzzySearch: false,
+        position: 'text',
+        caseSensitive: false
     },
 })
-
-
-

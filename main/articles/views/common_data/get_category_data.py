@@ -1,64 +1,64 @@
 from ...models.article import Article
 from ...models.article_category import ArticleCategory
 
+
 def get_category_data(self):
     '''
-    Metoda pro vytvoření seznamu článků pro konkrétní kategorii.
+    Method for creating a list of articles for a specific category.
 
-    Metoda je použita v těchto souborech:
+    This method is used in the following files:
     - articles/views/article_list_data/get_queryset_data/get_queryset_for_tags.py
     - articles/views/search_data/get_queryset.py
 
-    Atributy přidané nebo měněné touto metodou:
-    - self.article_ids: ID článků které obsahují vybraný tag.
-    - self.current_category: Instance aktuálně vybrané kategorie.
-    - self.category_tabs = Instance kategorií pro self.article_ids.
-    - self.page_title: Název stránky.
+    Attributes added or modified by this method:
+    - self.article_ids: IDs of articles containing the selected tag.
+    - self.current_category: Instance of the currently selected category.
+    - self.category_tabs: Instances of categories for self.article_ids.
+    - self.page_title: Page title.
 
-    Metoda nejprve načte z adresy slug aktuálně vybrané kategorie.
+    The method first retrieves the slug of the currently selected category from the URL.
 
-    Metoda následně vyhledá na základě ID článků množinu ID kategorií,
-    po té vyhledá instance kategorií na základě jejich ID,
-    a přidá je do atributu self.category_tabs.
+    Then it retrieves a set of category IDs based on the article IDs,
+    and then retrieves instances of categories based on their IDs,
+    and adds them to the self.category_tabs attribute.
 
-    Po té na základě hodnoty pro current_category provede kontrolu,
-    zda některá z kategorií obsahuje stejný slag,
-    jako je uveden v této proměné a při shodě načte tuto kategorii do atributu self.current_category.
-    V případě neshody (mhodnota current_category může obsahovat i řetězec 'first'
-    použitý v případě prvního zobrazení navigace pro kategorie,
-    kdy chceme získat seznam pro první záložku, ale ještě nevíme jaká to bude),
-    nastaví jako vybranou kategorii první v seznamu.
+    Next, based on the value for current_category, it checks if any of the categories contain the same slug
+    as the one specified in this variable. If there is a match, it loads this category into the self.current_category attribute.
+    In case of no match (current_category value may also contain the string 'first'
+    used in the case of the first display of category navigation,
+    when we want to get a list for the first tab, but we don't know which one it will be yet),
+    it sets the first category in the list as the selected one.
 
-    Nakonec pro tuto vybranou kategorii vyfiltruje z atributu self.article_ids ty články,
-    které spadají do této kategorie a přepíše s nimi obsah atributu.
+    Finally, it filters from the self.article_ids attribute those articles that belong to the selected category
+    and updates the content of the attribute with them.
 
-    Nakonec metoda vytvoří atribut self.page_title pro název stránky.
+    Finally, the method creates the self.page_title attribute for the page title.
     '''
 
-    # Načtení aktuální kategorie
+    # Retrieving the current category
     current_category = self.kwargs['category_slug']
 
-    # Získání množiny ID kategorií na základě ID článků
+    # Getting a set of category IDs based on article IDs
     article_category_ids = Article.objects \
         .filter(id__in=self.article_ids) \
         .values_list('category_id', flat=True) \
         .distinct()
 
-    # Získání množiny instancí kategorií na základě ID kategorií
+    # Getting a set of category instances based on category IDs
     self.category_tabs = ArticleCategory.objects \
         .filter(id__in=article_category_ids) \
         .distinct()
 
-    # Získání kategorie, která bude zobrazena po načtení stránky
+    # Getting the category to be displayed after loading the page
     self.current_category = next(
         (category for category in self.category_tabs if category.slug == current_category),
         self.category_tabs.first()
     )
 
-    # Získání seznamu ID článků s stavem "publish" a navázaných na danou kategorii
+    # Getting the list of article IDs with status "publish" and linked to the selected category
     self.article_ids = Article.objects \
         .filter(id__in=self.article_ids, category=self.current_category) \
         .values_list('id', flat=True)
 
-    # Vytvoření nadpisu stránky
+    # Creating the page title
     self.page_title = f'Category for {self.page_title}'

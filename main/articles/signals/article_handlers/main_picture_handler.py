@@ -3,30 +3,27 @@ from asgiref.sync import sync_to_async
 
 async def handle_picture_post_save(article):
     '''
-    Asynchronní handler pro zachycení post_save signál pro zpracování nově uloženého obrázku.
+    Asynchronous handler for capturing the post_save signal to process newly saved images.
 
-    Handler pracuje s atributem, kterému formulář dodá hodnotu True,
-    pokud je ssoučástí formuláře i hlavní obrázek k článku.
+    The handler works with an attribute provided by the form, which is set to True
+    if the main image for the article is part of the form.
 
-    Signál nejprve volá metodu, která pro daný obrázek vytvoří 4 různé velikosti.
-    A po té tyto obrázky přiřadí k příslušným polím a uloží.
+    The signal first calls a method that creates 4 different sizes for the image.
+    Then, these images are assigned to the corresponding fields and saved.
     '''
 
-    # Kontrola zda byl změněn profilový obrázek
+    # Check if the main picture has been changed
     if article.new_picture:
 
-        # Zpuštění procesu pro úpravu obrázku
+        # Run the process to process the image
         picture_paths = article.main_picture_processing()
         article.new_picture = False
 
-        # Aktualizace jednotlivých polí v modelu článku
+        # Update the individual fields in the article model
         article.main_picture_max_size = picture_paths['max-size']
         article.main_picture_for_article = picture_paths['for_article']
         article.main_picture_preview = picture_paths['preview']
         article.main_picture_thumbnail = picture_paths['thumbnail']
 
-        # Uložení změn v databázi
+        # Save the changes to the database
         await sync_to_async(article.save)()
-
-
-

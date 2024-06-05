@@ -2,61 +2,61 @@ from django.http import HttpResponseRedirect
 
 def user_navigation_settings(request, hash):
     '''
-    Pohled pro nastavení viditelnosti navigačních panelů a postranního panelu.
+    View for setting the visibility of navigation panels and the sidebar.
 
-    Pohled zpracovává následující klíče slovníků:
-    - show_sidebars: Viditelnost bočních panelů.
-    - show_category_navigation: Viditelnost navigace pro kategorie.
-    - show_tab_for_similar: Viditelnost pro navigaci pro podobné články.
+    This view handles the following dictionary keys:
+    - show_sidebars: Visibility of sidebars.
+    - show_category_navigation: Visibility of category navigation.
+    - show_tab_for_similar: Visibility for navigation for similar articles.
 
-    Pohled nejprve načítá adresu stránky ze kterého požadavek přišel.
+    The view first loads the address of the page from which the request came.
 
-    Pohled následně ověří, zda hodnota 'hash' začíná s '#bool' (položky pro změnu True/False),
-    Pokud ano, vygeneruje z hashe část obsahující klíč pro nalezení položky ve slovníku.
+    Then, it verifies whether the value of 'hash' starts with '#bool' (items for changing True/False),
+    If yes, it generates a part from the hash containing the key to find the item in the dictionary.
 
-    Poté ověří, zda jde o požadavek pro změnu viditelnosti bočního panelu,
-    nebo pro změnu viditelnosti navigace pro kategorie,
-    nebo pro změnu viditelnosti navigace pro podobné články,
-    a volá příslušnou metodu pro provedení změny v databázi.
+    It then checks whether it's a request to change the visibility of the sidebar,
+    or to change the visibility of category navigation,
+    or to change the visibility of navigation for similar articles,
+    and calls the corresponding method to make the change in the database.
 
-    Pokud se jedná o požadavek pro změnu viditelnosti navigace pro podobné články,
-    pohled ověří, zda nejsme na záložce pro podobné články k danému tagu,
-    pokud ano, odstraní tuto část z adresy.
-    Pohled následně ověří, zda se nenacházíme na záložce kategorie,
-    pokud ano, odstraní tuto část z adresy.
+    If it's a request to change the visibility of navigation for similar articles,
+    the view checks if we are on the tab for similar articles for a given tag,
+    if yes, it removes this part from the address.
+    The view then checks if we are on the category tab for a given tag,
+    if yes, it removes this part from the address.
 
-    Oba kroky mají za cíl zajistit, aby se při návratu na daný tag
-    načetla při návratu stránka pro daný tag a ne pro určitou záložku
-    pro kategorie článků daného tagu nebo podobné články k danému tagu.
+    Both steps aim to ensure that when returning to a given tag,
+    the page for that tag is loaded upon return and not a certain tab
+    for the category articles of that tag or similar articles to that tag.
 
-    Pohled nakonec volá buď takto upravenou návratovou stránku pro daný tag,
-    nebo se navrací na stránku, odkud požadavek přišel.
+    Finally, the view either calls the modified return page for the given tag,
+    or returns to the page where the request came from.
     '''
 
-    # Získání odkazu na předchozí stránku
+    # Get the link to the previous page
     previous_page = request.META.get('HTTP_REFERER', '/')
 
-    # Ověření požadavku a přesměrování na příslušnou metodu
+    # Verify the request and redirect to the corresponding method
     if hash.startswith('#bool'):
         key = hash[6:]
 
-        # Požadavek na změnu viditelnosti bočních panelů
+        # Request to change the visibility of sidebars
         if key == 'show_sidebars':
             request.user.change_sidebar_bool_value(key)
 
-        # Požadavek na změnu viditelnosti navigace pro kategorie
+        # Request to change the visibility of category navigation
         elif key == 'show_category_navigation':
             request.user.change_settings_bool_value(key)
 
-        # Požadavek na změnu viditelnosti navigace pro podobné články
+        # Request to change the visibility of navigation for similar articles
         elif key == 'show_tab_for_similar':
             request.user.change_settings_bool_value(key)
 
-            # Pokud jsme na záložce pro podobné články pro daný tag, návrat na stránku pro daný tag
+            # If we are on the tab for similar articles for a given tag, return to the page for that tag
             if '/similar/' in previous_page:
                 previous_page = previous_page.split('/similar/')[0]
 
-            # Pokud jsme na záložce pro kategorie pro daný tag, návrat na stránku pro daný tag
+            # If we are on the category tab for a given tag, return to the page for that tag
             elif '/category/' in previous_page:
                 previous_page = previous_page.split('/category/')[0]
 

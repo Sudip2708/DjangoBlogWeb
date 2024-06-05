@@ -10,25 +10,25 @@ from ..forms.comment_form import ArticleCommentForm
 
 class ArticleDetailView(BaseView, DetailView):
     '''
-    Pohled pro stránku s výpisem jednoho článku.
+    View for displaying a single article page.
 
-    Tento pohled zpracovává následující URL adresu:
-    - article-detail: Stránka zobrazující jeden vybraný článek.
+    This view processes the following URL:
+    - article-detail: Page displaying a selected article.
 
-    Pohled dědí od základní třídy DetailView a vlastní třídy BaseView.
+    The view inherits from the base class DetailView and its custom class BaseView.
 
-    Atributy přetížené z ListView:
-    - self.template_name: Určuje cestu k šabloně, která bude použita pro zobrazení výsledků.
-    - self.context_object_name: Název proměnné v kontextu šablony, která bude obsahovat výsledný seznam objektů.
+    Overridden attributes from DetailView:
+    - self.template_name: Specifies the path to the template used for rendering the results.
+    - self.context_object_name: The name of the variable in the template context that will contain the resulting object.
 
-    Atributy zděděné z BaseView:
-    - self.user: Instance uživatele (buď CustomUser, nebo AnonymousUserWithSettings).
-    - self.url_name: URL jméno adresy, ze které přišel požadavek.
+    Inherited attributes from BaseView:
+    - self.user: User instance (either CustomUser or AnonymousUserWithSettings).
+    - self.url_name: URL name of the address from which the request came.
 
-    Metody definované v tomto pohledu:
-    - get_object: Metoda pro získání objektu (instance článku) a zaznamenání jeho zhlédnutí.
-    - handle_comment_form: Metoda pro zpracování formuláře pro komentář k článku.
-    - get_context_data: Metoda, která vrací obsah pro vykreslení šablony.
+    Methods defined in this view:
+    - get_object: Method for retrieving the object (article instance) and recording its view.
+    - handle_comment_form: Method for processing the form for commenting on the article.
+    - get_context_data: Method that returns content for rendering the template.
     '''
     model = Article
     template_name = '4_article/40__base__.html'
@@ -36,24 +36,24 @@ class ArticleDetailView(BaseView, DetailView):
 
     def get_object(self):
         '''
-        Metoda pro získání objektu (instance článku) a zaznamenání jeho zhlédnutí.
+        Method for retrieving the object (article instance) and recording its view.
 
-        Nejprve získává instanci článku z nadřazené třídy.
-        Poté volá metodu record_view třídy ArticleView pro zaznamenání zhlédnutí.
-        Kromě instance článku a autora předává i IP adresu získanou ze slovníku 'META'.
-        Metoda navrací instanci článku.
+        First, it retrieves the article instance from the parent class.
+        Then, it calls the record_view method of the ArticleView class to record the view.
+        In addition to the article instance and the author, it also passes the IP address obtained from the 'META' dictionary.
+        The method returns the article instance.
         '''
         obj = super().get_object()
         ArticleView.record_view(obj, self.request.user, self.request.META.get('REMOTE_ADDR'))
         return obj
 
-    def handle_comment_form(self, request, *args, **kwargs):
+    def post(self, request, *args, **kwargs):
         '''
-        Metoda pro zpracování formuláře pro komentář k článku.
+        Method for processing the form for commenting on the article.
 
-        Nejprve načte formulář pro komentáře k článku a pokud jsou data validní,
-        přidává k formuláři instanci uživatele a instanci článku a ukládá data do databáze.
-        Po úspěšném uložení komentáře přesměruje uživatele na stránku s článkem.
+        First, it loads the form for commenting on the article, and if the data is valid,
+        it adds the user instance and the article instance to the form and saves the data to the database.
+        After successfully saving the comment, it redirects the user to the article page.
         '''
         form = ArticleCommentForm(request.POST)
 
@@ -65,20 +65,23 @@ class ArticleDetailView(BaseView, DetailView):
 
             return redirect(reverse("article-detail", kwargs={'slug': article.slug}))
 
+        else:
+            return self.get(request, *args, **kwargs)
+
     def get_context_data(self, **kwargs):
         '''
-        Metoda pro předání kontextu potřebného pro vykreslení stránky.
+        Method for passing the context required for rendering the page.
 
-        Kontext zděděný z BaseView:
-        - context['user']: Instance uživatele.
-        - context['url_name']: URL jménu adresy z které požadavek přišel.
-        - context['sidebar_search_form']: Formulář pro hledání (pro postranní panel).
-        - context['published_categories']: Publikované kategorie (pro dropdown menu a postranní panel).
-        - context['footer']: Data pro vykreslení patičky (na domácí stránce je již zahrnuto)
-        - context['user_thumbnail']: Miniatura profilového obrázku (pro přihlášeného a nepřihlášeného uživatele).
+        Context inherited from BaseView:
+        - context['user']: User instance.
+        - context['url_name']: URL name of the address from which the request came.
+        - context['sidebar_search_form']: Search form (for the sidebar).
+        - context['published_categories']: Published categories (for dropdown menu and sidebar).
+        - context['footer']: Data for rendering the footer (included on the homepage)
+        - context['user_thumbnail']: Profile thumbnail (for logged-in and logged-out users).
 
-        Kontext vytvořený tímto pohledem:
-        - context['form']: Formulář pro zanechání komentáře k článku.
+        Context created by this view:
+        - context['form']: Form for leaving a comment on the article.
         '''
         context = super().get_context_data(**kwargs)
 

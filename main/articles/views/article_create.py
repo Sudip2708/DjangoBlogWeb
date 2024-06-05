@@ -14,26 +14,26 @@ from .article_create_data.get_context_data import get_context_data
 @method_decorator(login_required, name='dispatch')
 class ArticleCreateView(BaseView, CreateView):
     '''
-    Pohled pro vytvoření článku (jen pro přihlášené uživatele).
+    View for creating an article (only for authenticated users).
 
-    Pohled zpracovává následující URL:
-    - article-create: Stránka pro vytvoření nového článku.
+    The view processes the following URL:
+    - article-create: Page for creating a new article.
 
-    Pohled dědí ze základní třídy CreateView a vlastní třídy BaseView.
+    The view inherits from the base class CreateView and its custom class BaseView.
 
-    Atributy přetížené z CreateView:
-    - self.model: Určuje model, se kterým tento pohled pracuje.
-    - self.template_name: Určuje cestu k šabloně, která bude použita pro zobrazení výsledků.
+    Overridden attributes from CreateView:
+    - self.model: Specifies the model this view works with.
+    - self.template_name: Specifies the path to the template used for rendering the results.
 
-    Atributy poděděné z BaseView:
-    - self.user: Instance uživatele (buď CustomUser, nebo AnonymousUserWithSettings).
-    - self.url_name: URL adresa, ze které požadavek přišel.
+    Inherited attributes from BaseView:
+    - self.user: User instance (either CustomUser or AnonymousUserWithSettings).
+    - self.url_name: URL address from which the request came.
 
-    Metody definované v tomto pohledu:
-    - get_form_class: Metoda, která vrací formulář na základě zvolené záložky stránky.
-    - form_valid: Metoda, která do formuláře přidává instanci autora.
-    - get_success_url: Metoda, která vrací adresu pro přesměrování po úspěšném založení článku.
-    - get_context_data: Metoda, která vrací obsah pro vykreslení šablony.
+    Methods defined in this view:
+    - get_form_class: Method that returns the form based on the selected tab of the page.
+    - form_valid: Method that validates the form (+ adds the author instance).
+    - get_success_url: Method that returns the redirect URL after successfully creating the article.
+    - get_context_data: Method that returns the content for rendering the template.
     '''
 
     model = Article
@@ -41,39 +41,39 @@ class ArticleCreateView(BaseView, CreateView):
 
     def get_form_class(self):
         '''
-        Metoda pro navrácení příslušného formuláře (dle záložky stránky).
+        Method to return the appropriate form (based on the page tab).
 
-        Metoda volá stejnojmennou metodu uloženou v samostatném souboru
-        a vrací její výsledek.
+        The method calls the similarly named method stored in a separate file
+        and returns its result.
         '''
         return get_form_class(self)
 
     def form_valid(self, form):
         '''
-        Metoda pro validaci formuláře (+ přidává autora).
+        Method for form validation (+ adds the author).
 
-        Metoda volá funkci pro získání nebo vytvoření a získání instance autora.
-        Následně metoda volá validační metodu nadřazené třídy.
+        The method calls the function to get or create and get the author instance.
+        Then the method calls the validation method of the parent class.
         '''
         form.instance.author = get_or_create_author(self.request.user)
         return super().form_valid(form)
 
     def get_success_url(self):
         '''
-        Metoda pro vytvoření návratové adresy (po úspěšném uložení formuláře).
+        Method to create the return address (after successfully saving the form).
 
-        Metoda volá stejnojmennou metodu uloženou v samostatném souboru
-        a vrací její výsledek.
+        The method calls the similarly named method stored in a separate file
+        and returns its result.
         '''
         return get_success_url(self)
 
     def get_context_data(self, **kwargs):
         '''
-        Metoda pro předání kontextu potřebného pro vykreslení stránky.
+        Method to pass the context required for rendering the page.
 
-        Metoda nejprve načte kontext nadřazené třídy,
-        a poté volá stejnojmennou metodu uloženou v samostatném souboru,
-        které kontext předá a následně vrací její výsledek.
+        The method first loads the context of the parent class,
+        and then calls the similarly named method stored in a separate file,
+        passes the context to it, and returns its result.
         '''
         context = super().get_context_data(**kwargs)
         return get_context_data(self, context, **kwargs)

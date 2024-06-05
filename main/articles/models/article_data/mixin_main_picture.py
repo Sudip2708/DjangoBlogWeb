@@ -1,34 +1,33 @@
 from django.db import models
-import os
 
 from .main_picture_processing import main_picture_processing
 
 
 class MainPictureMixin(models.Model):
     '''
-    Mixin pro model Article přidávající pole pro uložení různých velikostních variant hlavního obrázku.
+    Mixin for the Article model adding fields for storing various sizes of the main article image.
 
-    Mixin definuje tyto atributy:
-    - default_picture: Cesta z Media k defaultnímu obrázku (použit při vytvoření instance bez udání obrázku).
-    - upload_path: Cesta z Media pro uložení všech velikostních variant hlavního obrázku.
-    - new_picture: Boolean hodnota, zda došlo k novému nahrání obrázku (nastavuje se ve formuláři
-        po obdržení nového souboru pro obrázek a je zachytávána v post_save signálu pro zpracování obrázku).
+    The mixin defines these attributes:
+    - default_picture: Path from Media to the default image (used when creating an instance without specifying an image).
+    - upload_path: Path from Media to store all sizes of the main article image.
+    - new_picture: Boolean value indicating whether a new image has been uploaded (set in the form
+        after receiving a new image file and captured in the post_save signal for image processing).
 
-    Pole vytvořená tímto mixinem:
-    - main_picture_max_size: Největší velikost obrázku pro samotné zobrazení obrázku přes celou obrazovku.
-        (maximální rozměr: 1920px / 1080px, minimální rozměr: 800px / 800px)
-    - main_picture_for_article: Střední velikost obrázku pro použití na stránce článku.
-        (maximální šířka: 440px, minimální šířka: 800px)
-    - main_picture_preview: Menší velikost obrázku pro zobrazení na stránce s výpisem článků.
-        (oříznutí na poměr 4:3 a zmenšení velikosti na 440px / 330px)
-    - main_picture_thumbnail: Miniatura použitá pro odkaz článku.
-        (oříznutí na čtvercový formát a zmenšení velikosti na 150px)
+    Fields created by this mixin:
+    - main_picture_max_size: Largest size of the image for full-screen display.
+        (maximum dimensions: 1920px / 1080px, minimum dimensions: 800px / 800px)
+    - main_picture_for_article: Medium size of the image for use on the article page.
+        (maximum width: 440px, minimum width: 800px)
+    - main_picture_preview: Smaller size of the image for display on the article list page.
+        (cropped to a 4:3 aspect ratio and resized to 440px / 330px)
+    - main_picture_thumbnail: Thumbnail used for article links.
+        (cropped to square format and resized to 150px)
 
-    Mixin má definovanou vnitřní třídu Meta pro nastavení abstraktního chování.
-    (Samostatně nevytváří ID a tabulku v databázi.)
+    The mixin defines an inner Meta class to set abstract behavior.
+    (It does not create its own ID or table in the database.)
 
-    Mixin obsahuje metodu 'picture_processing',
-    která vytváří z nahraného obrázku jednotlivé jeho velikostní varianty.
+    The mixin contains the method 'picture_processing',
+    which creates various size variants of the uploaded image.
     '''
 
     default_picture = 'images/articles/no-image.jpg'
@@ -63,5 +62,5 @@ class MainPictureMixin(models.Model):
         abstract = True
 
     def main_picture_processing(self):
-        ''' Metoda pro vytvoření velikostních variant hlavního obrázku článku. '''
+        ''' Method for creating size variants of the main article image. '''
         return main_picture_processing(self)

@@ -1,4 +1,4 @@
-from .mixin_property import AnonynousPropertyMixin
+from .mixin_property import AnonymousPropertyMixin
 from ..common_data.change_bool_value import change_bool_value
 from ..common_data.change_sidebar_order import change_sidebar_order
 from ..common_data.get_sorted_sidebar_panels import get_sorted_sidebar_panels
@@ -7,45 +7,44 @@ from ..common_data.default_setting_values import (sidebar_setting_values,
                                                   additional_setting_values)
 
 
-class AnonymousUserWithSettings(AnonynousPropertyMixin):
+class AnonymousUserWithSettings(AnonymousPropertyMixin):
     '''
-    Třída pro vytvoření instance pro anonymního uživatele s nastavením pro postranní panely.
+    Class for creating an instance for an anonymous user with sidebar settings.
 
-    Tato třída je určena pro nastavení postranního panelu pro nepřihlášeného uživatele.
-    Třída dědí z mixinu AnonynousPropertyMixin nastavení základních vlastností
-    pro nepřihlášeného uživatele.
+    This class is intended for setting the sidebar for unregistered users.
+    The class inherits from the AnonymousPropertyMixin mixin, which sets basic properties
+    for unregistered users.
 
-    Třída vytváří následující atributy:
-    - username: Uživatelské jméno nepřihlášeného uživatele.
-    - slug: Slug nepřihlášeného uživatele.
+    The class creates the following attributes:
+    - username: The username of the unregistered user.
+    - slug: The slug of the unregistered user.
 
-    Třída nejprve volá konstruktor a na základě requestu vytvoří instanci pro nepřihlášeného uživatele
-    a vytvoří atributy pro slovníky hodnot pro vzhled a umístění bočních panelů,
-    a dalších nastavení přístupných ze stránek pro uživatele.
+    The class first calls the constructor and based on the request, creates an instance for an unregistered user
+    and creates attributes for dictionaries of values for appearance and placement of sidebar panels,
+    and other settings accessible from user pages.
 
-    Třída obsahuje metody pro změnu hodnot těchto slovníků,
-    které pro svůj výpočet používají funkce,
-    které jsou společné i pro přihlášeného uživatele.
+    The class contains methods for changing the values of these dictionaries,
+    which use functions for their calculation that are common even for registered users.
     '''
 
     username = 'Unregistered User'
-    slug = 'anonymus'
+    slug = 'anonymous'
 
 
     def __init__(self, request):
         '''
-        Konstruktor třídy pro vytvoření instance.
+        Constructor of the class for creating an instance.
 
-        Konstruktor přijímá parametr request, objekt reprezentující aktuální HTTP požadavek.
+        The constructor accepts the request parameter, an object representing the current HTTP request.
 
-        Konstruktor následně vytváří atributy:
-        - self.request: Atribut pro objekt reprezentující aktuální HTTP požadavek
-        - self.sidebar: Atribut pro slovník obsahující boolean hodnoty pro nastavení postranních panelů.
-        - self.sidebar_order: Atribut pro slovník obsahující hodnoty pořadí postranních panelů.
-        - self.settings: Atribut pro slovník obsahující boolean hodnoty pro další nastavení uživatele.
+        The constructor then creates attributes:
+        - self.request: Attribute for the object representing the current HTTP request.
+        - self.sidebar: Attribute for the dictionary containing boolean values for setting sidebar panels.
+        - self.sidebar_order: Attribute for the dictionary containing values for the order of sidebar panels.
+        - self.settings: Attribute for the dictionary containing boolean values for additional user settings.
 
-        Konstruktor ukládá hodnoty těchto dvou slovníků do aktuální session,
-        pro nepřihlášeného uživatele.
+        The constructor saves the values of these two dictionaries to the current session,
+        for an unregistered user.
 
         '''
         self.request = request
@@ -56,13 +55,13 @@ class AnonymousUserWithSettings(AnonynousPropertyMixin):
 
     def change_sidebar_bool_value(self, field_key):
         '''
-        Metoda pro změnu boolean hodnot pro nastavení bočního panelu.
+        Method for changing boolean values for sidebar settings.
 
-        Metoda obdrží klíč pole, jehož hodnota má být změněna,
-        po té volá metodu pro změnu boolean pole pro příslušný slovník a klíč,
-        která změnu provede a navrací změněný slovník.
-        Metoda navráceným slovníkem přepisuje slovník uložený v atributu třídy,
-        a slovník uložený v session nepřihlášeného uživatele.
+        The method receives the key of the field whose value is to be changed,
+        then calls the method to change the boolean field for the corresponding dictionary and key,
+        which performs the change and returns the modified dictionary.
+        The method overwrites the dictionary stored in the class attribute,
+        and the dictionary stored in the session for an unregistered user.
 
         '''
         self.sidebar = change_bool_value(self.sidebar, field_key)
@@ -70,13 +69,13 @@ class AnonymousUserWithSettings(AnonynousPropertyMixin):
 
     def change_sidebar_order_value(self, hash):
         '''
-        Metoda pro změnu pořadí bočních panelů.
+        Method for changing the order of sidebar panels.
 
-        Metoda hash s informacemi o vybraném panelu a směru posunu,
-        a po té volá metodu pro změnu pozice panelu pro příslušný slovník a hash,
-        která změnu provede a navrací změněný slovník.
-        Metoda navráceným slovníkem přepisuje slovník uložený v atributu třídy,
-        a slovník uložený v session nepřihlášeného uživatele.
+        The method receives a hash with information about the selected panel and the direction of movement,
+        and then calls the method to change the position of the panel for the corresponding dictionary and hash,
+        which performs the change and returns the modified dictionary.
+        The method overwrites the dictionary stored in the class attribute,
+        and the dictionary stored in the session for an unregistered user.
 
         '''
         self.sidebar_order = change_sidebar_order(self.sidebar_order, hash)
@@ -84,19 +83,18 @@ class AnonymousUserWithSettings(AnonynousPropertyMixin):
 
     def change_settings_bool_value(self, field_key):
         '''
-        Metoda pro změnu boolean hodnot pro dodatečná nastavení uživatele.
+        Method for changing boolean values for additional user settings.
 
-        Metoda obdrží klíč pole, jehož hodnota má být změněna,
-        po té volá metodu pro změnu boolean pole pro příslušný slovník a klíč,
-        která změnu provede a navrací změněný slovník.
-        Metoda navráceným slovníkem přepisuje slovník uložený v atributu třídy,
-        a slovník uložený v session nepřihlášeného uživatele.
+        The method receives the key of the field whose value is to be changed,
+        then calls the method to change the boolean field for the corresponding dictionary and key,
+        which performs the change and returns the modified dictionary.
+        The method overwrites the dictionary stored in the class attribute,
+        and the dictionary stored in the session for an unregistered user.
 
         '''
         self.settings = change_bool_value(self.settings, field_key)
         self.request.session['settings'] = self.settings
 
     def get_sorted_sidebar_panels(self):
-        ''' Metoda vrací data pro vykreslení postranních panelů v nastaveném pořadí. '''
+        ''' Method returns data for rendering sidebar panels in the configured order. '''
         return get_sorted_sidebar_panels(self)
-

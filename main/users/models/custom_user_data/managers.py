@@ -1,42 +1,36 @@
 from django.contrib.auth.base_user import BaseUserManager
 
-
 class CustomUserManager(BaseUserManager):
     """
-    Třída slouží pro změnu nastavení identifikace uživatele a superuživatele.
+    Class for changing user and superuser identification settings.
 
-    Tato třída mění nastavení identifikace uživatele a superuživatele
-    z uživatelského jména (jen je defaultně nastaveno jako identifikátor
-    pro přihlášení uživatele), na email uživatele.
+    This class changes the user and superuser identification settings
+    from username (which is default for user login) to user email.
 
-    Tento krok zjednodušuje založení účtu uživatele,
-    kdy při založení účtu není třeba definovat uživatelské jméno,
-    ale postačuje pouze email a heslo.
+    This step simplifies the user account creation process,
+    where only an email and password are needed instead of defining a username.
 
-    Tento krok také ovlivňuje i přihlášení do aplikace,
-    kdy namísto uživatelského jména je vyžadován jeho email.
+    This step also affects the login process,
+    where the user is required to use their email instead of a username.
 
-    Metody modelu:
-    - create_user: Metoda pro vytvoření instance uživatele.
-    - create_superuser: Metoda pro vytvoření instance superuživatele.
+    Model methods:
+    - create_user: Method for creating a user instance.
+    - create_superuser: Method for creating a superuser instance.
     """
 
     def create_user(self, email, password, **extra_fields):
         '''
-        Metoda pro vytvoření instance uživatele.
+        Method for creating a user instance.
 
-        Metoda nejprve zkontroluje, zda byl zadaný email a heslo.
-        Pokud ne, vyvolá výjimku s požadavkem na zadání.
+        The method first checks if an email and password are provided.
+        If not, it raises an exception with a request to provide them.
 
-        Následně provede normalizaci emailu,
-        a přiřadí jeho hodnotu do instance user,
-        kde bude sloužit jako hlavní identifikátor.
+        Then it normalizes the email and assigns its value to the user instance,
+        where it serves as the primary identifier.
 
-        Poté přidá k instanci uživatele i zadané heslo,
-        a instanci uloží.
+        It then adds the provided password to the user instance and saves the instance.
 
-        Metoda navrací nově založenou instanci uživatele
-        s definovaným emailem a heslem.
+        The method returns the newly created user instance with the defined email and password.
         '''
 
         if not email:
@@ -54,20 +48,20 @@ class CustomUserManager(BaseUserManager):
 
     def create_superuser(self, email, password, **extra_fields):
         """
-        Metoda pro vytvoření instance superuživatele.
+        Method for creating a superuser instance.
 
-        Metoda nejprve změní hodnotu pro klíče:
-        - is_staff: Povolení ke správě aplikace nebo jejím administrativním funkcím.
-        - is_superuser: Povolení provádět všechny operace a mít přístup ke všem funkcím a datům v aplikaci.
-        - is_active: Povolení uživatelovi přihlašovat se do systému.
-        Na hodnotu True (pokud klíč neexistuje, vytvoří nový).
+        The method first sets the values for the following keys:
+        - is_staff: Allowing access to manage the application or its administrative functions.
+        - is_superuser: Allowing to perform all operations and access all functions and data in the application.
+        - is_active: Allowing the user to log in to the system.
+        to True (creating a new key if it doesn't exist).
 
-        Metoda následně provede kontrolu správného nastavení těchto hodnot,
-        a pokud nejsou správně nastavené, vyvolá výjimku.
+        Then the method checks the correct settings of these values,
+        and if they are not set correctly, it raises an exception.
 
-        Metoda navrací instanci superuživatele
-        voláním metody pro založení uživatele
-        s nastavenými právy pro superuživatele.
+        The method returns a superuser instance
+        by calling the user creation method
+        with permissions set for a superuser.
         """
 
         extra_fields.setdefault("is_staff", True)

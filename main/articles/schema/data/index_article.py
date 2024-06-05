@@ -5,28 +5,28 @@ from bs4 import BeautifulSoup
 
 def index_article(self, article):
     '''
-    Metoda třídy ArticleSchema pro indexaci článku.
+    Method of the ArticleSchema class for indexing an article.
 
-    Metoda očekává instanci článku, který má být indexován.
-    Nejprve otevře soubor s indexy a poté načte metody pro zápis (writen).
+    This method expects an instance of the article to be indexed.
+    First, it opens the index file and then loads the methods for writing.
 
-    Poté načte obsah pole content, který je tvořen HTML obsahem od TinyMCE,
-    a pomocí metod BeautifulSoup a get_text převede HTML text
-    na normální text a poté odstraní bílé znaky na začátku a konci textu.
+    Then, it retrieves the content of the 'content' field, which is HTML content from TinyMCE,
+    and converts the HTML text to normal text using the BeautifulSoup methods and get_text,
+    and then removes whitespace characters at the beginning and end of the text.
 
-    Metoda přiřadí všechna indexovaná pole do indexu
-    a uloží změny.
+    The method assigns all indexed fields to the index
+    and saves the changes.
     '''
 
-    # Načtení souboru s indexem pro zápis.
+    # Open the index file for writing.
     ix = open_dir(settings.INDEX_DIRECTORY)
     writer = ix.writer()
 
-    # Převod HTML obsahu na text.
+    # Convert HTML content to text.
     html_content = article.content
     text_content = BeautifulSoup(html_content, 'html.parser').get_text(strip=True)
 
-    # Aktualizace hodnot polí v indexu a uložení změn.
+    # Update field values in the index and save the changes.
     writer.update_document(
         id=str(article.id),
         title=article.title,

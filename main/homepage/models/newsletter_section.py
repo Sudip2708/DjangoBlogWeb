@@ -8,19 +8,19 @@ from .data.singleton_model import SingletonModel
 
 class HomePageNewsletterSection(SingletonModel):
     '''
-    Databázový model pro Home Page Newsletter Section.
+    Database model for the Home Page Newsletter Section.
 
-    Model dědí ze SingletonModel, což je abstraktní třída definovaná pro vytvoření jediné instance.
+    The model inherits from SingletonModel, which is an abstract class defined to create a single instance.
 
-    Model vytváří následující pole:
-    - display_newsletter_section: Boolean pole pro hodnotu reprezentující zobrazení nebo skrytí sekce.
-    - newsletter_title: HTML pole pro vložení nadpisu, který bude zobrazen v této sekci
-    - newsletter_description: HTML pole pro vložení popisu, který bude zobrazen v této sekci
-    - newsletter_subscribers: ForeignKey pole pro propojení s modelem NewsletterSubscriber a ukládání odběratelů newsletteru.
+    The model creates the following fields:
+    - display_newsletter_section: Boolean field for representing the display or hiding of the section.
+    - newsletter_title: HTML field for inserting a title to be displayed in this section.
+    - newsletter_description: HTML field for inserting a description to be displayed in this section.
+    - newsletter_subscribers: ForeignKey field for linking with the NewsletterSubscriber model and storing newsletter subscribers.
 
-    Metody modelu:
-    - __str__: Pro získání textové reprezentace modelu (dle hodnoty pole pro název článku).
-    - get_data: Slouží k získání všech hodnot tohoto modelu pro vykreslení na domácí stránce.
+    Model methods:
+    - __str__: To get the textual representation of the model (based on the article name field value).
+    - get_data: Used to retrieve all the editable fields' values of this model for rendering on the home page.
     '''
 
     display_newsletter_section = models.BooleanField(
@@ -51,10 +51,10 @@ class HomePageNewsletterSection(SingletonModel):
 
     def get_data(self):
         '''
-        Metoda, která slouží k získání hodnot všech editovatelných polí tohoto modelu pro vykreslení na domácí stránce.
+        Method to retrieve the values of all editable fields of this model for rendering on the home page.
 
-        Vrací slovník obsahující následující informace:
-        zobrazení sekce, nadpis a popis sekce.
+        Returns a dictionary containing the following information:
+        section display, section title, and section description.
         '''
 
         return {

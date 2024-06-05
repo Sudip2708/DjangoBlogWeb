@@ -1,24 +1,24 @@
 def print_indexed_articles(self):
     '''
-    Metoda třídy ArticleSchema pro vytisknutí názvů všech indexovaných článků.
+    Method of the ArticleSchema class for printing the titles of all indexed articles.
 
-    Nejprve metoda vytvoří prázdný seznam pro názvy indexovaných článků.
-    Následně načte vyhledávač ve Whoosh schématu
-    a cyklem vytvoří seznam názvů všech indexovaných článků.
+    First, the method creates an empty list for the titles of indexed articles.
+    Then, it loads the searcher within the Whoosh schema
+    and iterates through to create a list of titles of all indexed articles.
 
-    Metoda vrací tiskem do terminálu
-    seznam všech názvů indexovaných článků.
+    The method prints to the terminal
+    the list of titles of all indexed articles.
     '''
 
-    # Seznam pro názvy článků
+    # List for article titles
     article_titles = []
 
-    # Vyhledání názvů článků
+    # Search for article titles
     with self.ix.searcher() as searcher:
         for doc in searcher.documents():
             article_titles.append(doc['title'])
 
-    # Tisk názvů článků
-    print("Indexované články:")
+    # Print article titles
+    print("Indexed Articles:")
     for title in article_titles:
         print(title)

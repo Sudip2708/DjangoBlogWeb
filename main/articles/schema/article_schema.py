@@ -11,49 +11,48 @@ from .data.update_field_in_index import update_field_in_index
 
 class ArticleSchema:
     '''
-    Třída ArticleSchema definuje schéma pro indexování článků pomocí Whoosh.
+    The ArticleSchema class defines the schema for indexing articles using Whoosh.
 
-    Třída umožňuje inicializaci a správu indexu Whoosh pro indexaci článků.
-    Obsahuje metodu pro vytvoření indexu a definuje schéma,
-    které se použije k indexaci jednotlivých atributů článků,
-    kterými jsou: titulek, přehled, obsah, autor, datum publikace.
+    The class allows for the initialization and management of a Whoosh index for article indexing.
+    It includes a method for creating the index and defines the schema
+    used to index individual article attributes, including: title, overview, content, author, and publication date.
 
-    Schéma je použito k efektivnějšímu fulltextovému vyhledávání v publikovaných článcích.
-    Na schéma jsou tak navázány funkce spojené s obsluhou vyhledávání.
-    Na třídu je také navázaná funkce rebuild_schema umístěná v modulu data,
-    která slouží k reindexaci celého schématu.
+    The schema is used for more efficient full-text searching in published articles.
+    Functions related to search handling are thus linked to the schema.
+    The class also includes the rebuild_schema function located in the data module,
+    which is used to reindex the entire schema.
 
-    Tato třída obsahuje následující metody:
-    - update_field_in_index: Pro aktualizaci konkrétního pole indexu.
-    - delete_article_from_index: Pro smazání indexu článku.
-    - index_article: Pro indexaci článku.
-    - print_indexed_articles: Pro výpis názvů všech indexovaných článků.
+    This class contains the following methods:
+    - update_field_in_index: For updating a specific field in the index.
+    - delete_article_from_index: For deleting an article from the index.
+    - index_article: For indexing an article.
+    - print_indexed_articles: For printing the titles of all indexed articles.
     '''
 
     def __init__(self):
-        ''' Inicializační metoda třídy. '''
+        ''' Class initialization method. '''
         self.ix = self.create_index()
 
     def create_index(self):
         '''
-        Metoda otvírá, nebo vytváří a navrací otevřený index z jeho umístění.
+        The method opens, creates, or returns an open index from its location.
 
-        Metoda create_index vytváří nebo otevírá index Whoosh
-        v adresáři nastaveném v proměnné settings.INDEX_DIRECTORY.
-        Pokud adresář ještě neexistuje, metoda ho vytvoří.
-        Poté zkontroluje, zda je adresář prázdný.
-        Pokud ano, vytvoří nový index s použitím schématu získaného pomocí metody get_schema().
-        Pokud adresář již obsahuje nějaké soubory,
-        metoda pouze otevře existující index v daném adresáři.
+        The create_index method creates or opens a Whoosh index
+        in the directory specified by the settings.INDEX_DIRECTORY variable.
+        If the directory does not exist yet, the method creates it.
+        It then checks if the directory is empty.
+        If it is, it creates a new index using the schema obtained via the get_schema method.
+        If the directory already contains some files,
+        the method simply opens the existing index in that directory.
 
-        Nakonec vrátí otevřený index.
+        Finally, it returns the open index.
         '''
 
-        # Kontrola/vytvoření adresáře
+        # Check/create directory
         if not os.path.exists(settings.INDEX_DIRECTORY):
             os.makedirs(settings.INDEX_DIRECTORY)
 
-        # Načtení a navrácení indexu
+        # Load and return index
         if not os.listdir(settings.INDEX_DIRECTORY):
             ix = create_in(settings.INDEX_DIRECTORY, self.get_schema())
         else:
@@ -63,10 +62,10 @@ class ArticleSchema:
 
     def get_schema(self):
         '''
-        Metoda definuje pole instance schématu.
+        The method defines the fields of the schema instance.
 
-        Metoda vrací instanci třídy SchemaClass,
-        která obsahuje definice polí (fields) pro indexování článků.
+        The method returns an instance of the SchemaClass,
+        which contains field definitions for indexing articles.
         '''
 
         return SchemaClass(
@@ -79,17 +78,17 @@ class ArticleSchema:
         )
 
     def update_field_in_index(self, article_id, field_name, new_value):
-        ''' Metoda pro aktualizaci konkrétního pole indexu. '''
+        ''' Method for updating a specific field in the index. '''
         update_field_in_index(self, article_id, field_name, new_value)
 
     def delete_article_from_index(self, article_id):
-        ''' Metoda pro smazání indexu článku. '''
+        ''' Method for deleting an article from the index. '''
         delete_article_from_index(self, article_id)
 
     def index_article(self, article):
-        ''' Metoda pro indexaci článku. '''
+        ''' Method for indexing an article. '''
         index_article(self, article)
 
     def print_indexed_articles(self):
-        ''' Metoda pro výpis názvů všech indexovaných článků. '''
+        ''' Method for printing the titles of all indexed articles. '''
         print_indexed_articles(self)

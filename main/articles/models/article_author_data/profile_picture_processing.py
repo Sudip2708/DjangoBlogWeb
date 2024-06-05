@@ -5,42 +5,42 @@ from common_data.image_processing import image_processing
 
 def profile_picture_processing(self):
     '''
-    Metoda pro vytvoření velikostních variant profilového obrázku autora.
+    Method for creating resized variants of the author's profile picture.
 
-    Metoda je použita v pos_save signálu 'handle_picture_post_save' pro úpravu prodfilového obrázku.
+    This method is used in the post_save signal 'handle_picture_post_save' for modifying the profile picture.
 
-    Metoda nejprve vytváří seznam se slovníky s parametry pro změnu obrázku 'pictures_parameters'.
-    Po té funkce vytvoří proměné potřebné pro následující cyklus,
-    kde projde jednotlivé položky (slovníky) seznamu 'pictures_parameters'.
-    Zde je nejprve volaná funkce pro zpracování a uložení nového obrázku dle zadaných parametrů,
-    která vrací relativní cestu k obrázku, která se ukládá do slovníku 'picture_paths'.
-    
-    Po provedení cyklu metoda zkontroluje, zda nahraný obrázek
-    je stále na svém umístění, a smaže ho.
+    The method first creates a list with dictionaries containing parameters for image transformation 'pictures_parameters'.
+    Then, the function creates variables needed for the following loop,
+    where it iterates over each item (dictionary) in the 'pictures_parameters' list.
+    Here, the function for processing and saving the new image according to the given parameters is called first,
+    which returns the relative path to the image, and it's saved in the 'picture_paths' dictionary.
 
-    Metoda vrací slovník s relativními cestami k novým obrázkům,
-    který je použit pro uložení cest do databáze,
-    a to v post_save signálu pro úpravu prodfilového obrázku.
+    After the loop, the method checks if the uploaded image
+    is still at its location and deletes it.
+
+    The method returns a dictionary with relative paths to the new images,
+    which is used for saving the paths to the database,
+    in the post_save signal for modifying the profile picture.
     '''
 
-    # Seznam s údaji o obrázcích
+    # List with image data
     pictures_parameters = [
         {'name': 'profile_picture', 'width': 440, 'aspect_ratio': 1},
         {'name': 'thumbnail', 'width': 150, 'aspect_ratio': 1},
     ]
 
-    # Načtení cesty k původnímu souboru
+    # Get the path to the original file
     image_path = self.profile_picture.path
     instance = self
     name = 'author'
 
-    # Cyklus procházející seznam s údaji o obrázcích
+    # Loop through the list with image data
     picture_paths = {}
     for image_parameters in pictures_parameters:
         relative_picture_path = image_processing(image_path, image_parameters, instance, name)
         picture_paths[image_parameters['name']] = relative_picture_path
 
-    # Odstranění nahraného obrázku
+    # Remove the uploaded image
     if os.path.exists(image_path):
         os.remove(image_path)
 

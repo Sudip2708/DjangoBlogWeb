@@ -7,23 +7,22 @@ from tinymce.models import HTMLField
 
 class HomePageLatestArticles(SingletonModel):
     '''
-    Databázový model pro Home Page Latest Articles Section.
+    Database model for the Home Page Latest Articles Section.
 
-    Model dědí ze SingletonModel, což je abstraktní třída definovaná pro vytvoření jediné instance.
+    The model inherits from SingletonModel, which is an abstract class defined to create a single instance.
 
-    Model vytváří následující pole:
-    - display_latest_section: Boolean pole pro hodnotu reprezentující zobrazení nebo skrytí sekce.
-    - latest_title: HTML pole pro vložení nadpisu, který bude zobrazen v této sekci.
-    - latest_description: HTML pole pro vložení popisu, který bude zobrazen v této sekci.
-    - latest_article_1: ForeignKey pole pro výběr prvního nejnovějšího článku.
-    - latest_article_2: ForeignKey pole pro výběr druhého nejnovějšího článku.
-    - latest_article_3: ForeignKey pole pro výběr třetího nejnovějšího článku.
+    The model creates the following fields:
+    - display_latest_section: Boolean field for representing the display or hiding of the section.
+    - latest_title: HTML field for inserting a title to be displayed in this section.
+    - latest_description: HTML field for inserting a description to be displayed in this section.
+    - latest_article_1: ForeignKey field for selecting the first latest article.
+    - latest_article_2: ForeignKey field for selecting the second latest article.
+    - latest_article_3: ForeignKey field for selecting the third latest article.
 
-    Metody modelu:
-    - __str__: Pro získání textové reprezentace modelu (dle hodnoty pole pro název článku).
-    - get_data: Slouží k získání všech hodnot tohoto modelu pro vykreslení na domácí stránce.
+    Model methods:
+    - __str__: To get the textual representation of the model (based on the article name field value).
+    - get_data: Used to retrieve all the values of this model for rendering on the home page.
     '''
-
 
     display_latest_section = models.BooleanField(
         _('Display Latest Section'),
@@ -70,31 +69,31 @@ class HomePageLatestArticles(SingletonModel):
     @property
     def latest_articles(self):
         """
-        Metoda, která slouží k získání hodnot tří nejnovějších článků pro tento model.
+        Method to retrieve the values of the three latest articles for this model.
 
-        Vrátí seznam tří nejnovějších článků přiřazených k modelu
-        nebo doplní seznam novými články, pokud některé položky nejsou definovány.
+        Returns a list of the three latest articles assigned to the model
+        or populates the list with new articles if some items are not defined.
         """
 
-        # Načtení uložených článků v tomto modelu
+        # Retrieve the saved articles in this model
         assigned_articles = [
             self.latest_article_1,
             self.latest_article_2,
             self.latest_article_3
         ]
 
-        # Kontrola, zda některé z polí neobsahuje id článku
+        # Check if any of the fields does not contain an article id
         if not all(assigned_articles):
 
-            # Načtení tří nejnovějších článků
+            # Retrieve the three latest articles
             latest_articles = list(Article.objects.filter(status='publish').order_by('-created')[:3])
 
-            # Odfiltrování článků, které se již vyskytují v nabídce modelu
+            # Filter out articles already appearing in the model's selection
             for index, article in enumerate(assigned_articles):
                 if article in latest_articles:
                     latest_articles = [a for a in latest_articles if a != article]
 
-            # Doplnění chybějících článků modelu
+            # Fill in the missing articles for the model
             for index, article in enumerate(assigned_articles):
                 if article is None:
                     assigned_articles[index] = latest_articles.pop(0)
@@ -104,10 +103,10 @@ class HomePageLatestArticles(SingletonModel):
 
     def get_data(self):
         '''
-        Metoda, která slouží k získání hodnot všech polí tohoto modelu pro vykreslení na domácí stránce.
+        Method to retrieve the values of all fields of this model for rendering on the home page.
 
-        Vrací slovník obsahující následující informace:
-        zobrazení sekce, nadpis, popis a články sekce.
+        Returns a dictionary containing the following information:
+        section display, section title, section description, and section articles.
         '''
 
         return {

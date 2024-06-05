@@ -1,33 +1,33 @@
 def get_unique_value(model, field, value):
     '''
-    Funkce pro ověření jedinečnosti dané hodnoty v rámci pole modelu.
+    Function to verify the uniqueness of a given value within a model field.
 
-    Funkce je použita v těchto souborech:
+    This function is used in the following files:
     - articles/signals/article_handlers/default_values_handler.py
     - articles/signals/article_author_handlers/default_values_handler.py
     - users/signals/user_handlers/default_values_handler.py
 
-    Funkce očekává tyto tři parametry:
-    - model: Instance modelu který bude použit pro kontrolu.
-    - field: Pole modelu, kde bude kontrola probíhat.
-    - value: Hodnota, která se v rámci pole a modelu bude ověřovat.
+    The function expects these three parameters:
+    - model: Instance of the model used for checking.
+    - field: Model field where the check will take place.
+    - value: Value to be verified within the field and model.
 
-    Funkce nejprve ověří samotnou hodnotu, zda je jedinečná v rámci pole modelu.
-    Pokud není, funkce přidá za hodnotu číslici 1 a ověří její jedinečnost.
-    Takto pomocí while cyklu pokračuje dokud se nedostane na výraz,
-    který v daném poli databáze neexistuje.
+    The function first checks the value itself for uniqueness within the model field.
+    If it's not unique, the function appends a digit 1 to the value and checks its uniqueness.
+    This way, the function continues with a while loop until it finds an expression
+    that doesn't exist in the database field.
 
-    Funkce vrací buď původní zadanou hodnotu (je-li jedinečná),
-    nebo pozměněnou hodnotu s přidaným číslem.
+    The function returns either the original input value (if it's unique)
+    or the modified value with an added number.
     '''
 
-    # Kontrola, zda zadaná hodnota existuje
+    # Check if the provided value exists
     if model.objects.filter(**{field: value}).exists():
 
         suffix = 1
         new_value = f"{value}{suffix}"
 
-        # Cyklus na dohledání jedinečné hodnoty
+        # Loop to find a unique value
         while model.objects.filter(**{field: new_value}).exists():
             suffix += 1
             new_value = f"{value}{suffix}"

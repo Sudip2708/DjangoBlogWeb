@@ -1,13 +1,13 @@
-class AnonynousPropertyMixin:
+class AnonymousPropertyMixin:
     '''
-    Mixin pro třídu AnonymousUserWithSettings přidávající třídě property.
+    Mixin for the class AnonymousUserWithSettings adding properties.
 
-    Tento mixin přidává třídě následující vlastnosti:
-    - is_authenticated: Vlastnost oznamující, že uživatel není přihlášen.
-    - is_anonymous: Vlastnost oznamující, že uživatel je anonymním uživatelem.
-    - is_staff: Vlastnost oznamující, že uživatel není ve skupině staff.
-    - is_superuser: Vlastnost oznamující, že uživatel není superuživatel.
-    - is_active: Vlastnost oznamující, že účet uživatele není aktivní.
+    This mixin adds the following properties to the class:
+    - is_authenticated: Property indicating that the user is not authenticated.
+    - is_anonymous: Property indicating that the user is an anonymous user.
+    - is_staff: Property indicating that the user is not in the staff group.
+    - is_superuser: Property indicating that the user is not a superuser.
+    - is_active: Property indicating that the user account is not active.
     '''
     @property
     def is_authenticated(self):

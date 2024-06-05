@@ -8,22 +8,19 @@ from .user_handlers import (default_values_handler,
                             profile_picture_handler)
 
 
-# Kontrola a aktualizace defaultních hodnot při přihlášení uživatele
+# Checking and updating default values when the user logs in
 @receiver(user_logged_in, sender=CustomUser)
 def handle_user_logged_in(sender, request, user, **kwargs):
     user.check_default_values()
 
 
-# Zpracování defaultních hodnot
+# Processing default values
 @receiver(pre_save, sender=CustomUser)
 def handle_title_slug(sender, instance, **kwargs):
     default_values_handler.handle_default_values_pre_save(instance)
 
 
-# Zpracování profilového obrázku
+# Processing the profile picture
 @receiver(post_save, sender=CustomUser)
 async def handle_picture_post_save(sender, instance, **kwargs):
     await profile_picture_handler.handle_picture_post_save(instance)
-
-
-

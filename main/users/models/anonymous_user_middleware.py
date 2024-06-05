@@ -4,42 +4,41 @@ from .anonymous_user_data.anonymous_user_with_settings import AnonymousUserWithS
 
 class AnonymousUserMiddleware(MiddlewareMixin):
     '''
-    Middleware přidávající nepřihlášenému uživateli nastavení pro boční panel.
+    Middleware adding settings for the sidebar to anonymous users.
 
-    Middleware nejprve ověří, zda se jedná o nepřihlášeného uživatele
-    a pokud ano, vytvoří pro něj instanci s nastavením bočního panelu.
+    The middleware first checks if the user is anonymous,
+    and if so, creates an instance with sidebar settings for them.
     '''
 
     def __init__(self, get_response):
         '''
-        Konstruktor třídy, který je volán při vytvoření instance.
+        Class constructor, called when creating an instance.
 
-        Konstruktor přijímá parametr get_response,
-        který slouží k odchycení a zpracování HTTP požadavku,
-        v rámci řetězce middleware.
+        The constructor accepts the get_response parameter,
+        which is used to capture and process the HTTP request
+        within the middleware chain.
 
-        Konstruktor vytváří pro tento požadavek atribut,
-        aby byl dostupný pro další zpracování požadavků
-        a odpovědí v rámci middleware.
+        The constructor creates an attribute for this request
+        to be available for further request and response processing within the middleware.
         '''
         self.get_response = get_response
 
     def __call__(self, request):
         '''
-        Metoda, která umožňuje objektu být volán jako funkce.
+        Method allowing the object to be called as a function.
 
-        Tato metoda slouží jako hlavní bod vstupu pro zpracování HTTP požadavku.
+        This method serves as the main entry point for processing an HTTP request.
 
-        Nejprve metoda zkontroluje, zda je uživatel přihlášen.
-        Pokud není, vytvoří instanci třídy AnonymousUserWithSettings,
-        která reprezentuje anonymního uživatele s dodatečným nastavením.
-        Tato instance je pak uložena do atributu request.user.
+        First, the method checks if the user is logged in.
+        If not, it creates an instance of the AnonymousUserWithSettings class,
+        which represents an anonymous user with additional settings.
+        This instance is then stored in the request.user attribute.
 
-        Pokud je uživatel přihlášen, atribut request.user zůstane nezměněn.
+        If the user is logged in, the request.user attribute remains unchanged.
 
-        Následně je volána funkce self.get_response(request),
-        která předá aktuální požadavek dalšímu middleware v řetězci
-        a vrátí odpověď.
+        Then, the self.get_response(request) function is called,
+        which passes the current request to the next middleware in the chain
+        and returns the response.
         '''
 
         if not request.user.is_authenticated:

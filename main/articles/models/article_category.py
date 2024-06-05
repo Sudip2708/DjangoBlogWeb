@@ -3,15 +3,15 @@ from django.db import models
 
 class ArticleCategory(models.Model):
     '''
-    Model reprezentující kategorii článku.
+    Model representing an article category.
 
-    Tento model uchovává informace o kategorii článku a obsahuje následující pole:
-    - name: Pole pro název kategorie, které je omezeno na 50 znaků a je unikátní.
-    - slug: Pole pro unikátní "slug", který slouží pro vytváření adresy URL odvozené z názvu kategorie.
-    - count: Pole pro počet výskytů, které uchovává počet článků v této kategorii.
+    This model stores information about the category of an article and includes the following fields:
+    - name: Field for the category name, limited to 50 characters and unique.
+    - slug: Field for a unique "slug" used to create a URL derived from the category name.
+    - count: Field for the count of occurrences, storing the number of articles in this category.
 
-    Metody modelu:
-    - __str__: Získání textové reprezentace modelu (dle hodnoty pole pro jméno kategorie).
+    Model methods:
+    - __str__: Obtains the textual representation of the model (based on the category name field value).
     '''
 
     name = models.CharField(

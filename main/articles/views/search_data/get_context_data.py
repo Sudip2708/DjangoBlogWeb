@@ -1,49 +1,49 @@
 def get_context_data(self, context, **kwargs):
     '''
-    Metoda pro přidání obsahu potřebného k vykreslení stránky.
+    Method for adding content necessary for rendering the page.
 
-    Metoda je určená pro tyto URL:
-    - article-search: Základní adresa sloužící k zadání a vyhodnocení parametrů hledání.
-    - article-search-results: Stránka pro zobrazení výsledků vyhledávání.
-    - article-search-similar: Stránka pro zobrazení podobných článků pro články z výsledku vyhledávání.
-    - article-search-results-category: Stránka pro zobrazení kategorií pro výsledek vyhledávání.
-    - article-search-similar-category: Stránka pro zobrazení kategorií pro podobné články.
+    The method is intended for the following URLs:
+    - article-search: Base address used for entering and evaluating search parameters.
+    - article-search-results: Page for displaying search results.
+    - article-search-similar: Page for displaying similar articles for articles from the search results.
+    - article-search-results-category: Page for displaying categories for the search result.
+    - article-search-similar-category: Page for displaying categories for similar articles.
 
-    Metoda dědí z třídy BaseView následující obsah:
-    - context['user']: Instance uživatele.
-    - context['url_name']: URL jménu adresy z které požadavek přišel.
-    - context['sidebar_search_form']: Formulář pro hledání (pro postranní panel).
-    - context['published_categories']: Publikované kategorie (pro dropdown menu a postranní panel).
-    - context['footer']: Data pro vykreslení patičky (na domácí stránce je již zahrnuto)
-    - context['user_thumbnail']: Miniatura profilového obrázku (pro přihlášeného a nepřihlášeného uživatele).
+    The method inherits the following content from the BaseView class:
+    - context['user']: User instance.
+    - context['url_name']: URL name of the address from which the request came.
+    - context['sidebar_search_form']: Search form (for the sidebar).
+    - context['published_categories']: Published categories (for dropdown menu and sidebar).
+    - context['footer']: Data for rendering the footer (already included on the homepage)
+    - context['user_thumbnail']: Profile picture thumbnail (for logged-in and logged-out users).
 
-    Metoda přidává následující kombinace těchto obsahů:
-    - context['query']: Slovník s parametry hledání.
-    - context['page_title']: Nadpis stránky.
-    - context['page_title_mobile']: Nadpis stránky pro mobilní zařízení.
-    - context['display_text']: Popis vyhledávání.
-    - context['info_text']: Informační text o případném nenalezení žádného výsledku (pro podobné články).
-    - context['current_category']: Instance aktuálně vybrané kategorie.
-    - context['category_tabs']: Instance kategorií pro daný obsah.
+    The method adds the following combinations of this content:
+    - context['query']: Dictionary with search parameters.
+    - context['page_title']: Page title.
+    - context['page_title_mobile']: Page title for mobile devices.
+    - context['display_text']: Description of the search.
+    - context['info_text']: Informational text about a possible failure to find any results (for similar articles).
+    - context['current_category']: Currently selected category instance.
+    - context['category_tabs']: Category instances for the given content.
     '''
 
     if self.url_name == 'article-search-error':
         return context
 
-    # Kontext pro všechny stránky
+    # Context for all pages
     context['query'] = self.search_parameters
     context['page_title'] = self.page_title
     context['page_title_mobile'] = self.page_title_mobile
     context['display_text'] = self.display_text
 
-    # Kontext pro stránku s podobnými články
+    # Context for the page with similar articles
     if not self.article_ids:
         context['info_text'] = self.info_text
 
-    # Kontext pro stránku s kategoriemi
+    # Context for the page with categories
     if self.url_name.endswith('category'):
         context['category_tabs'] = self.category_tabs
         context['current_category'] = self.current_category
 
-    # Navrácení kontextu
+    # Returning context
     return context

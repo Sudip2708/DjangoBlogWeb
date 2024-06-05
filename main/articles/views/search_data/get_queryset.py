@@ -8,84 +8,83 @@ from .get_article_ids import get_article_ids
 
 def get_queryset(self):
     '''
-    Metoda slouží k získání obsahu na základě zadaného hledání.
+    Method for obtaining content based on the specified search.
 
-    Metoda je určená pro tyto URL:
-    - article-search-results: Stránka pro zobrazení výsledků vyhledávání.
-    - article-search-similar: Stránka pro zobrazení podobných článků pro články z výsledku vyhledávání.
-    - article-search-results-category: Stránka pro zobrazení kategorií pro výsledek vyhledávání.
-    - article-search-similar-category: Stránka pro zobrazení kategorií pro podobné články.
+    The method is intended for the following URLs:
+    - article-search-results: Page for displaying search results.
+    - article-search-similar: Page for displaying similar articles for articles from the search results.
+    - article-search-results-category: Page for displaying categories for the search result.
+    - article-search-similar-category: Page for displaying categories for similar articles.
 
-    Atributy přidané nebo měněné touto metodou:
-    - self.search_parameters: Atribut obsahující slovník s parametry dotazu.
-    - self.article_ids: Atribut pro ID článku na základě hledaných dat.
-    - self.page_title: Atribut pro nadpis stránky.
-    - self.page_title_mobile: Název stránky pro mobilní zařízení.
-    - self.display_text: Atribut pro popisný text, informující o tom, co bylo hledáno.
-    - self.info_text: Informační text (zobrazí se, když není nalezen žádný podobný článek).
-    - self.category_items: Atribut pro výčet kategorií pro výsledek hledání.
-    - self.current_category_tab: Atribut pro aktuálně vybranou záložku kategorie.
+    Attributes added or modified by this method:
+    - self.search_parameters: Attribute containing a dictionary with query parameters.
+    - self.article_ids: Attribute for article IDs based on the searched data.
+    - self.page_title: Attribute for page title.
+    - self.page_title_mobile: Page title for mobile devices.
+    - self.display_text: Attribute for descriptive text, informing about what was searched.
+    - self.info_text: Informational text (displayed when no similar article is found).
+    - self.category_items: Attribute for listing categories for the search result.
+    - self.current_category_tab: Attribute for the currently selected category tab.
 
-    Metoda nejprve načte parametry hledání a vytvoří pro ně atribut self.search_parameters.
+    The method first loads the search parameters and creates the self.search_parameters attribute for them.
 
-    Po té volá funkci pro vyhledání obsahu na základě parametrů hledání,
-    která vrací obsah pro atribut self.article_ids a self.display_text.
+    Then it calls a function to search for content based on the search parameters,
+    which returns content for the self.article_ids and self.display_text attributes.
 
-    Následně vytvoří nadpis pro mobilní zařízení.
+    After that, it creates a title for mobile devices.
 
-    Metoda po té ověří, zda požadavek přišel z adresy pro zobrazení výsledků pro parametry hledání,
-    (url name začíná řetězcem 'article-search-results')
-    a pokud ano, vytvoří obsah pro atribut self.page_title.
+    The method then verifies if the request came from the address for displaying search results for search parameters
+    (url name starts with the string 'article-search-results')
+    and if yes, it creates content for the self.page_title attribute.
 
-    Následně metoda ověří, zda požadavek přišel z adresy pro zobrazení podobných článků,
-    (url name začíná řetězcem 'article-search-similar')
-    a pokud ano, je volána metoda, která na základě atributu self.article_ids vyhledá články,
-    které mají alespoň jeden shodný tag a nejsou obsaženy v self.article_ids.
-    A po té přepíše tento atribut novými hodnotami.
+    Next, the method checks if the request came from the address for displaying similar articles
+    (url name starts with the string 'article-search-similar')
+    and if yes, a method is called to search for articles based on the self.article_ids attribute,
+    which have at least one matching tag and are not included in self.article_ids.
+    And then it overrides this attribute with the new values.
 
-    Dále metoda ověří, zda požadavek přišel s adresy pro zobrazení kategorií
-    (koncový část jména adresy obsahuje řetězec 'category').
-    Pokud ano, volá metodu pro získání seznamu kategorií
-    a obsahu pro aktuálně zobrazenou kategorii:
-    self.article_ids, self.category_items a self.current_category_tab.
+    Furthermore, the method checks if the request came from the address for displaying categories
+    (the end part of the address name contains the string 'category').
+    If yes, it calls a method to get a list of categories
+    and content for the currently displayed category: self.article_ids, self.category_items, and self.current_category_tab.
 
-    Nakonec metoda ještě zkontroluje, zda nově obsah pro self.article_ids
-    obsahuje alespoň jeden záznam, a pokud ne, vytvoří atribut self.info_text.
+    Finally, the method checks if the newly obtained content for self.article_ids
+    contains at least one record, and if not, it creates the self.info_text attribute.
 
-    Metoda nakonec vyhledá a vrací instance článků dle obsahu atributu self.article_ids.
-    (Články jsou seřazeny od nejnovějšího po nejstarší.)
+    Finally, the method searches for and returns instances of articles according to the content of the self.article_ids attribute.
+    (Articles are sorted from newest to oldest.)
     '''
 
-    # Nastavení pro stránku s výpisem chyb
+    # Setup for error display page
     if self.url_name == 'article-search-error':
         return Article.objects.none()
 
-    # Získání parametrů pro hledání
+    # Getting search parameters
     self.search_parameters = ast.literal_eval(self.kwargs.get('query'))
 
-    # Získání ID článků a popisného textu dle zadaných parametrů
+    # Getting article IDs and descriptive text based on the provided parameters
     self.article_ids, self.display_text = get_article_ids(self.search_parameters)
 
-    # Nastavení názvu zobrazeného na mobilních zařízeních
+    # Setting the title displayed on mobile devices
     self.page_title_mobile = 'Search results'
 
-    # Vytvoření nadpisu stránky
+    # Creating the page title
     if self.url_name.startswith('article-search-results'):
         self.page_title = 'Search results for Articles'
 
-    # Získání ID článků a nadpisu pro stránku s podobnými články dle tagů
+    # Getting article IDs and title for the page with similar articles based on tags
     if self.url_name.startswith('article-search-similar'):
         get_similar_data(self)
         self.page_title = 'Similar Articles for Search Result'
 
-    # Získání ID článků pro stránky se zobrazenými kategoriemi
+    # Getting article IDs for pages displaying categories
     if self.url_name.endswith('category'):
         get_category_data(self)
 
-    # Vytvoření oznamu, pokud není nalezen žádný článek
+    # Creating a notice if no article is found
     if not self.article_ids:
         self.info_text = 'There are no articles for this request.'
 
-    # Vytvoření a navrácení seznamu instancí vybraných článků
+    # Creating and returning a queryset of selected articles
     queryset = Article.objects.filter(id__in=self.article_ids)
     return queryset

@@ -6,53 +6,53 @@ from .image_resize_and_crop import image_resize_and_crop
 
 def image_processing(image_path, image_parameters, instance, name):
     '''
-    Funkce na zpracování nového obrázku a nahrazení původního.
+    Function for processing a new image and replacing the original.
 
-    Funkce je použita v těchto souborech:
+    This function is used in the following files:
     - articles/models/article_data/main_picture_processing.py
     - articles/models/article_author_data/profile_picture_processing.py
     - users/models/custom_user_data/profile_picture_processing.py
 
-    Funkce očekává následující parametry:
-    - image_path: Cesta k zpracovávanému obrázku.
-    - image_parameters: Parametry pro zpracování obrázku.
-    - id: ID instance pro
-    - name: Pojmenování modelu k jakému se obrázek vstahuje.
+    The function expects the following parameters:
+    - image_path: Path to the processed image.
+    - image_parameters: Parameters for image processing.
+    - id: ID instance for
+    - name: Name of the model the image relates to.
 
-    Funkce nejprve otevře obrázek v PIL a následně z parametrů vytáhne hodnoty
-    pro poměr stran obrázku a pro požadovanou maximální šířku
-    a po té volá funkci 'image_resize_and_crop' pro úpravu velikosti obrázku.
+    The function first opens the image in PIL and then extracts values from the parameters
+    for the image aspect ratio and the desired maximum width.
+    It then calls the 'image_resize_and_crop' function to resize the image.
 
-    Funkce následně vytváří proměné pro cestu k složce obrázku 'image_directory'
-    a název soubory vygeneruje z hodnoty 'name', 'instance_id' a hodnoty pro šířku obrázku.
-    Společně pak z těchto hodnot vytvoří absolutní cestu, pro uložení obrázku 'new_image_path'.
+    The function then creates variables for the image directory path 'image_directory'
+    and generates the file name from the 'name' value, 'instance_id', and the image width value.
+    Together, it creates the absolute path for saving the image 'new_image_path'.
 
-    Funkce následně překontroluje, zda se na této cestě nenachází už nějaký soubor.
-    Pokud ano, pak jej smažem protože se jedná se o předešlí obrázek.
+    The function then checks if there is already a file at this path.
+    If so, it deletes it because it's the previous image.
 
-    Následně nový obrázek uloží na dané umístění.
+    Then it saves the new image to the specified location.
 
-    Funkce nakonec vytvoří a vrátí relativní cestu k obrázku.
+    Finally, the function creates and returns the relative path to the image.
     '''
 
-    # Změna velikosti obrázku
+    # Resize the image
     image = Image.open(image_path)
     new_aspect_ratio = image_parameters['aspect_ratio']
     new_width = image_parameters['width']
     processed_image = image_resize_and_crop(image, new_width, new_aspect_ratio)
 
-    # Získání cesty pro uložení obrázku
+    # Get the path for saving the image
     image_directory = os.path.dirname(image_path)
     new_image_name = f'{name}-{instance.id:08d}-{image_parameters["width"]:04d}.jpg'
     new_image_path = os.path.join(image_directory, new_image_name)
 
-    # Odstranění původního obrázku
+    # Remove the original image
     if os.path.exists(new_image_path):
         os.remove(new_image_path)
 
-    # Uložení nového obrázku do složky media
+    # Save the new image to the media folder
     processed_image.save(new_image_path)
 
-    # Vytvoření a vrácení relativní cesty k obrázku
+    # Create and return the relative path to the image
     relative_picture_path = os.path.join(instance.upload_path, new_image_name)
     return relative_picture_path

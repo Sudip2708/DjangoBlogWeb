@@ -75,4 +75,20 @@
 ###### Delete Article:
 ![](screen_shots/2024-06-04_14-17-01.jpg)
 
+##### Responzivní chování:
+###### XL < (poslední velikost kdy je boční panel viditelný)
+![](screen_shots/2024-06-05_11-35-44.jpg)
+###### < XL (skrytí bočního panelu - položky přesunuty do menu)
+![](screen_shots/2024-06-05_11-36-14.jpg)
+###### LG < (poslední velikost kdy jsou na stránku 3 odstavce)
+![](screen_shots/2024-06-05_11-37-00.jpg)
+###### < LG (skrytí 1 odstavce + položky z horní lišty přesunuty do menu)
+![](screen_shots/2024-06-05_11-37-23.jpg)
+###### MD < (poslední velikost kdy jsou na stránku 2 odstavce)
+![](screen_shots/2024-06-05_11-38-20.jpg)
+###### < MD (skrytí 1 odstavce)
+![](screen_shots/2024-06-05_11-38-36.jpg)
+###### Mobile (stejné jako MD)
+![](screen_shots/2024-06-05_11-39-46.jpg)
+
 [<<< Přechod na stránku README.](../README.md)

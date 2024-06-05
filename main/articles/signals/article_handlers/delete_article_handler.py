@@ -6,30 +6,29 @@ from .delete_unused_tags_handler import handle_delete_unused_tags_post_save
 
 def handle_article_pre_delete(article):
     '''
-    Handler pro zachycení signálu pre_delete pro smazání článku.
+    Handler to capture the pre_delete signal for deleting an article.
 
-    Handler nejprve ověří, zda je u článku nastavený status 'publish',
-    pokud ano, znamená to, že je článek indexovaný ve Whoosh pro rychlejší fulltextové vyhledávání,
-    a tak v další části kódu dojde k odstranění tohoto záznamu z indexu Whoosh.
+    The handler first verifies if the article has the status 'publish'.
+    If it does, it means the article is indexed in Whoosh for faster full-text search,
+    so in the next part of the code, it removes this record from the Whoosh index.
 
-    Handler dále vytvoří atribut '_picture_paths' obsahující prázdný seznam,
-    a vytvoří seznam s poli pro různé velikosti hlavního obrázku článku.
+    The handler then creates an attribute '_picture_paths' containing an empty list
+    and creates a list with fields for different sizes of the main article image.
 
-    Následně cyklem projde všechna tato pole a pokud nejsou prázdná (což by neměla být),
-    a pokud neobsahují odkaz na výchozí obrázek (což mohou),
-    pak do seznamu '_picture_paths' přidá cestu k umístění tohoto obrázku.
+    It then iterates through all these fields, and if they are not empty (which they shouldn't be),
+    and if they do not contain a link to the default image (which they might),
+    it adds the path to this image to the '_picture_paths' list.
 
-    Handler dále naplní atribut pro odstraněné tagy 'tags_to_delete'
-    všemi tagy z článku (tento seznam bude předán do post_delete signálu
-    na kontrolu a případné smazání tagů, které již nejsou použity nikde jinde).
+    Furthermore, the handler fills the attribute 'tags_to_delete' with all the tags from the article
+    (this list will be passed to the post_delete signal to check and potentially delete tags that are no longer used elsewhere).
     '''
 
-    # Odstranění z indexu Whoosh (je-li článek publikován)
+    # Remove from Whoosh index (if the article is published)
     if article.status == 'publish':
         article_schema = ArticleSchema()
         article_schema.delete_article_from_index(article.id)
 
-    # Vytvoření seznamu s cestami k obrázkům
+    # Create a list of image paths
     article._picture_paths = []
     picture_fields = [
         article.main_picture_max_size,
@@ -38,32 +37,31 @@ def handle_article_pre_delete(article):
         article.main_picture_thumbnail,
     ]
 
-    # Naplnění seznamu hodnotami z instance článku
+    # Fill the list with values from the article instance
     for field in picture_fields:
         if field and field.name != article.default_picture:
             article._picture_paths.append(field.path)
 
-    # Naplnění atributu 'tags_to_delete' všemi tagy článku.
+    # Fill the 'tags_to_delete' attribute with all the article tags
     article.tags_to_delete = list(article.tags.names())
-
 
 def handle_article_post_delete(article):
     '''
-    Handler pro zachycení signálu post_delete pro smazání článku.
+    Handler to capture the post_delete signal for deleting an article.
 
-    Handler pracuje s atributem '_picture_paths' vytvořeným v handle_article_pre_delete.
-    Handler v cyklu projde obsah tohoto seznamu a metodou getattr zkontroluje,
-    zda obsahuje nějaké hodnoty pro cesty ke smazání.
-    A pokud ano, nejprve ověří existenci souboru a poté soubor smaže.
+    The handler works with the '_picture_paths' attribute created in handle_article_pre_delete.
+    It iterates through the contents of this list and uses the getattr method to check
+    if it contains any values for deletion paths.
+    If it does, it first verifies the existence of the file and then deletes it.
 
-    Handler dále volá handler, který zkontroluje a smaže ty tagy,
-    které nejsou použity v žádném jiném článku.
+    The handler then calls a handler that checks and deletes those tags
+    that are not used in any other articles.
     '''
 
-    # Smazání obrázků
+    # Delete images
     for path in getattr(article, '_picture_paths', []):
         if os.path.exists(path):
             os.remove(path)
 
-    # Kontrola a smazání nepoužívaných tagů
+    # Check and delete unused tags
     handle_delete_unused_tags_post_save(article)

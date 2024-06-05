@@ -10,48 +10,48 @@ from .article_data.mixin_foreign_key import ForeignKeyMixin
 
 class Article(MainPictureMixin, DatesAndStatusMixin, ForeignKeyMixin, models.Model):
     '''
-    Model pro data článku.
+    Model for article data.
 
-    Model dědí ze základní třídy models.Model a přidává následující mixiny:
-    - MainPictureMixin: Mixin obsahující pole a metody pro zpracování obrázku.
-    - DatesAndStatusMixin: Mixin přidávající pole a metody pro zpracování dat a statusu.
-    - ForeignKeyMixin: Mixin přidávající pole, která jsou navázána na jiné modely.
+    The model inherits from the base class models.Model and adds the following mixins:
+    - MainPictureMixin: Mixin containing fields and methods for image processing.
+    - DatesAndStatusMixin: Mixin adding fields and methods for date and status processing.
+    - ForeignKeyMixin: Mixin adding fields linked to other models.
 
-    V této části model vytváří následující pole:
-    - title: Pole pro nadpis článku.
-    - slug: Pole pro slug nadpisu článku (použité pro vytváření URL).
-    - overview: Pole pro úvod k článku (v náhledu článku je vidět pouze tato část).
-    - content: Pole pro obsah článku, který je tvořen HTML obsahem modulu TinyMCE.
+    In this section, the model creates the following fields:
+    - title: Field for the article title.
+    - slug: Field for the article slug (used for URL creation).
+    - overview: Field for the article overview (only this part is visible in the article preview).
+    - content: Field for the article content, which is HTML content created by the TinyMCE module.
 
-    Z mixinů pak dědí tato pole:
+    From the mixins, it inherits these fields:
     DatesAndStatusMixin:
-    - created: Datum vytvoření článku.
-    - updated: Datum poslední úpravy článku.
-    - published: Datum publikování článku.
-    - status: Pole určující status článku.
+    - created: Date of article creation.
+    - updated: Date of the last article update.
+    - published: Date of article publication.
+    - status: Field determining the article status.
 
     ForeignKeyMixin:
-    - author: Cizí klíč na autora článku.
-    - category: Cizí klíč na kategorii, do které článek patří.
-    - tags: Propojení na modul Taggit pro správu tagů.
-    - previous_article: Cizí klíč na vlastní třídu pro definici předcházejícího článku.
-    - next_article: Cizí klíč na vlastní třídu pro definici následujícího článku.
+    - author: Foreign key to the article author.
+    - category: Foreign key to the category to which the article belongs.
+    - tags: Connection to the Taggit module for tag management.
+    - previous_article: Foreign key to the previous article.
+    - next_article: Foreign key to the next article.
 
     MainPictureMixin:
-    - main_picture_max_size: Největší velikost obrázku pro samotné zobrazení obrázku přes celou obrazovku.
-    - main_picture_for_article: Střední velikost obrázku pro použití na stránce článku.
-    - main_picture_preview: Menší velikost obrázku pro zobrazení na stránce s výpisem článků.
-    - main_picture_thumbnail: Miniatura použitá pro odkaz článku.
+    - main_picture_max_size: Largest image size for full-screen display.
+    - main_picture_for_article: Medium image size for use on the article page.
+    - main_picture_preview: Smaller image size for display on the article list page.
+    - main_picture_thumbnail: Thumbnail used for article links.
 
-    Metody modelu přidané v této části:
-    - __str__: Pro získání textové reprezentace modelu (dle hodnoty pole pro název článku).
-    - get_absolute_url: Pro získání URL adresy k článku.
+    Methods added to the model in this section:
+    - __str__: For obtaining the textual representation of the model (based on the article name field value).
+    - get_absolute_url: For obtaining the URL address of the article.
 
-    Metody získané z mixinů:
-    - picture_processing: Metoda pro zpracování hlavního obrázku a uložení jeho různých velikostí.
+    Methods inherited from mixins:
+    - picture_processing: Method for processing the main image and saving its different sizes.
 
-    Model má na sebe navázaných několik pre_save, post_save, pre_delete a post_delete signálů,
-    zpracovávající její obsah.
+    The model has several pre_save, post_save, pre_delete, and post_delete signals attached to it,
+    processing its content.
     '''
 
     title = models.CharField(
@@ -83,12 +83,5 @@ class Article(MainPictureMixin, DatesAndStatusMixin, ForeignKeyMixin, models.Mod
         return self.title
 
     def get_absolute_url(self):
-        ''' Vrátí absolutní URL pro zobrazení detailu článku. '''
+        ''' Returns the absolute URL for displaying the article detail. '''
         return reverse('article-detail', kwargs={'slug': self.slug})
-
-
-
-
-
-
-

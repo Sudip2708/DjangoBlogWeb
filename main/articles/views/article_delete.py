@@ -11,24 +11,24 @@ from ..models.article import Article
 @method_decorator(login_required, name='dispatch')
 class ArticleDeleteView(BaseView, DeleteView):
     '''
-    Pohled pro smazání článku (jen pro přihlášené uživatele).
+    View for deleting an article (only for authenticated users).
 
-    Pohled zpracovává následující URL:
-    - article-delete: Stránka pro potvrzení smazání článku.
+    The view processes the following URL:
+    - article-delete: Page for confirming the deletion of an article.
 
-    Pohled dědí ze základní třídy DeleteView a vlastní třídy BaseView.
+    The view inherits from the base class DeleteView and its custom class BaseView.
 
-    Atributy přetížené z DeleteView:
-    - self.model: Určuje model, se kterým tento pohled pracuje.
-    - self.template_name: Určuje cestu k šabloně, která bude použita pro zobrazení výsledků.
-    - self.success_url: Definuje návratovou cestu po úspěšném provedení úkonu.
+    Overridden attributes from DeleteView:
+    - self.model: Specifies the model this view works with.
+    - self.template_name: Specifies the path to the template used for rendering the results.
+    - self.success_url: Defines the URL to redirect to after successfully performing the operation.
 
-    Atributy poděděné z BaseView:
-    - self.user: Instance uživatele (buď CustomUser, nebo AnonymousUserWithSettings).
-    - self.url_name: URL jméno adresy, ze které požadavek přišel.
+    Inherited attributes from BaseView:
+    - self.user: User instance (either CustomUser or AnonymousUserWithSettings).
+    - self.url_name: URL name of the address from which the request came.
 
-    Metody definované v tomto pohledu:
-    - get_context_data: Metoda, která vytváří obsah pro vykreslení šablony.
+    Methods defined in this view:
+    - get_context_data: Method that creates content for rendering the template.
     '''
 
     model = Article
@@ -37,18 +37,18 @@ class ArticleDeleteView(BaseView, DeleteView):
 
     def get_context_data(self, **kwargs):
         '''
-        Metoda pro předání kontextu potřebného pro vykreslení stránky.
+        Method to pass the context required for rendering the page.
 
-        Kontext poděděný z BaseView:
-        - context['user']: Instance uživatele.
-        - context['url_name']: URL jménu adresy z které požadavek přišel.
-        - context['sidebar_search_form']: Formulář pro hledání (pro postranní panel).
-        - context['published_categories']: Publikované kategorie (pro dropdown menu a postranní panel).
-        - context['footer']: Data pro vykreslení patičky (na domácí stránce je již zahrnuto)
-        - context['user_thumbnail']: Miniatura profilového obrázku (pro přihlášeného a nepřihlášeného uživatele).
+        Context inherited from BaseView:
+        - context['user']: User instance.
+        - context['url_name']: URL name of the address from which the request came.
+        - context['sidebar_search_form']: Search form (for the sidebar).
+        - context['published_categories']: Published categories (for dropdown menu and sidebar).
+        - context['footer']: Data for rendering the footer (included on the homepage)
+        - context['user_thumbnail']: Profile thumbnail (for logged-in and logged-out users).
 
-        Kontext vytvořený tímto pohledem:
-        - context['article']: Instance článku.
+        Context created by this view:
+        - context['article']: Article instance.
         '''
         context = super().get_context_data(**kwargs)
         context['article'] = self.get_object()

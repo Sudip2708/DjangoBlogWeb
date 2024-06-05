@@ -1,34 +1,33 @@
 from django.db import models
 
 from users.models.custom_user import CustomUser
-
 from .article_author_data.profile_picture_processing import profile_picture_processing
 
 
 class ArticleAuthor(models.Model):
     '''
-    Model reprezentující autora článku.
+    Model representing an article author.
 
-    Tento model uchovává informace o uživateli, který je autorem článku
-    a obsahuje následující pole:
-    - linked_user: Pole propojující účet autora s uživatelským účtem pomocí vztahu "one-to-one" s modelem CustomUser.
-    - name: Pole pro uživatelské jméno autora, které se zobrazuje v souvislosti s jeho články.
-    - slug: Pole pro unikátní "slug", který slouží pro vytváření adresy URL odvozené z jeho jména.
-    - profile_picture: Pole pro profilový obrázek autora.
-    - profile_picture_thumbnail: Pole pro miniaturu profilového obrázku.
+    This model stores information about the user who is the author of an article
+    and includes the following fields:
+    - linked_user: Field linking the author's account to the user account using a "one-to-one" relationship with the CustomUser model.
+    - name: Field for the author's display name, which appears in connection with their articles.
+    - slug: Field for a unique "slug" used to create a URL derived from the author's name.
+    - profile_picture: Field for the author's profile picture.
+    - profile_picture_thumbnail: Field for the thumbnail of the author's profile picture.
 
-    Model definuje tyto atributy pro profilové obrázky:
-    - default_picture: Cesta z Media k defaultnímu obrázku (použit při vytvoření instance bez udání obrázku).
-    - upload_path: Cesta z Media pro uložení všech velikostních variant hlavního obrázku.
-    - new_picture: Boolean hodnota, zda došlo k novému nahrání obrázku (nastavuje se ve formuláři
-        po obdržení nového souboru pro obrázek a je zachytávána v post_save signálu pro zpracování obrázku).
+    The model defines these attributes for profile pictures:
+    - default_picture: Path from Media to the default image (used when creating an instance without specifying an image).
+    - upload_path: Path from Media to store all sizes of the main image.
+    - new_picture: Boolean value indicating whether a new image has been uploaded (set in the form
+        after receiving a new image file and captured in the post_save signal for image processing).
 
-    Metody modelu:
-    - __str__: Získání textové reprezentace modelu (dle hodnoty pole pro jméno autora).
-    - profile_picture_processing: Metoda pro úpravu profilového obrázku.
+    Model methods:
+    - __str__: Obtains the textual representation of the model (based on the author's name field value).
+    - profile_picture_processing: Method for processing the profile picture.
 
-    Model má na sebe navázaných několik pre_save, post_save, pre_delete a post_delete signálů,
-    zpracovávající její obsah.
+    The model has several pre_save, post_save, pre_delete, and post_delete signals attached to it,
+    processing its content.
     '''
 
     linked_user = models.OneToOneField(
@@ -72,5 +71,5 @@ class ArticleAuthor(models.Model):
         return self.name
 
     def profile_picture_processing(self):
-        ''' Metoda pro úpravu profilového obrázku (a vytvoření miniatury). '''
+        ''' Method for processing the profile picture (and creating a thumbnail). '''
         return profile_picture_processing(self)
