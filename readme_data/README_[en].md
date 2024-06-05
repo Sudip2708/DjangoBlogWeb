@@ -23,7 +23,7 @@ This is my third project (second in Django), which is intended to advance me on 
 - [A list of all URLs used in the project](01_url_list_[en].md) 
 can be used for quick orientation in the project.
 - [A detailed description of the view structure](02_view_list_[en].md) 
-and [a detailed description of the header structure.](04_header_[en].md) 
+and [a detailed description of the header structure](04_header_[en].md) 
 can be used for a deeper understanding of the project.
 - [A list of pip installations](03_pip_install_[en].md)  
 is available for an overview of the installed packages.
