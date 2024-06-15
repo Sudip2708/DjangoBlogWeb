@@ -63,6 +63,6 @@ class ArticleContentForm(forms.ModelForm):
         if self.instance.status == 'publish':
             html_text = cleaned_data.get('content')
             content_text = BeautifulSoup(html_text, 'html.parser').get_text(strip=True)
-            ArticleSchema().update_index(self.instance.id, 'content', content_text)
+            ArticleSchema().update_field_in_index(self.instance.id, 'content', content_text)
 
         return cleaned_data

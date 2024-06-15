@@ -833,3 +833,9 @@ Překlady všech vysvětlivek kodu z češtiny do angličtiny.
 ###
 Oprava několika odkazů v readme souborech.
 ###
+Přidání článků vytvořených při natáčení videa.
+Oprava vstupu pro tagy v šabloně při vytváření článku, tak aby zprávně zobrazila data (neiterovala)
+když se vrátí spolu s oznamem o nevalidním formuláři.
+Oprava reindexace článku do whoos schématu při jeho úpravě.
+Oprava signálu pro ověření statusu.
+###

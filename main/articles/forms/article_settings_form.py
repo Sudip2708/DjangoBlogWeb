@@ -86,18 +86,6 @@ class ArticleSettingsForm(forms.ModelForm):
         '''
         cleaned_data = super().clean()
 
-        # Processing tag change
-        if 'tags' in self.changed_data:
-            tags = cleaned_data.get('tags', [])
-
-            # Filtering unwanted items
-            invalid_tags = [':', '[{', 'value', '{', '}', '}]']
-            cleaned_data['tags'] = [tag for tag in tags if tag not in invalid_tags]
-
-            # Checking if a tag has been deleted (fills the tags_to_delete attribute list).
-            original_tags = list(self.instance.tags.names() if self.instance.pk else [])
-            self.instance.tags_to_delete = list(set(original_tags) - set(cleaned_data['tags']))
-
         # Article check before publication
         if 'status' in self.changed_data and cleaned_data.get('status') == 'publish':
             article = self.instance
@@ -119,5 +107,17 @@ class ArticleSettingsForm(forms.ModelForm):
 
             elif not article.tags:
                 raise forms.ValidationError("To be published, the article must contain at least one tag.")
+
+        # Processing tag change
+        if 'tags' in self.changed_data:
+            tags = cleaned_data.get('tags', [])
+
+            # Filtering unwanted items
+            invalid_tags = [':', '[{', 'value', '{', '}', '}]']
+            cleaned_data['tags'] = [tag for tag in tags if tag not in invalid_tags]
+
+            # Checking if a tag has been deleted (fills the tags_to_delete attribute list).
+            original_tags = list(self.instance.tags.names() if self.instance.pk else [])
+            self.instance.tags_to_delete = list(set(original_tags) - set(cleaned_data['tags']))
 
         return cleaned_data

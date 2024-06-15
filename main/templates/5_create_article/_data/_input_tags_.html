@@ -10,10 +10,17 @@
     </label>
 
     <!-- Input field (uses script for tagify) -->
-    <input name='tags'
-           value="{% for tag in form.tags.value %}{{ tag }}{% if not forloop.last %}, {% endif %}{% endfor %}"
-           class='form-control tags-input'
-           placeholder='Add tag' >
+    {% if form.errors %}
+        <input name='tags'
+               value="{% if form.tags.value %}{{ form.tags.value }}{% endif %}"
+               class='form-control tags-input d-flex align-items-center p-2'
+               placeholder='Add tag' >
+    {% else %}
+        <input name='tags'
+               value="{% if form.tags.value %}{{ form.tags.value|join:', ' }}{% endif %}"
+               class='form-control tags-input d-flex align-items-center p-2'
+               placeholder='Add tag' >
+    {% endif %}
 
     <!-- Information text -->
     <div class="my-color-grey my-font-size-0-8rem">

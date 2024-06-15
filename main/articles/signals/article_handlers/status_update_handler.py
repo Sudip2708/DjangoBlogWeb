@@ -23,9 +23,9 @@ def handle_status_pre_save(article):
         article.previous_status = None
 
 
-async def handle_status_post_save(article):
+def handle_status_post_save(article):
     '''
-    Asynchronous handler for capturing the post_save signal for changing the article status.
+    Handler for capturing the post_save signal for changing the article status.
 
     The handler checks if this code has already been executed (checking the `_status_save_done` attribute).
     If not, it checks if the article status has changed.

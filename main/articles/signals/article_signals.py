@@ -32,8 +32,8 @@ def handle_status_pre_save(sender, instance, **kwargs):
     status_update_handler.handle_status_pre_save(instance)
 
 @receiver(post_save, sender=Article)
-async def handle_status_post_save(sender, instance, **kwargs):
-    await status_update_handler.handle_status_post_save(instance)
+def handle_status_post_save(sender, instance, **kwargs):
+    status_update_handler.handle_status_post_save(instance)
 
 # Processing main picture
 @receiver(post_save, sender=Article)
