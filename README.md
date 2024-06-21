@@ -41,9 +41,8 @@ Pro vyzkoušení aplikace v Dockeru použijte tento příkaz:
 ```bash
 docker run -p 8000:8000 sudip2708/django-blog-web:latest
 ```  
-Aplikace bude přístupná na http://localhost:8000  
+Aplikace po té bude přístupná na http://localhost:8000  
 Pro stažení obrazu apliace z Dockeru použijte tento odkaz: [DockerHub - DjangoBlogWeb](https://hub.docker.com/r/sudip2708/django-blog-web)
-
 
 
 ## Moje cesta
