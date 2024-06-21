@@ -18,6 +18,16 @@ The project is based on this template: https://bootstrapious.com/p/bootstrap-blo
 This is my third project (second in Django), which is intended to advance me on my way to becoming a programmer.
 
 
+## Docker
+
+To try the application in Docker, use this command:  
+```bash
+docker run -p 8000:8000 sudip2708/django-blog-web:latest
+```  
+The application will be accessible at http://localhost:8000  
+To download the application image from Docker, use this link: [DockerHub - DjangoBlogWeb](https://hub.docker.com/r/sudip2708/django-blog-web)
+
+
 ## Project Analysis
 
 - [A list of all URLs used in the project](01_url_list_[en].md) 

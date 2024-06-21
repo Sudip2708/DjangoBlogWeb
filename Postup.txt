@@ -839,3 +839,17 @@ když se vrátí spolu s oznamem o nevalidním formuláři.
 Oprava reindexace článku do whoos schématu při jeho úpravě.
 Oprava signálu pro ověření statusu.
 ###
+Docker
+Vytvoření souboru Dockerfile a zapsání kodu
+$ docker build -t django-blog-web:latest . /* Vytvoření instance */
+Vytvoření souboru compose.yaml a zapsání kodu
+$ docker run --rm -p 8000:8000 django-blog-web:latest /* Zpuštění kontejneru */
+http://localhost:8000 /* Zkouška webu */
+$ docker ps /* Zjištění ID kontejneru */
+$ docker stop 15c1e2cb9edc /* Ukončení kontejneru */
+Vytvoření souboru .dockerignore a překopírování kodu
+$ docker tag django-blog-web:latest sudip2708/django-blog-web:latest /* Pojmenování souboru */
+$ docker push sudip2708/django-blog-web:latest /* Commit na DockerHub */
+$ docker run -p 8000:8000 YOUR_DOCKERHUB_USERNAME/django-blog-web:latest /* Kontrola zpuštěním */
+Úprava readme.md souboru - doplnění info o Docker
+###

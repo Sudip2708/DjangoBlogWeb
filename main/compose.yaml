@@ -1,0 +1,12 @@
+version: '3.8'
+services:
+  web:
+    build: .
+    ports:
+      - "8000:8000"
+    volumes:
+      - .:/app  # Montuje celý aktuální adresář do /app v kontejneru
+      - ./data:/app/db.sqlite3  # Specificky montuje databázový soubor
+
+
+
